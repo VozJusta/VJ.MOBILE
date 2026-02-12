@@ -11,7 +11,7 @@ export default function RootLayout() {
   
   return (
     <>
-      <StatusBar backgroundColor={"transparent"} />
+      <StatusBar translucent />
       <Stack screenOptions={{ headerShown: false }} />
       <Toast
         config={{

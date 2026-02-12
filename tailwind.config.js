@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
-  content: ["./app/**/*", "./components/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*", "./screens/**/*.{js,jsx,ts,tsx}", "./template/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -14,6 +14,14 @@ module.exports = {
         "White" : "#FFFFFF",
         "Placeholder" : "475569",
         "Blue Royal" : "#02A6FF"
+      },
+      fontFamily: {
+        inter: "Inter_500Medium",
+        interBold: "Inter_700Bold",
+        interSemiBold: "Inter_600SemiBold",
+        interRegular: "Inter_400Regular",
+        interLight: "Inter_300Light",
+        interExtraBold: "Inter_800ExtraBold",
       }
     },
   },

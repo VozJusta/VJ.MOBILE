@@ -2,31 +2,34 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef } from "react";
 import { View, Animated, Easing, Text } from "react-native";
 import Logo from "../assets/svg/icons/logo.svg";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 
 export default function App() {
+  const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const anim = Animated.sequence([
       Animated.timing(scale, {
         toValue: 0.7,
-        duration: 300,
+        duration: 400,
         easing: Easing.out(Easing.cubic),
         useNativeDriver: true,
       }),
       Animated.delay(800),
       Animated.timing(scale, {
-        toValue: 2,
-        duration: 400,
+        toValue: 1.7,
+        duration: 200,
         easing: Easing.in(Easing.quad),
         useNativeDriver: true,
       }),
       Animated.delay(1500),
     ]);
 
-    anim.start(() => {});
+    anim.start(() => {
+      router.push("/screens/Onboarding");
+    });
 
     return () => anim.stop();
   }, []);
