@@ -4,10 +4,12 @@ import { View, Animated, Easing, Text } from "react-native";
 import Logo from "../assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { useAppFonts } from "../assets/fonts/font";
 
 export default function App() {
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
+
 
   useEffect(() => {
     const anim = Animated.sequence([
@@ -48,7 +50,7 @@ export default function App() {
           className="items-center justify-center"
         >
           <View className="flex justify-center items-center w-[812px] h-[804px] rounded-full bg-black800">
-            <Logo width={70} height={51}/>
+            <Logo width={70} height={51} />
           </View>
         </Animated.View>
       </LinearGradient>

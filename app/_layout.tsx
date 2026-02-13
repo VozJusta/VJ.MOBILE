@@ -1,21 +1,21 @@
-
 import "../global.css";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 import { View, Text } from "react-native";
+import { useAppFonts } from "../assets/fonts/font";
 
 export default function RootLayout() {
+  const fontsLoaded = useAppFonts();
+  if (!fontsLoaded) return null;
 
-
-  
   return (
     <>
       <StatusBar translucent />
       <Stack screenOptions={{ headerShown: false }} />
       <Toast
         config={{
-           success: ({ text1, text2 }) => (
+          success: ({ text1, text2 }) => (
             <View
               style={{
                 width: "70%",
@@ -26,7 +26,7 @@ export default function RootLayout() {
                 borderLeftColor: "#4CAF50",
                 position: "absolute",
                 right: 10,
-                top: 20
+                top: 20,
               }}
             >
               <Text
@@ -41,9 +41,7 @@ export default function RootLayout() {
               </Text>
 
               {text2 ? (
-                <Text style={{ fontSize: 13, color: "#ddd" }}>
-                  {text2}
-                </Text>
+                <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
               ) : null}
             </View>
           ),
@@ -59,7 +57,7 @@ export default function RootLayout() {
                 borderLeftColor: "#FF5252",
                 position: "absolute",
                 right: 10,
-                top: 20
+                top: 20,
               }}
             >
               <Text
@@ -74,13 +72,10 @@ export default function RootLayout() {
               </Text>
 
               {text2 ? (
-                <Text style={{ fontSize: 13, color: "#ddd" }}>
-                  {text2}
-                </Text>
+                <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
               ) : null}
             </View>
           ),
-
         }}
       />
     </>
