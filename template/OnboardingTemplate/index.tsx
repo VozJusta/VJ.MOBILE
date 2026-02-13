@@ -1,9 +1,18 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar, Text, View, Image } from "react-native";
-import ConnectionIllustration from "../../assets/png/ConnectionIllustration.png";
-import MaskedView from "@react-native-masked-view/masked-view";
+import { StatusBar, Text, View, Image, Dimensions } from "react-native";
+import Onboarding from "react-native-reanimated-carousel";
+import { onboardingData } from "./data";
+import { useRef, useState } from "react";
+
+const { width } = Dimensions.get("window");
 
 export function OnboardingTemplate() {
+
+  const ref = useRef(null);
+  const [index, setIndex] = useState(0);
+
+  const isLast = index === onboardingData.length - 1;
+
   return (
     <>
       <StatusBar translucent />
@@ -17,28 +26,21 @@ export function OnboardingTemplate() {
           <Text className="text-white text-[16px] font-inter">Pular</Text>
         </View>
         <View className="mt-32 flex-1 items-center">
-          <Image source={ConnectionIllustration} />
-
-          <LinearGradient
-            style={{ borderRadius: 12 }}
-            className="w-full min-h-[200px] flex-col items-center "
-            colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
-          >
-            <LinearGradient
-              style={{ height: 4 }}
-              className="w-full"
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              colors={[
-                "rgba(255,255,255,0)",
-                "rgba(255, 255, 255, 0.20)",
-                "rgba(255,255,255,0)",
-              ]}
-            ></LinearGradient>
-            <Text className=" font-interBold text-white text-[30px] leading-[36px]">
-              Conexão <MaskedView   maskElement={<Text className="font-inter">Sem Barreiras</Text>} />
-            </Text>
-          </LinearGradient>
+          <Onboarding
+            ref={ref}
+            width={width}
+            height={600}
+            data={onboardingData}
+            onSnapToItem={(i) => setIndex(i)}
+            renderItem={({ item }) => (
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+                  {item.title}
+                </Text>
+                <Text>{item.description}</Text>
+              </View>
+            )}
+          />
         </View>
       </LinearGradient>
     </>
