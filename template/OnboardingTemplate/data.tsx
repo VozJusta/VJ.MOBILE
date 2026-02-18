@@ -1,59 +1,122 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
-import ConnectionIllustration from "../../assets/png/ConnectionIllustration.png";
-import { Text, View, Image } from "react-native";
+import ConnectionIllustration from "../../assets/svg/ConnectionIllustration.svg";
+import ContainerImage from "../../assets/svg/Container.svg";
+import { Text, View } from "react-native";
+import { PageData } from "react-native-onboarding-swiper";
 
-export const onboardingData = [
-    {
-        img: <Image source={ConnectionIllustration} />,
-        title: (
+export const onboardingData: PageData[] = [
+  {
+    image: <ConnectionIllustration />,
+
+    title: <></>,
+    subtitle: (
+      <View className="w-full px-4 ">
+        <LinearGradient
+          style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
+          className="w-full  min-h-[200px] flex-col items-center"
+          colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
+        >
+            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <LinearGradient
+            style={{ height: 4 }}
+            className="w-full"
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={[
+              "rgba(255,255,255,0)",
+              "rgba(255, 255, 255, 0.20)",
+              "rgba(255,255,255,0)",
+            ]}
+          ></LinearGradient>
+          <View className=" flex-col items-center  mt-3">
             <Text className=" font-interBold text-white text-[30px] leading-[36px]">
-                Conexão
+              Conexão
             </Text>
-        ),
-        description: (
-            <LinearGradient
-                style={{ borderRadius: 12 }}
-                className="w-full min-h-[200px] flex-col items-center "
-                colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
-            >
-                <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
-                <LinearGradient
-                    style={{ height: 4 }}
-                    className="w-full"
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    colors={[
-                        "rgba(255,255,255,0)",
-                        "rgba(255, 255, 255, 0.20)",
-                        "rgba(255,255,255,0)",
-                    ]}
-                ></LinearGradient>
-                <View className=" flex-col items-center mt-3">
 
-
-                    <MaskedView
-                        maskElement={
-                            <Text className="font-interBold text-[30px]">
-                                Sem Barreiras
-                            </Text>
-                        }
-                    >
-                        <LinearGradient
-                            colors={["#135BEC", "#93C5FD"]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                        >
-                            <Text className="font-interBold text-[30px] opacity-0">
-                                Sem Barreiras
-                            </Text>
-                        </LinearGradient>
-                    </MaskedView>
-                </View>
-                <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 mx-4">
-                    Unimos cidadãos e advogados especialistas com transparência e agilidade direta via <Text className="font-interSemiBold text-EconGreen900">WhatsApp</Text>.
+            <MaskedView
+              maskElement={
+                <Text className="font-interBold text-[30px]">
+                  Sem Barreiras
                 </Text>
-            </LinearGradient>
-        )
-    }
-]
+              }
+            >
+              <LinearGradient
+                colors={["#135BEC", "#93C5FD"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              >
+                <Text className="font-interBold text-[30px] opacity-0">
+                  Sem Barreiras
+                </Text>
+              </LinearGradient>
+            </MaskedView>
+          </View>
+          <Text className="font-interLight text-[#D1D5DB] text-[16px] text-center pt-4 w-[309px]">
+            Unimos cidadãos e advogados especialistas com transparência e
+            agilidade direta via{" "}
+            <Text className="font-interSemiBold text-EconGreen900">
+              WhatsApp
+            </Text>
+            .
+          </Text>
+        </LinearGradient>
+      </View>
+    ),
+  },
+  {
+    image: <ContainerImage />,
+
+    title: <></>,
+    subtitle: (
+      <View className="w-full px-4">
+        <LinearGradient
+          style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
+          className="w-full rounded-xl min-h-[200px] flex-col items-center"
+          colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
+        >
+            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <LinearGradient
+            style={{ height: 4 }}
+            className="w-full"
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={[
+              "rgba(255,255,255,0)",
+              "rgba(255, 255, 255, 0.20)",
+              "rgba(255,255,255,0)",
+            ]}
+          ></LinearGradient>
+          <View className=" flex-col items-center  mt-3">
+            <Text className=" font-interBold text-white text-[30px] leading-[36px]">
+              Simulador de
+            </Text>
+
+            <MaskedView
+              maskElement={
+                <Text className="font-interBold text-[30px]">Audiência IA</Text>
+              }
+            >
+              <LinearGradient
+                colors={["#135BEC", "#93C5FD"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              >
+                <Text className="font-interBold text-[30px] opacity-0">
+                  Audiência IA
+                </Text>
+              </LinearGradient>
+            </MaskedView>
+          </View>
+          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 mx-4">
+            Chegue preparado para o dia real. Treine suas respostas com nosso{" "}
+            <Text className="font-interSemiBold text-white">
+              Juiz virtual{" "}
+            </Text>
+            e ganhe a confiança que você merece.
+          </Text>
+        </LinearGradient>
+      </View>
+    ),
+  },
+];
