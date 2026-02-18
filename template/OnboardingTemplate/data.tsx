@@ -7,7 +7,7 @@ import { PageData } from "react-native-onboarding-swiper";
 
 export const onboardingData: PageData[] = [
   {
-    image: <ConnectionIllustration />,
+    image: <ConnectionIllustration width={343} height={256}/>,
 
     title: <></>,
     subtitle: (
@@ -65,7 +65,7 @@ export const onboardingData: PageData[] = [
     ),
   },
   {
-    image: <ContainerImage />,
+    image: <ContainerImage width={256} height={256} />,
 
     title: <></>,
     subtitle: (
