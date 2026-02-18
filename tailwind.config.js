@@ -13,7 +13,7 @@ module.exports = {
         "DarkTeal" : "#052F5F",
         "White" : "#FFFFFF",
         "Placeholder" : "475569",
-        "Blue Royal" : "#02A6FF"
+        "BlueRoyal" : "#02A6FF"
       },
       fontFamily: {
         inter: "Inter_500Medium",

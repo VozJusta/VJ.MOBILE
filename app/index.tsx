@@ -1,11 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef } from "react";
-import { View, Animated, Easing, Text } from "react-native";
+import { View, Animated, Easing } from "react-native";
 import Logo from "../assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useAppFonts } from "../assets/fonts/font";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function App() {
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
