@@ -1,15 +1,21 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar, Text, View, Image, Dimensions } from "react-native";
+import {
+  StatusBar,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import React,{ useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-
-const { width } = Dimensions.get("window");
+import { OnboardingRef } from "../../interfaces/interfaces";
 
 export default function OnboardingTemplate() {
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   const [index, setIndex] = useState(0);
   const router = useRouter();
 
@@ -24,7 +30,9 @@ export default function OnboardingTemplate() {
           borderRadius: 3,
           marginHorizontal: 4,
           backgroundColor: selected ? "#135BEC" : "#555",
-          boxShadow: selected ? "0px 0px 10px 0px rgba(19, 91, 236, 0.5)" : "none",
+          boxShadow: selected
+            ? "0px 0px 10px 0px rgba(19, 91, 236, 0.5)"
+            : "none",
         }}
       />
     );
@@ -46,32 +54,60 @@ export default function OnboardingTemplate() {
         <Onboarding
           ref={ref}
           showSkip={false}
-          onNext={() => router.replace("/home")}
           containerStyles={{
             paddingTop: 0,
             justifyContent: "flex-start",
+            alignItems: "center",
             backgroundColor: "transparent",
             paddingHorizontal: 16,
-
           }}
           imageContainerStyles={{
-            marginBottom: 40
+            marginBottom: 0,
           }}
           bottomBarColor="transparent"
+          showDone
           bottomBarHighlight={false}
           bottomBarHeight={100}
           controlStatusBar={false}
-
-          NextButtonComponent={() => (
-            <View className="w-14 h-14 bg-[#135BEC] rounded-full items-center mr-[16px] justify-center">
+          DoneButtonComponent={() => (
+            <View
+              style={{
+                shadowColor: "#1E3A8A",
+                shadowOffset: { width: 0, height: 10 },
+                shadowOpacity: 0.3,
+                shadowRadius: 6,
+                elevation: 8,
+              }}
+              className="w-14 h-14 bg-[#135BEC] rounded-full items-center mr-[16px] justify-center"
+            >
               <MaterialIcons name="chevron-right" size={24} color="#fff" />
             </View>
+          )}
+          NextButtonComponent={() => (
+            <TouchableOpacity
+              onPress={() => ref.current?.goNext()}
+              style={{
+                width: 56,
+                height: 56,
+                backgroundColor: "#135BEC",
+                borderRadius: 28,
+                justifyContent: "center",
+                alignItems: "center",
+                shadowColor: "#1E3A8A",
+                shadowOffset: { width: 0, height: 10 },
+                shadowOpacity: 0.3,
+                shadowRadius: 6,
+                elevation: 8,
+                marginRight: 16,
+              }}
+            >
+              <MaterialIcons name="chevron-right" size={24} color="#fff" />
+            </TouchableOpacity>
           )}
           DotComponent={Dot}
           pages={onboardingData}
         />
       </View>
     </LinearGradient>
-
   );
 }

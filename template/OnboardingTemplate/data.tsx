@@ -12,7 +12,7 @@ export const onboardingData: PageData[] = [
 
     title: <></>,
     subtitle: (
-      <View className="w-full mt-[21px]">
+      <View className="w-full mt-[61px]">
         <LinearGradient
           style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
           className="w-full  min-h-[200px] flex-col items-center"
@@ -70,7 +70,7 @@ export const onboardingData: PageData[] = [
 
     title: <></>,
     subtitle: (
-      <View className="w-full mt-[21px]">
+      <View className="w-full mt-[61px]">
         <LinearGradient
           style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
