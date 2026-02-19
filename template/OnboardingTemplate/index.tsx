@@ -12,7 +12,7 @@ import { onboardingData } from "./data";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import { OnboardingRef } from "../../interfaces/interfaces";
+import ButtonUI from "../../ui/Button";
 
 export default function OnboardingTemplate() {
   const ref = useRef<any>(null);
@@ -70,39 +70,10 @@ export default function OnboardingTemplate() {
           bottomBarHeight={100}
           controlStatusBar={false}
           DoneButtonComponent={() => (
-            <View
-              style={{
-                shadowColor: "#1E3A8A",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.3,
-                shadowRadius: 6,
-                elevation: 8,
-              }}
-              className="w-14 h-14 bg-[#135BEC] rounded-full items-center mr-[16px] justify-center"
-            >
-              <MaterialIcons name="chevron-right" size={24} color="#fff" />
-            </View>
+             <ButtonUI goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
           )}
           NextButtonComponent={() => (
-            <TouchableOpacity
-              onPress={() => ref.current?.goNext()}
-              style={{
-                width: 56,
-                height: 56,
-                backgroundColor: "#135BEC",
-                borderRadius: 28,
-                justifyContent: "center",
-                alignItems: "center",
-                shadowColor: "#1E3A8A",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.3,
-                shadowRadius: 6,
-                elevation: 8,
-                marginRight: 16,
-              }}
-            >
-              <MaterialIcons name="chevron-right" size={24} color="#fff" />
-            </TouchableOpacity>
+            <ButtonUI goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
           )}
           DotComponent={Dot}
           pages={onboardingData}

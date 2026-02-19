@@ -1,5 +1,9 @@
 export interface ButtonProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
+    height: string;
+    goNext?: boolean;
+    onPress: () => void
+
 }
 
  export interface OnboardingRef {
