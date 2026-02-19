@@ -21,15 +21,27 @@ export default function ButtonUI({ goNext = false, ...props}: ButtonProps) {
       <MaterialIcons name="chevron-right" size={24} color="#fff" />
     </TouchableOpacity>
   ) : (
+    props.gradient?
     <LinearGradient
       className={`w-full ${props.height}`}
+     style={{
+        shadowColor: "rbga(19,91,236,0.4)",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 0,
+        elevation: 8,
+      }}
       start={{ x: 1, y: 0 }}
       end={{ x: 0, y: 1 }}
       colors={["#135BEC", "#0A44B8"]}
     >
-      <Pressable className={`w-full ${props.height}`}>
+      <Pressable className={`w-full ${props.height} ${props.bg} ${props.active} `}>
         {props.children}
       </Pressable>
     </LinearGradient>
+    :
+     <Pressable className={`w-full ${props.height} ${props.bg} ${props.active}`}>
+        {props.children}
+      </Pressable>
   );
 }

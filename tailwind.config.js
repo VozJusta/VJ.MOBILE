@@ -1,3 +1,5 @@
+import { Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
@@ -23,6 +25,7 @@ module.exports = {
         interRegular: "Inter_400Regular",
         interLight: "Inter_300Light",
         interExtraBold: "Inter_800ExtraBold",
+        montserratBold: "Montserrat_700Bold"
       }
     },
   },

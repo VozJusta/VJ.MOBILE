@@ -1,12 +1,14 @@
 export interface ButtonProps {
-    children?: React.ReactNode;
-    height: string;
-    goNext?: boolean;
-    onPress: () => void
-
+  children?: React.ReactNode;
+  height: string;
+  goNext?: boolean;
+  bg?: string;
+  active?: boolean;
+  onPress: () => void;
+  gradient: boolean;
 }
 
- export interface OnboardingRef {
+export interface OnboardingRef {
   goNext: () => void;
   goToPage: (pageIndex: number, animated?: boolean) => void;
 }

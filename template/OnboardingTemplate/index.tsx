@@ -70,10 +70,10 @@ export default function OnboardingTemplate() {
           bottomBarHeight={100}
           controlStatusBar={false}
           DoneButtonComponent={() => (
-             <ButtonUI goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
+             <ButtonUI gradient={false} goNext height="h-[56px]"  onPress={() => router.replace('/screens/Onboarding/roles')}/>
           )}
           NextButtonComponent={() => (
-            <ButtonUI goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
+            <ButtonUI gradient={false} goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
           )}
           DotComponent={Dot}
           pages={onboardingData}
