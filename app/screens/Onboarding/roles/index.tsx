@@ -6,7 +6,8 @@ import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg"
 export default function SelectionUserRole() {
-  const [active, setActive] = useState(false);
+  const [activeCitizen, setActive] = useState(false);
+  const [activeLawyer, setActiveLawyer] = useState(false);
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
@@ -31,19 +32,19 @@ export default function SelectionUserRole() {
           hover
           size="w-full h-[103px]"
           gradient={false}
-          active={active}
+          active={activeCitizen}
           bg="bg-white"
-          onPress={() => setActive(!active)}
+          onPress={() => setActive(!activeCitizen)}
           children={
             <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
-              <View className="rounded-[12px] bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.12)] items-center justify-center py-[9px] px-[12px]">
-                <MaterialIcons name="person" color={"white"} size={30} />
+              <View className={`rounded-[12px] ${ activeCitizen? "bg-[rgba(5,47,95,0.08)]": "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen? "border-BrightBlue": "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}>
+                <MaterialIcons name="person" color={`${activeCitizen? "#052F5F" : "white"}`} size={30} />
               </View>
               <View className="gap-[2px] flex-col">
-                <Text className="font-interSemiBold text-[18px] text-white">
+                <Text className={`font-interSemiBold text-[18px] ${activeCitizen? "text-BrightBlue" : "text-white"}`}>
                   Sou Cidadão
                 </Text>
-                <Text className="font-interRegular text-[12px] max-w-[255px] text-white/50">
+                <Text className={`font-interRegular text-[12px] max-w-[255px] ${activeCitizen? "text-BrightBlue" : " text-white/50"}`}>
                   Busco orientação e empoderamento jurídico simples.
                 </Text>
               </View>
@@ -54,9 +55,9 @@ export default function SelectionUserRole() {
           hover
           size="w-full h-[103px]"
           gradient={false}
-          active={active}
+          active={activeLawyer}
           bg="bg-white"
-          onPress={() => setActive(!active)}
+          onPress={() => setActive(!activeLawyer)}
           children={
             <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
               <View className="rounded-[12px] bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.12)] items-center justify-center py-[9px] px-[12px]">
