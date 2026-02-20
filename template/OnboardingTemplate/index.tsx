@@ -46,9 +46,15 @@ export default function OnboardingTemplate() {
       colors={["#000000", "#052F5F"]}
     >
       <View className="w-full items-end mb-16">
-        <Text className="text-white text-[16px] font-inter pr-[16px]">
-          Pular
-        </Text>
+        <ButtonUI
+          onPress={() => router.replace("/screens/Onboarding/roles")}
+          gradient={false}
+          children={
+            <Text className="text-white text-[16px] font-inter pr-[16px]">
+              Pular
+            </Text>
+          }
+        />
       </View>
       <View className="flex-1  ">
         <Onboarding
@@ -70,10 +76,18 @@ export default function OnboardingTemplate() {
           bottomBarHeight={100}
           controlStatusBar={false}
           DoneButtonComponent={() => (
-             <ButtonUI gradient={false} goNext height="h-[56px]"  onPress={() => router.replace('/screens/Onboarding/roles')}/>
+            <ButtonUI
+              gradient={false}
+              goNext
+              onPress={() => router.replace("/screens/Onboarding/roles")}
+            />
           )}
           NextButtonComponent={() => (
-            <ButtonUI gradient={false} goNext height="h-[56px]"  onPress={() => ref.current?.goNext()}/>
+            <ButtonUI
+              gradient={false}
+              goNext
+              onPress={() => ref.current?.goNext()}
+            />
           )}
           DotComponent={Dot}
           pages={onboardingData}

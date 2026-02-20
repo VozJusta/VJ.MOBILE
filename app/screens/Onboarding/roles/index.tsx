@@ -1,8 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import Logo from "../../../../assets/svg/icons/logo.svg";
+import ButtonUI from "../../../../ui/Button";
+import React, { useState } from "react";
 
 export default function SelectionUserRole() {
+  const [active, setActive] = useState(false)
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
@@ -22,6 +25,10 @@ export default function SelectionUserRole() {
       <Text className="text-[14px] font-inter text-white mt-[8px]">
         Para começar, quem você é?
       </Text>
+      <View className="w-full px-[16px] items-center mt-[36px]">
+        <ButtonUI hover size="w-full h-[103px]" gradient={false} active={active} bg="bg-white" onPress={() => setActive(!active)}/>
+
+      </View>
     </LinearGradient>
   );
 }

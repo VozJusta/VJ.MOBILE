@@ -1,11 +1,12 @@
 export interface ButtonProps {
   children?: React.ReactNode;
-  height: string;
   goNext?: boolean;
   bg?: string;
   active?: boolean;
   onPress: () => void;
   gradient: boolean;
+  size?: string;
+  hover:boolean;
 }
 
 export interface OnboardingRef {

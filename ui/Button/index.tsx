@@ -4,10 +4,10 @@ import { ButtonProps } from "../../interfaces/interfaces";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 
-export default function ButtonUI({ goNext = false, ...props}: ButtonProps) {
+export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
   return goNext ? (
     <TouchableOpacity
-    className={`w-[56px] bg-BlueAzure rounded-full justify-center items-center ${props.height}`}
+      className={`w-[56px] bg-BlueAzure rounded-full justify-center items-center h-[56px]`}
       onPress={props.onPress}
       style={{
         shadowColor: "#1E3A8A",
@@ -20,11 +20,10 @@ export default function ButtonUI({ goNext = false, ...props}: ButtonProps) {
     >
       <MaterialIcons name="chevron-right" size={24} color="#fff" />
     </TouchableOpacity>
-  ) : (
-    props.gradient?
+  ) : props.gradient ? (
     <LinearGradient
-      className={`w-full ${props.height}`}
-     style={{
+      className={`w-full h-[56px]`}
+      style={{
         shadowColor: "rbga(19,91,236,0.4)",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
@@ -35,13 +34,19 @@ export default function ButtonUI({ goNext = false, ...props}: ButtonProps) {
       end={{ x: 0, y: 1 }}
       colors={["#135BEC", "#0A44B8"]}
     >
-      <Pressable className={`w-full ${props.height} ${props.bg} ${props.active} `}>
+      <Pressable
+        onPress={props.onPress}
+        className={`w-full h-[56px] ${props.bg} ${props.active} `}
+      >
         {props.children}
       </Pressable>
     </LinearGradient>
-    :
-     <Pressable className={`w-full ${props.height} ${props.bg} ${props.active}`}>
-        {props.children}
-      </Pressable>
+  ) : (
+    <Pressable
+      onPress={props.onPress}
+      className={` ${props.size} ${props.hover ? ` ${props.active ? "" : "border border-[rgba(255,255,255,0.12)]"} ${props.active ? props.bg : "bg-[rgba(255,255,255,0.06)]"}` : ""} `}
+    >
+      {props.children}
+    </Pressable>
   );
 }
