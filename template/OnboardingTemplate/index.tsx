@@ -1,15 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
 import {
-  StatusBar,
   Text,
   View,
-  Image,
-  Dimensions,
-  TouchableOpacity,
 } from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import ButtonUI from "../../ui/Button";
@@ -54,6 +49,7 @@ export default function OnboardingTemplate() {
               Pular
             </Text>
           }
+          hover={false}
         />
       </View>
       <View className="flex-1  ">
@@ -80,6 +76,7 @@ export default function OnboardingTemplate() {
               gradient={false}
               goNext
               onPress={() => router.replace("/screens/Onboarding/roles")}
+              hover={false}
             />
           )}
           NextButtonComponent={() => (
@@ -87,6 +84,7 @@ export default function OnboardingTemplate() {
               gradient={false}
               goNext
               onPress={() => ref.current?.goNext()}
+              hover={false}
             />
           )}
           DotComponent={Dot}
