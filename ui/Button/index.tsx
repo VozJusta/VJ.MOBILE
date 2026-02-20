@@ -24,7 +24,7 @@ export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
     <LinearGradient
       className={`w-full h-[56px]`}
       style={{
-        shadowColor: "rbga(19,91,236,0.4)",
+        shadowColor: "rgba(19,91,236,0.4)",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.15,
         shadowRadius: 0,
