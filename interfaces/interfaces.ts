@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 export interface ButtonProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   goNext?: boolean;
   bg?: string;
   active?: boolean;
