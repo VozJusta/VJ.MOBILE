@@ -114,8 +114,12 @@ export default function SelectionUserRole() {
 
             </View>
           }
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
+          onPress={() => {
+            // Only proceed if a role has been selected.
+            if (!activeCitizen && !activeLawyer) {
+              return;
+            }
+            // TODO: Implement navigation or submit logic based on the selected role.
           }}
           hover={false}
         />
