@@ -4,7 +4,6 @@ import { View, Animated, Easing } from "react-native";
 import Logo from "../assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 export default function App() {
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
