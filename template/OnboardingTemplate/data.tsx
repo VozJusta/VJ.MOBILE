@@ -8,7 +8,7 @@ import { PageData } from "react-native-onboarding-swiper";
 
 export const onboardingData: PageData[] = [
   {
-    image: <ConnectionIllustration width={343} height={256}/>,
+    image: <ConnectionIllustration width={343} height={256} />,
 
     title: <></>,
     subtitle: (
@@ -18,7 +18,7 @@ export const onboardingData: PageData[] = [
           className="w-full  min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
@@ -76,7 +76,7 @@ export const onboardingData: PageData[] = [
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
@@ -120,7 +120,7 @@ export const onboardingData: PageData[] = [
     ),
   },
   {
-    image: <Hammer width={343} height={320}/>,
+    image: <Hammer width={343} height={320} />,
 
     title: <></>,
     subtitle: (
@@ -130,7 +130,7 @@ export const onboardingData: PageData[] = [
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
