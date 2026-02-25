@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../../assets/svg/icons/logo.svg";
 import ButtonUI from "../../../../ui/Button";
 import React, { useState } from "react";
@@ -16,6 +17,7 @@ export default function SelectionUserRole() {
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+      <SafeAreaView style={{ flex: 1 }}>
       <View className=" items-center">
         <Logo width={70} height={51} />
         <Text className=" text-[36px] text-white font-montserratBold">
@@ -115,15 +117,14 @@ export default function SelectionUserRole() {
             </View>
           }
           onPress={() => {
-            // Only proceed if a role has been selected.
             if (!activeCitizen && !activeLawyer) {
               return;
             }
-            // TODO: Implement navigation or submit logic based on the selected role.
           }}
           hover={false}
         />
       </View>
+      </SafeAreaView>
     </LinearGradient>
   );
 }

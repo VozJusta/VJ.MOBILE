@@ -8,17 +8,26 @@ import { PageData } from "react-native-onboarding-swiper";
 
 export const onboardingData: PageData[] = [
   {
-    image: <ConnectionIllustration width={343} height={256}/>,
+    image: <ConnectionIllustration width={343} height={256} />,
 
     title: <></>,
     subtitle: (
       <View className="w-full mt-[61px]">
         <LinearGradient
-          style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
-          className="w-full  min-h-[200px] flex-col items-center"
+          style={{
+            borderRadius: 12,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.37,
+            shadowRadius: 32,
+            elevation: 8,
+             alignItems: "center",
+              padding: 20
+          }}
+          className="w-full  min-h-52 flex flex-col items-center justify-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
@@ -30,14 +39,14 @@ export const onboardingData: PageData[] = [
               "rgba(255,255,255,0)",
             ]}
           ></LinearGradient>
-          <View className=" flex-col items-center  mt-3">
-            <Text className=" font-interBold text-white text-[30px] leading-[36px]">
+          <View className=" flex-col items-center mt-3">
+            <Text className=" font-interBold text-white text-3xl leading-[36px]">
               Conexão
             </Text>
 
             <MaskedView
               maskElement={
-                <Text className="font-interBold text-[30px]">
+                <Text className="font-interBold text-3xl">
                   Sem Barreiras
                 </Text>
               }
@@ -47,7 +56,7 @@ export const onboardingData: PageData[] = [
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text className="font-interBold text-[30px] opacity-0">
+                <Text className="font-interBold text-3xl opacity-0">
                   Sem Barreiras
                 </Text>
               </LinearGradient>
@@ -76,7 +85,7 @@ export const onboardingData: PageData[] = [
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
@@ -120,7 +129,7 @@ export const onboardingData: PageData[] = [
     ),
   },
   {
-    image: <Hammer width={343} height={320}/>,
+    image: <Hammer width={343} height={320} />,
 
     title: <></>,
     subtitle: (
@@ -130,7 +139,7 @@ export const onboardingData: PageData[] = [
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
-            <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
+          <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
             style={{ height: 4 }}
             className="w-full"
