@@ -32,9 +32,9 @@ export const AppInput: React.FC<AppInputProps> = ({ label, type = "name", value,
 
   return (
     <View className='w-90% justify-center'>
-      <MaterialIcons name={type === "email" ? "email" : type === "phone" ? "smartphone" : type === "cpf" ? "badge" : "person"} size={20} color="#475569" className='absolute left-3 top-[31px] z-10' />
-      <Text className='text-[12px] mb-1.5 font-interBold text-white'>{label}</Text>
-      <TextInput className='bg-[rgba(255,255,255,0.03)] w-full h-55 text-[14px] text-white border-[1px] pl-12 border-[rgba(255,255,255,0.12)] rounded-[12px]' placeholderTextColor="#475569" value={value} onChangeText={handleChange} keyboardType={getKeyboardType()} secureTextEntry={isPassword} {...rest} />
+      <MaterialIcons name={type === "email" ? "email" : type === "phone" ? "smartphone" : type === "cpf" ? "badge" : type === "password" ? "lock-outline" : "person"} size={28} color="#475569" className='absolute left-3 top-[34px]' />
+      <Text className='uppercase text-[10px] mb-1.5 font-interBold text-white'>{label}</Text>
+      <TextInput className='bg-[rgba(255,255,255,0.03)] w-full h-55 text-[14px] text-white border-[1px] pl-14 py-5 border-[rgba(255,255,255,0.12)] rounded-[12px]' placeholderTextColor="#475569" value={value} onChangeText={handleChange} keyboardType={getKeyboardType()} secureTextEntry={isPassword} {...rest} />
 
     </View>
   )

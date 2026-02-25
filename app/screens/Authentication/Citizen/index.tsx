@@ -58,7 +58,7 @@ export default function Citizen() {
 
                         <AppInput
                             label="CPF"
-                            placeholder="000-000-000-00"
+                            placeholder="000.000.000-00"
                             type="cpf"
                             value={cpf}
                             onChangeText={setCpf} />
@@ -78,7 +78,7 @@ export default function Citizen() {
                             onChangeText={setEmail} />
 
                         <AppInput
-                            label="Senha"
+                            label="Senha de Acesso"
                             placeholder="••••••••"
                             type="password"
                             value={password}
