@@ -9,7 +9,7 @@ export default function BackButton() {
     return (
         <TouchableOpacity
             onPress={() => navigation.goBack()}
-            className="bg-white/5 px-9 py-5 ">
+            className="bg-white/5 rounded-full p-3 border-[1px] border-[rgba(255,255,255,0.12)]">
             <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
     )

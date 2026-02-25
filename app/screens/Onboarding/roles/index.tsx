@@ -116,15 +116,15 @@ export default function SelectionUserRole() {
                 className={`font-interRegular text-[12px] max-w-[255px] ${isLawyer ? "text-BrightBlue" : "text-white/50"
                   }`}
               >
+                Quero gerenciar casos e me conectar com clientes.
               </Text>
             </View>
           </View>
         </ButtonUI>
       </View>
 
-      {/* BOTÃO COMEÇAR */}
       <View className="w-full px-4 mt-[72px]">
-        <ButtonUI
+        <ButtonUI 
           gradient
           hover={false}
           onPress={() => {
@@ -138,7 +138,7 @@ export default function SelectionUserRole() {
           }}
         >
           <View className="flex-1 flex-row items-center justify-center gap-[10px]">
-            <Text className="text-white font-interBold text-[14px]">
+            <Text className="text-white font-interBold text-[14px] ">
               Começar agora
             </Text>
             <MaterialIcons
