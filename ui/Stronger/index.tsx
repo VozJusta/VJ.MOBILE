@@ -1,6 +1,7 @@
+
+
 export type PasswordStrength = {
   score: number;
-  label: "Muito Fraca" | "Fraca" | "Aceitavel" | "Forte";
   color: string;
 };
 
@@ -9,25 +10,22 @@ export default function passwordValidate(password: string): PasswordStrength {
 
   if (password.length >= 8) score++;
   if (/[A-Z]/.test(password)) score++;
-  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
   if (/\d/.test(password)) score++;
   if (/[@$!%*?&]/.test(password)) score++;
-  let label: "Muito Fraca" | "Fraca" | "Aceitavel" | "Forte";
   let color: string;
 
-  if (score === 0) {
-    label = "Muito Fraca";
+  if (score === 1) {
     color = "#EF4444";
-  } else if (score === 1) {
-    label = "Fraca";
-    color = "#F97316";
   } else if (score === 2) {
-    label = "Aceitavel";
+    color = "#F97316";
+  } else if (score === 3) {
     color = "#EAB308";
+  } else if (score === 4) {
+    color = "#67f55d";
   } else {
-    label = "Forte";
-    color = "#22C55E";
+    color = "#018d06";
   }
 
-  return { score, label, color };
+  return { score, color };
 }

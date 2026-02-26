@@ -5,8 +5,9 @@ import Logo from "../../../../assets/svg/icons/logo.svg";
 import { AppInput } from "../../../../ui/input";
 import { useState } from "react";
 import { ScrollView } from "react-native";
-import { useRouter } from "expo-router";
 import passwordValidate from "../../../../ui/Stronger";
+import { useRouter } from "expo-router";
+import CheckListFunction from "../../../../ui/CheckListFunction";
 
 export default function Citizen() {
   const [name, setName] = useState("");
@@ -15,6 +16,7 @@ export default function Citizen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const strength = passwordValidate(password);
+
 
   return (
     <LinearGradient
@@ -32,8 +34,8 @@ export default function Citizen() {
           <Logo width={40} height={29} />
         </View>
 
-        <View className="self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-6">
-          <View className="flex-col gap-2 mt-12">
+        <View className="self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11">
+          <View className="flex-col gap-2">
             <Text className="text-white text-[24px] font-interBold ">
               Cadastro de Cidadão
             </Text>
@@ -76,13 +78,31 @@ export default function Citizen() {
               onChangeText={setEmail}
             />
 
-            <AppInput
-              label="Senha de Acesso"
-              placeholder="••••••••"
-              type="password"
-              value={password}
-              onChangeText={setPassword}
-            />
+            <View>
+              <AppInput
+                label="Senha"
+                placeholder="Digite sua senha"
+                type="password"
+                value={password}
+                onChangeText={setPassword}
+              />
+              <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] mt-1.5">
+                <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">Força da Segurança</Text>
+                <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
+                  <View className="h-full rounded-full" style={{ width: `${(strength.score / 5) * 100}%`, backgroundColor: strength.color }} />
+                </View>
+                <View className="flex-row gap-[90px] mt-[8px]">
+                  <View className="flex-col">
+                    <CheckListFunction valid={password.length >= 8} label="8+ Caracteres" />
+                    <CheckListFunction valid={/[@$!%*?&]/.test(password)} label="Símbolo" />
+                  </View>
+                  <View className="flex-col">
+                    <CheckListFunction valid={/[A-Z]/.test(password)} label="Maiúscula" />
+                    <CheckListFunction valid={/[0-9]/.test(password)} label="Número" />
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </ScrollView>
