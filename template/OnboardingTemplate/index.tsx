@@ -80,6 +80,7 @@ export default function OnboardingTemplate() {
               goNext
               onPress={() => router.replace("/screens/Onboarding/roles")}
               hover={false}
+              size="w-[56px] h-[56px]"
             />
           )}
           NextButtonComponent={() => (
@@ -88,6 +89,7 @@ export default function OnboardingTemplate() {
               goNext
               onPress={() => ref.current?.goNext()}
               hover={false}
+              size="w-[56px] h-[56px]"
             />
           )}
           DotComponent={Dot}
