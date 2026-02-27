@@ -6,7 +6,6 @@ import Logo from "../../../../assets/svg/icons/logo.svg";
 import { Text } from "react-native";
 import { AppInput } from "../../../../ui/input";
 import { formatOABNumber, OAB } from "../../../../app/utils/oabValidate";
-import UfSelect, { UF } from "../../../../ui/ufSelect/ufSelect";
 
 export default function Lawyer() {
   const [name, setName] = useState("");
@@ -15,7 +14,6 @@ export default function Lawyer() {
     uf: "SP",
     number: "",
   });
-  const [uf, setUf] = useState<UF | "">("");
 
   return (
     <LinearGradient
@@ -65,6 +63,7 @@ export default function Lawyer() {
             <View className="flex-row justify-between items-center gap-4">
               <AppInput
                 label="000.000"
+                type="cpf"
                 value={oab.number}
                 keyboardType="numeric"
                 maxLength={7}
@@ -72,17 +71,6 @@ export default function Lawyer() {
                   setOab((prev) => ({
                     ...prev,
                     number: formatOABNumber(text),
-                  }))
-                }
-              />
-
-              <UfSelect
-              label="Estado"
-                value={oab.uf}
-                onChange={(uf) =>
-                  setOab((prev) => ({
-                    ...prev,
-                    uf,
                   }))
                 }
               />
