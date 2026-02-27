@@ -14,3 +14,4 @@ export const formatPhone = (value: string) => {
     .replace(/(\d{5})(\d)/, "$1-$2")
     .slice(0, 15);
 };  
+

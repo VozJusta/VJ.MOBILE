@@ -20,4 +20,5 @@ export interface OnboardingRef {
 export interface AppInputProps extends TextInputProps {
   label: string;
   type?: "name" | "cpf" | "phone" | "email" | "password";
+  rightIcon?: ReactNode;
 } 

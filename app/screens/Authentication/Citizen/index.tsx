@@ -1,11 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import BackButton from "../../../../ui/BackButton";
 import Logo from "../../../../assets/svg/icons/logo.svg";
 import { AppInput } from "../../../../ui/input";
 import { useState } from "react";
 import { ScrollView } from "react-native";
-import passwordValidate from "../../../../ui/Stronger";
+import passwordValidate from "../../../../app/utils/passwordValidate";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CheckListFunction from "../../../../ui/CheckListFunction";
 
@@ -15,6 +16,7 @@ export default function Citizen() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const strength = passwordValidate(password);
 
 
@@ -84,7 +86,15 @@ export default function Citizen() {
                 placeholder="Digite sua senha"
                 type="password"
                 value={password}
+                secureTextEntry={!showPassword}
                 onChangeText={setPassword}
+                rightIcon={
+                  <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                    <MaterialIcons name={showPassword ? "visibility-off" : "visibility"}
+                      size={26}
+                      color="#fff" />
+                  </TouchableOpacity>
+                }
               />
               <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] mt-1.5">
                 <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">Força da Segurança</Text>
