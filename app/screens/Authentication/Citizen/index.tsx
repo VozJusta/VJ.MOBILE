@@ -44,7 +44,7 @@ export default function Citizen() {
               Cadastro de Cidadão
             </Text>
 
-            <Text className="text-[#94A3B8] text-[14px] font-interRegular">
+            <Text className="text-[#94A3B8] text-[14px] font-interRegular leading-7">
               Faça seu cadastro para transformar sua indignação em mudança.
             </Text>
           </View>
