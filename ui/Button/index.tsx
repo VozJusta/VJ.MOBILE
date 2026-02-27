@@ -22,7 +22,7 @@ export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
     </TouchableOpacity>
   ) : props.gradient ? (
     <LinearGradient
-      className={`w-full h-[56px]`}
+      className={`w-full h-[56px] overflow-hidden rounded-[16px]`}
       style={{
         shadowColor: "rgba(19,91,236,0.4)",
         shadowOffset: { width: 0, height: 4 },

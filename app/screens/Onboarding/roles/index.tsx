@@ -124,7 +124,7 @@ export default function SelectionUserRole() {
       </View>
 
       <View className="w-full px-4 mt-[72px]">
-        <ButtonUI 
+        <ButtonUI
           gradient
           hover={false}
           onPress={() => {
@@ -138,7 +138,7 @@ export default function SelectionUserRole() {
           }}
         >
           <View className="flex-1 flex-row items-center justify-center gap-[10px]">
-            <Text className="text-white font-interBold text-[14px] ">
+            <Text className="text-white font-interBold text-[14px]" >
               Começar agora
             </Text>
             <MaterialIcons

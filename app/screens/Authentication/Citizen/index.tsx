@@ -9,6 +9,7 @@ import passwordValidate from "../../../../app/utils/passwordValidate";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CheckListFunction from "../../../../ui/CheckListFunction";
+import { Checkbox } from "../../../../ui/checkbox";
 
 export default function Citizen() {
   const [name, setName] = useState("");
@@ -18,11 +19,12 @@ export default function Citizen() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const strength = passwordValidate(password);
-
-
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const router = useRouter();
+  
   return (
     <LinearGradient
-      className="flex-1 pt-[58px]"
+      className="flex-1 pt-[58px] overflow-hidden"
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
@@ -112,6 +114,40 @@ export default function Citizen() {
                   </View>
                 </View>
               </View>
+              <Checkbox
+                value={acceptedTerms}
+                onChange={setAcceptedTerms}
+              >
+                <Text className="text-[#fff]/40 text-sm font-inter leading-5">
+                  Aceito os{" "}
+                  <Text
+                    className="text-blue-500 underline font-semibold"
+                    onPress={() => router.push("/terms")}
+                  >
+                    Termos de Uso
+                  </Text>{" "}
+                  e a{" "}
+                  <Text
+                    className="text-blue-500 underline font-semibold"
+                    onPress={() => router.push("/privacy")}
+                  >
+                    Política de Privacidade
+                  </Text>
+                </Text>
+              </Checkbox>
+              <LinearGradient colors={["#135BEC", "#0A44B8"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                className="rounded-4 mt-6"
+                style={{
+                  paddingVertical: 18,
+                  alignItems: "center",
+                  borderRadius: 16,
+                }}>
+                <TouchableOpacity className="w-full items-center">
+                  <Text className="text-white font-interBold">Cadastrar</Text>
+                </TouchableOpacity>
+              </LinearGradient>
             </View>
           </View>
         </View>
