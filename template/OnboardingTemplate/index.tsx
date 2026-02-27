@@ -8,6 +8,7 @@ import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import ButtonUI from "../../ui/Button";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnboardingTemplate() {
   const ref = useRef<any>(null);
@@ -35,11 +36,13 @@ export default function OnboardingTemplate() {
 
   return (
     <LinearGradient
+    style={{ flex: 1 }}
       className="flex-1 pt-[58px]"
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+      <SafeAreaView style={{ flex: 1 }}>
       <View className="w-full items-end mb-16">
         <ButtonUI
           onPress={() => router.replace("/screens/Onboarding/roles")}
@@ -52,7 +55,7 @@ export default function OnboardingTemplate() {
           hover={false}
         />
       </View>
-      <View className="flex-1  ">
+      <View className="flex-1">
         <Onboarding
           ref={ref}
           showSkip={false}
@@ -91,6 +94,8 @@ export default function OnboardingTemplate() {
           pages={onboardingData}
         />
       </View>
+      </SafeAreaView>
     </LinearGradient>
+    
   );
 }
