@@ -21,7 +21,7 @@ export default function Citizen() {
   const strength = passwordValidate(password);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const router = useRouter();
-  
+
   return (
     <LinearGradient
       className="flex-1 pt-[58px] overflow-hidden"
@@ -150,6 +150,18 @@ export default function Citizen() {
               </LinearGradient>
             </View>
           </View>
+        </View>
+        <View className="items-center mt-8">
+          <Text className="text-[#fff]/40 text-sm font-inter leading-5">
+            Já possui registro? {" "}
+            <Text
+              className="text-blue-500 underline font-semibold"
+              onPress={() => router.push("/login")}
+            >
+              Fazer Login
+            </Text>{" "}
+                
+          </Text>
         </View>
       </ScrollView>
     </LinearGradient>
