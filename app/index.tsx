@@ -39,11 +39,12 @@ export default function App() {
     <>
       <StatusBar hidden />
       <LinearGradient
-        className="flex-1"
+        style={{ flex: 1 }}
         start={{ x: 0, y: 0 }}
         end={{ x: 0.8, y: 1 }}
         colors={["#000000", "#052F5F"]}
       >
+        <SafeAreaView style={{ flex: 1 }}>
         <Animated.View
           style={{ transform: [{ scale }] }}
           className="items-center justify-center"
@@ -52,6 +53,7 @@ export default function App() {
             <Logo width={70} height={51} />
           </View>
         </Animated.View>
+        </SafeAreaView>
       </LinearGradient>
     </>
   );

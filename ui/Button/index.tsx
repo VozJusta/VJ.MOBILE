@@ -24,19 +24,20 @@ export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
     <LinearGradient
       className={`w-full h-[56px] overflow-hidden rounded-[16px]`}
       style={{
-        shadowColor: "rgba(19,91,236,0.4)",
+        borderRadius:16,
+        shadowColor: "#135BEC",
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 0,
+        shadowOpacity: 0.4,
+        shadowRadius: 15,
         elevation: 8,
       }}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 1 }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
       colors={["#135BEC", "#0A44B8"]}
     >
       <Pressable
         onPress={props.onPress}
-        className={`w-full h-[56px] ${props.bg} ${props.active} `}
+        className={`w-full h-[56px]`}
       >
         {props.children}
       </Pressable>
@@ -44,7 +45,7 @@ export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
   ) : (
     <Pressable
       onPress={props.onPress}
-      className={` rounded-[20px] ${props.size} ${props.hover ? ` ${props.active ? "" : "border border-[rgba(255,255,255,0.12)]"} ${props.active ? props.bg : "bg-[rgba(255,255,255,0.06)]"}` : ""} `}
+      className={` rounded-[20px] ${props.size || ""} ${props.hover ? ` ${props.active ? "" : "border border-[rgba(255,255,255,0.12)]"} ${props.active ? props.bg : "bg-[rgba(255,255,255,0.06)]"}` : ""} `}
     >
       {props.children}
     </Pressable>
