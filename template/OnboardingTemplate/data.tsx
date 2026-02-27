@@ -1,7 +1,7 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import ConnectionIllustration from "../../assets/svg/ConnectionIllustration.svg";
-import Hammer from "../../assets/svg/Rammer.svg"
+import Hammer from "../../assets/svg/Rammer.svg";
 import ContainerImage from "../../assets/svg/Container.svg";
 import { Text, View } from "react-native";
 import { PageData } from "react-native-onboarding-swiper";
@@ -16,15 +16,9 @@ export const onboardingData: PageData[] = [
         <LinearGradient
           style={{
             borderRadius: 12,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.37,
-            shadowRadius: 32,
-            elevation: 8,
-             alignItems: "center",
-              padding: 20
+            boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
           }}
-          className="w-full  min-h-52 flex flex-col items-center justify-center"
+          className="w-full  min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
@@ -39,14 +33,14 @@ export const onboardingData: PageData[] = [
               "rgba(255,255,255,0)",
             ]}
           ></LinearGradient>
-          <View className=" flex-col items-center mt-3">
-            <Text className=" font-interBold text-white text-3xl leading-[36px]">
+          <View className=" flex-col items-center  mt-3">
+            <Text className=" font-interBold text-white text-[30px] leading-[36px]">
               Conexão
             </Text>
 
             <MaskedView
               maskElement={
-                <Text className="font-interBold text-3xl">
+                <Text className="font-interBold text-[30px]">
                   Sem Barreiras
                 </Text>
               }
@@ -56,13 +50,13 @@ export const onboardingData: PageData[] = [
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text className="font-interBold text-3xl opacity-0">
+                <Text className="font-interBold text-[30px] opacity-0">
                   Sem Barreiras
                 </Text>
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-[16px] text-center pt-4 w-[309px]">
+          <Text className="font-interLight text-[#D1D5DB] text-[16px] text-center pt-4 px-4">
             Unimos cidadãos e advogados especialistas com transparência e
             agilidade direta via{" "}
             <Text className="font-interSemiBold text-EconGreen900">
@@ -81,7 +75,10 @@ export const onboardingData: PageData[] = [
     subtitle: (
       <View className="w-full mt-[61px]">
         <LinearGradient
-          style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
+          style={{
+            borderRadius: 12,
+            boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+          }}
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
@@ -104,7 +101,9 @@ export const onboardingData: PageData[] = [
 
             <MaskedView
               maskElement={
-                <Text className="font-interBold text-[30px]">Nossa Tradução</Text>
+                <Text className="font-interBold text-[30px]">
+                  Nossa Tradução
+                </Text>
               }
             >
               <LinearGradient
@@ -118,8 +117,9 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 mx-4">
-            Conte o que aconteceu em suas palavras. Nossa IA remove o juridiquês e extrai a{" "}
+          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
+            Conte o que aconteceu em suas palavras. Nossa IA remove o juridiquês
+            e extrai a{" "}
             <Text className="font-interSemiBold text-white">
               essência do seu direito.
             </Text>
@@ -135,7 +135,10 @@ export const onboardingData: PageData[] = [
     subtitle: (
       <View className="w-full">
         <LinearGradient
-          style={{ borderRadius: 12, boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)" }}
+          style={{
+            borderRadius: 12,
+            boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+          }}
           className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
@@ -172,11 +175,9 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 mx-4">
+          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
             Chegue preparado para o dia real. Treine suas respostas com nosso{" "}
-            <Text className="font-interSemiBold text-white">
-              Juiz virtual{" "}
-            </Text>
+            <Text className="font-interSemiBold text-white">Juiz virtual </Text>
             e ganhe a confiança que você merece.
           </Text>
         </LinearGradient>

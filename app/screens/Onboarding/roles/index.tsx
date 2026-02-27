@@ -17,8 +17,8 @@ export default function SelectionUserRole() {
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
-      <SafeAreaView style={{ flex: 1 }}>
-      <View className=" items-center">
+      <SafeAreaView className="flex-col items-center" style={{ flex: 1 }}>
+      <View className="flex-col items-center">
         <Logo width={70} height={51} />
         <Text className=" text-[36px] text-white font-montserratBold">
           VozJusta
@@ -104,11 +104,11 @@ export default function SelectionUserRole() {
           }
         />
       </View>
-      <View className="w-full px-4 mt-[72px]">
+      <View className="w-full px-4  mt-[72px]">
         <ButtonUI
           gradient
           children={
-            <View className="flex-1 flex-row items-center justify-center gap-[10px]">
+            <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
               <Text className="text-white font-interBold text-[14px]">
                 Começar agora
               </Text>
