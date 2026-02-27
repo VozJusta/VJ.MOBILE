@@ -12,6 +12,12 @@ export interface ButtonProps {
   hover: boolean;
 }
 
+export interface InputProps {
+  label: string;
+  placeholder: string;
+  icon
+}
+
 export interface OnboardingRef {
   goNext: () => void;
   goToPage: (pageIndex: number, animated?: boolean) => void;
