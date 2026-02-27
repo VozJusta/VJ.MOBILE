@@ -4,12 +4,12 @@ import { ButtonProps } from "../../interfaces/interfaces";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 
-export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
-  return goNext ? (
+export default function ButtonUI({ goNext = false,goBack = false, ...props }: ButtonProps) {
+  return goNext || goBack ? (
     <TouchableOpacity
-      className={`w-[56px] bg-BlueAzure rounded-full justify-center items-center h-[56px]`}
+      className={` ${props.size} ${goNext? "bg-BlueAzure" : "bg-white/5"} ${goBack && "border border-solid border-white/10"} rounded-full justify-center items-center `}
       onPress={props.onPress}
-      style={{
+      style={goNext&&{
         shadowColor: "#1E3A8A",
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
@@ -18,7 +18,7 @@ export default function ButtonUI({ goNext = false, ...props }: ButtonProps) {
         marginRight: 16,
       }}
     >
-      <MaterialIcons name="chevron-right" size={24} color="#fff" />
+     { goNext ? <MaterialIcons name="chevron-right" size={24} color="#fff" /> : <MaterialIcons name="keyboard-arrow-left" size={24} color="#fff" /> }
     </TouchableOpacity>
   ) : props.gradient ? (
     <LinearGradient

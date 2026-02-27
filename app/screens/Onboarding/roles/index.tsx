@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "../../../../assets/svg/icons/active-account-balace.svg";
+import { router } from "expo-router";
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
@@ -116,11 +117,7 @@ export default function SelectionUserRole() {
 
             </View>
           }
-          onPress={() => {
-            if (!activeCitizen && !activeLawyer) {
-              return;
-            }
-          }}
+          onPress={() => router.replace("/screens/auth/ForgotPassword")}
           hover={false}
         />
       </View>
