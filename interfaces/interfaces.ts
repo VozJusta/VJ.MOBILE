@@ -19,6 +19,13 @@ export interface OnboardingRef {
 
 export interface AppInputProps extends TextInputProps {
   label: string;
-  type?: "name" | "cpf" | "phone" | "email" | "password";
+  type?: "name" | "cpf" | "phone" | "email" | "password" | "OAB";
   rightIcon?: ReactNode;
 } 
+
+export interface UfSelectProps {
+  label: String;
+  value: String;
+  onValueChange: (value: String) => void;
+}
+

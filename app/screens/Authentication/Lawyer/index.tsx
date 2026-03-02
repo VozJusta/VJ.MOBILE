@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import CheckListFunction from "../../../../ui/CheckListFunction";
 import { Checkbox } from "../../../../ui/checkbox";
 import passwordValidate from "../../../../app/utils/passwordValidate";
+import UfSelect from "../../../../ui/ufSelect/ufSelect";
 
 export default function Lawyer() {
   const [name, setName] = useState("");
@@ -74,8 +75,9 @@ export default function Lawyer() {
 
             <View className="flex-row justify-between items-center gap-4">
               <AppInput
-                label="000.000"
-                type="cpf"
+                label="Numero OAB"
+                type="OAB"
+                placeholder="000.000"
                 value={oab.number}
                 keyboardType="numeric"
                 maxLength={7}
@@ -83,6 +85,16 @@ export default function Lawyer() {
                   setOab((prev) => ({
                     ...prev,
                     number: formatOABNumber(text),
+                  }))
+                }
+              />
+              <UfSelect
+                label="Estado"
+                value={oab.uf}
+                onValueChange={(value) =>
+                  setOab((prev) => ({
+                    ...prev,
+                    uf: value as OAB["uf"],
                   }))
                 }
               />
