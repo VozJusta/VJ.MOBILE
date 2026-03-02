@@ -37,7 +37,6 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
-            bg="bg-white"
             onPress={() => {
               setActiveCitizen(!activeCitizen);
               setActiveLawyer(false);
@@ -73,7 +72,6 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
-            bg="bg-white"
             onPress={() => {
               setActiveLawyer(!activeLawyer);
               setActiveCitizen(false);
