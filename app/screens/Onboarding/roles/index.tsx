@@ -120,7 +120,7 @@ export default function SelectionUserRole() {
                 />
               </View>
             }
-            onPress={() => router.replace("/screens/auth/ForgotPassword")}
+            onPress={() => router.replace("/screens/auth/ForgotPassword/Email")}
             hover={false}
           />
         </View>
