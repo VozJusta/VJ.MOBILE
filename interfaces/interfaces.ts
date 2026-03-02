@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-
+import type MaterialIcons from "@expo/vector-icons/MaterialIcons";
 export interface ButtonProps {
   children?: ReactNode;
   goNext?: boolean;
@@ -13,9 +13,11 @@ export interface ButtonProps {
 }
 
 export interface InputProps {
-  label: string;
   placeholder: string;
-  icon
+  icon: boolean;
+  iconSize: number;
+  iconNameProps: React.ComponentProps<typeof MaterialIcons>["name"];
+  height: string;
 }
 
 export interface OnboardingRef {
