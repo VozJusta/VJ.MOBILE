@@ -5,7 +5,8 @@ import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import { InputUI } from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-export function ForgotPasswordTemplate() {
+import { IdScreen } from "../../../interfaces/interfaces";
+export function ForgotPasswordTemplate({screen}:IdScreen) {
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -50,36 +51,42 @@ export function ForgotPasswordTemplate() {
             iconSize={20}
             placeholder="seu@email.com"
           />
-          <ButtonUI
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient
-            hover={false}
-            children={
-              <View className="flex-1 justify-center items-center">
-                <Text className="text-[16px] font-interBold text-white">
-                  Enviar códiogo
-                </Text>
-              </View>
-            }
-          />
+
+            <ButtonUI
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              gradient={false}
+              bg="bg-[#135BEC]"
+              hover={false}
+              size="w-full h-[56px]"
+              children={
+                <View className="flex-1 justify-center items-center">
+                  <Text className="text-[16px] font-interBold text-white">
+                    Enviar códiogo
+                  </Text>
+                </View>
+              }
+            />
           <ButtonUI
             bg="transparent"
             gradient={false}
             hover={false}
+            shadow="shadow-Button"
             onPress={function (): void {
               throw new Error("Function not implemented.");
             }}
             children={
-              <View style={{gap:8}} className="flex-row items-center gap-2">
+              <View style={{ gap: 8 }} className="flex-row items-center gap-2">
                 <MaterialIcons
                   name="arrow-forward"
                   size={20}
                   style={{ transform: [{ rotate: "-180deg" }] }}
                   color={"rgba(255,255,255,0.5)"}
                 />
-                <Text className="font-inter text-[14px] text-white/50">Voltar para o Login</Text>
+                <Text className="font-inter text-[14px] text-white/50">
+                  Voltar para o Login
+                </Text>
               </View>
             }
           />

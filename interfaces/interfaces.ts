@@ -10,6 +10,17 @@ export interface ButtonProps {
   gradient: boolean;
   size?: string;
   hover: boolean;
+  shadow?: string;
+}
+
+export interface IdScreen{
+  screen: ScreensForgotPassword
+}
+
+export enum ScreensForgotPassword {
+  Email = "EMAIL",
+  Code = "CODE",
+  Update = "UPDATE",
 }
 
 export interface InputProps {

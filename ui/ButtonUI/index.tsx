@@ -45,7 +45,7 @@ export default function ButtonUI({ goNext = false,goBack = false, ...props }: Bu
   ) : (
     <Pressable
       onPress={props.onPress}
-      className={` rounded-[20px] ${props.size || ""} ${props.hover ? ` ${props.active ? "" : "border border-[rgba(255,255,255,0.12)]"} ${props.active ? props.bg : "bg-[rgba(255,255,255,0.06)]"}` : ""} `}
+      className={` rounded-[20px] ${props.size || ""} ${props.hover ? ` ${props.active ? "" : "border border-[rgba(255,255,255,0.12)]"} ${props.shadow} ${props.active ? "bg-white" : "bg-[rgba(255,255,255,0.06)]"}` : ""} ${props.bg}`}
     >
       {props.children}
     </Pressable>

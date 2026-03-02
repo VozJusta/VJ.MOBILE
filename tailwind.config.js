@@ -18,6 +18,15 @@ module.exports = {
         "BlueRoyal" : "#02A6FF",
         "BlueAzure": "#135BEC"
       },
+       boxShadow: {
+        Button: {
+          shadowColor: "#135BEC",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.4,
+          shadowRadius: 6,
+          elevation: 8,
+        },
+      },
       fontFamily: {
         inter: "Inter_500Medium",
         interBold: "Inter_700Bold",
