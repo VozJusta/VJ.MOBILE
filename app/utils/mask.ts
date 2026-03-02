@@ -13,5 +13,11 @@ export const formatPhone = (value: string) => {
     .replace(/(\d{2})(\d)/, "($1) $2")
     .replace(/(\d{5})(\d)/, "$1-$2")
     .slice(0, 15);
-};  
+};
 
+export type UF =
+  | "AC"  | "AL"  | "AP"  | "AM"  | "BA"  | "CE"
+  | "DF"  | "ES"  | "GO"  | "MA"  | "MT"  | "MS"
+  | "MG"  | "PA"  | "PB"  | "PR"  | "PE"  | "PI"
+  | "RJ"  | "RN"  | "RS"  | "RO"  | "RR"  | "SC"
+  | "SP"  | "SE"  | "TO";
