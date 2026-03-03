@@ -1,5 +1,7 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
+import { TextInputProps } from 'react-native';
 import type MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 export interface ButtonProps {
   children?: ReactNode;
   goNext?: boolean;
@@ -35,3 +37,17 @@ export interface OnboardingRef {
   goNext: () => void;
   goToPage: (pageIndex: number, animated?: boolean) => void;
 }
+
+
+export interface AppInputProps extends TextInputProps {
+  label: string;
+  type?: "name" | "cpf" | "phone" | "email" | "password" | "OAB";
+  rightIcon?: ReactNode;
+} 
+
+export interface UfSelectProps {
+  label: String;
+  value: String;
+  onValueChange: (value: String) => void;
+}
+
