@@ -11,6 +11,7 @@ import { router } from "expo-router";
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
+  const navigation = useNavigation();
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
