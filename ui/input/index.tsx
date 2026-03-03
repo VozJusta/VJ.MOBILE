@@ -33,7 +33,25 @@ export const AppInput: React.FC<AppInputProps> = ({ label, type = "name", value,
 
   return (
     <View className='w-90% justify-center'>
-      <MaterialIcons name={type === "email" ? "email" : type === "phone" ? "smartphone" : type === "cpf" ? "badge" : type === "password" ? "lock-outline" : type ==="OAB" ? "badge" : "person"} size={28} color="#fff" className='absolute left-3 top-[34px]' />
+      <View className='absolute left-3 top-[34px]'>
+        <MaterialIcons
+          name={
+            type === "email"
+              ? "email"
+              : type === "phone"
+              ? "smartphone"
+              : type === "cpf"
+              ? "badge"
+              : type === "password"
+              ? "lock-outline"
+              : type === "OAB"
+              ? "badge"
+              : "person"
+          }
+          size={28}
+          color="#fff"
+        />
+      </View>
       <Text className='uppercase text-[10px] mb-1.5 font-interBold text-white'>{label}</Text>
       <TextInput
         className='font-inter bg-[rgba(175,43,43,0.03)] min-w-[45%] w-full h-55 text-[14px] text-white border-[1px] pl-14 py-5 border-[rgba(255,255,255,0.12)] rounded-[12px]'
