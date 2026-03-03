@@ -75,7 +75,7 @@ export default function Lawyer() {
 
             <View className="flex-row justify-between items-center gap-4">
               <AppInput
-                label="Numero OAB"
+                label="Número OAB"
                 type="OAB"
                 placeholder="000.000"
                 value={oab.number}

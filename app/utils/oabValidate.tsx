@@ -1,13 +1,6 @@
+import type { UF } from "./mask";
 
-
-
-export type UF =
-    | "AC" | "AL" | "AP" | "AM" | "BA" | "CE"
-    | "DF" | "ES" | "GO" | "MA" | "MT" | "MS"
-    | "MG" | "PA" | "PB" | "PR" | "PE" | "PI"
-    | "RJ" | "RN" | "RS" | "RO" | "RR" | "SC"
-    | "SP" | "SE" | "TO";
-
+export type { UF };
 export interface OAB {
     uf: UF;
     number: string;
@@ -16,9 +9,10 @@ export interface OAB {
 
 export function validateOAB(oab: OAB): boolean {
     const numberRegex = /^\d{4,6}$/;
+    const digitsOnlyNumber = oab.number.replace(/\D/g, "");
 
     if (!oab.uf) return false;
-    if (!numberRegex.test(oab.number)) return false;
+    if (!numberRegex.test(digitsOnlyNumber)) return false;
 
     return true;
 }
