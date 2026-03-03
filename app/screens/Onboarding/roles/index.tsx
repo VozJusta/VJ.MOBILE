@@ -7,10 +7,16 @@ import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "../../../../assets/svg/icons/active-account-balace.svg";
+<<<<<<< HEAD
 import { router } from "expo-router";
+=======
+import { router, useNavigation, useRouter } from "expo-router";
+
+>>>>>>> 25a362c5f4c2bc883c4a2e1f3c77f66b6434b0f5
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
+  const navigation = useNavigation();
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
@@ -37,6 +43,10 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
+<<<<<<< HEAD
+=======
+            bg="bg-white"
+>>>>>>> 25a362c5f4c2bc883c4a2e1f3c77f66b6434b0f5
             onPress={() => {
               setActiveCitizen(!activeCitizen);
               setActiveLawyer(false);
@@ -72,6 +82,10 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
+<<<<<<< HEAD
+=======
+            bg="bg-white"
+>>>>>>> 25a362c5f4c2bc883c4a2e1f3c77f66b6434b0f5
             onPress={() => {
               setActiveLawyer(!activeLawyer);
               setActiveCitizen(false);
@@ -118,7 +132,17 @@ export default function SelectionUserRole() {
                 />
               </View>
             }
+<<<<<<< HEAD
             onPress={() => router.replace("/screens/auth/ForgotPassword/Email")}
+=======
+            onPress={() => {
+              if (activeCitizen) {
+                router.push("/screens/Authentication/Citizen");
+              } else if (activeLawyer) {
+                router.push("/screens/Authentication/Lawyer");
+              }
+            }}
+>>>>>>> 25a362c5f4c2bc883c4a2e1f3c77f66b6434b0f5
             hover={false}
           />
         </View>
