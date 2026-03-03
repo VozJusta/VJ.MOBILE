@@ -26,6 +26,13 @@ export interface AppInputProps extends TextInputProps {
 export interface UfSelectProps {
   label: String;
   value: String;
+  style?: Object;
   onValueChange: (value: String) => void;
 }
 
+
+export interface CareerSelectProps {
+  label: String;
+  value: String;
+  onValueChange: (value: String) => void;
+}
