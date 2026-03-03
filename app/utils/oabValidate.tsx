@@ -9,9 +9,10 @@ export interface OAB {
 
 export function validateOAB(oab: OAB): boolean {
     const numberRegex = /^\d{4,6}$/;
+    const digitsOnlyNumber = oab.number.replace(/\D/g, "");
 
     if (!oab.uf) return false;
-    if (!numberRegex.test(oab.number)) return false;
+    if (!numberRegex.test(digitsOnlyNumber)) return false;
 
     return true;
 }
