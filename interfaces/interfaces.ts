@@ -26,10 +26,16 @@ export enum ScreensForgotPassword {
 
 export interface InputProps {
   placeholder: string;
-  icon: boolean;
+  leftIcon?: boolean;
+  rightIcon?: boolean;
   iconSize: number;
   iconNameProps: React.ComponentProps<typeof MaterialIcons>["name"];
   height: string;
+  keyboardType?: TextInputProps["keyboardType"];
+  secureTextEntry?: boolean;
+  value?: string;
+  onChangeText?: (text: string) => void;
+  iconColor?: string;
 }
 
 export interface OnboardingRef {
@@ -45,8 +51,8 @@ export interface AppInputProps extends TextInputProps {
 } 
 
 export interface UfSelectProps {
-  label: String;
-  value: String;
+  label: string;
+  value: string;
   style?: Object;
   onValueChange: (value: String) => void;
 }

@@ -4,7 +4,7 @@ import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import ButtonUI from "../../ui/ButtonUI";
+import ButtonUI from "../../ui/Button";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnboardingTemplate() {

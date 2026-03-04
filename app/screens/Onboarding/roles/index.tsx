@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../../assets/svg/icons/logo.svg";
-import ButtonUI from "../../../../ui/ButtonUI";
+import ButtonUI from "../../../../ui/Button";
 import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
