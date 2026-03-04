@@ -4,7 +4,7 @@ import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import ButtonUI from "../../ui/Button";
+import Button from "../../ui/Button";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnboardingTemplate() {
@@ -41,7 +41,7 @@ export default function OnboardingTemplate() {
     >
       <SafeAreaView style={{ flex: 1 }}>
         <View className="w-full items-end mb-16">
-          <ButtonUI
+          <Button
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
             children={
@@ -72,7 +72,7 @@ export default function OnboardingTemplate() {
             bottomBarHeight={10}
             controlStatusBar={false}
             DoneButtonComponent={() => (
-              <ButtonUI
+              <Button
                 gradient={false}
                 goNext
                 onPress={() => router.replace("/screens/Onboarding/roles")}
@@ -81,7 +81,7 @@ export default function OnboardingTemplate() {
               />
             )}
             NextButtonComponent={() => (
-              <ButtonUI
+              <Button
                 gradient={false}
                 goNext
                 onPress={() => ref.current?.goNext()}

@@ -66,7 +66,6 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
           </View>
 
           <View className="flex-col gap-6">
-            <View>
               <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
                 <Text className="text-[#fff]/40 text-sm font-inter leading-5">
                   Aceito os{" "}
@@ -85,17 +84,7 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
                   </Text>
                 </Text>
               </Checkbox>
-              <LinearGradient
-                colors={["#135BEC", "#0A44B8"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                className="rounded-4 mt-6"
-                style={{
-                  paddingVertical: 18,
-                  alignItems: "center",
-                  borderRadius: 16,
-                }}
-              >
+              
                 <Button
                   onPress={() => {}}
                   gradient={true}
@@ -103,23 +92,21 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
                   hover={false}
                   size="w-full h-[56px]"
                   children={
-                    <Text className="text-[16px] font-interBold text-white">
-                      {props.textButton}
+                    <Text className="text-[16px] font-interBold text-white text-center">
+                      Continuar
                     </Text>
                   }
                 />
-              </LinearGradient>
             </View>
-          </View>
         </View>
         <View className="items-center mt-8">
           <Text className="text-[#fff]/40 text-sm font-inter leading-5">
-            {props.redirectText}
+            Já tem uma conta?{" "}
             <Text
               className="text-blue-500 underline font-semibold"
               onPress={() => router.push("/login")}
             >
-              {props.redirectLink}
+              Faça Login
             </Text>{" "}
           </Text>
         </View>

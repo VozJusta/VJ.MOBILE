@@ -7,7 +7,6 @@ export interface IInputProps {
   rightIcon?: boolean;
   iconSize: number;
   iconNameProps: React.ComponentProps<typeof MaterialIcons>["name"];
-  height: string;
   keyboardType?: TextInputProps["keyboardType"];
   secureTextEntry?: boolean;
   value?: string;

@@ -6,13 +6,13 @@ import BackButton from "../../../../ui/BackButton";
 import Logo from "../../../../assets/svg/icons/logo.svg";
 import { Text } from "react-native";
 import { AppInput } from "../../../../ui/input";
-import { formatOABNumber, OAB } from "../../../../app/utils/oabValidate";
+import { formatOABNumber, OAB } from "../../../utils/oabValidate";
 import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import CheckListFunction from "../../../../ui/CheckListFunction";
 import { Checkbox } from "../../../../ui/checkbox";
-import passwordValidate from "../../../../app/utils/passwordValidate";
+import passwordValidate from "../../../utils/passwordValidate";
 import UfSelect from "../../../../ui/ufSelect/ufSelect";
 import CareerSelect from "../../../../ui/careerSelect";
 
