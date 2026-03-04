@@ -4,24 +4,16 @@ import Logo from "../../../assets/svg/icons/logo.svg";
 import BackButton from "../../../ui/BackButton";
 import { Checkbox } from "../../../ui/checkbox";
 import { router } from "expo-router";
-import { InputProps, UfSelectProps } from "../../../interfaces/interfaces";
+import { UfSelectProps } from "../../../interfaces/interfaces";
 import Button from "../../../ui/Button";
 import { useState } from "react";
 import UfSelect from "../../../ui/ufSelect/ufSelect";
 import Input from "../../../ui/input";
+import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
 
-export type FieldsProps = InputProps | UfSelectProps;
 
-export interface ISignInTemplateProps {
-  title: string;
-  description: string;
-  fields: FieldsProps[];
-  textButton: string;
-  redirectText?: string;
-  redirectLink?: string;
-}
 
-function isUfField(field: FieldsProps): field is UfSelectProps {
+function isUfField(field: FieldsType): field is UfSelectProps {
   return "onValueChange" in field;
 }
 
