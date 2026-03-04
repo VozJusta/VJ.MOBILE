@@ -7,10 +7,12 @@ import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "../../../../assets/svg/icons/active-account-balace.svg";
-import { router } from "expo-router";
+import { router, useNavigation, useRouter } from "expo-router";
+
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
+  const navigation = useNavigation();
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
@@ -37,6 +39,7 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
+            bg="bg-white"
             onPress={() => {
               setActiveCitizen(!activeCitizen);
               setActiveLawyer(false);
@@ -72,6 +75,7 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
+            bg="bg-white"
             onPress={() => {
               setActiveLawyer(!activeLawyer);
               setActiveCitizen(false);
@@ -118,7 +122,13 @@ export default function SelectionUserRole() {
                 />
               </View>
             }
-            onPress={() => router.replace("/screens/auth/ForgotPassword/Email")}
+            onPress={() => {
+              if (activeCitizen) {
+                router.push("/screens/Authentication/Citizen");
+              } else if (activeLawyer) {
+                router.push("/screens/Authentication/Lawyer");
+              }
+            }}
             hover={false}
           />
         </View>
