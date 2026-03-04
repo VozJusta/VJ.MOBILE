@@ -65,7 +65,7 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
 
           </View>
 
-          <View className="flex-col gap-6">
+          <View className=" flex-col gap-6">
               <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
                 <Text className="text-[#fff]/40 text-sm font-inter leading-5">
                   Aceito os{" "}

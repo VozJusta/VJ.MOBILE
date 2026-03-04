@@ -33,19 +33,18 @@ export default function SelectionUserRole() {
         <Text className="text-[14px] font-inter text-white mt-[8px]">
           Para começar, quem você é?
         </Text>
-        <View className="w-full px-[16px] items-center mt-[36px] gap-8">
+        <View className="w-full flex-1 items-center mt-[36px] gap-8 px-16">
           <Button
             hover
-            size="w-full h-[103px]"
+            size="min-w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
-            bg="bg-white"
             onPress={() => {
               setActiveCitizen(!activeCitizen);
               setActiveLawyer(false);
             }}
             children={
-              <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
+              <View className="flex-1 items-center flex-row gap-[20px] px-[20px]">
                 <View
                   className={`rounded-[12px] ${activeCitizen ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
                 >
@@ -75,7 +74,6 @@ export default function SelectionUserRole() {
             size="w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
-            bg="bg-white"
             onPress={() => {
               setActiveLawyer(!activeLawyer);
               setActiveCitizen(false);
@@ -105,14 +103,14 @@ export default function SelectionUserRole() {
                 </View>
               </View>
             }
+
           />
-        </View>
-        <View className="w-full px-4  mt-[72px]">
-          <Button
-            gradient
+            <Button
+            gradient={true}
+            size="w-full"
             children={
               <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
-                <Text className="text-white font-interBold text-[14px]">
+                <Text className="text-white font-interBold text-[16px]">
                   Começar agora
                 </Text>
                 <MaterialIcons
@@ -131,6 +129,9 @@ export default function SelectionUserRole() {
             }}
             hover={false}
           />
+        </View>
+        <View className="w-full px-4  mt-[72px]">
+          
         </View>
       </SafeAreaView>
     </LinearGradient>
