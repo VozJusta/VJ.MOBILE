@@ -1,12 +1,10 @@
-import { InputProps, UfSelectProps } from "../../interfaces";
+import { UfSelectProps } from "../../interfaces";
+import { IInputProps } from "../../ui/Input";
 
-export type FieldsType = InputProps | UfSelectProps;
+export type FieldsType = IInputProps | UfSelectProps;
 
 export interface ISignInTemplateProps {
   title: string;
   description: string;
   fields: FieldsType[];
-  textButton: string;
-  redirectText?: string;
-  redirectLink?: string;
 }

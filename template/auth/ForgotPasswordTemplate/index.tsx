@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonUI from "../../../ui/Button";
+import Button from "../../../ui/Button";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import  InputUI  from "../../../ui/input";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -17,7 +17,7 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
     >
       <SafeAreaView className="px-4" style={{ flex: 1 }}>
         <View className="mt-40 mb-8 flex-row justify-between items-center w-full">
-          <ButtonUI
+          <Button
             goBack
             size="w-[40px] h-[40px]"
             onPress={() => {}}
@@ -43,13 +43,12 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
           </View>
 
           <InputUI
-            height="h-[54px]"
             iconNameProps="mail"
             iconSize={20}
             placeholder="seu@email.com"
           />
 
-            <ButtonUI
+            <Button
               onPress={() => {}}
               gradient={false}
               bg="bg-[#135BEC]"
@@ -63,7 +62,7 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
                 </View>
               }
             />
-          <ButtonUI
+          <Button
             bg="bg-transparent"
             gradient={false}
             hover={false}

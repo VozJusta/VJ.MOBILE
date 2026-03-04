@@ -1,33 +1,49 @@
 import { TextInput, View } from "react-native";
-import { InputProps } from "../../interfaces/interfaces";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { IInputProps } from "../../interfaces/ui/Input";
 
-export default function Input({ ...props }: InputProps) {
+export default function Input({ 
+  leftIcon, 
+  rightIcon, 
+  iconSize, 
+  iconNameProps, 
+  iconColor,
+  placeholder,
+  keyboardType,
+  secureTextEntry,
+  value,
+  onChangeText,
+  ...restProps 
+}: IInputProps) {
   return (
     <View
-      className={`w-full gap-[13px] ${props.height} px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center`}
+      className={`w-full gap-[13px] h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center`}
     >
-      {props.leftIcon && (
+      {leftIcon && (
         <MaterialIcons
-          name={props.iconNameProps}
-          size={props.iconSize}
+          name={iconNameProps}
+          size={iconSize}
           color={"#64748B"}
         />
       )}
 
       <TextInput
-        className="w-[80%] h-full  bg-transparent"
+        className="w-[80%] h-full bg-transparent"
         placeholderTextColor={"#475569"}
-        {...props}
+        placeholder={placeholder}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        value={value}
+        onChangeText={onChangeText}
+        {...restProps}
       />
 
-
-      {props.rightIcon && (
+      {rightIcon && (
         <MaterialIcons
-        className="absolute right-0 left-4"
-          name={props.iconNameProps}
-          size={props.iconSize}
-          color={props.iconColor}
+          className="absolute right-0 left-4"
+          name={iconNameProps}
+          size={iconSize}
+          color={iconColor}
         />
       )}
     </View>
