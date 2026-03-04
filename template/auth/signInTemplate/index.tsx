@@ -17,6 +17,8 @@ export interface ISignInTemplateProps {
   description: string;
   fields: FieldsProps[];
   textButton: string;
+  redirectText?: string;
+  redirectLink?: string;
 }
 
 function isUfField(field: FieldsProps): field is UfSelectProps {
@@ -120,12 +122,12 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
         </View>
         <View className="items-center mt-8">
           <Text className="text-[#fff]/40 text-sm font-inter leading-5">
-            Já possui registro?{" "}
+            {props.redirectText}
             <Text
               className="text-blue-500 underline font-semibold"
               onPress={() => router.push("/login")}
             >
-              Fazer Login
+              {props.redirectLink}
             </Text>{" "}
           </Text>
         </View>
