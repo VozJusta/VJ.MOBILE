@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Animated } from "react-native";
+import { useEffect, useRef } from "react";
 import BackButton from "../../../../ui/BackButton";
 import Logo from "../../../../assets/svg/icons/logo.svg";
 import { Text } from "react-native";
@@ -13,6 +14,7 @@ import CheckListFunction from "../../../../ui/CheckListFunction";
 import { Checkbox } from "../../../../ui/checkbox";
 import passwordValidate from "../../../../app/utils/passwordValidate";
 import UfSelect from "../../../../ui/ufSelect/ufSelect";
+import CareerSelect from "../../../../ui/careerSelect";
 
 export default function Lawyer() {
   const [name, setName] = useState("");
@@ -24,9 +26,20 @@ export default function Lawyer() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const strength = passwordValidate(password);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const router = useRouter();
+  const strength = passwordValidate(password);
+  const animatedWidth = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const percentage = (strength.score / 5) * 100;
+
+    Animated.timing(animatedWidth, {
+      toValue: percentage,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [strength.score]);
 
   return (
     <LinearGradient
@@ -90,7 +103,7 @@ export default function Lawyer() {
               />
               <UfSelect
                 label="Estado"
-                value={oab.uf}
+                value={oab.uf[0]}
                 onValueChange={(value) =>
                   setOab((prev) => ({
                     ...prev,
@@ -98,10 +111,12 @@ export default function Lawyer() {
                   }))
                 }
               />
-              {/* Dentro desta view preciso colocar um select para o advogado selecionar o UF da sua OAB */}
+
             </View>
-            {/* Aqui ainda preciso colocar um select para a área do advogado 
-            OBS: Abaixo desta linha de comando*/}
+
+            <CareerSelect
+              label="Especialização Principal"
+            />
 
             <AppInput
               label="E-mail Profissional"
@@ -136,14 +151,19 @@ export default function Lawyer() {
                   Força da Segurança
                 </Text>
                 <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                  <View
+
+                  <Animated.View
                     className="h-full rounded-full"
                     style={{
-                      width: `${(strength.score / 5) * 100}%`,
+                      width: animatedWidth.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: ["0%", "100%"],
+                      }),
                       backgroundColor: strength.color,
                     }}
                   />
                 </View>
+
                 <View className="flex-row gap-[90px] mt-[8px]">
                   <View className="flex-col">
                     <CheckListFunction
@@ -215,6 +235,6 @@ export default function Lawyer() {
           </Text>
         </View>
       </ScrollView>
-    </LinearGradient>
+    </LinearGradient >
   );
 }
