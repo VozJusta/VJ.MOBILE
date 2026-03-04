@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
-import { InputUI } from "../../../ui/InputUI";
+import  InputUI  from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IdScreen } from "../../../interfaces/interfaces";
 export function ForgotPasswordTemplate({screen}:IdScreen) {
@@ -20,9 +20,7 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
           <ButtonUI
             goBack
             size="w-[40px] h-[40px]"
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            onPress={() => {}}
             gradient={false}
             hover={false}
           />
@@ -53,9 +51,7 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
           />
 
             <ButtonUI
-              onPress={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onPress={() => {}}
               gradient={false}
               bg="bg-[#135BEC]"
               hover={false}
@@ -69,13 +65,11 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
               }
             />
           <ButtonUI
-            bg="transparent"
+            bg="bg-transparent"
             gradient={false}
             hover={false}
-            shadow="shadow-Button"
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            shadow="shadow-custom"
+           onPress={() => {}}
             children={
               <View style={{ gap: 8 }} className="flex-row items-center gap-2">
                 <MaterialIcons
