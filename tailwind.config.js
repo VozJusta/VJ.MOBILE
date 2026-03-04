@@ -20,11 +20,7 @@ module.exports = {
       },
        boxShadow: {
         Button: {
-          shadowColor: "#135BEC",
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.4,
-          shadowRadius: 6,
-          elevation: 8,
+           custom: "0px 4px 10px rgba(0,0,0,0.2)"
         },
       },
       fontFamily: {

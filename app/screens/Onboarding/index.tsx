@@ -1,7 +1,5 @@
-import OnboardingTemplate  from "../../../template/OnboardingTemplate";
+import OnboardingTemplate from "../../../template/OnboardingTemplate";
 
 export default function Onboarding() {
-    return(
-        <OnboardingTemplate/>
-    )
+  return <OnboardingTemplate />;
 }
