@@ -1,14 +1,35 @@
 import type { ReactNode } from 'react';
 import { TextInputProps } from 'react-native';
+import type MaterialIcons from "@expo/vector-icons/MaterialIcons";
 export interface ButtonProps {
   children?: ReactNode;
   goNext?: boolean;
+  goBack?: boolean;
   bg?: string;
   active?: boolean;
   onPress: () => void;
   gradient: boolean;
   size?: string;
-  hover:boolean;
+  hover: boolean;
+  shadow?: string;
+}
+
+export interface IdScreen{
+  screen: ScreensForgotPassword
+}
+
+export enum ScreensForgotPassword {
+  Email = "EMAIL",
+  Code = "CODE",
+  Update = "UPDATE",
+}
+
+export interface InputProps {
+  placeholder: string;
+  icon: boolean;
+  iconSize: number;
+  iconNameProps: React.ComponentProps<typeof MaterialIcons>["name"];
+  height: string;
 }
 
 export interface OnboardingRef {
