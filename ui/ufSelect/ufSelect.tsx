@@ -4,6 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import type { UF } from "../../app/utils/mask";
 
 const states: { label: string; value: UF }[] = [
+  { label: "UF", value: undefined as any },
   { label: "Acre (AC)", value: "AC" },
   { label: "Alagoas (AL)", value: "AL" },
   { label: "Amapá (AP)", value: "AP" },
@@ -46,7 +47,7 @@ export default function UfSelect({
       <View className="rounded-[12px] border-[1px] border-[rgba(255,255,255,0.12)] bg-[rgba(175,43,43,0.03)] h-55 min-w-[45%] w-45% justify-center">
         <Picker
           dropdownIconColor="#fff"
-          style={{ color: "white"  }}
+          style={{ color: "white" }}
           selectedValue={value}
           onValueChange={onValueChange}
         >

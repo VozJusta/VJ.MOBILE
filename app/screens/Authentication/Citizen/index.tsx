@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Animated } from "react-native";
+import { useEffect, useRef } from "react";
 import BackButton from "../../../../ui/BackButton";
 import Logo from "../../../../assets/svg/icons/logo.svg";
 import { AppInput } from "../../../../ui/input";
@@ -18,9 +19,21 @@ export default function Citizen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const strength = passwordValidate(password);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const router = useRouter();
+  const strength = passwordValidate(password);
+  const animatedWidth = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const percentage = (strength.score / 5) * 100;
+
+    Animated.timing(animatedWidth, {
+      toValue: percentage,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [strength.score]);
+
 
   return (
     <LinearGradient
@@ -101,8 +114,19 @@ export default function Citizen() {
               <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] mt-1.5">
                 <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">Força da Segurança</Text>
                 <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                  <View className="h-full rounded-full" style={{ width: `${(strength.score / 5) * 100}%`, backgroundColor: strength.color }} />
+
+                  <Animated.View
+                    className="h-full rounded-full"
+                    style={{
+                      width: animatedWidth.interpolate({
+                        inputRange: [0, 100],
+                        outputRange: ["0%", "100%"],
+                      }),
+                      backgroundColor: strength.color,
+                    }}
+                  />
                 </View>
+
                 <View className="flex-row gap-[90px] mt-[8px]">
                   <View className="flex-col">
                     <CheckListFunction valid={password.length >= 8} label="8+ Caracteres" />
@@ -160,7 +184,7 @@ export default function Citizen() {
             >
               Fazer Login
             </Text>{" "}
-                
+
           </Text>
         </View>
       </ScrollView>
