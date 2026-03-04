@@ -1,5 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import {
+  Text,
+  View,
+} from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
@@ -33,67 +36,68 @@ export default function OnboardingTemplate() {
 
   return (
     <LinearGradient
-      style={{ flex: 1 }}
+    style={{ flex: 1 }}
       className="flex-1 pt-[58px]"
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <View className="w-full items-end mb-16">
-          <Button
-            onPress={() => router.replace("/screens/Onboarding/roles")}
-            gradient={false}
-            children={
-              <Text className="text-white text-[16px] font-inter pr-[16px]">
-                Pular
-              </Text>
-            }
-            hover={false}
-          />
-        </View>
-        <View className="flex-1">
-          <Onboarding
-            ref={ref}
-            showSkip={false}
-            containerStyles={{
-              paddingTop: 0,
-              justifyContent: "flex-start",
-              alignItems: "center",
-              backgroundColor: "transparent",
-              paddingHorizontal: 16,
-            }}
-            imageContainerStyles={{
-              marginBottom: 0,
-            }}
-            bottomBarColor="transparent"
-            showDone
-            bottomBarHighlight={false}
-            bottomBarHeight={10}
-            controlStatusBar={false}
-            DoneButtonComponent={() => (
-              <Button
-                gradient={false}
-                goNext
-                onPress={() => router.replace("/screens/Onboarding/roles")}
-                hover={false}
-                size="w-[56px] h-[56px]"
-              />
-            )}
-            NextButtonComponent={() => (
-              <Button
-                gradient={false}
-                goNext
-                onPress={() => ref.current?.goNext()}
-                hover={false}
-                size="w-[56px] h-[56px]"
-              />
-            )}
-            DotComponent={Dot}
-            pages={onboardingData}
-          />
-        </View>
+      <View className="flex-1 items-end mb-16">
+        <Button
+          onPress={() => router.replace("/screens/Onboarding/roles")}
+          gradient={false}
+          size="w-[56px] h-[56px]"
+          children={
+            <Text className="text-white text-[16px] font-inter pr-[16px] text-end">
+              Pular
+            </Text>
+          }
+          hover={false}
+        />
+      </View>
+      <View className="flex-1">
+        <Onboarding
+          ref={ref}
+          showSkip={false}
+          containerStyles={{
+            paddingTop: 0,
+            justifyContent: "flex-start",
+            alignItems: "center",
+            backgroundColor: "transparent",
+            paddingHorizontal: 16,
+          }}
+          imageContainerStyles={{
+            marginBottom: 0,
+          }}
+          bottomBarColor="transparent"
+          showDone
+          bottomBarHighlight={false}
+          bottomBarHeight={100}
+          controlStatusBar={false}
+          DoneButtonComponent={() => (
+            <Button
+              gradient={false}
+              goNext
+              onPress={() => router.replace("/screens/Onboarding/roles")}
+              hover={false}
+            />
+          )}
+          NextButtonComponent={() => (
+            <Button
+              gradient={false}
+              goNext
+              onPress={() => ref.current?.goNext()}
+              hover={false}
+              size="w-[56px] h-[56px]"
+            />
+          )}
+          DotComponent={Dot}
+          pages={onboardingData}
+        />
+      </View>
       </SafeAreaView>
     </LinearGradient>
+    
   );
 }
