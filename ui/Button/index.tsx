@@ -3,7 +3,7 @@ import { Pressable, TouchableOpacity } from "react-native";
 import { ButtonProps } from "../../interfaces/interfaces";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-export default function ButtonUI({
+export default function Button({
   goNext = false,
   goBack = false,
   ...props

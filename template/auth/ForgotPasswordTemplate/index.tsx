@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonUI from "../../../ui/ButtonUI";
+import ButtonUI from "../../../ui/Button";
 import Logo from "../../../assets/svg/icons/logo.svg";
-import  InputUI  from "../../../ui/InputUI";
+import  InputUI  from "../../../ui/input";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IdScreen } from "../../../interfaces/interfaces";
 export function ForgotPasswordTemplate({screen}:IdScreen) {
@@ -44,7 +44,6 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
 
           <InputUI
             height="h-[54px]"
-            icon
             iconNameProps="mail"
             iconSize={20}
             placeholder="seu@email.com"
