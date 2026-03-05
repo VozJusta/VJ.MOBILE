@@ -9,7 +9,7 @@ export default function Lawyer() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [oabNumber, setOabNumber] = useState("");
-  const [uf, setUf] = useState("SP");
+  const [uf, setUf] = useState("");
   const [specializations, setSpecializations] = useState<string[]>([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

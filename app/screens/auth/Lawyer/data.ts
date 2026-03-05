@@ -73,7 +73,7 @@ export const getInitialLawyerData = (
             onValueChange: onUfChange,
         },
         {
-            label: "Especializações",
+            label: "Especialização Principal",
             values: specializations,
             options: specializationOptions,
             onValuesChange: onSpecializationsChange,
