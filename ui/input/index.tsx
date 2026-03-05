@@ -1,4 +1,4 @@
-import { Text, TextInput, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IInputProps } from "../../interfaces/ui/Input";
 
@@ -6,6 +6,7 @@ export default function Input({
   label,
   leftIcon,
   rightIcon,
+  rightIconName,
   iconSize,
   iconNameProps,
   iconColor,
@@ -14,6 +15,7 @@ export default function Input({
   secureTextEntry,
   value,
   onChangeText,
+  onRightIconPress,
   ...restProps
 }: IInputProps) {
   return (
@@ -31,7 +33,7 @@ export default function Input({
           <MaterialIcons
             name={iconNameProps}
             size={iconSize}
-            color={"#64748B"}
+            color={"#fff"}
           />
         )}
 
@@ -47,12 +49,17 @@ export default function Input({
         />
 
         {rightIcon && (
-          <MaterialIcons
-            className="absolute right-0 left-4"
-            name={iconNameProps}
-            size={iconSize}
-            color={iconColor}
-          />
+          <TouchableOpacity
+            className="absolute right-4"
+            onPress={onRightIconPress}
+            disabled={!onRightIconPress}
+          >
+            <MaterialIcons
+              name={rightIconName || iconNameProps}
+              size={iconSize}
+              color={iconColor || "#fff"}
+            />
+          </TouchableOpacity>
         )}
       </View>
     </View>

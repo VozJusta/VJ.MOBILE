@@ -10,7 +10,9 @@ export const getInitialCitizenData = (
     email: string,
     onEmailChange: (text: string) => void,
     password: string,
-    onPasswordChange: (text: string) => void
+    onPasswordChange: (text: string) => void,
+    showPassword: boolean,
+    onToggleShowPassword: () => void
 ): ISignInTemplateProps => ({
     title: "Cadastro de Cidadão",
     description: "Faça seu cadastro para transformar sua indignação em mudança",
@@ -29,7 +31,7 @@ export const getInitialCitizenData = (
         },
         {
             label: "CPF",
-            placeholder: "Digite seu CPF",
+            placeholder: "000.000.000-00",
             keyboardType: "numeric",
             leftIcon: true,
             rightIcon: false,
@@ -41,7 +43,7 @@ export const getInitialCitizenData = (
         },
         {
             label: "Telefone",
-            placeholder: "Digite seu telefone",
+            placeholder: "(00) 00000-0000",
             keyboardType: "phone-pad",
             leftIcon: true,
             rightIcon: false,
@@ -53,7 +55,7 @@ export const getInitialCitizenData = (
         },
         {
             label: "E-mail",
-            placeholder: "Digite seu e-mail",
+            placeholder: "email@exemplo.com",
             keyboardType: "email-address",
             leftIcon: true,
             rightIcon: false,
@@ -65,15 +67,17 @@ export const getInitialCitizenData = (
         },
         {
             label: "Senha de acesso",
-            placeholder: "Digite sua senha",
-            secureTextEntry: true,
+            placeholder: "••••••••",
+            secureTextEntry: !showPassword,
             leftIcon: true,
-            rightIcon: false,
+            rightIcon: true,
+            rightIconName: showPassword ? "visibility-off" : "visibility",
             iconSize: 24,
-            iconNameProps: "lock",
+            iconNameProps: "lock-outline",
             type: "password",
             value: password,
             onChangeText: onPasswordChange,
+            onRightIconPress: onToggleShowPassword,
         },
     ],
 });

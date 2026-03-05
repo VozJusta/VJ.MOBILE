@@ -40,11 +40,11 @@ export default function UfSelect({
   onValueChange,
 }: UfSelectProps) {
   return (
-    <View className="">
-      <Text className="uppercase text-[10px] mb-1.5 font-interBold text-white">
+    <View className="w-full mb-[24px]">
+      <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
         {label}
       </Text>
-      <View className="rounded-[12px] border-[1px] border-[rgba(255,255,255,0.12)] bg-[rgba(175,43,43,0.03)] h-55 min-w-[45%] w-45% justify-center">
+      <View className="w-full h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] justify-center">
         <Picker
           dropdownIconColor="#fff"
           style={{ color: "white" }}

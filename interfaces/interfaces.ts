@@ -17,12 +17,13 @@ export interface UfSelectProps {
   label: string;
   value: string;
   style?: Object;
-  onValueChange: (value: String) => void;
+  onValueChange: (value: string) => void;
 }
 
 
 export interface CareerSelectProps {
-  label: String;
-  value: String;
-  onValueChange: (value: String) => void;
+  label: string;
+  values: string[];
+  options: string[];
+  onValuesChange: (values: string[]) => void;
 }
