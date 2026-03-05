@@ -11,21 +11,6 @@ export default function Citizen() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const strength = passwordValidate(password);
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [acceptedTerms, setAcceptedTerms] = useState(false);
-  // const router = useRouter();
-  // const strength = passwordValidate(password);
-  // const animatedWidth = useRef(new Animated.Value(0)).current;
-
-  // useEffect(() => {
-  //   const percentage = (strength.score / 5) * 100;
-
-  //   Animated.timing(animatedWidth, {
-  //     toValue: percentage,
-  //     duration: 300,
-  //     useNativeDriver: false,
-  //   }).start();
-  // }, [strength.score]);
 
   const citizenData = getInitialCitizenData(
     name, setName,

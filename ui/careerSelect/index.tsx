@@ -13,7 +13,7 @@ export default function CareerSelect({
 
     const selectedLabel = useMemo(() => {
         if (!values.length) {
-            return "Selecione especializações";
+            return "Selecione sua área";
         }
 
         return values.join(", ");
@@ -41,7 +41,7 @@ export default function CareerSelect({
                 <View className="flex-row items-center gap-3 flex-1 pr-2">
                     <MaterialIcons name="gavel" size={24} color="#fff" />
                     <Text
-                        className={`text-[14px] ${values.length ? "text-white" : "text-[#475569]"}`}
+                        className={`text-[14px] ${values.length ? "text-white" : "text-[#fff]"}`}
                         numberOfLines={1}
                     >
                         {selectedLabel}
