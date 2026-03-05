@@ -1,40 +1,83 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
+import { CareerSelectProps } from "../../interfaces/interfaces";
+import { useMemo, useState } from "react";
 
+export default function CareerSelect({
+    label,
+    values,
+    options,
+    onValuesChange,
+}: CareerSelectProps) {
+    const [open, setOpen] = useState(false);
 
-type Props = {
-    label: String;
-}
+    const selectedLabel = useMemo(() => {
+        if (!values.length) {
+            return "Selecione especializações";
+        }
 
+        return values.join(", ");
+    }, [values]);
 
-const careerAreas: { label: string; }[] = [
-    { label: "          Selecione sua área" },
+    const toggleOption = (option: string) => {
+        if (values.includes(option)) {
+            onValuesChange(values.filter((value) => value !== option));
+            return;
+        }
 
-];
+        onValuesChange([...values, option]);
+    };
 
-
-
-
-export default function CareerSelect({ label }: Props) {
     return (
-        <View>
-            <Text className="uppercase text-[10px] mb-1.5 font-interBold text-white">{label}</Text>
-            <View className="rounded-[12px] border-[1px] border-[rgba(255,255,255,0.12)] bg-[rgba(175,43,43,0.03)] h-55 min-w-[45%] w-45% justify-center">
-                <MaterialIcons name="gavel" size={24} color="#fff" className="absolute left-3" />
-                <Picker
-                    dropdownIconColor="#fff"
-                    style={{ color: "white",  }}
-                    selectedValue={""}>
+        <View className="w-full mb-[24px]">
+            <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+                {label}
+            </Text>
 
-                    <Picker.Item
-                        key={careerAreas[0].label}
-                        label={careerAreas[0].label}
-                        value={careerAreas[0].label}
-                        color="#000"
-                    />
-                </Picker>
-            </View>
+            <TouchableOpacity
+                className="w-full h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center justify-between"
+                onPress={() => setOpen((prev) => !prev)}
+            >
+                <View className="flex-row items-center gap-3 flex-1 pr-2">
+                    <MaterialIcons name="gavel" size={24} color="#fff" />
+                    <Text
+                        className={`text-[14px] ${values.length ? "text-white" : "text-[#475569]"}`}
+                        numberOfLines={1}
+                    >
+                        {selectedLabel}
+                    </Text>
+                </View>
+                <MaterialIcons
+                    name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                    size={24}
+                    color="#fff"
+                />
+            </TouchableOpacity>
+
+            {open && (
+                <View className="mt-2 border border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] px-4 py-3 gap-2">
+                    {options.map((option) => {
+                        const selected = values.includes(option);
+
+                        return (
+                            <TouchableOpacity
+                                key={option}
+                                className="flex-row items-center gap-2"
+                                onPress={() => toggleOption(option)}
+                            >
+                                <MaterialIcons
+                                    name={selected ? "check-box" : "check-box-outline-blank"}
+                                    size={20}
+                                    color={selected ? "#34D399" : "#94A3B8"}
+                                />
+                                <Text className={`text-[13px] ${selected ? "text-[#34D399]" : "text-[#94A3B8]"}`}>
+                                    {option}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    })}
+                </View>
+            )}
         </View>
-    )
+    );
 }

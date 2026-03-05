@@ -9,6 +9,7 @@ export default function Citizen() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const strength = passwordValidate(password);
   // const [showPassword, setShowPassword] = useState(false);
   // const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -31,7 +32,9 @@ export default function Citizen() {
     cpf, setCpf,
     phone, setPhone,
     email, setEmail,
-    password, setPassword
+    password, setPassword,
+    showPassword,
+    () => setShowPassword((prev) => !prev)
   );
 
   return (

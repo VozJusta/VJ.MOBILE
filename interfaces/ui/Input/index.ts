@@ -6,6 +6,7 @@ export interface IInputProps {
   placeholder: string;
   leftIcon?: boolean;
   rightIcon?: boolean;
+  rightIconName?: React.ComponentProps<typeof MaterialIcons>["name"];
   iconSize: number;
   iconNameProps: React.ComponentProps<typeof MaterialIcons>["name"];
   keyboardType?: TextInputProps["keyboardType"];
@@ -13,5 +14,6 @@ export interface IInputProps {
   value?: string;
   type: "text" | "password" | "email" | "phone" | "cpf" | "name";
   onChangeText?: (text: string) => void;
+  onRightIconPress?: () => void;
   iconColor?: string;
 }

@@ -1,7 +1,7 @@
-import { UfSelectProps } from "../../interfaces";
+import { CareerSelectProps, UfSelectProps } from "../../interfaces";
 import { IInputProps } from "../../ui/Input";
 
-export type FieldsType = IInputProps | UfSelectProps;
+export type FieldsType = IInputProps | UfSelectProps | CareerSelectProps;
 
 export interface PasswordChecklistItem {
   label: string;
@@ -19,4 +19,5 @@ export interface ISignInTemplateProps {
   description: string;
   fields: FieldsType[];
   passwordStrength?: PasswordStrengthSection;
+  
 }

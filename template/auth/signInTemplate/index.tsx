@@ -1,13 +1,14 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import BackButton from "../../../ui/BackButton";
 import { Checkbox } from "../../../ui/checkbox";
 import { router } from "expo-router";
-import { UfSelectProps } from "../../../interfaces/interfaces";
+import { CareerSelectProps, UfSelectProps } from "../../../interfaces/interfaces";
 import Button from "../../../ui/Button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UfSelect from "../../../ui/ufSelect/ufSelect";
+import CareerSelect from "../../../ui/careerSelect";
 import Input from "../../../ui/input";
 import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
 import CheckListFunction from "../../../ui/CheckListFunction";
@@ -15,11 +16,28 @@ import CheckListFunction from "../../../ui/CheckListFunction";
 
 
 function isUfField(field: FieldsType): field is UfSelectProps {
-  return "onValueChange" in field;
+  return "onValueChange" in field && !("onValuesChange" in field);
+}
+
+function isCareerField(field: FieldsType): field is CareerSelectProps {
+  return "onValuesChange" in field;
 }
 
 export default function SignInTemplate({...props} : ISignInTemplateProps) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const animatedWidth = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const percentage = props.passwordStrength
+      ? (props.passwordStrength.score / 5) * 100
+      : 0;
+
+    Animated.timing(animatedWidth, {
+      toValue: percentage,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [animatedWidth, props.passwordStrength]);
 
   return (
     <LinearGradient
@@ -61,6 +79,18 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
                 );
               }
 
+              if (isCareerField(field)) {
+                return (
+                  <CareerSelect
+                    key={index}
+                    label={field.label}
+                    values={field.values}
+                    options={field.options}
+                    onValuesChange={field.onValuesChange}
+                  />
+                );
+              }
+
               return <Input key={index} {...field} />;
             })}
 
@@ -73,10 +103,13 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
               </Text>
 
               <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                <View
+                <Animated.View
                   className="h-full rounded-full"
                   style={{
-                    width: `${(props.passwordStrength.score / 5) * 100}%`,
+                    width: animatedWidth.interpolate({
+                      inputRange: [0, 100],
+                      outputRange: ["0%", "100%"],
+                    }),
                     backgroundColor: props.passwordStrength.color,
                   }}
                 />
