@@ -10,6 +10,7 @@ import { useState } from "react";
 import UfSelect from "../../../ui/ufSelect/ufSelect";
 import Input from "../../../ui/input";
 import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
+import CheckListFunction from "../../../ui/CheckListFunction";
 
 
 
@@ -64,6 +65,37 @@ export default function SignInTemplate({...props} : ISignInTemplateProps) {
             })}
 
           </View>
+
+          {!!props.passwordStrength && (
+            <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
+              <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
+                Força da Segurança
+              </Text>
+
+              <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
+                <View
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${(props.passwordStrength.score / 5) * 100}%`,
+                    backgroundColor: props.passwordStrength.color,
+                  }}
+                />
+              </View>
+
+              <View className="flex-row gap-[90px] mt-[8px]">
+                <View className="flex-col">
+                  {props.passwordStrength.checklist.slice(0, 2).map((item) => (
+                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                  ))}
+                </View>
+                <View className="flex-col">
+                  {props.passwordStrength.checklist.slice(2, 4).map((item) => (
+                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                  ))}
+                </View>
+              </View>
+            </View>
+          )}
 
           <View className=" flex-col gap-6">
               <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>

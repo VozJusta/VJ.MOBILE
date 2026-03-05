@@ -1,19 +1,79 @@
 import { ISignInTemplateProps } from "../../../../interfaces/template/SignInTemplate";
 
-export const getInitialCitizenData = (name: string, onNameChange: (text: string) => void): ISignInTemplateProps => ({
+export const getInitialCitizenData = (
+    name: string,
+    onNameChange: (text: string) => void,
+    cpf: string,
+    onCpfChange: (text: string) => void,
+    phone: string,
+    onPhoneChange: (text: string) => void,
+    email: string,
+    onEmailChange: (text: string) => void,
+    password: string,
+    onPasswordChange: (text: string) => void
+): ISignInTemplateProps => ({
     title: "Cadastro de Cidadão",
     description: "Faça seu cadastro para transformar sua indignação em mudança",
     fields: [
         {
-            label: "Nome Completo",
+            label: "Nome completo",
             placeholder: "Digite seu nome completo",
             keyboardType: "default",
             leftIcon: true,
             rightIcon: false,
             iconSize: 24,
             iconNameProps: "person",
+            type: "name",
             value: name,
             onChangeText: onNameChange,
-        }
-    ]
-}); 
+        },
+        {
+            label: "CPF",
+            placeholder: "Digite seu CPF",
+            keyboardType: "numeric",
+            leftIcon: true,
+            rightIcon: false,
+            iconSize: 24,
+            iconNameProps: "badge",
+            type: "cpf",
+            value: cpf,
+            onChangeText: onCpfChange,
+        },
+        {
+            label: "Telefone",
+            placeholder: "Digite seu telefone",
+            keyboardType: "phone-pad",
+            leftIcon: true,
+            rightIcon: false,
+            iconSize: 24,
+            iconNameProps: "phone",
+            type: "phone",
+            value: phone,
+            onChangeText: onPhoneChange,
+        },
+        {
+            label: "E-mail",
+            placeholder: "Digite seu e-mail",
+            keyboardType: "email-address",
+            leftIcon: true,
+            rightIcon: false,
+            iconSize: 24,
+            iconNameProps: "email",
+            type: "email",
+            value: email,
+            onChangeText: onEmailChange,
+        },
+        {
+            label: "Senha de acesso",
+            placeholder: "Digite sua senha",
+            secureTextEntry: true,
+            leftIcon: true,
+            rightIcon: false,
+            iconSize: 24,
+            iconNameProps: "lock",
+            type: "password",
+            value: password,
+            onChangeText: onPasswordChange,
+        },
+    ],
+});
