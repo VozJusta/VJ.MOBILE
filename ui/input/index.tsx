@@ -38,7 +38,7 @@ export default function Input({
         )}
 
         <TextInput
-          className="w-[80%] h-full bg-transparent"
+          className="w-[80%] h-full bg-transparent text-white font-interRegular"
           placeholderTextColor={"#475569"}
           placeholder={placeholder}
           keyboardType={keyboardType}
