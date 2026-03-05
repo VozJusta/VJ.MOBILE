@@ -69,7 +69,7 @@ export const getInitialLawyerData = (
         },
         {
             label: "UF da OAB",
-            value: uf,
+            value: uf[0],
             onValueChange: onUfChange,
         },
         {

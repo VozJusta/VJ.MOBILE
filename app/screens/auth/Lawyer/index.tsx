@@ -17,22 +17,14 @@ export default function Lawyer() {
   const strength = passwordValidate(password);
 
   const lawyerData = getInitialLawyerData(
-    name,
-    setName,
-    cpf,
-    (text) => setCpf(formatCPF(text)),
-    oabNumber,
-    (text) => setOabNumber(formatOABNumber(text)),
-    email,
-    setEmail,
-    uf,
-    setUf,
-    specializations,
-    setSpecializations,
-    password,
-    setPassword,
-    showPassword,
-    () => setShowPassword((prev) => !prev)
+    name, setName,
+    cpf, (text) => setCpf(formatCPF(text)),
+    oabNumber, (text) => setOabNumber(formatOABNumber(text)),
+    email, setEmail,
+    uf, setUf,
+    specializations, setSpecializations,
+    password, setPassword,
+    showPassword, () => setShowPassword((prev) => !prev)
   );
 
   return (
