@@ -44,12 +44,18 @@ export default function UfSelect({
         {label}
       </Text>
       <View className="rounded-[12px] border-[1px] border-[rgba(255,255,255,0.12)] bg-[rgba(175,43,43,0.03)] h-55 min-w-[45%] w-45% justify-center">
-        <Picker itemStyle={{ color: "white" }} selectedValue={value} onValueChange={onValueChange}>
+        <Picker 
+          itemStyle={{ color: "white", fontSize: 16 }} 
+          style={{ color: "white" }}
+          selectedValue={value} 
+          onValueChange={onValueChange}
+        >
           {states.map((state) => (
             <Picker.Item
               key={state.value}
               label={state.label}
               value={state.value}
+              style={{ fontSize: 16 }}
             />
           ))}
         </Picker>

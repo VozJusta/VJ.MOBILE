@@ -117,7 +117,7 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
+          <Text className="font-interLight text-[#D1D5DB] text-base text-center pt-4 px-4">
             Conte o que aconteceu em suas palavras. Nossa IA remove o juridiquês
             e extrai a{" "}
             <Text className="font-interSemiBold text-white">
@@ -175,7 +175,7 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
+          <Text className="font-interLight text-[#D1D5DB] text-base text-center pt-4 px-4">
             Chegue preparado para o dia real. Treine suas respostas com nosso{" "}
             <Text className="font-interSemiBold text-white">Juiz virtual </Text>
             e ganhe a confiança que você merece.

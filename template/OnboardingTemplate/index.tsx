@@ -69,7 +69,7 @@ export default function OnboardingTemplate() {
             bottomBarColor="transparent"
             showDone
             bottomBarHighlight={false}
-            bottomBarHeight={10}
+            bottomBarHeight={100}
             controlStatusBar={false}
             DoneButtonComponent={() => (
               <ButtonUI
