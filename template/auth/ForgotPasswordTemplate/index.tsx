@@ -3,10 +3,15 @@ import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
-import  InputUI  from "../../../ui/InputUI";
+import InputUI from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { IdScreen } from "../../../interfaces/interfaces";
-export function ForgotPasswordTemplate({screen}:IdScreen) {
+import {
+  IdScreen,
+  ScreensForgotPassword,
+} from "../../../interfaces/interfaces";
+import React, { useState } from "react";
+import { screensEnabled } from "react-native-screens";
+export function ForgotPasswordTemplate({ screen }: IdScreen) {
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -32,58 +37,184 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
           }}
           className="w-full gap-[32px] bg-white/5 rounded-xl min-h-[406px] flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] px-4 py-8"
         >
-          <View className="gap-[11.40px] items-center justify-center">
-            <Text className="font-interBold text-[24px] text-white">
-              Esqueceu a Senha?
-            </Text>
-            <Text className="font-interRegular text-[14px] text-white/60 text-center">
-              Não se preocupe! Informe seu e-mail cadastrado para receber as
-              instruções de recuperação.
-            </Text>
-          </View>
-
-          <InputUI
-            height="h-[54px]"
-            icon
-            iconNameProps="mail"
-            iconSize={20}
-            placeholder="seu@email.com"
-          />
-
-            <ButtonUI
-              onPress={() => {}}
-              gradient={false}
-              bg="bg-[#135BEC]"
-              hover={false}
-              size="w-full h-[56px]"
-              children={
-                <View className="flex-1 justify-center items-center">
-                  <Text className="text-[16px] font-interBold text-white">
-                    Enviar códiogo
-                  </Text>
-                </View>
-              }
-            />
-          <ButtonUI
-            bg="bg-transparent"
-            gradient={false}
-            hover={false}
-            shadow="shadow-custom"
-           onPress={() => {}}
-            children={
-              <View style={{ gap: 8 }} className="flex-row items-center gap-2">
-                <MaterialIcons
-                  name="arrow-forward"
-                  size={20}
-                  style={{ transform: [{ rotate: "-180deg" }] }}
-                  color={"rgba(255,255,255,0.5)"}
-                />
-                <Text className="font-inter text-[14px] text-white/50">
-                  Voltar para o Login
+          {screen === ScreensForgotPassword.Email ? (
+            <>
+              <View className="gap-[11.40px] items-center justify-center">
+                <Text className="font-interBold text-[24px] text-white">
+                  Esqueceu a Senha?
+                </Text>
+                <Text className="font-interRegular text-[14px] text-white/60 text-center">
+                  Não se preocupe! Informe seu e-mail cadastrado para receber as
+                  instruções de recuperação.
                 </Text>
               </View>
-            }
-          />
+
+              <InputUI
+                placeholder={"seu@email.com"}
+                leftIcon
+                keyboardType="email-address"
+                iconSize={24}
+                iconNameProps={"mail"}
+                type={"email"}
+              />
+
+              <ButtonUI
+                onPress={() => {}}
+                gradient={false}
+                bg="bg-[#135BEC]"
+                hover={false}
+                size="w-full h-[56px]"
+                children={
+                  <View className="flex-1 justify-center items-center">
+                    <Text className="text-[16px] font-interBold text-white">
+                      Enviar códiogo
+                    </Text>
+                  </View>
+                }
+              />
+              <ButtonUI
+                bg="bg-transparent"
+                gradient={false}
+                hover={false}
+                shadow="shadow-custom"
+                onPress={() => {}}
+                children={
+                  <View
+                    style={{ gap: 8 }}
+                    className="flex-row items-center gap-2"
+                  >
+                    <MaterialIcons
+                      name="arrow-forward"
+                      size={20}
+                      style={{ transform: [{ rotate: "-180deg" }] }}
+                      color={"rgba(255,255,255,0.5)"}
+                    />
+                    <Text className="font-inter text-[14px] text-white/50">
+                      Voltar para o Login
+                    </Text>
+                  </View>
+                }
+              />
+            </>
+          ) : screen === ScreensForgotPassword.Code ? (
+            <>
+              <View className="gap-[11.40px] items-center justify-center">
+                <Text className="font-interBold text-[24px] text-white">
+                  Esqueceu a Senha?
+                </Text>
+                <Text className="font-interRegular text-[14px] text-white/60 text-center">
+                  Não se preocupe! Informe seu e-mail cadastrado para receber as
+                  instruções de recuperação.
+                </Text>
+              </View>
+
+              <InputUI
+                placeholder={"seu@email.com"}
+                leftIcon
+                keyboardType="email-address"
+                iconSize={24}
+                iconNameProps={"mail"}
+                type={"email"}
+              />
+
+              <ButtonUI
+                onPress={() => {}}
+                gradient={false}
+                bg="bg-[#135BEC]"
+                hover={false}
+                size="w-full h-[56px]"
+                children={
+                  <View className="flex-1 justify-center items-center">
+                    <Text className="text-[16px] font-interBold text-white">
+                      Enviar códiogo
+                    </Text>
+                  </View>
+                }
+              />
+              <ButtonUI
+                bg="bg-transparent"
+                gradient={false}
+                hover={false}
+                shadow="shadow-custom"
+                onPress={() => {}}
+                children={
+                  <View
+                    style={{ gap: 8 }}
+                    className="flex-row items-center gap-2"
+                  >
+                    <MaterialIcons
+                      name="arrow-forward"
+                      size={20}
+                      style={{ transform: [{ rotate: "-180deg" }] }}
+                      color={"rgba(255,255,255,0.5)"}
+                    />
+                    <Text className="font-inter text-[14px] text-white/50">
+                      Voltar para o Login
+                    </Text>
+                  </View>
+                }
+              />
+            </>
+          ) : (
+            <>
+              <View className="gap-[11.40px] items-center justify-center">
+                <Text className="font-interBold text-[24px] text-white">
+                  Esqueceu a Senha?
+                </Text>
+                <Text className="font-interRegular text-[14px] text-white/60 text-center">
+                  Não se preocupe! Informe seu e-mail cadastrado para receber as
+                  instruções de recuperação.
+                </Text>
+              </View>
+
+              <InputUI
+                placeholder={"seu@email.com"}
+                leftIcon
+                keyboardType="email-address"
+                iconSize={24}
+                iconNameProps={"mail"}
+                type={"email"}
+              />
+
+              <ButtonUI
+                onPress={() => {}}
+                gradient={false}
+                bg="bg-[#135BEC]"
+                hover={false}
+                size="w-full h-[56px]"
+                children={
+                  <View className="flex-1 justify-center items-center">
+                    <Text className="text-[16px] font-interBold text-white">
+                      Enviar códiogo
+                    </Text>
+                  </View>
+                }
+              />
+              <ButtonUI
+                bg="bg-transparent"
+                gradient={false}
+                hover={false}
+                shadow="shadow-custom"
+                onPress={() => {}}
+                children={
+                  <View
+                    style={{ gap: 8 }}
+                    className="flex-row items-center gap-2"
+                  >
+                    <MaterialIcons
+                      name="arrow-forward"
+                      size={20}
+                      style={{ transform: [{ rotate: "-180deg" }] }}
+                      color={"rgba(255,255,255,0.5)"}
+                    />
+                    <Text className="font-inter text-[14px] text-white/50">
+                      Voltar para o Login
+                    </Text>
+                  </View>
+                }
+              />
+            </>
+          )}
         </View>
       </SafeAreaView>
     </LinearGradient>
