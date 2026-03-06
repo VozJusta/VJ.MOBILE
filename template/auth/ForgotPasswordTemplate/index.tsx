@@ -10,8 +10,9 @@ import {
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
 import React, { useState } from "react";
-import { screensEnabled } from "react-native-screens";
+import { useRouter } from "expo-router";
 export function ForgotPasswordTemplate({ screen }: IdScreen) {
+  const router = useRouter();
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -25,7 +26,13 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
           <ButtonUI
             goBack
             size="w-[40px] h-[40px]"
-            onPress={() => {}}
+            onPress={() => {
+              screen === ScreensForgotPassword.Email
+                ? ""
+                : screen === ScreensForgotPassword.Code
+                  ? router.replace("/screens/auth/ForgotPassword/Email")
+                  : router.replace("/screens/auth/ForgotPassword/Code");
+            }}
             gradient={false}
             hover={false}
           />
@@ -35,7 +42,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
           style={{
             boxShadow: "0px 25px 50px -12px rgba(0,0,0,0.25)",
           }}
-          className="w-full gap-[32px] bg-white/5 rounded-xl min-h-[406px] flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] px-4 py-8"
+          className="w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] px-4 py-8"
         >
           {screen === ScreensForgotPassword.Email ? (
             <>
@@ -59,7 +66,9 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
               />
 
               <ButtonUI
-                onPress={() => {}}
+                onPress={() =>
+                  router.replace("/screens/auth/ForgotPassword/Code")
+                }
                 gradient={false}
                 bg="bg-[#135BEC]"
                 hover={false}
@@ -99,12 +108,11 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
           ) : screen === ScreensForgotPassword.Code ? (
             <>
               <View className="gap-[11.40px] items-center justify-center">
-                <Text className="font-interBold text-[24px] text-white">
-                  Esqueceu a Senha?
-                </Text>
+                <View className="w-[64px] h-[64px] flex justify-center items-center bg-[#135BEC] opacity-10 rounded-full">
+                  <MaterialIcons />
+                </View>
                 <Text className="font-interRegular text-[14px] text-white/60 text-center">
-                  Não se preocupe! Informe seu e-mail cadastrado para receber as
-                  instruções de recuperação.
+                  Verificação de Email
                 </Text>
               </View>
 
