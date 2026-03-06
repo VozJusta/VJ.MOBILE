@@ -16,4 +16,5 @@ export interface IInputProps {
   onChangeText?: (text: string) => void;
   onRightIconPress?: () => void;
   iconColor?: string;
+  inputOTP?: boolean
 }
