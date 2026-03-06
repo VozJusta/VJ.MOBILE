@@ -1,6 +1,7 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IInputProps } from "../../interfaces/ui/InputUI";
+import { OtpInput } from "react-native-otp-entry";
 
 export default function InputUI({
   label,
@@ -16,9 +17,30 @@ export default function InputUI({
   value,
   onChangeText,
   onRightIconPress,
+  inputOTP,
   ...restProps
 }: IInputProps) {
-  return (
+  return inputOTP ? (
+    <OtpInput
+      numberOfDigits={6}
+      theme={{
+        containerStyle: {
+          gap: 10,
+        },
+        pinCodeTextStyle: {
+          color: "#FAFAFA",
+        },
+        pinCodeContainerStyle: {
+          backgroundColor: "rgba(255,255,255,0.03)",
+          width: 41.5,
+          height: 41.5,
+          borderRadius: 16,
+          borderColor: "rgba(255,255,255,0.1)",
+        },
+      }}
+      focusColor={"#FFB74D"}
+    />
+  ) : (
     <View className="w-full mb-[24px]">
       {!!label && (
         <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
