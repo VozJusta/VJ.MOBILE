@@ -109,7 +109,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
               </>
             ) : screen === ScreensForgotPassword.Code ? (
               <>
-                <View className="gap-[16px] items-center justify-center">
+                <View className="gap-[16px] items-center justify-center mb-[40px]">
                   <View className="w-[64px] h-[64px] flex justify-center items-center bg-[rgba(19,91,236,0.1)] rounded-full">
                     <Shield width={30} height={36} />
                   </View>
@@ -122,45 +122,32 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                 </View>
 
                 <InputUI
-                    inputOTP placeholder={""} iconSize={0} iconNameProps={"sort"} type={"email"}                />
-
-                <ButtonUI
-                  onPress={() => {}}
-                  gradient={false}
-                  bg="bg-[#135BEC]"
-                  hover={false}
-                  size="w-full h-[56px]"
-                  children={
-                    <View className="flex-1 justify-center items-center">
-                      <Text className="text-[16px] font-interBold text-white">
-                        Enviar códiogo
-                      </Text>
-                    </View>
-                  }
+                  inputOTP
+                  placeholder={""}
+                  iconSize={0}
+                  iconNameProps={"sort"}
+                  type={"email"}
                 />
-                <ButtonUI
-                  bg="bg-transparent"
-                  gradient={false}
-                  hover={false}
-                  shadow="shadow-custom"
-                  onPress={() => {}}
-                  children={
-                    <View
-                      style={{ gap: 8 }}
-                      className="flex-row items-center gap-2"
-                    >
-                      <MaterialIcons
-                        name="arrow-forward"
-                        size={20}
-                        style={{ transform: [{ rotate: "-180deg" }] }}
-                        color={"rgba(255,255,255,0.5)"}
-                      />
-                      <Text className="font-inter text-[14px] text-white/50">
-                        Voltar para o Login
-                      </Text>
-                    </View>
-                  }
-                />
+                <Text className="font-inter text-[12px] text-[rgba(96,165,250,8)]">
+                  O código expira em{" "}
+                  <Text className="font-interBold"> 04:59 </Text>
+                </Text>
+                <View className="w-full pb-[16px]">
+                  <ButtonUI
+                    onPress={() => {}}
+                    gradient={false}
+                    bg="bg-[#135BEC]"
+                    hover={false}
+                    size="w-full h-[56px]"
+                    children={
+                      <View className="flex-1 justify-center items-center">
+                        <Text className="text-[16px] font-interBold text-white">
+                          Verificar Email
+                        </Text>
+                      </View>
+                    }
+                  />
+                </View>
               </>
             ) : (
               <>
@@ -223,6 +210,16 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
               </>
             )}
           </View>
+          {screen === ScreensForgotPassword.Code && (
+            <View className="mt-[32px] flex-row gap-[4px]">
+              <Text className=" font-inter text-[14px] text-[#64748B]">
+                Não recebeu o código?
+              </Text>
+              <Text className=" font-interBold text-[14px] text-white underline">
+                Reenviar
+              </Text>
+            </View>
+          )}
         </View>
       </SafeAreaView>
     </LinearGradient>
