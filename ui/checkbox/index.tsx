@@ -8,7 +8,7 @@ type Props = {
     children?: React.ReactNode;
 };
 
-export function Checkbox({ value, onChange, children }: Props) {
+export default function Checkbox({ value, onChange, children }: Props) {
     return (
         <View className="flex-row items-start gap-[12px] mt-[32px]">
 

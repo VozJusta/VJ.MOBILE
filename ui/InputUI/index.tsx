@@ -1,22 +1,86 @@
-import { TextInput, View, Text } from "react-native";
-import { InputProps } from "../../interfaces/interfaces";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { IInputProps } from "../../interfaces/ui/InputUI";
+import { OtpInput } from "react-native-otp-entry";
 
-export function InputUI({ icon = false, ...props }: InputProps) {
-  return icon ? (
-    <View className={`w-full gap-[13px] ${props.height} px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center`}>
-      <MaterialIcons
-        name={props.iconNameProps}
-        size={props.iconSize}
-        color={"#64748B"}
-      />
-      <TextInput
-        className="w-[80%] h-full  bg-transparent"
-        placeholderTextColor={"#475569"}
-        placeholder={`${props.placeholder}`}
-      />
-    </View>
+export default function InputUI({
+  label,
+  leftIcon,
+  rightIcon,
+  rightIconName,
+  iconSize,
+  iconNameProps,
+  iconColor,
+  placeholder,
+  keyboardType,
+  secureTextEntry,
+  value,
+  onChangeText,
+  onRightIconPress,
+  inputOTP,
+  ...restProps
+}: IInputProps) {
+  return inputOTP ? (
+    <OtpInput
+      numberOfDigits={6}
+      theme={{
+        containerStyle: {
+          gap: 10,
+        },
+        pinCodeTextStyle: {
+          color: "#FAFAFA",
+        },
+        pinCodeContainerStyle: {
+          backgroundColor: "rgba(255,255,255,0.03)",
+          width: 41.5,
+          height: 41.5,
+          borderRadius: 16,
+          borderColor: "rgba(255,255,255,0.1)",
+        },
+      }}
+      focusColor={"#FFFF"}
+    />
   ) : (
-    <View></View>
+    <View className="w-full ">
+      {!!label && (
+        <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+          {label}
+        </Text>
+      )}
+
+      <View
+        className={`w-full gap-[13px] h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center`}
+      >
+        {leftIcon && (
+          <MaterialIcons name={iconNameProps} size={iconSize} color={"#fff"} />
+        )}
+
+        <TextInput
+          className="w-[80%] h-full bg-transparent text-white font-interRegular"
+          style={{ fontSize: 14 }}
+          placeholderTextColor={"#475569"}
+          placeholder={placeholder}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          value={value}
+          onChangeText={onChangeText}
+          {...restProps}
+        />
+
+        {rightIcon && (
+          <TouchableOpacity
+            className="absolute right-4"
+            onPress={onRightIconPress}
+            disabled={!onRightIconPress}
+          >
+            <MaterialIcons
+              name={rightIconName || iconNameProps}
+              size={iconSize}
+              color={iconColor || "#fff"}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
   );
 }
