@@ -38,7 +38,7 @@ export default function InputUI({
           borderColor: "rgba(255,255,255,0.1)",
         },
       }}
-      focusColor={"#FFB74D"}
+      focusColor={"#FFFF"}
     />
   ) : (
     <View className="w-full mb-[24px]">
