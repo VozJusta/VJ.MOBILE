@@ -10,11 +10,34 @@ import {
   IdScreen,
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 export function ForgotPasswordTemplate({ screen }: IdScreen) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
+  const [secondsLeft, setSecondsLeft] = useState(5 * 60);
+
+  useEffect(() => {
+    if (screen !== ScreensForgotPassword.Code) {
+      return;
+    }
+
+    setSecondsLeft(5 * 60);
+    const intervalId = setInterval(() => {
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [screen]);
+
+  const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -45,7 +68,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
             style={{
               boxShadow: "0px 25px 50px -12px rgba(0,0,0,0.25)",
             }}
-            className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${ screen === ScreensForgotPassword.Update? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
+            className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
           >
             {screen === ScreensForgotPassword.Email ? (
               <>
@@ -89,7 +112,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   gradient={false}
                   hover={false}
                   shadow="shadow-custom"
-                  onPress={() => {}}
+                  onPress={() => { }}
                   children={
                     <View
                       style={{ gap: 8 }}
@@ -131,7 +154,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                 />
                 <Text className="font-inter text-[12px] text-[rgba(96,165,250,8)]">
                   O código expira em{" "}
-                  <Text className="font-interBold"> 04:59 </Text>
+                  <Text className="font-interBold"> {timerLabel} </Text>
                 </Text>
                 <View className="w-full pb-[16px]">
                   <ButtonUI
@@ -162,7 +185,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                 </View>
 
                 <InputUI
-                label="Nova senha"
+                  label="Nova senha"
                   placeholder={"••••••••"}
                   leftIcon
                   keyboardType="visible-password"
@@ -172,10 +195,10 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   secureTextEntry={true}
                   rightIcon
                   rightIconName="visibility"
-                  onRightIconPress={() => {}}
+                  onRightIconPress={() => { }}
                 />
                 <InputUI
-                label="Confirme a nova senha"
+                  label="Confirme a nova senha"
                   placeholder={"••••••••"}
                   leftIcon
                   keyboardType="visible-password"
@@ -185,43 +208,43 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   type={"password"}
                   rightIcon
                   rightIconName="visibility"
-                  onRightIconPress={() => {}}
+                  onRightIconPress={() => { }}
                 />
                 <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
-                              <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
-                                Força da Segurança
-                              </Text>
-                
-                              <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                                <Animated.View
-                                  className="h-full rounded-full"
-                                  style={{
-                                    width: animatedWidth.interpolate({
-                                      inputRange: [0, 100],
-                                      outputRange: ["0%", "100%"],
-                                    }),
-                                    backgroundColor: props.passwordStrength.color,
-                                  }}
-                                />
-                              </View>
-                
-                              <View className="flex-row gap-[90px] mt-[8px]">
-                                <View className="flex-col">
-                                  {props.passwordStrength.checklist.slice(0, 2).map((item) => (
-                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                                  ))}
-                                </View>
-                                <View className="flex-col">
-                                  {props.passwordStrength.checklist.slice(2, 4).map((item) => (
-                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                                  ))}
-                                </View>
-                              </View>
-                            </View>
-                          )
+                  <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
+                    Força da Segurança
+                  </Text>
+
+                  <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
+                    <Animated.View
+                      className="h-full rounded-full"
+                      style={{
+                        width: animatedWidth.interpolate({
+                          inputRange: [0, 100],
+                          outputRange: ["0%", "100%"],
+                        }),
+                        backgroundColor: props.passwordStrength.color,
+                      }}
+                    />
+                  </View>
+
+                  <View className="flex-row gap-[90px] mt-[8px]">
+                    <View className="flex-col">
+                      {props.passwordStrength.checklist.slice(0, 2).map((item) => (
+                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                      ))}
+                    </View>
+                    <View className="flex-col">
+                      {props.passwordStrength.checklist.slice(2, 4).map((item) => (
+                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                      ))}
+                    </View>
+                  </View>
+                </View>
+                )
 
                 <ButtonUI
-                  onPress={() => {}}
+                  onPress={() => { }}
                   gradient={true}
                   hover={false}
                   children={
@@ -232,7 +255,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                     </View>
                   }
                 />
-            
+
               </>
             )}
           </View>
