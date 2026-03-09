@@ -2,17 +2,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../../assets/svg/icons/logo.svg";
-import ButtonUI from "../../../../ui/Button";
+import Button from "../../../../ui/Button";
 import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "../../../../assets/svg/icons/active-account-balace.svg";
-import { router, useNavigation, useRouter } from "expo-router";
+import { router } from "expo-router";
 
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
-  const navigation = useNavigation();
+
   return (
     <LinearGradient
       className="flex-1 items-center pt-[90px]"
@@ -33,19 +33,18 @@ export default function SelectionUserRole() {
         <Text className="text-[14px] font-inter text-white mt-[8px]">
           Para começar, quem você é?
         </Text>
-        <View className="w-full px-[16px] items-center mt-[36px] gap-8">
-          <ButtonUI
+        <View className="w-full flex-1 items-center mt-[36px] gap-8 px-16">
+          <Button
             hover
-            size="w-full h-[103px]"
+            size="min-w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
-            bg="bg-white"
             onPress={() => {
               setActiveCitizen(!activeCitizen);
               setActiveLawyer(false);
             }}
             children={
-              <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
+              <View className="flex-1 items-center flex-row gap-[20px] px-[20px]">
                 <View
                   className={`rounded-[12px] ${activeCitizen ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
                 >
@@ -70,12 +69,11 @@ export default function SelectionUserRole() {
               </View>
             }
           />
-          <ButtonUI
+          <Button
             hover
             size="w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
-            bg="bg-white"
             onPress={() => {
               setActiveLawyer(!activeLawyer);
               setActiveCitizen(false);
@@ -105,14 +103,14 @@ export default function SelectionUserRole() {
                 </View>
               </View>
             }
+
           />
-        </View>
-        <View className="w-full px-4  mt-[72px]">
-          <ButtonUI
-            gradient
+            <Button
+            gradient={true}
+            size="w-full"
             children={
               <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
-                <Text className="text-white font-interBold text-[14px]">
+                <Text className="text-white font-interBold text-[16px]">
                   Começar agora
                 </Text>
                 <MaterialIcons
@@ -124,13 +122,16 @@ export default function SelectionUserRole() {
             }
             onPress={() => {
               if (activeCitizen) {
-                router.push("/screens/Authentication/Citizen");
+                router.push("/screens/auth/Citizen");
               } else if (activeLawyer) {
-                router.push("/screens/Authentication/Lawyer");
+                router.push("/screens/auth/Lawyer");
               }
             }}
             hover={false}
           />
+        </View>
+        <View className="w-full px-4  mt-[72px]">
+          
         </View>
       </SafeAreaView>
     </LinearGradient>

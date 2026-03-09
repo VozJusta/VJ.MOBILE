@@ -1,14 +1,11 @@
-import type { ReactNode } from 'react';
-import { TextInputProps } from 'react-native';
-export interface ButtonProps {
-  children?: ReactNode;
-  goNext?: boolean;
-  bg?: string;
-  active?: boolean;
-  onPress: () => void;
-  gradient: boolean;
-  size?: string;
-  hover:boolean;
+export interface IdScreen {
+  screen: ScreensForgotPassword
+}
+
+export enum ScreensForgotPassword {
+  Email = "EMAIL",
+  Code = "CODE",
+  Update = "UPDATE",
 }
 
 export interface OnboardingRef {
@@ -16,16 +13,17 @@ export interface OnboardingRef {
   goToPage: (pageIndex: number, animated?: boolean) => void;
 }
 
-
-export interface AppInputProps extends TextInputProps {
-  label: string;
-  type?: "name" | "cpf" | "phone" | "email" | "password" | "OAB";
-  rightIcon?: ReactNode;
-} 
-
 export interface UfSelectProps {
-  label: String;
-  value: String;
-  onValueChange: (value: String) => void;
+  label: string;
+  value: string;
+  style?: Object;
+  onValueChange: (value: string) => void;
 }
 
+
+export interface CareerSelectProps {
+  label: string;
+  values: string[];
+  options: string[];
+  onValuesChange: (values: string[]) => void;
+}
