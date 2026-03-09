@@ -45,8 +45,7 @@ export function ForgotPasswordTemplate({screen}:IdScreen) {
           <InputUI
             iconNameProps="mail"
             iconSize={20}
-            placeholder="seu@email.com"
-          />
+            placeholder="seu@email.com" type={"text"}          />
 
             <Button
               onPress={() => {}}

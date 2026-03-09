@@ -1,20 +1,24 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import BackButton from "../../../ui/BackButton";
 import { Checkbox } from "../../../ui/checkbox";
 import { router } from "expo-router";
-import { CareerSelectProps, UfSelectProps } from "../../../interfaces/interfaces";
+import {
+  CareerSelectProps,
+  UfSelectProps,
+} from "../../../interfaces/interfaces";
 import Button from "../../../ui/Button";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import UfSelect from "../../../ui/ufSelect/ufSelect";
 import CareerSelect from "../../../ui/careerSelect";
 import Input from "../../../ui/input";
-import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
-import CheckListFunction from "../../../ui/CheckListFunction";
-
-
+import {
+  FieldsType,
+  ISignInTemplateProps,
+} from "../../../interfaces/template/SignInTemplate";
+import PasswordStrength from "../../../components/passwordStrengh";
 
 function isUfField(field: FieldsType): field is UfSelectProps {
   return "onValueChange" in field && !("onValuesChange" in field);
@@ -26,27 +30,16 @@ function isCareerField(field: FieldsType): field is CareerSelectProps {
 
 export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const animatedWidth = useRef(new Animated.Value(0)).current;
   const isLoginLayout = props.layout === "login";
   const showHeader = props.showHeader ?? true;
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
   const footerActionText = props.footerActionText ?? "Fazer Login";
   const footerActionRoute = props.footerActionRoute ?? "/screens/auth/SingIn";
-  const footerActionTextClassName = props.footerActionTextClassName ?? "text-blue-500 underline font-semibold";
-  const forgotPasswordRoute = props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
-
-  useEffect(() => {
-    const percentage = props.passwordStrength
-      ? (props.passwordStrength.score / 5) * 100
-      : 0;
-
-    Animated.timing(animatedWidth, {
-      toValue: percentage,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  }, [animatedWidth, props.passwordStrength]);
+  const footerActionTextClassName =
+    props.footerActionTextClassName ?? "text-blue-500 underline font-semibold";
+  const forgotPasswordRoute =
+    props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
 
   return (
     <LinearGradient
@@ -59,7 +52,12 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={
           isLoginLayout
-            ? { paddingBottom: 40, paddingTop: 24, flexGrow: 1, justifyContent: "center" }
+            ? {
+                paddingBottom: 40,
+                paddingTop: 24,
+                flexGrow: 1,
+                justifyContent: "center",
+              }
             : { paddingBottom: 40 }
         }
       >
@@ -71,10 +69,11 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
         )}
 
         <View
-          className={`${isLoginLayout
+          className={`${
+            isLoginLayout
               ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
               : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
-            }`}
+          }`}
         >
           <View className="flex-col gap-2">
             <Text className="text-white text-[24px] font-interBold ">
@@ -113,41 +112,14 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
               return <Input key={index} {...field} />;
             })}
-
           </View>
 
           {!!props.passwordStrength && (
-            <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
-              <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
-                Força da Segurança
-              </Text>
-
-              <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                <Animated.View
-                  className="h-full rounded-full"
-                  style={{
-                    width: animatedWidth.interpolate({
-                      inputRange: [0, 100],
-                      outputRange: ["0%", "100%"],
-                    }),
-                    backgroundColor: props.passwordStrength.color,
-                  }}
-                />
-              </View>
-
-              <View className="flex-row gap-[90px] mt-[8px]">
-                <View className="flex-col">
-                  {props.passwordStrength.checklist.slice(0, 2).map((item) => (
-                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                  ))}
-                </View>
-                <View className="flex-col">
-                  {props.passwordStrength.checklist.slice(2, 4).map((item) => (
-                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                  ))}
-                </View>
-              </View>
-            </View>
+            <PasswordStrength
+              score={props.passwordStrength.score}
+              color={props.passwordStrength.color}
+              checklist={props.passwordStrength.checklist}
+            />
           )}
 
           <View className=" flex-col gap-[24px]">
@@ -182,7 +154,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
             )}
 
             <Button
-              onPress={() => { }}
+              onPress={() => {}}
               gradient={true}
               bg="bg-[#135BEC]"
               hover={false}
@@ -206,7 +178,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
                 <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
                   <GoogleIcon width={24} height={24} />
-                  <Text className="text-white text-[24px] font-interBold">Google</Text>
+                  <Text className="text-white text-[24px] font-interBold">
+                    Google
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
