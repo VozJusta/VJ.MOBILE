@@ -11,7 +11,7 @@ type Props = {
 export function Checkbox({ value, onChange, children }: Props) {
 
   return (
-    <View className="flex-row items-start gap-[12px] mt-[32px]">
+    <View className="flex-row items-start gap-[12px] mt-[24px]">
       <TouchableOpacity onPress={() => onChange(!value)} activeOpacity={0.8}>
         <View
           className={`w-[20px] h-[20px] rounded border items-center justify-center ${

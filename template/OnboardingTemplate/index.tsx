@@ -79,6 +79,7 @@ export default function OnboardingTemplate() {
               <Button
                 gradient={false}
                 goNext
+                size="w-[56px] h-[56px]"
                 onPress={() => router.replace("/screens/Onboarding/roles")}
                 hover={false}
               />
