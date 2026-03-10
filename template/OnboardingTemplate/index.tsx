@@ -1,10 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import {
+  Text,
+  View,
+} from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import ButtonUI from "../../ui/ButtonUI";
+import Button from "../../ui/ButtonUI";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnboardingTemplate() {
@@ -40,12 +43,13 @@ export default function OnboardingTemplate() {
       colors={["#000000", "#052F5F"]}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <View className="w-full items-end mb-16">
-          <ButtonUI
+        <View className="items-end w-full mb-16">
+          <Button
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
+            size="w-[56px] h-[56px]"
             children={
-              <Text className="text-white text-[16px] font-inter pr-[16px]">
+              <Text className="text-white text-[16px] font-inter absolute top-[-30px] right-[16px]">
                 Pular
               </Text>
             }
@@ -72,16 +76,16 @@ export default function OnboardingTemplate() {
             bottomBarHeight={100}
             controlStatusBar={false}
             DoneButtonComponent={() => (
-              <ButtonUI
+              <Button
                 gradient={false}
                 goNext
+                size="w-[56px] h-[56px]"
                 onPress={() => router.replace("/screens/Onboarding/roles")}
                 hover={false}
-                size="w-[56px] h-[56px]"
               />
             )}
             NextButtonComponent={() => (
-              <ButtonUI
+              <Button
                 gradient={false}
                 goNext
                 onPress={() => ref.current?.goNext()}
@@ -95,5 +99,6 @@ export default function OnboardingTemplate() {
         </View>
       </SafeAreaView>
     </LinearGradient>
+
   );
 }

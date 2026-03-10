@@ -1,5 +1,8 @@
-export interface IdScreen {
+import { PasswordStrengthSection } from "./template/SignInTemplate";
+
+export interface ForgotPasswordProps {
   screen: ScreensForgotPassword
+  passwordStrength?: PasswordStrengthSection;
 }
 
 export enum ScreensForgotPassword {
@@ -20,6 +23,13 @@ export interface UfSelectProps {
   onValueChange: (value: string) => void;
 }
 
+
+export interface CareerSelectProps {
+  label: string;
+  values: string[];
+  options: string[];
+  onValuesChange: (values: string[]) => void;
+}
 
 export interface CareerSelectProps {
   label: string;
