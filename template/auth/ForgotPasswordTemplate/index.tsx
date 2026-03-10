@@ -215,7 +215,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
               <Text className=" font-inter text-[14px] text-[#64748B]">
                 Não recebeu o código?
               </Text>
-              <Text className=" font-interBold text-[14px] text-white underline">
+              <Text className=" font-interBold text-[14px] text-white underline v">
                 Reenviar
               </Text>
             </View>
