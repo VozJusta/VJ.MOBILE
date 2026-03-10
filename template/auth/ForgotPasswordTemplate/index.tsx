@@ -55,7 +55,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
               size="w-[40px] h-[40px]"
               onPress={() => {
                 screen === ScreensForgotPassword.Email
-                  ? ""
+                  ? router.replace("/screens/auth/SingIn")
                   : screen === ScreensForgotPassword.Code
                     ? router.replace("/screens/auth/ForgotPassword/Email")
                     : router.replace("/screens/auth/ForgotPassword/Code");
