@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SignInTemplate from "../../../../template/auth/signInTemplate";
+import SignInTemplate from "../../../../template/auth/SingInTemplate";
 import { getInitialSignInData } from "./data";
 
 export default function SignIn() {

@@ -7,13 +7,13 @@ import InputUI from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Shield from "../../../assets/svg/icons/shield.svg";
 import {
-  ForgotPasswordProps,
+  IForgotPasswordProps,
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import PasswordStrength from "../../../components/passwordStrengh";
-export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswordProps) {
+export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
@@ -159,7 +159,9 @@ export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswor
                 </Text>
                 <View className="w-full pb-[16px]">
                   <ButtonUI
-                    onPress={() => router.replace("/screens/auth/ForgotPassword/Update")}
+                    onPress={() =>
+                      router.replace("/screens/auth/ForgotPassword/Update")
+                    }
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}
@@ -184,7 +186,6 @@ export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswor
                     Crie uma nova senha forte para proteger sua conta
                   </Text>
                 </View>
-
                 <InputUI
                   label="Nova senha"
                   placeholder={"••••••••"}
@@ -211,8 +212,7 @@ export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswor
                   rightIconName="visibility"
                   onRightIconPress={() => { }}
                 />
-                <PasswordStrength score={passwordStrength?.score || 0} color={passwordStrength?.color || ""} checklist={passwordStrength?.checklist ||  []} />
-
+               { passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist}/>}
                 <ButtonUI
                   onPress={() => { }}
                   gradient={true}
@@ -225,7 +225,6 @@ export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswor
                     </View>
                   }
                 />
-
               </>
             )}
           </View>
@@ -234,7 +233,7 @@ export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswor
               <Text className=" font-inter text-[14px] text-[#64748B]">
                 Não recebeu o código?
               </Text>
-              <Text className=" font-interBold text-[14px] text-white underline">
+              <Text className=" font-interBold text-[14px] text-white underline v">
                 Reenviar
               </Text>
             </View>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SignInTemplate from "../../../../../template/auth/SingInTemplate";
 import { getInitialCitizenData } from "./data";
-import passwordValidate from "../../../../utils/passwordValidate";
+import passwordValidate from "../../../../../utils/passwordValidate";
 
 export default function Citizen() {
   const [name, setName] = useState("");
@@ -13,13 +13,18 @@ export default function Citizen() {
   const strength = passwordValidate(password);
 
   const citizenData = getInitialCitizenData(
-    name, setName,
-    cpf, setCpf,
-    phone, setPhone,
-    email, setEmail,
-    password, setPassword,
+    name,
+    setName,
+    cpf,
+    setCpf,
+    phone,
+    setPhone,
+    email,
+    setEmail,
+    password,
+    setPassword,
     showPassword,
-    () => setShowPassword((prev) => !prev)
+    () => setShowPassword((prev) => !prev),
   );
 
   return (
@@ -49,4 +54,4 @@ export default function Citizen() {
       }}
     />
   );
-} 
+}

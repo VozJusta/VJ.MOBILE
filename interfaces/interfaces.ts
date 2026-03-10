@@ -1,6 +1,7 @@
-import { PasswordStrengthSection } from "./template/SignInTemplate";
+import { PasswordStrengthSection } from "./components/PasswordStrengh";
 
-export interface ForgotPasswordProps {
+
+export interface IForgotPasswordProps {
   screen: ScreensForgotPassword
   passwordStrength?: PasswordStrengthSection;
 }
@@ -23,13 +24,6 @@ export interface UfSelectProps {
   onValueChange: (value: string) => void;
 }
 
-
-export interface CareerSelectProps {
-  label: string;
-  values: string[];
-  options: string[];
-  onValuesChange: (values: string[]) => void;
-}
 
 export interface CareerSelectProps {
   label: string;

@@ -15,16 +15,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full mt-[61px]">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full  min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
@@ -76,16 +78,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full mt-[61px]">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
@@ -136,16 +140,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
