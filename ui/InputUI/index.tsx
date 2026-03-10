@@ -41,7 +41,7 @@ export default function InputUI({
       focusColor={"#FFFF"}
     />
   ) : (
-    <View className="w-full mb-[24px]">
+    <View className="w-full ">
       {!!label && (
         <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
           {label}
