@@ -7,12 +7,13 @@ import InputUI from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Shield from "../../../assets/svg/icons/shield.svg";
 import {
-  IdScreen,
+  IForgotPasswordProps,
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-export function ForgotPasswordTemplate({ screen }: IdScreen) {
+import PasswordStrength from "../../../components/passwordStrengh";
+export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
   return (
@@ -45,7 +46,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
             style={{
               boxShadow: "0px 25px 50px -12px rgba(0,0,0,0.25)",
             }}
-            className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${ screen === ScreensForgotPassword.Update? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
+            className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
           >
             {screen === ScreensForgotPassword.Email ? (
               <>
@@ -135,7 +136,9 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                 </Text>
                 <View className="w-full pb-[16px]">
                   <ButtonUI
-                    onPress={() => router.replace("/screens/auth/ForgotPassword/Update")}
+                    onPress={() =>
+                      router.replace("/screens/auth/ForgotPassword/Update")
+                    }
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}
@@ -160,9 +163,8 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                     Crie uma nova senha forte para proteger sua conta
                   </Text>
                 </View>
-
                 <InputUI
-                label="Nova senha"
+                  label="Nova senha"
                   placeholder={"••••••••"}
                   leftIcon
                   keyboardType="visible-password"
@@ -175,7 +177,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   onRightIconPress={() => {}}
                 />
                 <InputUI
-                label="Confirme a nova senha"
+                  label="Confirme a nova senha"
                   placeholder={"••••••••"}
                   leftIcon
                   keyboardType="visible-password"
@@ -187,39 +189,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   rightIconName="visibility"
                   onRightIconPress={() => {}}
                 />
-                <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
-                              <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
-                                Força da Segurança
-                              </Text>
-                
-                              <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                                <Animated.View
-                                  className="h-full rounded-full"
-                                  style={{
-                                    width: animatedWidth.interpolate({
-                                      inputRange: [0, 100],
-                                      outputRange: ["0%", "100%"],
-                                    }),
-                                    backgroundColor: props.passwordStrength.color,
-                                  }}
-                                />
-                              </View>
-                
-                              <View className="flex-row gap-[90px] mt-[8px]">
-                                <View className="flex-col">
-                                  {props.passwordStrength.checklist.slice(0, 2).map((item) => (
-                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                                  ))}
-                                </View>
-                                <View className="flex-col">
-                                  {props.passwordStrength.checklist.slice(2, 4).map((item) => (
-                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                                  ))}
-                                </View>
-                              </View>
-                            </View>
-                          )
-
+               { passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist}/>}
                 <ButtonUI
                   onPress={() => {}}
                   gradient={true}
@@ -232,7 +202,6 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                     </View>
                   }
                 />
-            
               </>
             )}
           </View>

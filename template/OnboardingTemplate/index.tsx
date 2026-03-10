@@ -40,7 +40,7 @@ export default function OnboardingTemplate() {
       colors={["#000000", "#052F5F"]}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <View className="w-full items-end mb-16">
+        <View className=" flex min-w-full items-end  mb-16">
           <ButtonUI
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
