@@ -1,13 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, TouchableOpacity } from "react-native";
-import { ButtonProps } from "../../interfaces/interfaces";
+import { IButtonProps } from "../../interfaces/ui/ButtonUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function ButtonUI({
   goNext = false,
   goBack = false,
   ...props
-}: ButtonProps) {
+}: IButtonProps) {
   return goNext || goBack ? (
     <TouchableOpacity
       className={` ${props.size} ${goNext ? "bg-BlueAzure" : "bg-white/5"} ${goBack && "border border-solid border-white/10"} rounded-full justify-center items-center `}

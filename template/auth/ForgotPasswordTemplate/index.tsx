@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text } from "react-native";
+import { View, Text, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
@@ -10,10 +10,11 @@ import {
   IdScreen,
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
 export function ForgotPasswordTemplate({ screen }: IdScreen) {
   const router = useRouter();
+  const animatedWidth = useRef(new Animated.Value(0)).current;
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -44,7 +45,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
             style={{
               boxShadow: "0px 25px 50px -12px rgba(0,0,0,0.25)",
             }}
-            className="w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] px-4 py-8"
+            className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${ screen === ScreensForgotPassword.Update? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
           >
             {screen === ScreensForgotPassword.Email ? (
               <>
@@ -134,7 +135,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                 </Text>
                 <View className="w-full pb-[16px]">
                   <ButtonUI
-                    onPress={() => {}}
+                    onPress={() => router.replace("/screens/auth/ForgotPassword/Update")}
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}
@@ -151,62 +152,87 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
               </>
             ) : (
               <>
-                <View className="gap-[11.40px] items-center justify-center">
+                <View className="gap-[7px] w-full items-start">
                   <Text className="font-interBold text-[24px] text-white">
-                    Esqueceu a Senha?
+                    Nova senha
                   </Text>
-                  <Text className="font-interRegular text-[14px] text-white/60 text-center">
-                    Não se preocupe! Informe seu e-mail cadastrado para receber
-                    as instruções de recuperação.
+                  <Text className="font-interRegular text-[14px] max-w-[300px] text-white/60 ">
+                    Crie uma nova senha forte para proteger sua conta
                   </Text>
                 </View>
 
                 <InputUI
-                  placeholder={"seu@email.com"}
+                label="Nova senha"
+                  placeholder={"••••••••"}
                   leftIcon
-                  keyboardType="email-address"
+                  keyboardType="visible-password"
                   iconSize={24}
-                  iconNameProps={"mail"}
-                  type={"email"}
+                  iconNameProps={"lock"}
+                  type={"password"}
+                  secureTextEntry={true}
+                  rightIcon
+                  rightIconName="visibility"
+                  onRightIconPress={() => {}}
                 />
+                <InputUI
+                label="Confirme a nova senha"
+                  placeholder={"••••••••"}
+                  leftIcon
+                  keyboardType="visible-password"
+                  iconSize={24}
+                  iconNameProps={"lock"}
+                  secureTextEntry={true}
+                  type={"password"}
+                  rightIcon
+                  rightIconName="visibility"
+                  onRightIconPress={() => {}}
+                />
+                <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
+                              <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
+                                Força da Segurança
+                              </Text>
+                
+                              <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
+                                <Animated.View
+                                  className="h-full rounded-full"
+                                  style={{
+                                    width: animatedWidth.interpolate({
+                                      inputRange: [0, 100],
+                                      outputRange: ["0%", "100%"],
+                                    }),
+                                    backgroundColor: props.passwordStrength.color,
+                                  }}
+                                />
+                              </View>
+                
+                              <View className="flex-row gap-[90px] mt-[8px]">
+                                <View className="flex-col">
+                                  {props.passwordStrength.checklist.slice(0, 2).map((item) => (
+                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                                  ))}
+                                </View>
+                                <View className="flex-col">
+                                  {props.passwordStrength.checklist.slice(2, 4).map((item) => (
+                                    <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
+                                  ))}
+                                </View>
+                              </View>
+                            </View>
+                          )
 
                 <ButtonUI
                   onPress={() => {}}
-                  gradient={false}
-                  bg="bg-[#135BEC]"
+                  gradient={true}
                   hover={false}
-                  size="w-full h-[56px]"
                   children={
                     <View className="flex-1 justify-center items-center">
                       <Text className="text-[16px] font-interBold text-white">
-                        Enviar códiogo
+                        Redefinir senha
                       </Text>
                     </View>
                   }
                 />
-                <ButtonUI
-                  bg="bg-transparent"
-                  gradient={false}
-                  hover={false}
-                  shadow="shadow-custom"
-                  onPress={() => {}}
-                  children={
-                    <View
-                      style={{ gap: 8 }}
-                      className="flex-row items-center gap-2"
-                    >
-                      <MaterialIcons
-                        name="arrow-forward"
-                        size={20}
-                        style={{ transform: [{ rotate: "-180deg" }] }}
-                        color={"rgba(255,255,255,0.5)"}
-                      />
-                      <Text className="font-inter text-[14px] text-white/50">
-                        Voltar para o Login
-                      </Text>
-                    </View>
-                  }
-                />
+            
               </>
             )}
           </View>
