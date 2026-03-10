@@ -1,5 +1,9 @@
-export interface IdScreen {
+import { PasswordStrengthSection } from "./components/PasswordStrengh";
+
+
+export interface IForgotPasswordProps {
   screen: ScreensForgotPassword
+  passwordStrength?: PasswordStrengthSection;
 }
 
 export enum ScreensForgotPassword {

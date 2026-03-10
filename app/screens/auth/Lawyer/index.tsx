@@ -1,26 +1,34 @@
 import { useState } from "react";
-import SignInTemplate from "../../../../../template/auth/SingInTemplate";
-import { getInitialCitizenData } from "./data";
-import passwordValidate from "../../../../../utils/passwordValidate";
+import { formatCPF } from "../../../../utils/mask";
+import SignInTemplate from "../../../../template/auth/signInTemplate";
+import { getInitialLawyerData } from "./data";
+import passwordValidate from "../../../../utils/passwordValidate";
+import { formatOABNumber } from "../../../../utils/oabValidate";
 
-export default function Citizen() {
+export default function Lawyer() {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
-  const [phone, setPhone] = useState("");
+  const [oabNumber, setOabNumber] = useState("");
+  const [uf, setUf] = useState("");
+  const [specializations, setSpecializations] = useState<string[]>([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const strength = passwordValidate(password);
 
-  const citizenData = getInitialCitizenData(
+  const lawyerData = getInitialLawyerData(
     name,
     setName,
     cpf,
-    setCpf,
-    phone,
-    setPhone,
+    (text) => setCpf(formatCPF(text)),
+    oabNumber,
+    (text) => setOabNumber(formatOABNumber(text)),
     email,
     setEmail,
+    uf,
+    setUf,
+    specializations,
+    setSpecializations,
     password,
     setPassword,
     showPassword,
@@ -29,7 +37,7 @@ export default function Citizen() {
 
   return (
     <SignInTemplate
-      {...citizenData}
+      {...lawyerData}
       passwordStrength={{
         score: strength.score,
         color: strength.color,

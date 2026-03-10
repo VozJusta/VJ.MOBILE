@@ -2,25 +2,27 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../../assets/svg/icons/logo.svg";
-import ButtonUI from "../../../../ui/ButtonUI";
+import Button from "../../../../ui/ButtonUI";
 import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "../../../../assets/svg/icons/active-account-balace.svg";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
-  const navigation = useNavigation();
+
   return (
     <LinearGradient
-      className="flex-1 items-center pt-[90px]"
+      style={{ flex: 1, alignItems: "center", paddingTop: 90 }}
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
-      <SafeAreaView className="flex-col items-center" style={{ flex: 1 }}>
+      <SafeAreaView
+        style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
+      >
         <View className="flex-col items-center">
           <Logo width={70} height={51} />
           <Text className=" text-[36px] text-white font-montserratBold">
@@ -33,10 +35,10 @@ export default function SelectionUserRole() {
         <Text className="text-[14px] font-inter text-white mt-[8px]">
           Para começar, quem você é?
         </Text>
-        <View className="w-full px-[16px] items-center mt-[36px] gap-8">
-          <ButtonUI
+        <View className="w-full flex-1 items-center mt-[36px] gap-8 px-16">
+          <Button
             hover
-            size="w-full h-[103px]"
+            size="min-w-full h-[103px]"
             gradient={false}
             active={activeCitizen}
             onPress={() => {
@@ -44,7 +46,7 @@ export default function SelectionUserRole() {
               setActiveLawyer(false);
             }}
             children={
-              <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
+              <View className="flex-1 items-center flex-row gap-[20px] px-[20px]">
                 <View
                   className={`rounded-[12px] ${activeCitizen ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
                 >
@@ -69,7 +71,7 @@ export default function SelectionUserRole() {
               </View>
             }
           />
-          <ButtonUI
+          <Button
             hover
             size="w-full h-[103px]"
             gradient={false}
@@ -104,13 +106,12 @@ export default function SelectionUserRole() {
               </View>
             }
           />
-        </View>
-        <View className="w-full px-4  mt-[72px]">
-          <ButtonUI
-            gradient
+          <Button
+            gradient={true}
+            size="w-full"
             children={
               <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
-                <Text className="text-white font-interBold text-[14px]">
+                <Text className="text-white font-interBold text-[16px]">
                   Começar agora
                 </Text>
                 <MaterialIcons
@@ -122,14 +123,15 @@ export default function SelectionUserRole() {
             }
             onPress={() => {
               if (activeCitizen) {
-                router.push("/screens/Authentication/Citizen");
+                router.push("/screens/auth/Citizen");
               } else if (activeLawyer) {
-                router.push("/screens/auth/ForgotPassword/Email")
+                router.push("/screens/auth/Lawyer");
               }
             }}
             hover={false}
           />
         </View>
+        <View className="w-full px-4  mt-[72px]"></View>
       </SafeAreaView>
     </LinearGradient>
   );

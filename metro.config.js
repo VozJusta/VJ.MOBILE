@@ -1,13 +1,27 @@
 const { getDefaultConfig } = require("expo/metro-config");
-const { withNativeWind } = require('nativewind/metro');
- 
-let config = getDefaultConfig(__dirname)
+const { withNativeWind } = require("nativewind/metro");
+const path = require("path");
 
-config.transformer.babelTransformerPath = require.resolve("react-native-svg-transformer");
-config.resolver.assetExts = config.resolver.assetExts.filter(ext => ext !== "svg");
+let config = getDefaultConfig(__dirname);
+
+config.transformer.babelTransformerPath =
+  require.resolve("react-native-svg-transformer");
+config.resolver.assetExts = config.resolver.assetExts.filter(
+  (ext) => ext !== "svg",
+);
 config.resolver.sourceExts.push("svg");
 config.resolver.sourceExts.push("cjs");
 
-config = withNativeWind(config, { input: './global.css' })
+// Exclude pnpm cache directories
+config.resolver.blockList = [
+  /.*[\\\/]\.pnpm-cache[\\\/].*/,
+  /.*[\\\/]AppData[\\\/]Local[\\\/]pnpm-cache[\\\/].*/,
+  /.*[\\\/]pnpm-cache[\\\/]dlx[\\\/].*/,
+];
 
-module.exports = config
+config.watchFolders = [path.resolve(__dirname)];
+config.projectRoot = __dirname;
+
+config = withNativeWind(config, { input: "./global.css" });
+
+module.exports = config;
