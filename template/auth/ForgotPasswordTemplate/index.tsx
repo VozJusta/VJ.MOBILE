@@ -7,12 +7,13 @@ import InputUI from "../../../ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Shield from "../../../assets/svg/icons/shield.svg";
 import {
-  IdScreen,
+  ForgotPasswordProps,
   ScreensForgotPassword,
 } from "../../../interfaces/interfaces";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
-export function ForgotPasswordTemplate({ screen }: IdScreen) {
+import PasswordStrength from "../../../components/passwordStrengh";
+export function ForgotPasswordTemplate({screen,passwordStrength }: ForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
@@ -210,38 +211,7 @@ export function ForgotPasswordTemplate({ screen }: IdScreen) {
                   rightIconName="visibility"
                   onRightIconPress={() => { }}
                 />
-                <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
-                  <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
-                    Força da Segurança
-                  </Text>
-
-                  <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
-                    <Animated.View
-                      className="h-full rounded-full"
-                      style={{
-                        width: animatedWidth.interpolate({
-                          inputRange: [0, 100],
-                          outputRange: ["0%", "100%"],
-                        }),
-                        backgroundColor: props.passwordStrength.color,
-                      }}
-                    />
-                  </View>
-
-                  <View className="flex-row gap-[90px] mt-[8px]">
-                    <View className="flex-col">
-                      {props.passwordStrength.checklist.slice(0, 2).map((item) => (
-                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                      ))}
-                    </View>
-                    <View className="flex-col">
-                      {props.passwordStrength.checklist.slice(2, 4).map((item) => (
-                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                      ))}
-                    </View>
-                  </View>
-                </View>
-                )
+                <PasswordStrength score={passwordStrength?.score || 0} color={passwordStrength?.color || ""} checklist={passwordStrength?.checklist ||  []} />
 
                 <ButtonUI
                   onPress={() => { }}

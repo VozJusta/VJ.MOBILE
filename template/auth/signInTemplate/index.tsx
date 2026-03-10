@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
-import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
+// import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
-import { Checkbox } from "../../../ui/checkbox";
+import  Checkbox  from "../../../ui/checkbox";
 import { router } from "expo-router";
 import { CareerSelectProps, UfSelectProps } from "../../../interfaces/interfaces";
 import { useEffect, useRef, useState } from "react";
@@ -65,16 +65,16 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
         {showHeader && (
           <View className="flex-row justify-between items-center px-4 mb-8">
             <ButtonUI goBack onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }} gradient={false} hover={false} />
+                          throw new Error("Function not implemented.");
+                      } } gradient={false} hover={false} />
             <Logo width={40} height={29} />
           </View>
         )}
 
         <View
           className={`${isLoginLayout
-            ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
-            : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
+              ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
+              : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
             }`}
         >
           <View className="flex-col gap-2">
@@ -176,7 +176,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
             {props.showForgotPassword && (
               <Text
                 className="text-[#3B82F6] text-[12px] font-interBold underline text-right -mt-12 "
-                onPress={() => router.push("/screens/auth/ForgotPassword/Email")}
+                onPress={() => router.push(forgotPasswordRoute as any)}
               >
                 ESQUECI MINHA SENHA
               </Text>
