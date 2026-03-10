@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, TouchableOpacity } from "react-native";
-import { IButtonProps } from "../../interfaces/ui/ButtonUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { IButtonProps } from "../../interfaces/ui/ButtonUI";
 
 export default function ButtonUI({
   goNext = false,

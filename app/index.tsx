@@ -9,7 +9,6 @@ export default function App() {
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
 
-
   useEffect(() => {
     const anim = Animated.sequence([
       Animated.timing(scale, {
@@ -45,14 +44,14 @@ export default function App() {
         colors={["#000000", "#052F5F"]}
       >
         <SafeAreaView style={{ flex: 1 }}>
-        <Animated.View
-          style={{ transform: [{ scale }] }}
-          className="items-center justify-center"
-        >
-          <View className="flex justify-center items-center w-[812px] h-[804px] rounded-full bg-black800">
-            <Logo width={70} height={51} />
-          </View>
-        </Animated.View>
+          <Animated.View
+            style={{ transform: [{ scale }], flex: 1 }}
+            className="flex-1 items-center justify-center"
+          >
+            <View className="flex justify-center items-center w-[812px] h-[804px] rounded-full bg-black800">
+              <Logo width={70} height={51} />
+            </View>
+          </Animated.View>
         </SafeAreaView>
       </LinearGradient>
     </>
