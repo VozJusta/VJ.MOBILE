@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Keyboard } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { IInputProps } from "../../interfaces/ui/InputUI";
 import { OtpInput } from "react-native-otp-entry";

@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
-// import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
+import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
-import  Checkbox  from "../../../ui/checkbox";
+import Checkbox from "../../../ui/checkbox";
 import { router } from "expo-router";
 import { CareerSelectProps, UfSelectProps } from "../../../interfaces/interfaces";
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +31,6 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
   const footerActionText = props.footerActionText ?? "Fazer Login";
-  const footerActionRoute = props.footerActionRoute ?? "/screens/auth/SingIn";
   const footerActionTextClassName = props.footerActionTextClassName ?? "text-blue-500 underline font-semibold";
   const forgotPasswordRoute = props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
 
@@ -64,17 +63,15 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
       >
         {showHeader && (
           <View className="flex-row justify-between items-center px-4 mb-8">
-            <ButtonUI goBack onPress={function (): void {
-                          throw new Error("Function not implemented.");
-                      } } gradient={false} hover={false} />
+            <ButtonUI goBack size="h-[40px] w-[40px]" onPress={() => router.replace("/screens/Onboarding/roles")} gradient={false} hover={false} />
             <Logo width={40} height={29} />
           </View>
         )}
 
         <View
           className={`${isLoginLayout
-              ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
-              : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
+            ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
+            : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
             }`}
         >
           <View className="flex-col gap-2">
@@ -175,7 +172,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
             {props.showForgotPassword && (
               <Text
-                className="text-[#3B82F6] text-[12px] font-interBold underline text-right -mt-12 "
+                className="text-[#60A5FA] text-[12px] font-interBold underline text-right  "
                 onPress={() => router.push(forgotPasswordRoute as any)}
               >
                 ESQUECI MINHA SENHA
@@ -189,9 +186,11 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
               hover={false}
               size="w-full h-[56px]"
               children={
-                <Text className="text-[16px] font-interBold text-white text-center">
-                  {props.submitLabel || "Continuar"}
-                </Text>
+                <View className="flex-1 justify-center items-center">
+                  <Text className="text-[16px] font-interBold text-white text-center">
+                    {props.submitLabel || "Continuar"}
+                  </Text>
+                </View>
               }
             />
 
@@ -206,19 +205,19 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 </View>
 
                 <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
-                  {/* <GoogleIcon width={24} height={24} /> */}
-                  <Text className="text-white text-[24px] font-interBold">Google</Text>
+                <GoogleIcon width={20} height={20} />
+                  <Text className="text-white text-[14px] font-inter">Google</Text>
                 </TouchableOpacity>
               </View>
             )}
           </View>
         </View>
         <View className="items-center mt-8">
-          <Text className="text-[#fff]/40 text-sm font-inter leading-5">
+          <Text className="text-[#64748B] text-[14px] font-interRegular leading-5">
             {footerPrefixText}{" "}
             <Text
-              className={footerActionTextClassName}
-              onPress={() => router.push(footerActionRoute as any)}
+              className={"text-white underline font-interBold"}
+              onPress={props.showForgotPassword ? () => router.push("/screens/Onboarding/roles") : () => router.push("/screens/auth/SingIn")}
             >
               {footerActionText}
             </Text>{" "}
