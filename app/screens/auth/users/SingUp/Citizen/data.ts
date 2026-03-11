@@ -1,4 +1,4 @@
-import { ISignInTemplateProps } from "../../../../../interfaces/template/SignInTemplate";
+import { ISignInTemplateProps } from "../../../../../../interfaces/template/SignInTemplate";
 
 export const getInitialCitizenData = (
     name: string,
