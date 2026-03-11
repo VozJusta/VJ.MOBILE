@@ -19,6 +19,18 @@ export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPasswor
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
 
   useEffect(() => {
+    const percentage = passwordStrength
+      ? (passwordStrength.score / 5) * 100
+      : 0;
+
+    Animated.timing(animatedWidth, {
+      toValue: percentage,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [animatedWidth, passwordStrength]);
+
+  useEffect(() => {
     if (screen !== ScreensForgotPassword.Code) {
       return;
     }

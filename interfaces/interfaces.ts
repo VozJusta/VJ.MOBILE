@@ -1,18 +1,14 @@
 import { PasswordStrengthSection } from "./components/PasswordStrengh";
 
 
-export type IForgotPasswordProps =
-  | {
-      screen: ScreensForgotPassword.Email | ScreensForgotPassword.Code;
-    }
-  | {
-      screen: ScreensForgotPassword.Update;
-      passwordStrength: PasswordStrengthSection;
-      newPassword: string;
-      setNewPassword: (password: string) => void;
-      confirmPassword: string;
-      setConfirmPassword: (password: string) => void;
-    };
+export interface IForgotPasswordProps {
+  screen: ScreensForgotPassword
+  passwordStrength: PasswordStrengthSection;
+  newPassword: string;
+  setNewPassword: (password: string) => void;
+  confirmPassword: string;
+  setConfirmPassword: (password: string) => void;
+}
 
 export enum ScreensForgotPassword {
   Email = "EMAIL",
