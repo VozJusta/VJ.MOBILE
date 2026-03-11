@@ -8,9 +8,9 @@ export enum ScreensForgotPassword {
 
 export interface IForgotPasswordProps {
   screen: ScreensForgotPassword
-  passwordStrength: PasswordStrengthSection;
-  newPassword: string;
-  setNewPassword: (password: string) => void;
-  confirmPassword: string;
-  setConfirmPassword: (password: string) => void;
+  passwordStrength?: PasswordStrengthSection;
+  newPassword?: string;
+  setNewPassword?: (password: string) => void;
+  confirmPassword?: string;
+  setConfirmPassword?: (password: string) => void;
 }

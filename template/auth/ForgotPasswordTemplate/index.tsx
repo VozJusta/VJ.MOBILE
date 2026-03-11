@@ -217,7 +217,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       rightIconName="visibility"
                       onRightIconPress={() => { }}
                       value={newPassword}
-                      onChangeText={(e) => setNewPassword(e)}
+                      onChangeText={(e) => setNewPassword && setNewPassword(e) }
                     />
                     <InputUI
                       label="Confirme a nova senha"
@@ -232,7 +232,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       rightIconName="visibility"
                       onRightIconPress={() => { }}
                       value={confirmPassword}
-                      onChangeText={(e) => setConfirmPassword(e)}
+                      onChangeText={(e) => setConfirmPassword && setConfirmPassword(e)}
                     />
                     {passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist} />}
                     <ButtonUI
