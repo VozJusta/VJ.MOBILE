@@ -184,7 +184,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 )}
 
                 <ButtonUI
-                  onPress={() => { }}
+                  onPress={() => router.push("/screens/home")}
                   gradient={true}
                   bg="bg-[#135BEC]"
                   hover={false}
