@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, Animated } from "react-native";
+import { View, Text, Animated, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import PasswordStrength from "../../../components/passwordStrengh";
-export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPasswordProps) {
+export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPassword,newPassword,setConfirmPassword,setNewPassword }: IForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
@@ -40,6 +40,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
 
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
   return (
+
     <LinearGradient
       style={{ flex: 1 }}
       className="flex-1 pt-[58px]"
@@ -47,6 +48,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="px-4" style={{ flex: 1 }}>
         <View className="flex flex-1 justify-center items-center">
           <View className="mb-8 flex-row justify-between items-center w-full">
@@ -198,6 +200,8 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
                   rightIcon
                   rightIconName="visibility"
                   onRightIconPress={() => { }}
+                  value={newPassword}
+                  onChangeText={(e) => setNewPassword(e)}
                 />
                 <InputUI
                   label="Confirme a nova senha"
@@ -211,6 +215,8 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
                   rightIcon
                   rightIconName="visibility"
                   onRightIconPress={() => { }}
+                  value={confirmPassword}
+                  onChangeText={(e) => setConfirmPassword(e)}
                 />
                { passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist}/>}
                 <ButtonUI
@@ -240,6 +246,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength }: IForgotPass
           )}
         </View>
       </SafeAreaView>
+      </TouchableWithoutFeedback>
     </LinearGradient>
   );
 }
