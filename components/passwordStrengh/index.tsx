@@ -1,5 +1,5 @@
 import { View, Animated,Text } from "react-native";
-import { PasswordStrengthSection } from "../../interfaces/template/SignInTemplate";
+import { PasswordStrengthSection } from "../../interfaces/components/PasswordStrengh";
 import CheckListFunction from "../../ui/CheckListFunction";
 import React, { useEffect, useRef } from "react";
 
@@ -19,7 +19,7 @@ export default function PasswordStrength({
           }).start();
         }, [animatedWidth, props]);
   return (
-    <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] -mt-12">
+    <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px]">
       <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
         Força da Segurança
       </Text>
