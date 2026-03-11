@@ -29,7 +29,7 @@ export default function CareerSelect({
     };
 
     return (
-        <View className="w-full mb-[24px]">
+        <View className="w-full">
             <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
                 {label}
             </Text>

@@ -12,7 +12,7 @@ export const getInitialSignInData = (
   showHeader: false,
   title: "Entrar no VozJusta",
   description: "Acesse sua conta para continuar",
-  descriptionToFieldsSpacing: 40,
+  descriptionToFieldsSpacing: 32,
   submitLabel: "Entrar",
   showTerms: false,
   showForgotPassword: true,
