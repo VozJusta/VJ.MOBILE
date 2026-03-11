@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Animated, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Animated, ScrollView, Text, TouchableOpacity, View, Keyboard, TouchableWithoutFeedback } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
@@ -53,6 +53,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={
@@ -224,6 +225,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
           </Text>
         </View>
       </ScrollView>
+      </TouchableWithoutFeedback>
     </LinearGradient>
   );
 }
