@@ -31,7 +31,6 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
   const footerActionText = props.footerActionText ?? "Fazer Login";
-  const footerActionTextClassName = props.footerActionTextClassName ?? "text-blue-500 underline font-semibold";
   const forgotPasswordRoute = props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
 
   useEffect(() => {
