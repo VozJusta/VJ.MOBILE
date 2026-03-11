@@ -159,7 +159,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPasswor
                   iconNameProps={"sort"}
                   type={"email"}
                 />
-                <Text className="font-inter text-[12px] text-[rgba(96,165,250,8)]">
+                <Text className="font-inter text-[12px] text-[rgba(96,165,250,0.8)]">
                   O código expira em{" "}
                   <Text className="font-interBold"> {timerLabel} </Text>
                 </Text>
