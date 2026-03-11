@@ -22,6 +22,7 @@ export default function InputUI({
 }: IInputProps) {
   return inputOTP ? (
     <OtpInput
+    autoFocus={false}
       numberOfDigits={6}
       theme={{
         containerStyle: {

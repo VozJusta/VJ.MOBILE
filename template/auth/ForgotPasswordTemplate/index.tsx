@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, Animated, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { View, Text, Animated, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "../../../ui/ButtonUI";
 import Logo from "../../../assets/svg/icons/logo.svg";
@@ -48,6 +48,10 @@ export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPasswor
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+  <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+  >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="px-4" style={{ flex: 1 }}>
         <View className="flex flex-1 justify-center items-center">
@@ -247,6 +251,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPasswor
         </View>
       </SafeAreaView>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </LinearGradient>
   );
 }
