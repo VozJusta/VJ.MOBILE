@@ -1,4 +1,4 @@
-import { ScreensForgotPassword } from "../../../../../interfaces/interfaces";
+import { ScreensForgotPassword } from "../../../../../interfaces/template/ForgotPasswordTemplate";
 import { ForgotPasswordTemplate } from "../../../../../template/auth/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import passwordValidate from "../../../../../utils/passwordValidate";
