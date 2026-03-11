@@ -243,7 +243,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength,confirmPasswor
               <Text className=" font-inter text-[14px] text-[#64748B]">
                 Não recebeu o código?
               </Text>
-              <Text className=" font-interBold text-[14px] text-white underline v">
+              <Text className=" font-interBold text-[14px] text-white underline">
                 Reenviar
               </Text>
             </View>
