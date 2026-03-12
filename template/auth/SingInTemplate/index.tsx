@@ -221,7 +221,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 {footerPrefixText}{" "}
                 <Text
                   className={"text-white underline font-interBold"}
-                  onPress={props.showForgotPassword ? () => router.push("/screens/Onboarding/roles") : () => router.push("/screens/auth/SingIn")}
+                  onPress={props.showForgotPassword ? () => router.push("/screens/Onboarding/roles") : () => router.push("/screens/auth/users/SingIn")}
                 >
                   {footerActionText}
                 </Text>{" "}

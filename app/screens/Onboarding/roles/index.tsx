@@ -123,9 +123,9 @@ export default function SelectionUserRole() {
             }
             onPress={() => {
               if (activeCitizen) {
-                router.push("/screens/auth/Citizen");
+                router.replace("/screens/auth/users/SingUp/Citizen");
               } else if (activeLawyer) {
-                router.push("/screens/auth/Lawyer");
+                router.replace("/screens/auth/users/SingUp/Lawyer");
               }
             }}
             hover={false}

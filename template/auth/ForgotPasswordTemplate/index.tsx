@@ -73,7 +73,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                   size="w-[40px] h-[40px]"
                   onPress={() => {
                     screen === ScreensForgotPassword.Email
-                      ? router.replace("/screens/auth/SingIn")
+                      ? router.replace("/screens/auth/users/SingIn")
                       : screen === ScreensForgotPassword.Code
                         ? router.replace("/screens/auth/ForgotPassword/Email")
                         : router.replace("/screens/auth/ForgotPassword/Code");
@@ -131,7 +131,7 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       gradient={false}
                       hover={false}
                       shadow="shadow-custom"
-                      onPress={() => { }}
+                      onPress={() => router.replace("/screens/auth/users/SingIn")}
                       children={
                         <View
                           style={{ gap: 8 }}
