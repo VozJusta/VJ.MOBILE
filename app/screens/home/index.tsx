@@ -62,14 +62,14 @@ export default function Home() {
           />
         </View>
         <View className="gap-[16px] items-center w-full">
-          <View className="w-full flex-row justify-between items-center">
+          <View className="w-full flex-col justify-between items-center">
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
             <ButtonUI
               children={
                 <Text className="text-[#2563EB] text-[14px] font-inter">
-                  Ver todos
+                  Ação Trabalhista - XPTO
                 </Text>
               }
               onPress={function (): void {
@@ -80,7 +80,7 @@ export default function Home() {
               iconLeft={true}
               statusBorder={false}
               status="Em Análise"
-              paddingButtonStatus={""}
+              paddingButtonStatus={"p-[16px]"}
             />
           </View>
         </View>

@@ -9,7 +9,6 @@ export interface IButtonProps {
   gradient: boolean;
   size?: string;
   hover: boolean;
-  shadow?: string;
   border?: string;
   iconLeft: boolean;
   colorsStatus?: "orange" | "green" | "blue";
