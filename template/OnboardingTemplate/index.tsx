@@ -44,12 +44,10 @@ export default function OnboardingTemplate() {
           <ButtonUI
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
-            children={
-              <Text className="text-white text-[16px] font-inter pr-[16px]">
-                Pular
-              </Text>
-            }
-            hover={false}
+            children={<Text className="text-white text-[16px] font-inter pr-[16px]">
+              Pular
+            </Text>}
+            hover={false} iconLeft={false} paddingButtonStatus={""}            
           />
         </View>
         <View className="flex-1">
@@ -78,7 +76,7 @@ export default function OnboardingTemplate() {
                 onPress={() => router.replace("/screens/Onboarding/roles")}
                 hover={false}
                 size="w-[56px] h-[56px]"
-              />
+                paddingButtonStatus={""} iconLeft={false}              />
             )}
             NextButtonComponent={() => (
               <ButtonUI
@@ -86,7 +84,7 @@ export default function OnboardingTemplate() {
                 goNext
                 onPress={() => ref.current?.goNext()}
                 hover={false}
-                size="w-[56px] h-[56px]"
+                size="w-[56px] h-[56px]" iconLeft={false} paddingButtonStatus={""}                
               />
             )}
             DotComponent={Dot}
