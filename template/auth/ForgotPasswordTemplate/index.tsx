@@ -77,10 +77,9 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       : screen === ScreensForgotPassword.Code
                         ? router.replace("/screens/auth/ForgotPassword/Email")
                         : router.replace("/screens/auth/ForgotPassword/Code");
-                  }}
+                  } }
                   gradient={false}
-                  hover={false}
-                />
+                  hover={false} iconLeft={false} paddingButtonStatus={""}                />
                 <Logo width={40} height={29} />
               </View>
               <View
@@ -111,44 +110,35 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                     />
 
                     <ButtonUI
-                      onPress={() =>
-                        router.replace("/screens/auth/ForgotPassword/Code")
-                      }
+                      onPress={() => router.replace("/screens/auth/ForgotPassword/Code")}
                       gradient={false}
                       bg="bg-[#135BEC]"
                       hover={false}
                       size="w-full h-[56px]"
-                      children={
-                        <View className="flex-1 justify-center items-center">
-                          <Text className="text-[16px] font-interBold text-white">
-                            Enviar código
-                          </Text>
-                        </View>
-                      }
-                    />
+                      children={<View className="flex-1 justify-center items-center">
+                        <Text className="text-[16px] font-interBold text-white">
+                          Enviar código
+                        </Text>
+                      </View>} iconLeft={false} paddingButtonStatus={""}                    />
                     <ButtonUI
                       bg="bg-transparent"
                       gradient={false}
                       hover={false}
                       shadow="shadow-custom"
                       onPress={() => router.replace("/screens/auth/users/SingIn")}
-                      children={
-                        <View
-                          style={{ gap: 8 }}
-                          className="flex-row items-center gap-2"
-                        >
-                          <MaterialIcons
-                            name="arrow-forward"
-                            size={20}
-                            style={{ transform: [{ rotate: "-180deg" }] }}
-                            color={"rgba(255,255,255,0.5)"}
-                          />
-                          <Text className="font-inter text-[14px] text-white/50">
-                            Voltar para o Login
-                          </Text>
-                        </View>
-                      }
-                    />
+                      children={<View
+                        style={{ gap: 8 }}
+                        className="flex-row items-center gap-2"
+                      >
+                        <MaterialIcons
+                          name="arrow-forward"
+                          size={20}
+                          style={{ transform: [{ rotate: "-180deg" }] }}
+                          color={"rgba(255,255,255,0.5)"} />
+                        <Text className="font-inter text-[14px] text-white/50">
+                          Voltar para o Login
+                        </Text>
+                      </View>} iconLeft={false} paddingButtonStatus={""}                    />
                   </>
                 ) : screen === ScreensForgotPassword.Code ? (
                   <>
@@ -177,21 +167,16 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                     </Text>
                     <View className="w-full pb-[16px]">
                       <ButtonUI
-                        onPress={() =>
-                          router.replace("/screens/auth/ForgotPassword/Update")
-                        }
-                        gradient={false}
-                        bg="bg-[#135BEC]"
-                        hover={false}
-                        size="w-full h-[56px]"
-                        children={
-                          <View className="flex-1 justify-center items-center">
+                          onPress={() => router.replace("/screens/auth/ForgotPassword/Update")}
+                          gradient={false}
+                          bg="bg-[#135BEC]"
+                          hover={false}
+                          size="w-full h-[56px]"
+                          children={<View className="flex-1 justify-center items-center">
                             <Text className="text-[16px] font-interBold text-white">
                               Verificar Email
                             </Text>
-                          </View>
-                        }
-                      />
+                          </View>} iconLeft={false} paddingButtonStatus={""}                      />
                     </View>
                   </>
                 ) : (
@@ -236,17 +221,14 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                     />
                     {passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist} />}
                     <ButtonUI
-                      onPress={() => { }}
-                      gradient={true}
-                      hover={false}
-                      children={
-                        <View className="flex-1 justify-center items-center">
-                          <Text className="text-[16px] font-interBold text-white">
-                            Redefinir senha
-                          </Text>
-                        </View>
-                      }
-                    />
+                          onPress={() => { } }
+                          gradient={true}
+                          hover={false}
+                          children={<View className="flex-1 justify-center items-center">
+                            <Text className="text-[16px] font-interBold text-white">
+                              Redefinir senha
+                            </Text>
+                          </View>} iconLeft={false} paddingButtonStatus={""}                    />
                   </>
                 )}
               </View>
