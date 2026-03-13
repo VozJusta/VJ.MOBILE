@@ -70,6 +70,8 @@ export default function SelectionUserRole() {
                 </View>
               </View>
             }
+            iconLeft={false}
+            paddingButtonStatus={""}
           />
           <Button
             hover
@@ -105,6 +107,8 @@ export default function SelectionUserRole() {
                 </View>
               </View>
             }
+            iconLeft={false}
+            paddingButtonStatus={""}
           />
           <Button
             gradient={true}
@@ -129,6 +133,8 @@ export default function SelectionUserRole() {
               }
             }}
             hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
           />
         </View>
         <View className="w-full px-4  mt-[72px]"></View>

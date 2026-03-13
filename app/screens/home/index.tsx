@@ -44,17 +44,22 @@ export default function Home() {
             mesmo.
           </Text>
           <ButtonUI
-                      children={<View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
-                          <Text className="text-white font-interSemiBold text-[14px]">
-                              Relatar Novo Caso
-                          </Text>
-                          <MaterialIcons name="arrow-forward" size={20} color="white" />
-                      </View>}
-                      onPress={function (): void {
-                          throw new Error("Function not implemented.");
-                      } }
-                      gradient={true}
-                      hover={false} iconLeft={false} paddingButtonStatus={""}          />
+            children={
+              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
+                <Text className="text-white font-interSemiBold text-[14px]">
+                  Relatar Novo Caso
+                </Text>
+                <MaterialIcons name="arrow-forward" size={20} color="white" />
+              </View>
+            }
+            onPress={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            gradient={true}
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+          />
         </View>
         <View className="gap-[16px] items-center w-full">
           <View className="w-full flex-row justify-between items-center">
@@ -62,16 +67,22 @@ export default function Home() {
               Meus Casos
             </Text>
             <ButtonUI
-                          children={<Text className="text-[#2563EB] text-[14px] font-inter">
-                              Ver todos
-                          </Text>}
-                          onPress={function (): void {
-                              throw new Error("Function not implemented.");
-                          } }
-                          gradient={false}
-                          hover={false} iconLeft={false} paddingButtonStatus={""}            />
+              children={
+                <Text className="text-[#2563EB] text-[14px] font-inter">
+                  Ver todos
+                </Text>
+              }
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              gradient={false}
+              hover={false}
+              iconLeft={true}
+              statusBorder={false}
+              status="Em Análise"
+              paddingButtonStatus={""}
+            />
           </View>
-          
         </View>
       </SafeAreaView>
     </LinearGradient>

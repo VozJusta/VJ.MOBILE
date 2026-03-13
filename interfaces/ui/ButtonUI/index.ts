@@ -14,6 +14,6 @@ export interface IButtonProps {
   iconLeft: boolean;
   colorsStatus?: "orange" | "green" | "blue";
   paddingButtonStatus: string;
-  status?: "Em Análise" | "Concluído" | "Aguardando Advogado" | null;
+  status?: "Em Análise" | "Concluído" | "Aguardando Advogado";
   statusBorder?: boolean;
 }
