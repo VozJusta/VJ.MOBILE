@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "../../../ui/ButtonUI";
 import Person from "../../../assets/svg/icons/person.svg"
+import NavBar from "../../../components/NavBar";
 
 export default function Home() {
   return (
@@ -145,6 +146,7 @@ export default function Home() {
               iconLeft={false}
               paddingButtonStatus={""}
             />
+            <NavBar/>
           </LinearGradient>
         </SafeAreaView>
       </ScrollView>
