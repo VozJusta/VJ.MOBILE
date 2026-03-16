@@ -12,7 +12,7 @@ import {
 } from "../../../interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import PasswordStrength from "../../../components/passwordStrengh";
+import PasswordStrength from "../../../components/PasswordStrengh";
 export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPassword, newPassword, setConfirmPassword, setNewPassword }: IForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
@@ -124,7 +124,6 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       bg="bg-transparent"
                       gradient={false}
                       hover={false}
-                      shadow="shadow-custom"
                       onPress={() => router.replace("/screens/auth/users/SingIn")}
                       children={<View
                         style={{ gap: 8 }}
