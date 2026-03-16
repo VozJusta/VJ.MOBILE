@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 export interface IButtonProps {
   children?: ReactNode;
   goNext?: boolean;
@@ -15,4 +16,5 @@ export interface IButtonProps {
   paddingButtonStatus: string;
   status?: "Em Análise" | "Concluído" | "Aguardando Advogado";
   statusBorder?: boolean;
+  iconName?: React.ComponentProps<typeof MaterialIcons>["name"];
 }
