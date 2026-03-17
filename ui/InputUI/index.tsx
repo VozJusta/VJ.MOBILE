@@ -1,8 +1,9 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Keyboard } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { IInputProps } from "../../interfaces/ui/Input";
+import { IInputProps } from "../../interfaces/ui/InputUI";
+import { OtpInput } from "react-native-otp-entry";
 
-export default function Input({
+export default function InputUI({
   label,
   leftIcon,
   rightIcon,
@@ -16,10 +17,32 @@ export default function Input({
   value,
   onChangeText,
   onRightIconPress,
+  inputOTP,
   ...restProps
 }: IInputProps) {
-  return (
-    <View className="w-full mb-[24px]">
+  return inputOTP ? (
+    <OtpInput
+    autoFocus={false}
+      numberOfDigits={6}
+      theme={{
+        containerStyle: {
+          gap: 10,
+        },
+        pinCodeTextStyle: {
+          color: "#FAFAFA",
+        },
+        pinCodeContainerStyle: {
+          backgroundColor: "rgba(255,255,255,0.03)",
+          width: 41.5,
+          height: 41.5,
+          borderRadius: 16,
+          borderColor: "rgba(255,255,255,0.1)",
+        },
+      }}
+      focusColor={"#FFFF"}
+    />
+  ) : (
+    <View className="w-full ">
       {!!label && (
         <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
           {label}
@@ -30,15 +53,12 @@ export default function Input({
         className={`w-full gap-[13px] h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row items-center`}
       >
         {leftIcon && (
-          <MaterialIcons
-            name={iconNameProps}
-            size={iconSize}
-            color={"#fff"}
-          />
+          <MaterialIcons name={iconNameProps} size={iconSize} color={"#fff"} />
         )}
 
         <TextInput
           className="w-[80%] h-full bg-transparent text-white font-interRegular"
+          style={{ fontSize: 14 }}
           placeholderTextColor={"#475569"}
           placeholder={placeholder}
           keyboardType={keyboardType}

@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../../../../assets/svg/icons/logo.svg";
-import Button from "../../../../ui/Button";
+import Button from "../../../../ui/ButtonUI";
 import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "../../../../assets/svg/icons/account-balace.svg";
@@ -15,12 +15,14 @@ export default function SelectionUserRole() {
 
   return (
     <LinearGradient
-      className="flex-1 items-center pt-[90px]"
+      style={{ flex: 1, alignItems: "center", paddingTop: 90 }}
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
-      <SafeAreaView className="flex-col items-center" style={{ flex: 1 }}>
+      <SafeAreaView
+        style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
+      >
         <View className="flex-col items-center">
           <Logo width={70} height={51} />
           <Text className=" text-[36px] text-white font-montserratBold">
@@ -103,9 +105,8 @@ export default function SelectionUserRole() {
                 </View>
               </View>
             }
-
           />
-            <Button
+          <Button
             gradient={true}
             size="w-full"
             children={
@@ -130,9 +131,7 @@ export default function SelectionUserRole() {
             hover={false}
           />
         </View>
-        <View className="w-full px-4  mt-[72px]">
-          
-        </View>
+        <View className="w-full px-4  mt-[72px]"></View>
       </SafeAreaView>
     </LinearGradient>
   );

@@ -28,3 +28,5 @@ export function Checkbox({ value, onChange, children }: Props) {
     </View>
   );
 }
+
+export default Checkbox;
