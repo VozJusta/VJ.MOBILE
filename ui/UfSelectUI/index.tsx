@@ -47,9 +47,10 @@ export default function UfSelect({
       <View className="w-full h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] justify-center">
         <Picker
           dropdownIconColor="#fff"
-          style={{ color: "white" }}
+          style={{ color: "white", height: 55 }}
           selectedValue={value}
           onValueChange={onValueChange}
+          
         >
           {states.map((state) => (
             <Picker.Item
@@ -57,6 +58,7 @@ export default function UfSelect({
               label={state.label}
               value={state.value}
               color="#000"
+
             />
           ))}
         </Picker>

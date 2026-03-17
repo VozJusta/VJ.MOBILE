@@ -12,7 +12,7 @@ import {
 } from "../../../interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import PasswordStrength from "../../../components/PasswordStrengh";
+import PasswordStrength from "../../../components/passwordStrengh";
 export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPassword, newPassword, setConfirmPassword, setNewPassword }: IForgotPasswordProps) {
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
@@ -218,12 +218,14 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
                       value={confirmPassword}
                       onChangeText={(e) => setConfirmPassword && setConfirmPassword(e)}
                     />
+                    
                     {passwordStrength && <PasswordStrength score={passwordStrength.score} color={passwordStrength.color} checklist={passwordStrength.checklist} />}
                     <ButtonUI
                           onPress={() => { } }
                           gradient={true}
                           hover={false}
-                          children={<View className="flex-1 justify-center items-center">
+                          children={
+                          <View className="min-w-full h-full justify-center items-center">
                             <Text className="text-[16px] font-interBold text-white">
                               Redefinir senha
                             </Text>

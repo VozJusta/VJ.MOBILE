@@ -13,6 +13,7 @@ import {
 import Logo from "../../../assets/svg/icons/logo.svg";
 import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Checkbox from "../../../ui/CheckboxUI";
 import { router } from "expo-router";
 import {
@@ -62,11 +63,13 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
   return (
     <LinearGradient
-      className={`flex-1 overflow-hidden ${isLoginLayout ? "pt-0" : "pt-[58px]"}`}
+    style={{ flex: 1, overflow: "hidden" }}
+      className={`${isLoginLayout ? "pt-0" : "pt-[58px]"}`}
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}
     >
+      <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -284,6 +287,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }
