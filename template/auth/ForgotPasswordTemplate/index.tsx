@@ -53,13 +53,6 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
   return (
 
-    <LinearGradient
-      style={{ flex: 1 }}
-      className="flex-1 pt-[58px]"
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.8, y: 1 }}
-      colors={["#000000", "#052F5F"]}
-    >
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -245,6 +238,5 @@ export function ForgotPasswordTemplate({ screen, passwordStrength, confirmPasswo
           </SafeAreaView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-    </LinearGradient>
   );
 }

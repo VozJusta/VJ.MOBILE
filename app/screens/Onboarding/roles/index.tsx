@@ -14,14 +14,9 @@ export default function SelectionUserRole() {
   const [activeLawyer, setActiveLawyer] = useState(false);
 
   return (
-    <LinearGradient
-      style={{ flex: 1, alignItems: "center", paddingTop: 90 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.8, y: 1 }}
-      colors={["#000000", "#052F5F"]}
-    >
+
       <SafeAreaView
-        style={{ flex: 1, alignItems: "center", flexDirection: "column" }}
+        style={{ flex: 1, alignItems: "center", flexDirection: "column", paddingTop: 90  }}
       >
         <View className="flex-col items-center">
           <Logo width={70} height={51} />
@@ -75,7 +70,7 @@ export default function SelectionUserRole() {
           />
           <Button
             hover
-            size="w-full h-[103px]"
+            size="min-w-full h-[103px]"
             gradient={false}
             active={activeLawyer}
             onPress={() => {
@@ -139,6 +134,5 @@ export default function SelectionUserRole() {
         </View>
         <View className="w-full px-4  mt-[72px]"></View>
       </SafeAreaView>
-    </LinearGradient>
   );
 }
