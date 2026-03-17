@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
-export default function CheckListFunction({ valid, label }: { valid: boolean, label: string }) {
+export default function CheckListFunctionUI({ valid, label }: { valid: boolean, label: string }) {
     return (
         <View className="flex-row items-center gap-2">
             <MaterialIcons name={valid ? "check-circle" : "radio-button-unchecked"}

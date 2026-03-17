@@ -13,21 +13,21 @@ import {
 import Logo from "../../../assets/svg/icons/logo.svg";
 import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
-import Checkbox from "../../../ui/checkbox";
+import Checkbox from "../../../ui/CheckboxUI";
 import { router } from "expo-router";
 import {
   CareerSelectProps,
   UfSelectProps,
 } from "../../../interfaces/interfaces";
 import { useEffect, useRef, useState } from "react";
-import UfSelect from "../../../ui/ufSelect";
-import CareerSelect from "../../../ui/careerSelect";
+import UfSelect from "../../../ui/UfSelectUI";
+import CareerSelect from "../../../ui/CareerSelectUI";
 import Input from "../../../ui/InputUI";
 import {
   FieldsType,
   ISignInTemplateProps,
 } from "../../../interfaces/template/SignInTemplate";
-import CheckListFunction from "../../../ui/CheckListFunction";
+import CheckListFunction from "../../../ui/CheckListFunctionUI";
 
 function isUfField(field: FieldsType): field is UfSelectProps {
   return "onValueChange" in field && !("onValuesChange" in field);
@@ -93,7 +93,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   onPress={() => router.replace("/screens/Onboarding/roles")}
                   gradient={false}
                   hover={false}
-                  iconLeft={false} paddingButtonStatus={""}                />
+                  iconLeft={false}
+                  paddingButtonStatus={""}
+                />
                 <Logo width={40} height={29} />
               </View>
             )}
@@ -233,12 +235,16 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   bg="bg-[#135BEC]"
                   hover={false}
                   size="w-full h-[56px]"
-                  children={<View className="flex-1 justify-center items-center">
-                    <Text className="text-[16px] font-interBold text-white text-center">
-                      {props.submitLabel || "Continuar"}
-                    </Text>
-                  </View>}
-                  iconLeft={false} paddingButtonStatus={""}                />
+                  children={
+                    <View className="flex-1 justify-center items-center">
+                      <Text className="text-[16px] font-interBold text-white text-center">
+                        {props.submitLabel || "Continuar"}
+                      </Text>
+                    </View>
+                  }
+                  iconLeft={false}
+                  paddingButtonStatus={""}
+                />
 
                 {props.showSocialGoogle && (
                   <View className="gap-[24px]">
