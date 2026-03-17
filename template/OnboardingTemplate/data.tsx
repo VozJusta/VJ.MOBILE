@@ -15,16 +15,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full mt-[61px]">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full  min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
@@ -76,16 +78,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full mt-[61px]">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
@@ -117,7 +121,7 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
+          <Text className="font-interLight text-[#D1D5DB] text-base text-center pt-4 px-4">
             Conte o que aconteceu em suas palavras. Nossa IA remove o juridiquês
             e extrai a{" "}
             <Text className="font-interSemiBold text-white">
@@ -136,16 +140,18 @@ export const onboardingData: PageData[] = [
       <View className="w-full">
         <LinearGradient
           style={{
+            width: "100%",
+            minHeight: 200,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-          className="w-full rounded-xl min-h-[200px] flex-col items-center"
           colors={["rgba(255,255,255,0.10)", "rgba(255,255,255,0.05)"]}
         >
           <View className="w-full h-full absolute top-0 left-0 backdrop-blur-sm" />
           <LinearGradient
-            style={{ height: 4 }}
-            className="w-full"
+            style={{ height: 4, width: "100%" }}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={[
@@ -175,7 +181,7 @@ export const onboardingData: PageData[] = [
               </LinearGradient>
             </MaskedView>
           </View>
-          <Text className="font-interLight text-[#D1D5DB] text-4 text-center pt-4 px-4">
+          <Text className="font-interLight text-[#D1D5DB] text-base text-center pt-4 px-4">
             Chegue preparado para o dia real. Treine suas respostas com nosso{" "}
             <Text className="font-interSemiBold text-white">Juiz virtual </Text>
             e ganhe a confiança que você merece.
