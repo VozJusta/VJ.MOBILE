@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import Navbar from "../../../components/Navbar";
+import Navbar from "../../../components/NavBar/index";
 
 export default function UsersLayout() {
   return (
