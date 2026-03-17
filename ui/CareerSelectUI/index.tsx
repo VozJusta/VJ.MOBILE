@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text } from "react-native";
 import { CareerSelectProps } from "../../interfaces/interfaces";
 import { useMemo, useState } from "react";
 
-export default function CareerSelect({
+export default function CareerSelectUI({
     label,
     values,
     options,

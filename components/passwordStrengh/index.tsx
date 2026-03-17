@@ -1,23 +1,21 @@
-import { View, Animated,Text } from "react-native";
+import { View, Animated, Text } from "react-native";
 import { PasswordStrengthSection } from "../../interfaces/components/PasswordStrengh";
-import CheckListFunction from "../../ui/CheckListFunction";
+import CheckListFunction from "../../ui/CheckListFunctionUI";
 import React, { useEffect, useRef } from "react";
 
 export default function PasswordStrength({
   ...props
 }: PasswordStrengthSection) {
-      const animatedWidth = useRef(new Animated.Value(0)).current;
-        useEffect(() => {
-          const percentage = props
-            ? (props.score / 5) * 100
-            : 0;
-      
-          Animated.timing(animatedWidth, {
-            toValue: percentage,
-            duration: 300,
-            useNativeDriver: false,
-          }).start();
-        }, [animatedWidth, props]);
+  const animatedWidth = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    const percentage = props ? (props.score / 5) * 100 : 0;
+
+    Animated.timing(animatedWidth, {
+      toValue: percentage,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [animatedWidth, props]);
   return (
     <View className="bg-[#fff]/5 w-full border border-[rgba(255,255,255,0.12)] rounded-[12px] p-4">
       <Text className="text-[10px] text-white pb-[8px] font-inter">
