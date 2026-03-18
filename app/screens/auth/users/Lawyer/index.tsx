@@ -11,7 +11,7 @@ export default function Lawyer() {
   const [cpf, setCpf] = useState("");
   const [oabNumber, setOabNumber] = useState("");
   const [uf, setUf] = useState("");
-  const [specializations, setSpecializations] = useState<string[]>([]);
+  const [specialization, setSpecialization] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,8 +28,8 @@ export default function Lawyer() {
     setEmail,
     uf,
     setUf,
-    specializations,
-    setSpecializations,
+    specialization,
+    setSpecialization,
     password,
     setPassword,
     showPassword,
