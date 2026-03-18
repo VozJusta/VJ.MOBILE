@@ -16,10 +16,7 @@ import ButtonUI from "@/ui/ButtonUI";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Checkbox from "@/ui/CheckboxUI";
 import { router } from "expo-router";
-import {
-  CareerSelectProps,
-  UfSelectProps,
-} from "@/interfaces/interfaces";
+import { CareerSelectProps, UfSelectProps } from "@/interfaces/interfaces";
 import { useEffect, useRef, useState } from "react";
 import UfSelect from "@/ui/UfSelectUI";
 import CareerSelect from "@/ui/CareerSelectUI";
@@ -40,6 +37,7 @@ function isCareerField(field: FieldsType): field is CareerSelectProps {
 
 export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isUfDropdownOpen, setIsUfDropdownOpen] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const isLoginLayout = props.layout === "login";
   const showHeader = props.showHeader ?? true;
@@ -62,22 +60,27 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   }, [animatedWidth, props.passwordStrength]);
 
   return (
-
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={{ flex: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView
+              onTouchStart={() => {
+                if (isUfDropdownOpen) {
+                  setIsUfDropdownOpen(false);
+                }
+              }}
+              nestedScrollEnabled
+              keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               contentContainerStyle={
                 isLoginLayout
                   ? {
                       paddingBottom: 40,
                       paddingTop: 24,
-                      flexGrow: 1,
-                      justifyContent: "center",
                     }
                   : { paddingBottom: 40 }
               }
@@ -122,30 +125,42 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   }}
                 >
                   {props.fields.map((field, index) => {
+                    const zIndex = 1000 - index;
+
                     if (isUfField(field)) {
                       return (
-                        <UfSelect
-                          key={index}
-                          label={field.label}
-                          value={field.value}
-                          onValueChange={field.onValueChange}
-                        />
+                        <View
+                          key={field.label}
+                          style={{
+                            zIndex,
+                            elevation: zIndex, // 🔥 ANDROID
+                          }}
+                        >
+                          <UfSelect
+                            label={field.label}
+                            value={field.value}
+                            open={isUfDropdownOpen}
+                            onValueChange={field.onValueChange}
+                            onOpenChange={setIsUfDropdownOpen}
+                          />
+                        </View>
                       );
                     }
 
                     if (isCareerField(field)) {
                       return (
-                        <CareerSelect
-                          key={index}
-                          label={field.label}
-                          values={field.values}
-                          options={field.options}
-                          onValuesChange={field.onValuesChange}
-                        />
+                        <View key={field.label} style={{ zIndex: 0 }}>
+                          <CareerSelect
+                            label={field.label}
+                            values={field.values}
+                            options={field.options}
+                            onValuesChange={field.onValuesChange}
+                          />
+                        </View>
                       );
                     }
 
-                    return <Input key={index} {...field} />;
+                    return <Input key={field.label} {...field} />;
                   })}
                 </View>
 
@@ -280,8 +295,8 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
               </View>
             </ScrollView>
           </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-  
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
