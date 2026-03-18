@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 import { NavbarItemsCitizen } from "./data";
-import ButtonUI from "../../ui/ButtonUI";
+import ButtonUI from "@/ui/ButtonUI";
 import React, { useState } from "react";
 
 export default function Navbar() {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SignInTemplate from "../../../../../../template/auth/SingInTemplate";
+import SignInTemplate from "@/template/auth/SingInTemplate";
 import { getInitialCitizenData } from "./data";
-import passwordValidate from "../../../../../../utils/passwordValidate";
+import passwordValidate from "@/utils/passwordValidate";
 
 export default function Citizen() {
   const [name, setName] = useState("");

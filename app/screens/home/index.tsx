@@ -1,19 +1,14 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, ScrollView } from "react-native";
-import Logo from "../../../assets/svg/icons/logo.svg";
+import Logo from "@/assets/svg/icons/logo.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
-import ButtonUI from "../../../ui/ButtonUI";
-import Person from "../../../assets/svg/icons/person.svg"
+import ButtonUI from "@/ui/ButtonUI";
+import Person from "@/assets/svg/icons/person.svg";
 
 export default function Home() {
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.8, y: 1 }}
-      colors={["#000000", "#052F5F"]}
-    >
+
       <ScrollView>
         <SafeAreaView
           style={{ flex: 1 }}
@@ -117,7 +112,7 @@ export default function Home() {
             colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
           >
             <View className="flex-row justify-between">
-              <View >
+              <View>
                 <Text className="text-[18px] text-white font-interBold">
                   Simulador de Audiência
                 </Text>
@@ -126,7 +121,7 @@ export default function Home() {
                 </Text>
               </View>
               <View className="justify-center rounded-full items-center flex bg-[rgba(255,255,255,0.05)] w-[48px] h-[48px]">
-            <Person width={24} height={24}/>
+                <Person width={24} height={24} />
               </View>
             </View>
             <ButtonUI
@@ -145,10 +140,9 @@ export default function Home() {
               iconLeft={false}
               paddingButtonStatus={""}
             />
-  
           </LinearGradient>
         </SafeAreaView>
       </ScrollView>
-    </LinearGradient>
+
   );
 }

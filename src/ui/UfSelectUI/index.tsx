@@ -1,7 +1,8 @@
 import { Text, View } from "react-native";
-import { UfSelectProps } from "../../interfaces/interfaces";
-import { Picker } from "@react-native-picker/picker";
-import type { UF } from "../../utils/mask";
+import { UfSelectProps } from "@/interfaces/interfaces";
+import DropDownPicker from "react-native-dropdown-picker";
+import { useState, useMemo } from "react";
+import type { UF } from "@/utils/mask";
 
 const states: { label: string; value: UF }[] = [
   { label: "UF", value: undefined as any },
@@ -39,28 +40,43 @@ export default function UfSelect({
   value,
   onValueChange,
 }: UfSelectProps) {
+  const [open, setOpen] = useState(false);
+
+  // 🔥 mantém seu array intacto, só memoiza
+  const items = useMemo(() => states, []);
+
   return (
-    <View className="w-full ">
+    <View className="w-full" style={{ zIndex: 1000 }}>
       <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
         {label}
       </Text>
-      <View className="w-full h-[55px] px-4 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] justify-center">
-        <Picker
-          dropdownIconColor="#fff"
-          style={{ color: "white" }}
-          selectedValue={value}
-          onValueChange={onValueChange}
-        >
-          {states.map((state) => (
-            <Picker.Item
-              key={state.value}
-              label={state.label}
-              value={state.value}
-              color="#000"
-            />
-          ))}
-        </Picker>
-      </View>
+
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={(callback) => {
+          const newValue = callback(value);
+          onValueChange(newValue);
+        }}
+        setItems={() => {}}
+        placeholder="Selecione UF"
+        style={{
+          backgroundColor: "rgba(255,255,255,0.03)",
+          borderColor: "rgba(255,255,255,0.1)",
+          borderRadius: 16,
+          minHeight: 55,
+        }}
+        textStyle={{
+          color: "white",
+        }}
+        dropDownContainerStyle={{
+          backgroundColor: "#111",
+          borderColor: "rgba(255,255,255,0.1)",
+        }}
+        maxHeight={200}
+      />
     </View>
   );
 }

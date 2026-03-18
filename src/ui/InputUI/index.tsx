@@ -1,6 +1,12 @@
-import { Text, TextInput, TouchableOpacity, View, Keyboard } from "react-native";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Keyboard,
+} from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { IInputProps } from "../../interfaces/ui/InputUI";
+import { IInputProps } from "@/interfaces/ui/InputUI";
 import { OtpInput } from "react-native-otp-entry";
 
 export default function InputUI({
@@ -22,7 +28,7 @@ export default function InputUI({
 }: IInputProps) {
   return inputOTP ? (
     <OtpInput
-    autoFocus={false}
+      autoFocus={false}
       numberOfDigits={6}
       theme={{
         containerStyle: {
