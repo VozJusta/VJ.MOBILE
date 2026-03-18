@@ -42,7 +42,7 @@ export interface UfSelectProps {
 
 export interface CareerSelectProps {
   label: string;
-  values: string[];
+  value: string;
   options: string[];
-  onValuesChange: (values: string[]) => void;
+  onValueChange: (value: string) => void;
 }

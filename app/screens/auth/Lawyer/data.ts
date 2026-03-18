@@ -6,7 +6,7 @@ const specializationOptions = [
     "Direito Trabalhista",
     "Direito Tributário",
     "Direito Previdenciário",
-    "Direito Empresarial",
+    "Direito Empresarial",               
 ];
 
 export const getInitialLawyerData = (
@@ -20,8 +20,8 @@ export const getInitialLawyerData = (
     onEmailChange: (text: string) => void,
     uf: string,
     onUfChange: (value: string) => void,
-    specializations: string[],
-    onSpecializationsChange: (values: string[]) => void,
+    specialization: string,
+    onSpecializationChange: (value: string) => void,
     password: string,
     onPasswordChange: (text: string) => void,
     showPassword: boolean,
@@ -74,9 +74,9 @@ export const getInitialLawyerData = (
         },
         {
             label: "Especialização Principal",
-            values: specializations,
+            value: specialization,
             options: specializationOptions,
-            onValuesChange: onSpecializationsChange,
+            onValueChange: onSpecializationChange,
         },
         {
             label: "E-mail profissional",
