@@ -1,12 +1,20 @@
 import { ISignInTemplateProps } from "../../../../../interfaces/template/SignInTemplate";
 
 const specializationOptions = [
-  "Direito Civil",
-  "Direito Penal",
-  "Direito Trabalhista",
-  "Direito Tributário",
-  "Direito Previdenciário",
-  "Direito Empresarial",
+  "Administrativo", "Aduaneiro", "Assessoria Jurídica",
+  "Aeronáutico","Agrário", "Ambiental", "Arbitragem",
+  "Direitos Autorais", "Bancário e Financeiro", "Biotecnologia",
+  "Civil", "Comercial", "Comércio Internacional", "Concorrencial",
+  "Constitucional", "Consumidor", "Contratos Comerciais", "Desportivo",
+  "Direito das Águas", "Terceiro Setor", "Econômico", "Eleitoral",
+  "Penal Empresarial", "Energia", "Falimentar", "Família", "Fusões e Aquisições",
+  "Imobiliário", "Importação e Exportação", "Infraestrutura", "Internacional",
+  "Internet e Comércio Eletrônico", "Marítimo", "Mercado de Capitais",
+  "Minerário", "Operações Financeiras", "Penal",
+  "Óleo e Gás","Previdenciário", "Financiamento de Projetos",
+  "Propriedade Intelectual", "Reestruturação Empresarial", "Regulatório",
+  "Saúde e Sanitário", "Seguros", "Sindical",
+  "Societário", "Telecomunicações", "Trabalhista", "Tributário",
 ];
 
 export const getInitialLawyerData = (
