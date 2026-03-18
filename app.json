@@ -5,6 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "meuapp",
+     "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    },
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",

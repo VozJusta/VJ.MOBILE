@@ -1,6 +1,6 @@
 import { View, Animated, Text } from "react-native";
-import { PasswordStrengthSection } from "../../interfaces/components/PasswordStrengh";
-import CheckListFunction from "../../ui/CheckListFunctionUI";
+import { PasswordStrengthSection } from "@/interfaces/components/PasswordStrengh";
+import CheckListFunction from "@/ui/CheckListFunctionUI";
 import React, { useEffect, useRef } from "react";
 
 export default function PasswordStrength({

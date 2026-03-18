@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, TouchableOpacity, View, Text } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { IButtonProps } from "../../interfaces/ui/ButtonUI";
+import { IButtonProps } from "@/interfaces/ui/ButtonUI";
 
 export default function ButtonUI({
   goNext = false,
@@ -138,7 +138,12 @@ export default function ButtonUI({
               )}
             </View>
           </View>
-          <MaterialIcons  style={{ transform: [{ rotate: "-180deg" }] }} name="arrow-back-ios" size={14} color={"#64748B"} />
+          <MaterialIcons
+            style={{ transform: [{ rotate: "-180deg" }] }}
+            name="arrow-back-ios"
+            size={14}
+            color={"#64748B"}
+          />
         </View>
       </Pressable>
     );
