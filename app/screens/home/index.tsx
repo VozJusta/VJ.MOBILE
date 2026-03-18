@@ -38,7 +38,7 @@ export default function Home() {
                         Nossos especialistas estão prontos para analisar seu caso agora mesmo.
                     </Text>
                     <ButtonUI children={
-                        <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
+                        <View className="px-[24px] py-[16px0] justify-between items-center flex-row gap-[8px]">
                         <Text className="text-white font-interSemiBold text-[14px]">
                             Relatar Novo Caso
                         </Text>
