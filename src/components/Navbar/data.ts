@@ -4,17 +4,21 @@ export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "home",
     name: "Início",
+    path: "/screens/citizen/home",
   },
   {
     iconName: "folder",
     name: "Documentos",
+    path: "/screens/citizen/documents",
   },
   {
     iconName: "chat-bubble",
     name: "Chat",
+    path: "/screens/citizen/chat",
   },
   {
     iconName: "person",
     name: "Perfil",
+    path: "/screens/citizen/profile",
   },
 ];
