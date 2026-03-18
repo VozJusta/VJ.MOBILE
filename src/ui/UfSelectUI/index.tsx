@@ -1,11 +1,10 @@
-import { Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { UfSelectProps } from "@/interfaces/interfaces";
-import DropDownPicker from "react-native-dropdown-picker";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { UF } from "@/utils/mask";
 
 const states: { label: string; value: UF }[] = [
-  { label: "UF", value: undefined as any },
   { label: "Acre (AC)", value: "AC" },
   { label: "Alagoas (AL)", value: "AL" },
   { label: "Amapá (AP)", value: "AP" },
@@ -38,45 +37,121 @@ const states: { label: string; value: UF }[] = [
 export default function UfSelect({
   label,
   value,
+  open,
   onValueChange,
+  onOpenChange,
+  onInteractionChange,
 }: UfSelectProps) {
-  const [open, setOpen] = useState(false);
-
-  // 🔥 mantém seu array intacto, só memoiza
+  const [internalOpen, setInternalOpen] = useState(false);
   const items = useMemo(() => states, []);
+  const isOpen = open ?? internalOpen;
+  const selectedLabel =
+    items.find((item) => item.value === value)?.label ?? "Selecione UF";
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setInternalOpen(nextOpen);
+    onOpenChange?.(nextOpen);
+    if (!nextOpen) {
+      onInteractionChange?.(false);
+    }
+  };
 
   return (
-    <View className="w-full" style={{ zIndex: 1000 }}>
+    <View
+      className="w-full"
+      style={{ zIndex: 1000, elevation: 1000 }}
+      onTouchStart={(event) => event.stopPropagation()}
+    >
       <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
         {label}
       </Text>
 
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={(callback) => {
-          const newValue = callback(value);
-          onValueChange(newValue);
-        }}
-        setItems={() => {}}
-        placeholder="Selecione UF"
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => handleOpenChange(!isOpen)}
         style={{
           backgroundColor: "rgba(255,255,255,0.03)",
           borderColor: "rgba(255,255,255,0.1)",
+          borderWidth: 1,
           borderRadius: 16,
           minHeight: 55,
+          paddingHorizontal: 12,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
-        textStyle={{
-          color: "white",
-        }}
-        dropDownContainerStyle={{
-          backgroundColor: "#111",
-          borderColor: "rgba(255,255,255,0.1)",
-        }}
-        maxHeight={200}
-      />
+      >
+        <Text className="text-white text-[14px]" numberOfLines={1}>
+          {selectedLabel}
+        </Text>
+
+        <MaterialIcons
+          name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+          size={22}
+          color="#fff"
+        />
+      </TouchableOpacity>
+
+      {isOpen && (
+        <View
+          style={{
+            marginTop: 8,
+            maxHeight: 200,
+            backgroundColor: "#111",
+            borderColor: "rgba(255,255,255,0.1)",
+            borderWidth: 1,
+            borderRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          <ScrollView
+            nestedScrollEnabled
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator
+            onResponderTerminationRequest={() => false}
+            onTouchStart={() => onInteractionChange?.(true)}
+            onTouchEnd={() => onInteractionChange?.(false)}
+            onTouchCancel={() => onInteractionChange?.(false)}
+            onScrollBeginDrag={() => onInteractionChange?.(true)}
+            onScrollEndDrag={() => onInteractionChange?.(false)}
+            onMomentumScrollEnd={() => onInteractionChange?.(false)}
+          >
+            {items.map((item) => {
+              const selected = item.value === value;
+
+              return (
+                <TouchableOpacity
+                  key={item.value}
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    onValueChange(item.value as UF);
+                    handleOpenChange(false);
+                  }}
+                  style={{
+                    minHeight: 44,
+                    justifyContent: "center",
+                    paddingHorizontal: 12,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "rgba(255,255,255,0.06)",
+                    backgroundColor: selected
+                      ? "rgba(96,165,250,0.12)"
+                      : "#111",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: selected ? "#60A5FA" : "#fff",
+                      fontSize: 14,
+                    }}
+                  >
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
+      )}
     </View>
   );
 }

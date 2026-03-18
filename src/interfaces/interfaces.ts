@@ -1,4 +1,3 @@
-
 export interface OnboardingRef {
   goNext: () => void;
   goToPage: (pageIndex: number, animated?: boolean) => void;
@@ -8,9 +7,11 @@ export interface UfSelectProps {
   label: string;
   value: string;
   style?: Object;
+  open?: boolean;
   onValueChange: (value: string) => void;
+  onOpenChange?: (open: boolean) => void;
+  onInteractionChange?: (interacting: boolean) => void;
 }
-
 
 export interface CareerSelectProps {
   label: string;
