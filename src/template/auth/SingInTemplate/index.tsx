@@ -133,7 +133,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                           key={field.label}
                           style={{
                             zIndex,
-                            elevation: zIndex, // 🔥 ANDROID
+                            elevation: zIndex,
                           }}
                         >
                           <UfSelect
@@ -242,7 +242,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   )}
 
                   <ButtonUI
-                    onPress={() => router.push("/screens/home")}
+                    onPress={() => router.push("/screens/citizen/home")}
                     gradient={true}
                     bg="bg-[#135BEC]"
                     hover={false}

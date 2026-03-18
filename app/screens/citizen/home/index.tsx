@@ -105,8 +105,12 @@ export default function Home() {
             style={{
               borderRadius: 24,
               backgroundColor: "rgba(255,255,255,0.03)",
+              height: 225,
+              paddingTop: 24,
+              paddingHorizontal: 24,
+              paddingBottom: 56,
+              marginBottom: 128,
             }}
-            className="h-[225px] w-full pt-[24px] px-[24px] pb-[55px] mb-[128px]"
             start={{ x: 0, y: 0 }}
             end={{ x: 0.8, y: 1 }}
             colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
