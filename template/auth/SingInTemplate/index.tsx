@@ -137,16 +137,13 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
                   if (isCareerField(field)) {
                     return (
-                      <View key={index} style={{ maxHeight: 240 }}>
-                        <ScrollView nestedScrollEnabled>
-                          <CareerSelect
-                            label={field.label}
-                            value={field.value}
-                            options={field.options}
-                            onValueChange={field.onValueChange}
-                          />
-                        </ScrollView>
-                      </View>
+                      <CareerSelect
+                        key={index}
+                        label={field.label}
+                        value={field.value}
+                        options={field.options}
+                        onValueChange={field.onValueChange}
+                      />
                     );
                   }
 
