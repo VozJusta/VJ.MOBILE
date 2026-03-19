@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient"
 import { View, Text } from "react-native"
-import Logo from "../../../assets/svg/icons/logo.svg"
+import Logo from "@/assets/svg/icons/logo.svg"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { MaterialIcons } from "@expo/vector-icons"
-import ButtonUI from "../../../ui/ButtonUI"
+import ButtonUI from "@/ui/ButtonUI"
 
 export default function Home() {
     return (
@@ -37,16 +37,14 @@ export default function Home() {
                     <Text className="text-[14px] mb-[18px] text-[#94A3B8] font-interRegular">
                         Nossos especialistas estão prontos para analisar seu caso agora mesmo.
                     </Text>
-                    <ButtonUI children={
-                        <View className="px-[24px] py-[16px0] justify-between items-center flex-row gap-[8px]">
+                    <ButtonUI children={<View className="px-[24px] py-[16px0] justify-between items-center flex-row gap-[8px]">
                         <Text className="text-white font-interSemiBold text-[14px]">
                             Relatar Novo Caso
                         </Text>
                         <MaterialIcons name="arrow-forward" size={20} color="white" />
-                    </View>
-                    } onPress={function (): void {
+                    </View>} onPress={function (): void {
                         throw new Error("Function not implemented.")
-                    } } gradient={true} hover={false}/>
+                    } } gradient={true} hover={false} iconLeft={false} paddingButtonStatus={""}/>
                 </View>
 
             </SafeAreaView>

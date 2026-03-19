@@ -1,4 +1,4 @@
-import { ISignInTemplateProps } from "../../../../../interfaces/template/SignInTemplate";
+import { ISignInTemplateProps } from "../../../../../src/interfaces/template/SignInTemplate";
 
 export const getInitialSignInData = (
   email: string,
@@ -6,7 +6,7 @@ export const getInitialSignInData = (
   password: string,
   onPasswordChange: (text: string) => void,
   showPassword: boolean,
-  onToggleShowPassword: () => void
+  onToggleShowPassword: () => void,
 ): ISignInTemplateProps => ({
   layout: "login",
   showHeader: false,
