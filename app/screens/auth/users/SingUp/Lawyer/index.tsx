@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { formatCPF } from "../../../../../../utils/mask";
-import SignInTemplate from "../../../../../../template/auth/SingInTemplate/index";
+import { formatCPF } from "@/utils/mask";
+import SignInTemplate from "@/template/auth/SingInTemplate/index";
 import { getInitialLawyerData } from "./data";
-import passwordValidate from "../../../../../../utils/passwordValidate";
-import { formatOABNumber } from "../../../../../../utils/oabValidate";
+import passwordValidate from "../../../../../../src/utils/passwordValidate";
+import { formatOABNumber } from "@/utils/oabValidate";
 
 export default function Lawyer() {
   const [name, setName] = useState("");
