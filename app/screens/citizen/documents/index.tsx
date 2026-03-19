@@ -23,7 +23,7 @@ export default function DocumentsCitizen() {
     <SafeAreaView style={{ flex: 1 }}>
       <View className="pt-[32px] px-[16px] gap-[32px]">
         <View className="w-full  flex-row justify-between ">
-          <Text className="text-white text-[18px] font-interSemiBold">
+          <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
             Documentos
           </Text>
           <Logo width={40} height={29} />
