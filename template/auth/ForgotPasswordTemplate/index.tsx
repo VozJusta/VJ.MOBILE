@@ -66,7 +66,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                 props.screen === ScreensForgotPassword.Email
                   ? router.replace("/screens/auth/SingIn")
                   : props.screen === ScreensForgotPassword.Code
-                    ? router.replace((props.codeBackRoute as any) ?? "/screens/auth/ForgotPassword/Email")
+                    ? router.replace(props.codeBackRoute ?? "/screens/auth/ForgotPassword/Email")
                     : router.replace("/screens/auth/ForgotPassword/Code");
               }}
               gradient={false}
