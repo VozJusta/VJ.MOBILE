@@ -5,28 +5,28 @@ import { ForgotPasswordTemplate } from "../../../../template/auth/ForgotPassword
 type ValidationSource = "citizen" | "lawyer";
 
 export default function ValidateEmail() {
-	const router = useRouter();
-	const { source, email } = useLocalSearchParams<{
-		source?: ValidationSource | ValidationSource[];
-		email?: string | string[];
-	}>();
+  const router = useRouter();
+  const { source, email } = useLocalSearchParams<{
+    source?: ValidationSource | ValidationSource[];
+    email?: string | string[];
+  }>();
 
-	const sourceValue = Array.isArray(source) ? source[0] : source;
-	const emailValue = Array.isArray(email) ? email[0] : email;
-	const resolvedSource: ValidationSource = sourceValue === "lawyer" ? "lawyer" : "citizen";
-	const codeBackRoute =
-		resolvedSource === "lawyer" ? "/screens/auth/Lawyer" : "/screens/auth/Citizen";
+  const sourceValue = Array.isArray(source) ? source[0] : source;
+  const emailValue = Array.isArray(email) ? email[0] : email;
+  const resolvedSource: ValidationSource = sourceValue === "lawyer" ? "lawyer" : "citizen";
+  const codeBackRoute =
+    resolvedSource === "lawyer" ? "/screens/auth/Lawyer" : "/screens/auth/Citizen";
 
-	return (
-		<ForgotPasswordTemplate
-			screen={ScreensForgotPassword.Code}
-			codeDescription={
-				emailValue
-					? `Enviamos um código de 6 dígitos para ${emailValue}`
-					: "Enviamos um código de 6 dígitos para seu email"
-			}
-			codeBackRoute={codeBackRoute}
-			onCodeVerified={() => router.replace("/screens/Dashboard")}
-		/>
-	);
+  return (
+    <ForgotPasswordTemplate
+      screen={ScreensForgotPassword.Code}
+      codeDescription={
+        emailValue
+          ? `Enviamos um código de 6 dígitos para ${emailValue}`
+          : "Enviamos um código de 6 dígitos para seu email"
+      }
+      codeBackRoute={codeBackRoute}
+      onCodeVerified={() => router.replace("/screens/auth/Dashboard")}
+    />
+  );
 }
