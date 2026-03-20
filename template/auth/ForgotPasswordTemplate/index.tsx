@@ -14,14 +14,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import PasswordStrength from "../../../components/passwordStrengh";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
-  const {
-    screen,
-    codeTitle,
-    codeDescription,
-    verifyButtonLabel,
-    codeBackRoute,
-    onCodeVerified,
-  } = props;
   const router = useRouter();
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
