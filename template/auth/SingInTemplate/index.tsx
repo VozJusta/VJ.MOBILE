@@ -1,32 +1,16 @@
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Platform,
-  KeyboardAvoidingView,
-} from "react-native";
+import { Animated, ScrollView, Text, TouchableOpacity, View, Keyboard, TouchableWithoutFeedback, Platform, KeyboardAvoidingView } from "react-native";
 import Logo from "../../../assets/svg/icons/logo.svg";
 import GoogleIcon from "../../../assets/svg/icons/Google-Icon.svg";
 import ButtonUI from "../../../ui/ButtonUI";
 import Checkbox from "../../../ui/checkbox";
 import { router } from "expo-router";
-import {
-  CareerSelectProps,
-  UfSelectProps,
-} from "../../../interfaces/interfaces";
+import { CareerSelectProps, UfSelectProps } from "../../../interfaces/interfaces";
 import { useEffect, useRef, useState } from "react";
 import UfSelect from "../../../ui/ufSelect";
 import CareerSelect from "../../../ui/careerSelect";
 import Input from "../../../ui/InputUI";
-import {
-  FieldsType,
-  ISignInTemplateProps,
-} from "../../../interfaces/template/SignInTemplate";
+import { FieldsType, ISignInTemplateProps, } from "../../../interfaces/template/SignInTemplate";
 import CheckListFunction from "../../../ui/CheckListFunction";
 
 function isUfField(field: FieldsType): field is UfSelectProps {
