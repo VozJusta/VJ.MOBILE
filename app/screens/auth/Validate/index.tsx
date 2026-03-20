@@ -26,7 +26,7 @@ export default function ValidateEmail() {
 					: "Enviamos um código de 6 dígitos para seu email"
 			}
 			codeBackRoute={codeBackRoute}
-			onCodeVerified={() => router.replace("/screens/auth/Dashboard")}
+			onCodeVerified={() => router.replace("/screens/Dashboard")}
 		/>
 	);
 }
