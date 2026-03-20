@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { getInitialCitizenData } from "./data";
+import { getInitialCitizenData } from "@/utils/auth/users/SingUp/Citizen/data";
 import passwordValidate from "@/utils/passwordValidate";
 
 export default function Citizen() {

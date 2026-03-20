@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { getInitialSignInData } from "./data";
+import { getInitialSignInData } from "@/utils/auth/users/SingIn/data";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
