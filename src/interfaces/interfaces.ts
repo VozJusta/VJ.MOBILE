@@ -1,3 +1,5 @@
+import { MaterialIcons } from "@expo/vector-icons";
+
 export interface OnboardingRef {
   goNext: () => void;
   goToPage: (pageIndex: number, animated?: boolean) => void;
@@ -18,4 +20,13 @@ export interface CareerSelectProps {
   values: string[];
   options: string[];
   onValuesChange: (values: string[]) => void;
+}
+
+export interface IButtonProfile {
+  icon: React.ComponentProps<typeof MaterialIcons>["name"];
+  colorIcon: string;
+  bgIcon: string;
+  namebutton: string;
+  path: string;
+  NextButton: boolean
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { formatCPF } from "@/utils/mask";
 import SignInTemplate from "@/template/auth/SingInTemplate/index";
-import { getInitialLawyerData } from "./data";
+import { getInitialLawyerData } from "@/utils/auth/users/SingUp/Lawyer/data";
 import passwordValidate from "../../../../../../src/utils/passwordValidate";
 import { formatOABNumber } from "@/utils/oabValidate";
 
