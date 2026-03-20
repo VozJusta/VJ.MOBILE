@@ -15,7 +15,6 @@ import { useRouter } from "expo-router";
 import PasswordStrength from "../../../components/passwordStrengh";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
-  const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
