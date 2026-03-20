@@ -13,14 +13,12 @@ import Input from "../../../ui/InputUI";
 import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
 import CheckListFunction from "../../../ui/CheckListFunction";
 
-
-
 function isUfField(field: FieldsType): field is UfSelectProps {
-  return "onValueChange" in field && !("onValuesChange" in field);
+  return "onValueChange" in field && !("options" in field);
 }
 
 function isCareerField(field: FieldsType): field is CareerSelectProps {
-  return "onValuesChange" in field;
+  return "onValueChange" in field && "options" in field;
 }
 
 export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
@@ -31,7 +29,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
   const footerActionText = props.footerActionText ?? "Fazer Login";
-  const forgotPasswordRoute = props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
+  const forgotPasswordRoute =
+    props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
+  const handleSubmit = props.onSubmit ?? (() => {});
 
   useEffect(() => {
     const percentage = props.passwordStrength
@@ -61,22 +61,34 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={
               isLoginLayout
-                ? { paddingBottom: 40, paddingTop: 24, flexGrow: 1, justifyContent: "center" }
+                ? {
+                    paddingBottom: 40,
+                    paddingTop: 24,
+                    flexGrow: 1,
+                    justifyContent: "center",
+                  }
                 : { paddingBottom: 40 }
             }
           >
             {showHeader && (
               <View className="flex-row justify-between items-center px-4 mb-8">
-                <ButtonUI goBack size="h-[40px] w-[40px]" onPress={() => router.replace("/screens/Onboarding/roles")} gradient={false} hover={false} />
+                <ButtonUI
+                  goBack
+                  size="h-[40px] w-[40px]"
+                  onPress={() => router.replace("/screens/Onboarding/roles")}
+                  gradient={false}
+                  hover={false}
+                />
                 <Logo width={40} height={29} />
               </View>
             )}
 
             <View
-              className={`${isLoginLayout
-                ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
-                : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
-                }`}
+              className={`${
+                isLoginLayout
+                  ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
+                  : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
+              }`}
             >
               <View className="flex-col gap-2">
                 <Text className="text-white text-[24px] font-interBold ">
@@ -88,7 +100,13 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 </Text>
               </View>
 
-              <View style={{ marginTop: props.descriptionToFieldsSpacing ?? 0, gap: 24, flexDirection: "column" }}>
+              <View
+                style={{
+                  marginTop: props.descriptionToFieldsSpacing ?? 0,
+                  gap: 24,
+                  flexDirection: "column",
+                }}
+              >
                 {props.fields.map((field, index) => {
                   if (isUfField(field)) {
                     return (
@@ -106,16 +124,15 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                       <CareerSelect
                         key={index}
                         label={field.label}
-                        values={field.values}
+                        value={field.value}
                         options={field.options}
-                        onValuesChange={field.onValuesChange}
+                        onValueChange={field.onValueChange}
                       />
                     );
                   }
 
                   return <Input key={index} {...field} />;
                 })}
-
               </View>
 
               {!!props.passwordStrength && (
@@ -139,14 +156,26 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
                   <View className="flex-row gap-[90px] mt-[8px]">
                     <View className="flex-col">
-                      {props.passwordStrength.checklist.slice(0, 2).map((item) => (
-                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                      ))}
+                      {props.passwordStrength.checklist
+                        .slice(0, 2)
+                        .map((item) => (
+                          <CheckListFunction
+                            key={item.label}
+                            valid={item.valid}
+                            label={item.label}
+                          />
+                        ))}
                     </View>
                     <View className="flex-col">
-                      {props.passwordStrength.checklist.slice(2, 4).map((item) => (
-                        <CheckListFunction key={item.label} valid={item.valid} label={item.label} />
-                      ))}
+                      {props.passwordStrength.checklist
+                        .slice(2, 4)
+                        .map((item) => (
+                          <CheckListFunction
+                            key={item.label}
+                            valid={item.valid}
+                            label={item.label}
+                          />
+                        ))}
                     </View>
                   </View>
                 </View>
@@ -184,7 +213,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 )}
 
                 <ButtonUI
-                  onPress={() => { }}
+                  onPress={handleSubmit}
                   gradient={true}
                   bg="bg-[#135BEC]"
                   hover={false}
@@ -210,7 +239,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
                     <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
                       <GoogleIcon width={20} height={20} />
-                      <Text className="text-white text-[14px] font-inter">Google</Text>
+                      <Text className="text-white text-[14px] font-inter">
+                        Google
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -221,7 +252,11 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                 {footerPrefixText}{" "}
                 <Text
                   className={"text-white underline font-interBold"}
-                  onPress={props.showForgotPassword ? () => router.push("/screens/Onboarding/roles") : () => router.push("/screens/auth/SingIn")}
+                  onPress={
+                    props.showForgotPassword
+                      ? () => router.push("/screens/Onboarding/roles")
+                      : () => router.push("/screens/auth/SingIn")
+                  }
                 >
                   {footerActionText}
                 </Text>{" "}

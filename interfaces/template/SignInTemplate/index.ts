@@ -13,6 +13,7 @@ export interface ISignInTemplateProps {
   descriptionToFieldsSpacing?: number;
   fields: FieldsType[];
   passwordStrength?: PasswordStrengthSection;
+  onSubmit?: () => void;
   submitLabel?: string;
   showTerms?: boolean;
   showForgotPassword?: boolean;

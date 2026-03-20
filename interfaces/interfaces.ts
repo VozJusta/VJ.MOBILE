@@ -1,14 +1,25 @@
 import { PasswordStrengthSection } from "./components/PasswordStrengh";
 
+type CodeScreenOptions = {
+  codeTitle?: string;
+  codeDescription?: string;
+  verifyButtonLabel?: string;
+  codeBackRoute?: string;
+  onCodeVerified?: () => void;
+};
 
-export interface IForgotPasswordProps {
-  screen: ScreensForgotPassword
-  passwordStrength: PasswordStrengthSection;
-  newPassword: string;
-  setNewPassword: (password: string) => void;
-  confirmPassword: string;
-  setConfirmPassword: (password: string) => void;
-}
+export type IForgotPasswordProps =
+  | ({
+      screen: ScreensForgotPassword.Email | ScreensForgotPassword.Code;
+    } & CodeScreenOptions)
+  | ({
+      screen: ScreensForgotPassword.Update;
+      passwordStrength: PasswordStrengthSection;
+      newPassword: string;
+      setNewPassword: (password: string) => void;
+      confirmPassword: string;
+      setConfirmPassword: (password: string) => void;
+    } & CodeScreenOptions);
 
 export enum ScreensForgotPassword {
   Email = "EMAIL",
@@ -31,7 +42,7 @@ export interface UfSelectProps {
 
 export interface CareerSelectProps {
   label: string;
-  values: string[];
+  value: string;
   options: string[];
-  onValuesChange: (values: string[]) => void;
+  onValueChange: (value: string) => void;
 }

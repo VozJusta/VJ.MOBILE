@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { router } from "expo-router";
 import SignInTemplate from "../../../../../template/auth/SingInTemplate";
 import { getInitialCitizenData } from "./data";
 import passwordValidate from "../../../../../utils/passwordValidate";
@@ -30,6 +31,11 @@ export default function Citizen() {
   return (
     <SignInTemplate
       {...citizenData}
+      onSubmit={() =>
+        router.push(
+          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(email)}`,
+        )
+      }
       passwordStrength={{
         score: strength.score,
         color: strength.color,
