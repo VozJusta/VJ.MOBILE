@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import UfSelect from "../../../ui/ufSelect";
 import CareerSelect from "../../../ui/careerSelect";
 import Input from "../../../ui/InputUI";
-import { FieldsType, ISignInTemplateProps, } from "../../../interfaces/template/SignInTemplate";
+import { FieldsType, ISignInTemplateProps } from "../../../interfaces/template/SignInTemplate";
 import CheckListFunction from "../../../ui/CheckListFunction";
 
 function isUfField(field: FieldsType): field is UfSelectProps {
