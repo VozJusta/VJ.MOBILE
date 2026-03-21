@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
@@ -14,9 +14,10 @@ export default function ProfileCitizen() {
   const fourthButton = ButtonsProfile[3];
   const fifithButton = ButtonsProfile[4];
   return (
+    <ScrollView style={{ flex: 1 }} >
     <SafeAreaView
       style={{ flex: 1 }}
-      className="pt-[32px] px-[16px] gap-[32px]"
+      className="+px-[16px] gap-[32px]"
     >
       <View className="w-full  flex-row justify-between ">
         <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
@@ -52,7 +53,7 @@ export default function ProfileCitizen() {
           </View>
         </View>
       </View>
-      <View className="flex-col gap-[16px] w-full">
+      <View className="flex-col gap-[16px] w-full pb-20">
         <View className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16] border border-solid border-white/5 justify-center items-center">
           <ProfileButton
             icon={primaryButton.icon}
@@ -102,5 +103,6 @@ export default function ProfileCitizen() {
         </View>
       </View>
     </SafeAreaView>
+    </ScrollView>
   );
 }

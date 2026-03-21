@@ -5,8 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
+import { useRouter } from "expo-router";
 
 export default function Home() {
+  const router = useRouter();
   return (
 
       <ScrollView>
@@ -48,9 +50,7 @@ export default function Home() {
                   <MaterialIcons name="arrow-forward" size={20} color="white" />
                 </View>
               }
-              onPress={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onPress={() => router.replace("/screens/citizen/home/newRequest")}
               gradient={true}
               hover={false}
               iconLeft={false}
