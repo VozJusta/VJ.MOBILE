@@ -11,7 +11,6 @@ export default function OnboardingTemplate() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
 
-
   const Dot = ({ selected }: DotProps) => {
     return (
       <View
@@ -32,22 +31,25 @@ export default function OnboardingTemplate() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View className=" flex min-w-full items-end  mb-16">
-        <ButtonUI
-          onPress={() => router.replace("/screens/Onboarding/roles")}
-          gradient={false}
-          children={
-            <Text className="text-white text-[16px] font-inter pr-[16px]">
-              Pular
-            </Text>
-          }
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-        />
+        {index < onboardingData.length - 1 && (
+          <ButtonUI
+            onPress={() => router.replace("/screens/Onboarding/roles")}
+            gradient={false}
+            children={
+              <Text className="text-white text-[16px] font-inter pr-[16px]">
+                Pular
+              </Text>
+            }
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+          />
+        )}
       </View>
       <View className="flex-1">
         <Onboarding
           ref={ref}
+          pageIndexCallback={(pageIndex) => setIndex(pageIndex)}
           showSkip={false}
           containerStyles={{
             paddingTop: 0,
