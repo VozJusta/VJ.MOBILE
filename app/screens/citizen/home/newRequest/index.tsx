@@ -1,3 +1,4 @@
+import ButtonAudio from "@/interfaces/components/ButtonAudio";
 import ButtonUI from "@/ui/ButtonUI";
 import { newRequestData } from "@/utils/home/newRequest/data";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -86,7 +87,7 @@ export default function NewRequest() {
           ))}
         </View>
         <View className="mt-[32px] gap-[16px]">
-          
+          <ButtonAudio />
         </View>
 
       </SafeAreaView>
