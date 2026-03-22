@@ -30,3 +30,14 @@ export interface IButtonProfile {
   path: string;
   NextButton: boolean
 }
+
+
+export interface IButtonRequest {
+  icon: React.ComponentProps<typeof MaterialIcons>["name"];
+  colorIcon: string;
+  bgIcon: string;
+  title: string;
+  path: string;
+  description: string;
+  
+}
