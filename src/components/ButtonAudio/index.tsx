@@ -15,7 +15,7 @@ export default function ButtonAudio() {
   const record = async () => {
     await audioRecorder.prepareToRecordAsync();
     audioRecorder.record();
-    console.log(audioRecorder.);
+    console.log(audioRecorder);
   };
   console.log(record)
 
