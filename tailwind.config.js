@@ -1,22 +1,26 @@
-import { Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
-  content: ["./app/**/*", "./ui/**/*.{js,jsx,ts,tsx}","./screens/**/*.{js,jsx,ts,tsx}", "./template/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./ui/**/*.{js,jsx,ts,tsx}",
+    "./template/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+  ],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
-        "BrightBlue" : "#052F5F",
-        "WarmYellow" : "#FDD835",
-        "Carmin Red" : "#E63946",
-        "EconGreen900" : "#59B666",
-        "DarkTeal" : "#052F5F",
-        "White" : "#FFFFFF",
-        "Placeholder" : "475569",
-        "BlueRoyal" : "#02A6FF",
-        "BlueAzure": "#135BEC"
+        BrightBlue: "#052F5F",
+        WarmYellow: "#FDD835",
+        CarminRed: "#E63946",
+        EconGreen900: "#59B666",
+        DarkTeal: "#052F5F",
+        White: "#FFFFFF",
+        Placeholder: "#475569",
+        BlueRoyal: "#02A6FF",
+        BlueAzure: "#135BEC",
+        black800: "#141414",
       },
        boxShadow: {
         Button: {
