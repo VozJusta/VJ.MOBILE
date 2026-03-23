@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ScreensForgotPassword } from "../../../../interfaces/interfaces";
-import { ForgotPasswordTemplate } from "../../../../template/auth/ForgotPasswordTemplate";
+import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
+import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 
 type ValidationSource = "citizen" | "lawyer";
 
@@ -26,7 +26,7 @@ export default function ValidateEmail() {
           : "Enviamos um código de 6 dígitos para seu email"
       }
       codeBackRoute={codeBackRoute}
-      onCodeVerified={() => router.replace("/screens/auth/Dashboard")}
+      onCodeVerified={() => router.replace("/screens/citizen/home")}
     />
   );
 }
