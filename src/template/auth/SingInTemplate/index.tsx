@@ -44,7 +44,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const footerActionText = props.footerActionText ?? "Fazer Login";
   const forgotPasswordRoute =
     props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
-  const handleSubmit = props.onSubmit ?? (() => { });
+  const handleSubmit = props.onSubmit ?? (() => router.replace("/screens/citizen/home"));
 
   useEffect(() => {
     const percentage = props.passwordStrength

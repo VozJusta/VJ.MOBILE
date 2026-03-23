@@ -14,7 +14,7 @@ export default function Home() {
       <ScrollView>
         <SafeAreaView
           style={{ flex: 1 }}
-          className="pt-[32px] px-[16px] gap-[32px]"
+          className="px-[16px] gap-[32px]"
         >
           <View className="w-full justify-between flex-row items-center">
             <Logo width={40} height={29} />
