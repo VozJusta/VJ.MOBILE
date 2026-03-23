@@ -17,7 +17,7 @@ export default function ProfileCitizen() {
     <ScrollView style={{ flex: 1 }} >
     <SafeAreaView
       style={{ flex: 1 }}
-      className="+px-[16px] gap-[32px]"
+      className="px-[16px] gap-[32px]"
     >
       <View className="w-full  flex-row justify-between ">
         <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">

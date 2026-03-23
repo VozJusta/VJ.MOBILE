@@ -21,7 +21,7 @@ export default function DocumentsCitizen() {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="pt-[32px] px-[16px] gap-[32px]">
+      <View className="px-[16px] gap-[32px]">
         <View className="w-full  flex-row justify-between ">
           <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
             Documentos
@@ -61,7 +61,7 @@ export default function DocumentsCitizen() {
             <View className="w-[48px] h-[48px] bg-[rgba(19,91,236,0.2)] justify-center items-center rounded-full">
               <Document width={24} height={24} />
             </View>
-            <View className="flex-col gap-[0.5] items-center w-[164px]">
+            <View className="flex-col gap-[0.5] items-start w-[164px]">
               <Text
                 numberOfLines={1}
                 ellipsizeMode="clip"
@@ -83,7 +83,7 @@ export default function DocumentsCitizen() {
             <View className="w-[48px] h-[48px] bg-[rgba(19,91,236,0.2)] justify-center items-center rounded-full">
               <Document width={24} height={24} />
             </View>
-            <View className="flex-col gap-[0.5] items-center w-[164px]">
+            <View className="flex-col gap-[0.5] items-start w-[164px]">
               <Text
                 numberOfLines={1}
                 ellipsizeMode="clip"
@@ -106,7 +106,7 @@ export default function DocumentsCitizen() {
       </View>
       <View className="flex-col gap-[25px]">
         <View className="w-full bg-white/5 h-[1px] mt-[32px]"></View>
-        <View className=" w-full px-[24px] pt-[25px] py-[24px]">
+        <View className=" w-full px-[24px] pt-6 py-[24px]">
           <ButtonUI
             onPress={function (): void {
               throw new Error("Function not implemented.");
