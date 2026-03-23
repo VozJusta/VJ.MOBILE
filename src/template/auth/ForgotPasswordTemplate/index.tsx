@@ -20,32 +20,16 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import PasswordStrength from "@/components/PasswordStrengh";
-export function ForgotPasswordTemplate({
-  screen,
-  passwordStrength,
-  confirmPassword,
-  newPassword,
-  setConfirmPassword,
-  setNewPassword,
-}: IForgotPasswordProps) {
+export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
-  const animatedWidth = useRef(new Animated.Value(0)).current;
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
+  const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
+  const resolvedCodeDescription =
+    props.codeDescription ?? "Enviamos um código de 6 dígitos para seu email";
+  const resolvedVerifyButtonLabel = props.verifyButtonLabel ?? "Verificar Email";
 
   useEffect(() => {
-    const percentage = passwordStrength
-      ? (passwordStrength.score / 5) * 100
-      : 0;
-
-    Animated.timing(animatedWidth, {
-      toValue: percentage,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  }, [animatedWidth, passwordStrength]);
-
-  useEffect(() => {
-    if (screen !== ScreensForgotPassword.Code) {
+    if (props.screen !== ScreensForgotPassword.Code) {
       return;
     }
 
@@ -62,7 +46,7 @@ export function ForgotPasswordTemplate({
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [screen]);
+  }, [props.screen]);
 
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
   return (
@@ -78,34 +62,31 @@ export function ForgotPasswordTemplate({
                 goBack
                 size="w-[40px] h-[40px]"
                 onPress={() => {
-                  screen === ScreensForgotPassword.Email
-                    ? router.replace("/screens/auth/users/SingIn")
-                    : screen === ScreensForgotPassword.Code
-                      ? router.replace("/screens/auth/ForgotPassword/Email")
+                  props.screen === ScreensForgotPassword.Email
+                    ? router.replace("/screens/auth/SingIn")
+                    : props.screen === ScreensForgotPassword.Code
+                      ? router.replace(props.codeBackRoute ?? "/screens/auth/ForgotPassword/Email")
                       : router.replace("/screens/auth/ForgotPassword/Code");
                 }}
                 gradient={false}
-                hover={false}
-                iconLeft={false}
-                paddingButtonStatus={""}
-              />
+                hover={false} iconLeft={false} paddingButtonStatus={""} />
               <Logo width={40} height={29} />
             </View>
             <View
               style={{
                 boxShadow: "0px 25px 50px -12px rgba(0,0,0,0.25)",
               }}
-              className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
+              className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${props.screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
             >
-              {screen === ScreensForgotPassword.Email ? (
+              {props.screen === ScreensForgotPassword.Email ? (
                 <>
                   <View className="gap-[11.40px] items-center justify-center">
                     <Text className="font-interBold text-[24px] text-white">
                       Esqueceu a Senha?
                     </Text>
                     <Text className="font-interRegular text-[14px] text-white/60 text-center">
-                      Não se preocupe! Informe seu e-mail cadastrado para
-                      receber as instruções de recuperação.
+                      Não se preocupe! Informe seu e-mail cadastrado para receber
+                      as instruções de recuperação.
                     </Text>
                   </View>
 
@@ -119,59 +100,46 @@ export function ForgotPasswordTemplate({
                   />
 
                   <ButtonUI
-                    onPress={() =>
-                      router.replace("/screens/auth/ForgotPassword/Code")
-                    }
+                    onPress={() => router.replace("/screens/auth/ForgotPassword/Code")}
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}
                     size="w-full h-[56px]"
-                    children={
-                      <View className="flex-1 justify-center items-center">
-                        <Text className="text-[16px] font-interBold text-white">
-                          Enviar código
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
+                    children={<View className="flex-1 justify-center items-center">
+                      <Text className="text-[16px] font-interBold text-white">
+                        Enviar código
+                      </Text>
+                    </View>} iconLeft={false} paddingButtonStatus={""} />
                   <ButtonUI
                     bg="bg-transparent"
                     gradient={false}
                     hover={false}
-                    onPress={() => router.replace("/screens/auth/users/SingIn")}
-                    children={
-                      <View
-                        style={{ gap: 8 }}
-                        className="flex-row items-center gap-2"
-                      >
-                        <MaterialIcons
-                          name="arrow-forward"
-                          size={20}
-                          style={{ transform: [{ rotate: "-180deg" }] }}
-                          color={"rgba(255,255,255,0.5)"}
-                        />
-                        <Text className="font-inter text-[14px] text-white/50">
-                          Voltar para o Login
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
+                    onPress={() => { } }
+                    children={<View
+                      style={{ gap: 8 }}
+                      className="flex-row items-center gap-2"
+                    >
+                      <MaterialIcons
+                        name="arrow-forward"
+                        size={20}
+                        style={{ transform: [{ rotate: "-180deg" }] }}
+                        color={"rgba(255,255,255,0.5)"} />
+                      <Text className="font-inter text-[14px] text-white/50">
+                        Voltar para o Login
+                      </Text>
+                    </View>} iconLeft={false} paddingButtonStatus={""}                  />
                 </>
-              ) : screen === ScreensForgotPassword.Code ? (
+              ) : props.screen === ScreensForgotPassword.Code ? (
                 <>
                   <View className="gap-[16px] items-center justify-center mb-[40px]">
                     <View className="w-[64px] h-[64px] flex justify-center items-center bg-[rgba(19,91,236,0.1)] rounded-full">
                       <Shield width={30} height={36} />
                     </View>
                     <Text className="font-interBold text-[24px] text-white text-center">
-                      Verificação de Email
+                      {resolvedCodeTitle}
                     </Text>
                     <Text className="font-interRegular text-[14px] px-[30.5px] text-[#94A3B8] text-center">
-                      Enviamos um código de 6 dígitos para seu email
+                      {resolvedCodeDescription}
                     </Text>
                   </View>
 
@@ -188,23 +156,23 @@ export function ForgotPasswordTemplate({
                   </Text>
                   <View className="w-full pb-[16px]">
                     <ButtonUI
-                      onPress={() =>
-                        router.replace("/screens/auth/ForgotPassword/Update")
-                      }
+                      onPress={() => {
+                        if (props.onCodeVerified) {
+                          props.onCodeVerified();
+                          return;
+                        }
+
+                        router.replace("/screens/auth/ForgotPassword/Update");
+                      }}
                       gradient={false}
                       bg="bg-[#135BEC]"
                       hover={false}
                       size="w-full h-[56px]"
-                      children={
-                        <View className="flex-1 justify-center items-center">
-                          <Text className="text-[16px] font-interBold text-white">
-                            Verificar Email
-                          </Text>
-                        </View>
-                      }
-                      iconLeft={false}
-                      paddingButtonStatus={""}
-                    />
+                      children={<View className="flex-1 justify-center items-center">
+                        <Text className="text-[16px] font-interBold text-white">
+                          {resolvedVerifyButtonLabel}
+                        </Text>
+                      </View>} iconLeft={false} paddingButtonStatus={""} />
                   </View>
                 </>
               ) : (
@@ -228,9 +196,13 @@ export function ForgotPasswordTemplate({
                     secureTextEntry={true}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => {}}
-                    value={newPassword}
-                    onChangeText={(e) => setNewPassword && setNewPassword(e)}
+                    onRightIconPress={() => { }}
+                    value={props.screen === ScreensForgotPassword.Update ? props.newPassword : ""}
+                    onChangeText={(e) => {
+                      if (props.screen === ScreensForgotPassword.Update) {
+                        props.setNewPassword(e);
+                      }
+                    }}
                   />
                   <InputUI
                     label="Confirme a nova senha"
@@ -243,38 +215,28 @@ export function ForgotPasswordTemplate({
                     type={"password"}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => {}}
-                    value={confirmPassword}
-                    onChangeText={(e) =>
-                      setConfirmPassword && setConfirmPassword(e)
-                    }
+                    onRightIconPress={() => { }}
+                    value={props.screen === ScreensForgotPassword.Update ? props.confirmPassword : ""}
+                    onChangeText={(e) => {
+                      if (props.screen === ScreensForgotPassword.Update) {
+                        props.setConfirmPassword(e);
+                      }
+                    }}
                   />
-
-                  {passwordStrength && (
-                    <PasswordStrength
-                      score={passwordStrength.score}
-                      color={passwordStrength.color}
-                      checklist={passwordStrength.checklist}
-                    />
-                  )}
+                  {props.screen === ScreensForgotPassword.Update && props.passwordStrength && <PasswordStrength score={props.passwordStrength.score} color={props.passwordStrength.color} checklist={props.passwordStrength.checklist} />}
                   <ButtonUI
-                    onPress={() => {}}
+                    onPress={() => router.replace("/screens/auth/users/SingIn")}
                     gradient={true}
                     hover={false}
-                    children={
-                      <View className="min-w-full h-full justify-center items-center">
-                        <Text className="text-[16px] font-interBold text-white">
-                          Redefinir senha
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
+                    children={<View className="flex-1 justify-center items-center">
+                      <Text className="text-[16px] font-interBold text-white">
+                        Redefinir senha
+                      </Text>
+                    </View>} iconLeft={false} paddingButtonStatus={""} />
                 </>
               )}
             </View>
-            {screen === ScreensForgotPassword.Code && (
+            {props.screen === ScreensForgotPassword.Code && (
               <View className="mt-[32px] flex-row gap-[4px]">
                 <Text className=" font-inter text-[14px] text-[#64748B]">
                   Não recebeu o código?
@@ -288,5 +250,6 @@ export function ForgotPasswordTemplate({
         </SafeAreaView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+
   );
 }

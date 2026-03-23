@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { router } from "expo-router";
 import { formatCPF } from "@/utils/mask";
 import SignInTemplate from "@/template/auth/SingInTemplate/index";
 import { getInitialLawyerData } from "@/utils/auth/users/SingUp/Lawyer/data";
-import passwordValidate from "../../../../../../src/utils/passwordValidate";
+import passwordValidate from "@/utils/passwordValidate";
 import { formatOABNumber } from "@/utils/oabValidate";
 
 export default function Lawyer() {
@@ -10,7 +11,7 @@ export default function Lawyer() {
   const [cpf, setCpf] = useState("");
   const [oabNumber, setOabNumber] = useState("");
   const [uf, setUf] = useState("");
-  const [specializations, setSpecializations] = useState<string[]>([]);
+  const [specialization, setSpecialization] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,8 +28,8 @@ export default function Lawyer() {
     setEmail,
     uf,
     setUf,
-    specializations,
-    setSpecializations,
+    specialization,
+    setSpecialization,
     password,
     setPassword,
     showPassword,
@@ -38,6 +39,11 @@ export default function Lawyer() {
   return (
     <SignInTemplate
       {...lawyerData}
+      onSubmit={() =>
+        router.push(
+          `/screens/auth/Validate?source=lawyer&email=${encodeURIComponent(email)}`,
+        )
+      }
       passwordStrength={{
         score: strength.score,
         color: strength.color,

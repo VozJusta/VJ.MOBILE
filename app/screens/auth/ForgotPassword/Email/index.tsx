@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 
