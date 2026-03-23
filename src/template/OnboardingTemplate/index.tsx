@@ -31,7 +31,7 @@ export default function OnboardingTemplate() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View className=" flex min-w-full items-end  mb-16">
-        {index < onboardingData.length - 1 && (
+        {index < onboardingData.length - 1 ? (
           <ButtonUI
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
@@ -44,7 +44,22 @@ export default function OnboardingTemplate() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-        )}
+        )
+      :
+      <ButtonUI
+            onPress={() => {} }
+            gradient={false}
+            children={
+              <Text className="text-transparent text-[16px] font-inter pr-[16px]">
+                Pular
+              </Text>
+            }
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+          />
+        
+      }
       </View>
       <View className="flex-1">
         <Onboarding
