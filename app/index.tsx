@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
-import Logo from "../assets/svg/icons/logo.svg";
+import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
