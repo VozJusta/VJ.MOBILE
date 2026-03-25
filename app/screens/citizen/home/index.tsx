@@ -74,8 +74,8 @@ export default function Home() {
           </View>
           {casesData.slice(0, 2).map((item) => (
             <ButtonUI
-              key={item.title}
-              onPress={() => {}}
+              key={item.id}
+              onPress={() => router.replace(`/screens/citizen/home/caseSelected/${item.id}`)}
               gradient={false}
               hover={false}
               iconLeft
@@ -87,20 +87,14 @@ export default function Home() {
             />
           ))}
         </View>
-        <LinearGradient
-          style={{
+        <View
+        style={{
             borderRadius: 24,
             backgroundColor: "rgba(255,255,255,0.03)",
-            height: 225,
-            paddingTop: 24,
+            paddingVertical: 24,
             paddingHorizontal: 24,
-            paddingBottom: 56,
             marginBottom: 128,
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0.8, y: 1 }}
-          colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
-        >
+          }}>
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -130,7 +124,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-        </LinearGradient>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
