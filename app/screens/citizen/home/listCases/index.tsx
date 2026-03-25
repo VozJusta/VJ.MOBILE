@@ -1,5 +1,5 @@
 import ButtonUI from "@/ui/ButtonUI";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
@@ -37,7 +37,7 @@ export default function ListCases() {
         {casesData.map((item) => (
           <ButtonUI
             key={item.title}
-            onPress={() => {}}
+            onPress={() => router.replace(`/screens/citizen/home/caseSelected/${item.id}`)}
             gradient={false}
             hover={false}
             iconLeft

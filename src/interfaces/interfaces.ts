@@ -22,6 +22,10 @@ export interface CareerSelectProps {
   onValueChange: (value: string) => void;
 }
 
+export interface ICaseSelectProps {
+  title: string;
+} 
+
 export interface IButtonProfile {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
   colorIcon: string;
