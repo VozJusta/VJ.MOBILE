@@ -14,7 +14,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#CB30E0",
         icon: "settings",
         namebutton: "Configurações",
-        path: "@screen/settings/mainSettings",
+        path: "/screens/citizen/settings",
         NextButton:true
     },
     {
