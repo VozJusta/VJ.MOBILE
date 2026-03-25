@@ -1,6 +1,4 @@
-import {
-  ISettingsSection,
-} from "@/interfaces/template/settingsTemplate";
+import { ISettingsSection, } from "@/interfaces/template/settingsTemplate";
 import { router } from "expo-router";
 import SettingsTemplate from "@/template/settingsTemplate";
 import { useMemo, useState } from "react";
