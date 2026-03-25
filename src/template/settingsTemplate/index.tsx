@@ -6,22 +6,17 @@ import {
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Pressable, ScrollView, Switch, Text, View } from "react-native";
+import { Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function SettingsRow({
-  item,
-  isLast,
-}: {
-  item: ISettingsItem;
-  isLast: boolean;
-}) {
+function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean }) {
   const isLinkItem = item.type === "link";
 
   return (
     <View className={`${!isLast ? "border-b border-white/5" : ""}`}>
       <Pressable
         className="h-[64px] flex-row items-center justify-between px-[16px]"
+        style={{ alignItems: "center" }}
         onPress={isLinkItem ? item.onPress : undefined}
         disabled={!isLinkItem}
       >
@@ -33,13 +28,19 @@ function SettingsRow({
         </View>
 
         {item.type === "switch" ? (
-          <Switch
-            value={item.value}
-            onValueChange={item.onValueChange}
-            trackColor={{ false: "#334155", true: "#135BEC" }}
-            thumbColor={item.value ? "#F8FAFC" : "#E2E8F0"}
-            ios_backgroundColor="#334155"
-          />
+          <View
+            className="h-full justify-center"
+            style={{ justifyContent: "center", alignItems: "center" }}
+          >
+            <Switch
+              value={item.value}
+              onValueChange={item.onValueChange}
+              trackColor={{ false: "#334155", true: "#135BEC" }}
+              thumbColor={item.value ? "#F8FAFC" : "#E2E8F0"}
+              ios_backgroundColor="#334155"
+              style={Platform.OS === "ios" ? { marginTop: 0 } : undefined}
+            />
+          </View>
         ) : (
           <View className="flex-row items-center gap-[10px]">
             {!!item.rightLabel && (
@@ -114,27 +115,23 @@ export default function SettingsTemplate({
               </Text>
             )}
 
-            {!!supportCard && (
-              <View className="p-[1px] rounded-[18px] bg-[#135BEC]/70">
-                <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
-                  <View className="flex-row items-center gap-[12px]">
-                    <View className="w-[40px] h-[40px] rounded-full bg-[#135BEC]/20 items-center justify-center">
-                      <MaterialIcons
-                        name="support-agent"
-                        size={22}
-                        color="#60A5FA"
-                      />
-                    </View>
-
-                    <View>
-                      <Text className="text-white text-[18px] font-interBold">
-                        {supportCard.title}
-                      </Text>
-                      <Text className="text-[#94A3B8] text-[13px] font-interRegular">
-                        {supportCard.description}
-                      </Text>
-                    </View>
+          {!!supportCard && (
+            <View className="p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2">
+              <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
+                <View className="flex-row items-center gap-[12px]">
+                  <View className="w-[40px] h-[40px] rounded-full bg-[#135BEC]/20 items-center justify-center">
+                    <MaterialIcons name="support-agent" size={22} color="#60A5FA" />
                   </View>
+
+                  <View>
+                    <Text className="text-white text-[18px] font-interBold">
+                      {supportCard.title}
+                    </Text>
+                    <Text className="text-[#94A3B8] text-[13px] font-interRegular">
+                      {supportCard.description}
+                    </Text>
+                  </View>
+                </View>
 
                   <ButtonUI
                     onPress={() => supportCard.onPress}
