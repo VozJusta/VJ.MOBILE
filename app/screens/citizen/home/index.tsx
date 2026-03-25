@@ -6,16 +6,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
+import { casesData } from "@/utils/home/cases/data";
 
 export default function Home() {
   const router = useRouter();
   return (
-
     <ScrollView>
-      <SafeAreaView
-        style={{ flex: 1 }}
-        className="px-[16px] gap-[32px]"
-      >
+      <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">
         <View className="w-full justify-between flex-row items-center">
           <Logo width={40} height={29} />
           <Text className="font-interBold text-[10px] text-[#94A3B8]">
@@ -62,48 +59,33 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <ButtonUI onPress={() => router.replace("/screens/citizen/home/listCases")}
+            <ButtonUI
+              onPress={() => router.replace("/screens/citizen/home/listCases")}
               children={
                 <Text className="font-inter text-[14px] text-[#2563EB]">
                   Ver todos
                 </Text>
-              } gradient={false} hover={false} iconLeft={false} paddingButtonStatus={""} />
-
+              }
+              gradient={false}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+            />
           </View>
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Ação Trabalhista - XPTO
-              </Text>
-            }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Em Análise"
-            iconName="article"
-            paddingButtonStatus={"p-[16px]"}
-          />
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Indenização Danos Morais
-              </Text>
-            }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Concluído"
-            iconName="verified"
-            paddingButtonStatus={"p-[16px]"}
-          />
+          {casesData.slice(0, 2).map((item) => (
+            <ButtonUI
+              key={item.title}
+              onPress={() => {}}
+              gradient={false}
+              hover={false}
+              iconLeft
+              iconName={item.icon}
+              status={item.status}
+              colorsStatus={item.color}
+              children={<Text>{item.title}</Text>}
+              paddingButtonStatus={"p-[16px]"}
+            />
+          ))}
         </View>
         <LinearGradient
           style={{
@@ -151,6 +133,5 @@ export default function Home() {
         </LinearGradient>
       </SafeAreaView>
     </ScrollView>
-
   );
 }

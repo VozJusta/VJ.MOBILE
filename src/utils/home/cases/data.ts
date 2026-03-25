@@ -6,7 +6,7 @@ export const casesData: IButtonCases[] = [
         icon: "work",
         color: "orange",
         status: "Em Análise",
-        path: ""
+        path: "/screens/home/"
     },
     {
         title: "Indenização Danos Morais",
