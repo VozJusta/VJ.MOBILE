@@ -9,7 +9,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean }) {
+function SettingsRow({
+  item,
+  isLast,
+}: {
+  item: ISettingsItem;
+  isLast: boolean;
+}) {
   const isLinkItem = item.type === "link";
 
   return (
@@ -19,7 +25,7 @@ function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean })
         onPress={isLinkItem ? item.onPress : undefined}
         disabled={!isLinkItem}
       >
-        <View className="flex-row items-center gap-[12px]">
+        <View className="flex-row  items-center gap-[12px]">
           <MaterialIcons name={item.icon} size={21} color="#E2E8F0" />
           <Text className="text-[#F1F5F9] text-[18px] font-interRegular">
             {item.label}
@@ -59,12 +65,7 @@ export default function SettingsTemplate({
   supportCard,
 }: ISettingsTemplateProps) {
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.85, y: 1 }}
-      colors={["#020617", "#052F5F"]}
-    >
+
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -105,50 +106,59 @@ export default function SettingsTemplate({
               </View>
             ))}
           </View>
+          <View 
+          >
+            {!!versionLabel && (
+              <Text className="text-[#64748B] text-[13px] font-interRegular text-center mt-[32px] mb-[45px] ">
+                {versionLabel}
+              </Text>
+            )}
 
-          {!!versionLabel && (
-            <Text className="text-[#64748B] text-[13px] font-interRegular text-center mt-[24px] mb-[20px]">
-              {versionLabel}
-            </Text>
-          )}
+            {!!supportCard && (
+              <View className="p-[1px] rounded-[18px] bg-[#135BEC]/70">
+                <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
+                  <View className="flex-row items-center gap-[12px]">
+                    <View className="w-[40px] h-[40px] rounded-full bg-[#135BEC]/20 items-center justify-center">
+                      <MaterialIcons
+                        name="support-agent"
+                        size={22}
+                        color="#60A5FA"
+                      />
+                    </View>
 
-          {!!supportCard && (
-            <View className="p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2">
-              <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
-                <View className="flex-row items-center gap-[12px]">
-                  <View className="w-[40px] h-[40px] rounded-full bg-[#135BEC]/20 items-center justify-center">
-                    <MaterialIcons name="support-agent" size={22} color="#60A5FA" />
+                    <View>
+                      <Text className="text-white text-[18px] font-interBold">
+                        {supportCard.title}
+                      </Text>
+                      <Text className="text-[#94A3B8] text-[13px] font-interRegular">
+                        {supportCard.description}
+                      </Text>
+                    </View>
                   </View>
 
-                  <View>
-                    <Text className="text-white text-[18px] font-interBold">
-                      {supportCard.title}
-                    </Text>
-                    <Text className="text-[#94A3B8] text-[13px] font-interRegular">
-                      {supportCard.description}
-                    </Text>
-                  </View>
+                  <ButtonUI
+                    onPress={() => supportCard.onPress}
+                    gradient={false}
+                    hover={false}
+                    bg="bg-transparent"
+                    border=""
+                    size="w-[30px] h-[30px]"
+                    iconLeft={false}
+                    paddingButtonStatus={""}
+                  >
+                    <View className="flex-1 items-center justify-center">
+                      <MaterialIcons
+                        name="chevron-right"
+                        size={26}
+                        color="#3B82F6"
+                      />
+                    </View>
+                  </ButtonUI>
                 </View>
-
-                <ButtonUI
-                  onPress={supportCard.onPress}
-                  gradient={false}
-                  hover={false}
-                  bg="bg-transparent"
-                  border=""
-                  size="w-[30px] h-[30px]"
-                  iconLeft={false}
-                  paddingButtonStatus={""}
-                >
-                  <View className="flex-1 items-center justify-center">
-                    <MaterialIcons name="chevron-right" size={26} color="#3B82F6" />
-                  </View>
-                </ButtonUI>
               </View>
-            </View>
-          )}
+            )}
+          </View>
         </ScrollView>
       </SafeAreaView>
-    </LinearGradient>
   );
 }
