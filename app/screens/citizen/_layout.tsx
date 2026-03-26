@@ -3,9 +3,12 @@ import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function UsersLayout() {
-  const pathName = usePathname()
-  console.log(pathName)
-   const hideNavbar = pathName === "/screens/citizen/home/listCases";
+  const pathName = usePathname();
+
+  const hideNavbar =
+    pathName === "/screens/citizen/home/listCases" ||
+    pathName.startsWith("/screens/citizen/home/listCases/caseSelected/");
+
   return (
     <LinearGradient
       style={{ flex: 1 }}
