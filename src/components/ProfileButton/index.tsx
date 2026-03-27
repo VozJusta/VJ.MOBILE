@@ -1,9 +1,11 @@
 import { IButtonProfile } from "@/interfaces/interfaces";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
 export default function ProfileButton({ ...item }: IButtonProfile) {
+  const router = useRouter()
   return (
     <ButtonUI
       key={item.namebutton}
@@ -50,7 +52,7 @@ export default function ProfileButton({ ...item }: IButtonProfile) {
           )}
         </View>
       }
-      onPress={() => item.path}
+      onPress={() => router.replace(item.path)}
       gradient={false}
       hover={false}
       iconLeft={false}
