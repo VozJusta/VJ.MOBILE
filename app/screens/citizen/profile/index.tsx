@@ -9,11 +9,6 @@ import ProfileButton from "@/components/ProfileButton";
 
 export default function ProfileCitizen() {
   const sections = [[0, 1], [2, 3], [4]];
-  const primaryButton = ButtonsProfile[0];
-  const secondButton = ButtonsProfile[1];
-  const thirdButton = ButtonsProfile[2];
-  const fourthButton = ButtonsProfile[3];
-  const fifithButton = ButtonsProfile[4];
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">
