@@ -1,11 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, ScrollView } from "react-native";
-import Logo from "@/assets/svg/icons/logo.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
+import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
@@ -16,15 +16,8 @@ export default function Home() {
           style={{ flex: 1 }}
           className="pt-[32px] px-[16px] gap-[32px]"
         >
-          <View className="w-full justify-between flex-row items-center">
-            <Logo width={40} height={29} />
-            <Text className="font-interBold text-[10px] text-[#94A3B8]">
-              CIDADÃO
-            </Text>
-            <View className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]">
-              <MaterialIcons name="notifications" size={20} color="#2563EB" />
-            </View>
-          </View>
+          <Header isFirstPage={true} title="CIDADÃO" />
+          
           <View className="mt-[32px] gap-[4px]">
             <Text className="font-interBold text-[30px] text-white">
               Olá, Ricardo!
