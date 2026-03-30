@@ -5,6 +5,7 @@ import * as DocumentPicker from "expo-document-picker";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import Document from "@/assets/svg/icons/document.svg";
+import Header from "@/components/Header";
 
 export default function DocumentsCitizen() {
   const pickFile = async () => {
@@ -22,12 +23,7 @@ export default function DocumentsCitizen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View className="pt-[32px] px-[16px] gap-[32px]">
-        <View className="w-full  flex-row justify-between ">
-          <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
-            Documentos
-          </Text>
-          <Logo width={40} height={29} />
-        </View>
+        <Header isFirstPage={true} title="DOCUMENTOS" />
         <View className="w-full justify-center items-center py-[32px] bg-[rgba(255,255,255,0.03)] border border-solid border-[rgba(19,91,236,0.3)] rounded-[48px]">
           <ButtonUI
             children={
