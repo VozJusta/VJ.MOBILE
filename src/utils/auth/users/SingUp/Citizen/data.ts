@@ -1,13 +1,33 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
+import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
+import { SingUpCitizen } from "@/settings/users/citizen/SingUp";
+import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
+import { useRouter } from "expo-router/build/exports";
+import Toast from "react-native-toast-message";
 
 export function getInitialCitizenData(
   showPassword: boolean,
   onToggleShowPassword: () => void,
 ): ISignInTemplateProps {
   const { handleRegisterChange, registerAuth } = useAuth();
+  const role = useRolesStorage((state) => state.role)
+  const router = useRouter();
+  const handleRegister = async (data: ZodSingUpTypes) => {
+    if (role === "citizen") {
+      const response = await SingUpCitizen(data)
+      Toast.show({
+        type: response.success ? "success" : "error",
+        text1: response.fields && response.fields[0]
+      })
+      // router.push(
+      //   `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`)
+      console.log()
+      return response;
+    }
+  }
   return {
     title: "Cadastro de Cidadão",
     description: "Faça seu cadastro para transformar sua indignação em mudança",
@@ -23,7 +43,7 @@ export function getInitialCitizenData(
         type: "name",
         value: registerAuth.fullName,
         onChangeText: (text) => {
-          handleRegisterChange("cpf", text);
+          handleRegisterChange("fullName", text);
         },
       },
       {
@@ -87,5 +107,6 @@ export function getInitialCitizenData(
         onRightIconPress: onToggleShowPassword,
       },
     ],
+    onSubmit: () => handleRegister(registerAuth),
   };
 }

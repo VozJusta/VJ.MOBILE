@@ -11,7 +11,9 @@ export default function Citizen() {
   const [showPassword, setShowPassword] = useState(false);
   const { registerAuth } = useAuth();
   const strength = passwordValidate(registerAuth.password);
+  console.log(registerAuth.password)
   const citizenData = getInitialCitizenData(
+    
     showPassword,
      () => setShowPassword((prev) => !prev),
   );
@@ -20,11 +22,6 @@ export default function Citizen() {
   return (
     <SignInTemplate
       {...citizenData}
-      onSubmit={() =>
-        router.push(
-          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
-        )
-      }
       passwordStrength={{
         score: strength.score,
         color: strength.color,
