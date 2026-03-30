@@ -1,5 +1,5 @@
-import { ZodLoginSchema, ZodRegisterSchema } from "@/validation/schema.zod";
+import { ZodLoginSchema, ZodSingUpSchema} from "@/validation/schema.zod";
 import z from "zod";
 
 export type ZodLoginTypes = z.infer<typeof ZodLoginSchema>;
-export type ZodRegisterTypes = z.infer<typeof ZodRegisterSchema>;
+export type ZodSingUpTypes = z.infer<typeof ZodSingUpSchema>;

@@ -1,3 +1,4 @@
+import { ZodLoginTypes, ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
 import { useState } from "react";
 
 export const useAuth = () => {
@@ -6,13 +7,12 @@ export const useAuth = () => {
     password: "",
   });
 
-  const [registerAuth, setRegisterAuth] = useState<ZodRegisterTypes>({
+  const [registerAuth, setRegisterAuth] = useState<ZodSingUpTypes>({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
-    confirmPassword: "",
-    cnpj: "",
+    cpf:"",
+    fullName: "",
+    phone: "",
   });
 
 
@@ -22,7 +22,7 @@ export const useAuth = () => {
   function handleLoginChange(name: keyof ZodLoginTypes, value: string) {
     setLoginAuth((prev) => ({ ...prev, [name]: value }));
   }
-  function handleRegisterChange(name: keyof ZodRegisterTypes, value: string) {
+  function handleRegisterChange(name: keyof ZodSingUpTypes, value: string) {
     setRegisterAuth((prev) => ({ ...prev, [name]: value }));
   }
 
