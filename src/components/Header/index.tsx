@@ -3,6 +3,7 @@ import Logo from "@/assets/svg/icons/logo.svg";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { HeaderProps } from "@/interfaces/components/Header";
+import ButtonUI from "@/ui/ButtonUI";
 
 export default function Header({ ...props }: HeaderProps) {
   const router = useRouter();
@@ -12,12 +13,17 @@ export default function Header({ ...props }: HeaderProps) {
       {props.isFirstPage ? (
         <Logo width={40} height={29} />
       ) : (
-        <TouchableOpacity
-          className="rounded-full bg-[#0A111F] p-2 flex justify-center items-center"
-          onPress={() => router.back()}
-        >
-          <MaterialIcons name="arrow-back-ios" size={24} color="#94A3B8" />
-        </TouchableOpacity>
+        <ButtonUI
+          goBack
+          size="w-[40px] h-[40px]"
+          onPress={() => {
+            router.back();
+          }}
+          gradient={false}
+          hover={false}
+          iconLeft={false}
+          paddingButtonStatus={""}
+        />
       )}
       <Text className="font-interBold text-[10px] text-[#94A3B8]">
         {props.title}
