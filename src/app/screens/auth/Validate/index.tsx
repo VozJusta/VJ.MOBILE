@@ -25,7 +25,6 @@ export default function ValidateEmail() {
           ? `Enviamos um código de 6 dígitos para ${emailValue}`
           : "Enviamos um código de 6 dígitos para seu email"
       }
-      codeBackRoute={codeBackRoute}
       onCodeVerified={() => router.replace("/screens/citizen/home")}
     />
   );
