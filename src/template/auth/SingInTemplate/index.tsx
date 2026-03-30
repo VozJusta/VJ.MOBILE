@@ -25,6 +25,8 @@ import {
   ISignInTemplateProps,
 } from "@/interfaces/template/SignInTemplate";
 import CheckListFunction from "@/ui/CheckListFunctionUI";
+import { useRolesStorage } from "@/store/roles.store";
+import { SingUpCitizen } from "@/settings/users/citizen/SingUp";
 
 
 function isUfField(field: FieldsType): field is UfSelectProps {
@@ -46,6 +48,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const forgotPasswordRoute =
     props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
   const handleSubmit = props.onSubmit ?? (() => router.replace("/screens/citizen/home"));
+  const role = useRolesStorage((state) => state.role)
 
   useEffect(() => {
     const percentage = props.passwordStrength
@@ -59,7 +62,11 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
     }).start();
   }, [animatedWidth, props.passwordStrength]);
 
-
+const handleRegister= async () => {
+  if(role === "citizen") {
+    const response = await SingUpCitizen()
+  }
+}
 
 
   return (
