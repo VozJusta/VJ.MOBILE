@@ -29,9 +29,9 @@ export default function Header({ ...props }: HeaderProps) {
         {props.title}
       </Text>
       {props.isFirstPage ? (
-        <View className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]">
+        <TouchableOpacity onPress={() => router.replace("screens/citizen/notifications")} className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]">
           <MaterialIcons name="notifications" size={20} color="#2563EB" />
-        </View>
+        </TouchableOpacity>
       ) : (
         <Logo width={40} height={29} />
       )}
