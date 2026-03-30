@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
+import Header from "@/components/Header";
 
 export default function ProfileCitizen() {
   const primaryButton = ButtonsProfile[0];
@@ -19,12 +20,7 @@ export default function ProfileCitizen() {
       style={{ flex: 1 }}
       className="+px-[16px] gap-[32px]"
     >
-      <View className="w-full  flex-row justify-between ">
-        <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
-          Perfil do Cidadão
-        </Text>
-        <Logo width={40} height={29} />
-      </View>
+      <Header isFirstPage={true} title="PERFIL" />
       <View className="w-full justify-center items-center gap-[16px]">
         <LinearGradient
           style={{
