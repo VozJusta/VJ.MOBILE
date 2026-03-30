@@ -6,6 +6,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodSingUpSchema } from "@/validation/schema.zod";
 
 export async function SingUpCitizen(data: ZodSingUpTypes) {
+  
   const validate = ZodValidate(ZodSingUpSchema, data);
   if (validate.success !== true) {
     return {
@@ -13,7 +14,6 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
       fields: validate.fields,
     };
   }
-
   const response = await fetch(`${BASE_URL}/citizen`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -25,9 +25,10 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
       password: validate.data?.password,
     }),
   });
+  const json = await response.json();
 
   return {
     success: true,
-    data: response.json,
+    data: json,
   };
 }
