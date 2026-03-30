@@ -22,7 +22,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#75FB4C",
         icon: "verified-user",
         namebutton: "Privacidade",
-        path: "",
+        path: "/screens/citizen/privacity",
         NextButton:true
     },
     {
