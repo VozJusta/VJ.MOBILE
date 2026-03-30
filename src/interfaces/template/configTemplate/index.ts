@@ -1,9 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
 export type SettingsIconName = React.ComponentProps<typeof MaterialIcons>["name"];
-
 export type SettingsSectionVariant = "grouped" | "stacked";
-
+export type SettingsTemplateVariant = "default" | "privacy";
 export type SettingsItemVariant = "default" | "danger";
 
 export interface ISettingsSwitchItem {
@@ -68,6 +67,7 @@ export interface ISettingsDangerCard {
 export interface ISettingsTemplateProps {
 	title: string;
 	description?: string;
+	templateVariant?: SettingsTemplateVariant;
 	onBack: () => void;
 	sections: ISettingsSection[];
 	versionLabel?: string;
