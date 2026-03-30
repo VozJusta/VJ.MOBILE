@@ -1,6 +1,6 @@
 import { ISettingsSection, } from "@/interfaces/template/settingsTemplate";
 import { router } from "expo-router";
-import SettingsTemplate from "@/template/settingsTemplate";
+import SettingsTemplate from "@/template/settingsTemplate/index";
 import { useMemo, useState } from "react";
 
 export default function MainSettings() {
