@@ -26,6 +26,7 @@ import {
 } from "@/interfaces/template/SignInTemplate";
 import CheckListFunction from "@/ui/CheckListFunctionUI";
 
+
 function isUfField(field: FieldsType): field is UfSelectProps {
   return "onValueChange" in field && !("options" in field);
 }
@@ -57,6 +58,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
       useNativeDriver: false,
     }).start();
   }, [animatedWidth, props.passwordStrength]);
+
+
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
