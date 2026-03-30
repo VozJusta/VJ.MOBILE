@@ -1,4 +1,4 @@
-import { ISignInTemplateProps } from "../../../../../../src/interfaces/template/SignInTemplate";
+import { ISignInTemplateProps } from "../../../../../@/src/interfaces/template/SignInTemplate";
 
 const specializationOptions = [
   "Administrativo", "Aduaneiro", "Assessoria Jurídica",

@@ -1,9 +1,9 @@
-import "../global.css";
+import "@/styles/global.css";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 import { View, Text } from "react-native";
-import { useAppFonts } from "../src/assets/fonts/font";
+import { useAppFonts } from "@/assets/fonts/font";
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();

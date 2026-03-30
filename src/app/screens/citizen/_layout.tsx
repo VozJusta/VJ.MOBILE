@@ -1,5 +1,5 @@
 import { Slot } from "expo-router";
-import Navbar from "../../../src/components/Navbar";
+import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function UsersLayout() {
