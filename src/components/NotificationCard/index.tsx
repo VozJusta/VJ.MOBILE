@@ -12,20 +12,20 @@ export type NotificationCardProps = TypeNotificationCardProps & {
 
 export default function NotificationCard({ ...props }: NotificationCardProps) {
   return (
-    <View className="p-4 flex flex-row items-center w-full bg-[#09121D] justify-between rounded-lg border-1 border-[#1C242E]">
+    <View className="p-4 flex flex-row items-center w-full h-fit bg-[#09121E] gap-4 rounded-lg border-1 border-[#1C2027]">
       <TypeNotificationCard {...props} />
 
-      <View className="flex flex-col items-center justify-between w-full h-fit gap-1 ">
-        <View className="flex flex-row items-center justify-between w-full">
-          <Text className="font-interBold text-[14px] text-white truncate">
+      <View className="flex-1 flex-col gap-1">
+        <View className="flex flex-row items-center justify-between w-fit h-fit gap-2">
+          <Text className="font-interBold text-[14px] text-white truncate w-fit">
             {props.title}
           </Text>
-          <Text className="font-interRegular text-[12px] text-[#94A3B8]">
-            {props.description}
+          <Text className="font-interRegular text-[12px] text-[#94A3B8] w-fit">
+          {props.date.toLocaleDateString()}
           </Text>
         </View>
-        <Text className="font-interRegular text-[12px] text-[#94A3B8]">
-          {props.date.toLocaleDateString()}
+        <Text className="font-interRegular text-[12px] text-[#94A3B8] w-fit h-fit" numberOfLines={2}>
+            {props.description}
         </Text>
       </View>
     </View>

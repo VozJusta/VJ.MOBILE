@@ -3,7 +3,8 @@ import NotificationCard, {
   NotificationCardProps,
 } from "@/components/NotificationCard";
 import ButtonUI from "@/ui/ButtonUI";
-import { FlatList } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface NotificationTemplateProps {
@@ -14,7 +15,7 @@ export default function NotificationTemplate({
   notifications,
 }: NotificationTemplateProps) {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1 px-4 py-6 gap-4">
       <Header isFirstPage={false} title="NOTIFICAÇÕES"></Header>
       <FlatList
         data={notifications}
@@ -30,6 +31,14 @@ export default function NotificationTemplate({
         hover={false}
         paddingButtonStatus="px-[16px] py-[12px]"
         onPress={() => console.log("Limpei tudo")}
+        children={
+          <View className="w-full h-full flex-row items-center justify-center gap-2">
+            <MaterialIcons name="delete-sweep" size={20} color="#FFFFFF" />
+            <Text className="font-interSemiBold text-[14px] text-white">
+              Limpar tudo
+            </Text>
+          </View>
+        }
       />
     </SafeAreaView>
   );
