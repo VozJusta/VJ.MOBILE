@@ -234,7 +234,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   size="w-full h-[56px]"
                   children={<View className="flex-1 justify-center items-center">
                     <Text className="text-[16px] font-interBold text-white text-center">
-                      {props.submitLabel || "Continuar"}
+                      {props.submitLabel}
                     </Text>
                   </View>} iconLeft={false} paddingButtonStatus={""} />
 
