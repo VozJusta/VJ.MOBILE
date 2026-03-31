@@ -1,5 +1,5 @@
 import { NotificationCardProps } from "@/components/NotificationCard";
-import { TypeNotificationColor, TypeNotificationIcon } from "@/components/TypeNotificationCard";
+import { TypeNotificationBgColor, TypeNotificationColor, TypeNotificationIcon } from "@/components/TypeNotificationCard";
 import NotificationTemplate from "@/template/notification";
 
 export const data: NotificationCardProps[] = [
@@ -10,7 +10,7 @@ export const data: NotificationCardProps[] = [
         date: new Date("2024-06-01T10:30:00"),
         icon: TypeNotificationIcon.NOTIFICATION,
         iconColor: TypeNotificationColor.NOTIFICATION,
-        bgColor: TypeNotificationColor.NOTIFICATION,
+        bgColor: TypeNotificationBgColor.NOTIFICATION,
     }
 ]
 

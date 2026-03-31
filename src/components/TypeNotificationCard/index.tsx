@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { View } from "react-native";
 
 export enum TypeNotificationIcon {
-  NOTIFICATION = "notification",
+  NOTIFICATION = "notifications",
   ALERT = "warning",
   DOCUMENTS = "article",
   SUCCESS = "verified",
@@ -30,7 +30,7 @@ export interface TypeNotificationCardProps {
 
 export default function TypeNotificationCard({...props}: TypeNotificationCardProps) {
   return (
-    <View className={`flex items-center justify-center w-fit h-fit p-3 bg-[${props.bgColor}]`} >
+    <View className={`flex items-center justify-center w-16 h-16 p-3 rounded-lg`} style={{ backgroundColor: props.bgColor }}>
       <MaterialIcons name={props.icon as any} size={24} color={props.iconColor} />
     </View>
   );
