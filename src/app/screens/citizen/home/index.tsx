@@ -13,7 +13,7 @@ export default function Home() {
     <ScrollView>
       <SafeAreaView
         style={{ flex: 1 }}
-        className="pt-[32px] pb-32 px-[16px] gap-[32px]"
+        className=" gap-[32px]"
       >
         <Header isFirstPage={true} title="CIDADÃO" />
 

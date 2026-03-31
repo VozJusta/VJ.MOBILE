@@ -18,7 +18,7 @@ export default function ProfileCitizen() {
     <ScrollView style={{ flex: 1 }} >
     <SafeAreaView
       style={{ flex: 1 }}
-      className="+px-[16px] gap-[32px]"
+      className="px-[16px] gap-[32px]"
     >
       <Header isFirstPage={true} title="PERFIL" />
       <View className="w-full justify-center items-center gap-[16px]">
@@ -49,7 +49,7 @@ export default function ProfileCitizen() {
           </View>
         </View>
       </View>
-      <View className="flex-col gap-[16px] w-full pb-20">
+      <View className="flex-col gap-[16px] w-full">p
         <View className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16] border border-solid border-white/5 justify-center items-center">
           <ProfileButton
             icon={primaryButton.icon}
