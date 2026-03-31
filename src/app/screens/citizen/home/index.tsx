@@ -13,7 +13,7 @@ export default function Home() {
     <ScrollView>
       <SafeAreaView
         style={{ flex: 1 }}
-        className="pt-[32px] px-[16px] gap-[32px]"
+        className="pt-[32px] pb-32 px-[16px] gap-[32px]"
       >
         <Header isFirstPage={true} title="CIDADÃO" />
 
@@ -99,7 +99,6 @@ export default function Home() {
             paddingTop: 24,
             paddingHorizontal: 24,
             paddingBottom: 56,
-            marginBottom: 128,
           }}
           start={{ x: 0, y: 0 }}
           end={{ x: 0.8, y: 1 }}
