@@ -243,7 +243,7 @@ export default function SettingsTemplate({
 
         {!!dangerCard && (
           <View
-            className={`border bg-[rgba(8,11,31,0.97)] ${isPrivacy ? "rounded-[36px] border-[#F0455A]/45 p-[20px] mt-[32px]" : "rounded-[26px] border-red-500/40 p-[14px] mt-[10px]"}`}
+            className={`border bg-[rgba(8,11,31,0.97)] ${isPrivacy ? "rounded-[36px] border-[#F0455A]/45 p-[20px] mt-[32px] mb-[54px]" : "rounded-[26px] border-red-500/40 p-[14px] mt-[10px]"}`}
             style={
               isPrivacy
                 ? {
