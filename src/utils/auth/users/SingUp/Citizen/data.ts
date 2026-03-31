@@ -21,22 +21,28 @@ export function getInitialCitizenData(
   handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void,
 ): ISignInTemplateProps {
   const role = useRolesStorage((state) => state.role);
+  const { loading, setLoading } = useAuth();
   const router = useRouter();
   console.log(registerAuth.password);
   async function handleRegister(data: ZodSingUpTypes) {
+    setLoading(false);
     if (role === "citizen") {
       const response = await SingUpCitizen(data);
       if (!response.success) {
+        setLoading(true);
         Toast.show({
           type: "error",
           text1: response.fields && response.fields[0],
         });
+
         return;
       }
+      setLoading(true);
       Toast.show({
         type: "success",
-        text1: "Cidadão criado"
+        text1: "Cidadão criado",
       });
+
       return router.push(
         `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
       );
@@ -122,5 +128,6 @@ export function getInitialCitizenData(
       },
     ],
     onSubmit: () => handleRegister(registerAuth),
+    submitLabel: loading ? "carregando..." : "continuar",
   };
 }
