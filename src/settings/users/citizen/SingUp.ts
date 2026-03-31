@@ -38,10 +38,10 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
     if (!response.ok) {
       return {
         success: false,
-        fields:  json?.errors || [json?.message || "Erro ao cadastrar"]
+        fields: json?.errors || [json?.message || "Erro ao cadastrar"],
       };
     }
-    console.log("message:", response.statusText)
+    console.log("message:", response.statusText);
 
     console.log("response:", response);
     console.log("json:", json);
