@@ -15,12 +15,7 @@ export default function SelectionUserRole() {
 
   return (
     <SafeAreaView
-      style={{
-        flex: 1,
-        alignItems: "center",
-        flexDirection: "column",
-        paddingTop: 90,
-      }}
+      className="flex-1 items-center flex-col py-[90px] px-[16px]"
     >
       <View className="flex-col items-center">
         <Logo width={70} height={51} />
@@ -34,7 +29,7 @@ export default function SelectionUserRole() {
       <Text className="text-[14px] font-inter text-white mt-[8px]">
         Para começar, quem você é?
       </Text>
-      <View className="w-full flex-1 items-center mt-[36px] gap-8 px-16">
+      <View className="w-full items-center mt-[36px] gap-8 ">
         <Button
           hover
           size="min-w-full h-[103px]"

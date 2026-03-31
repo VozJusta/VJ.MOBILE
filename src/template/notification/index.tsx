@@ -11,7 +11,7 @@ export default function NotificationTemplate({
   notifications,
 }: NotificationTemplateProps) {
   return (
-    <SafeAreaView className="flex-1 px-4 py-6 gap-4">
+    <SafeAreaView className="flex-1 px-8 py-6 gap-4">
       <Header isFirstPage={false} title="NOTIFICAÇÕES"></Header>
       <FlatList
         className="mt-8"
@@ -21,7 +21,7 @@ export default function NotificationTemplate({
         )}
         ListEmptyComponent={
           <View className="flex flex-col items-center gap-2">
-            <EmptyNotification width={200} height={200} />
+            <EmptyNotification width={300} height={300} />
             <Text className="font-interSemiBold text-[32px] text-white">
               Tudo limpo por aqui!
             </Text>
