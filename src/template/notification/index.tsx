@@ -1,15 +1,10 @@
 import Header from "@/components/Header";
-import NotificationCard, {
-  NotificationCardProps,
-} from "@/components/NotificationCard";
+import NotificationCard from "@/components/NotificationCard";
+import { NotificationTemplateProps } from "@/interfaces/template/NotificationTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-export interface NotificationTemplateProps {
-  notifications: NotificationCardProps[];
-}
 
 export default function NotificationTemplate({
   notifications,

@@ -1,14 +1,8 @@
 import { Text, View } from "react-native";
 import TypeNotificationCard, {
-  TypeNotificationCardProps,
 } from "../TypeNotificationCard";
+import { NotificationCardProps } from "@/interfaces/components/NotificationCard";
 
-export type NotificationCardProps = TypeNotificationCardProps & {
-  id: string;
-  title: string;
-  description: string;
-  date: Date;
-};
 
 export default function NotificationCard({ ...props }: NotificationCardProps) {
   return (
