@@ -55,7 +55,7 @@ export default function ButtonUI({
         end={{ x: 1, y: 1 }}
         colors={["#135BEC", "#0A44B8"]}
       >
-        <Pressable onPress={props.onPress} className={`w-full h-[56px]`}>
+        <Pressable disabled={props.disabled} onPress={props.onPress} className={`w-full h-[56px]`}>
           {props.children}
         </Pressable>
       </LinearGradient>

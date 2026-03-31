@@ -22,5 +22,6 @@ export interface ISignInTemplateProps {
   footerPrefixText?: string;
   footerActionText?: string;
   footerActionRoute?: string;
+  disableSubmit?: boolean;
   footerActionTextClassName?: string;
 }
