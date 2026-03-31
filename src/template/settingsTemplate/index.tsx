@@ -1,10 +1,6 @@
 import Logo from "@/assets/svg/icons/logo.svg";
 import DangerAlertIcon from "@/assets/svg/icons/danger-alert.svg";
-import {
-  ISettingsItem,
-  ISettingsSection,
-  ISettingsTemplateProps,
-} from "@/interfaces/template/configTemplate";
+import { ISettingsItem, ISettingsSection, ISettingsTemplateProps } from "@/interfaces/template/configTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
