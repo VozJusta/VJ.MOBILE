@@ -2,7 +2,7 @@ import { Slot } from "expo-router";
 import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function CitizenLayout() {
+export default function LawyerLayout() {
   return (
     <LinearGradient
       style={{ flex: 1, paddingBottom: 128, paddingTop: 32, paddingInline: 16 }}
@@ -11,7 +11,7 @@ export default function CitizenLayout() {
       colors={["#000000", "#052F5F"]}
     >
       <Slot />
-      <Navbar isLawyer={false} />
+      <Navbar isLawyer={true} />
     </LinearGradient>
   );
 }
