@@ -30,7 +30,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#FFFF55",
         icon: "help",
         namebutton: "Central de Ajuda",
-        path: "",
+        path: "/screens/citizen/help",
         NextButton:true
     },
     {

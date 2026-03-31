@@ -7,6 +7,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+function getHelpIconPalette(itemId: string) {
+  switch (itemId) {
+    case "ai-overview":
+      return { bg: "rgba(17, 85, 170, 0.22)", border: "rgba(67, 141, 231, 0.32)", color: "#44A4FF" };
+    case "plans-billing":
+      return { bg: "rgba(180, 132, 28, 0.2)", border: "rgba(233, 172, 41, 0.36)", color: "#F4B72D" };
+    case "process-questions":
+      return { bg: "rgba(11, 140, 136, 0.2)", border: "rgba(47, 185, 168, 0.34)", color: "#2DDFC4" };
+    case "security-data":
+      return { bg: "rgba(170, 33, 86, 0.2)", border: "rgba(243, 84, 130, 0.34)", color: "#FF4F8D" };
+    case "getting-started":
+      return { bg: "rgba(96, 62, 196, 0.22)", border: "rgba(150, 110, 255, 0.36)", color: "#A78BFA" };
+    default:
+      return { bg: "rgba(17, 85, 170, 0.22)", border: "rgba(67, 141, 231, 0.32)", color: "#44A4FF" };
+  }
+}
+
 function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean }) {
   const isLinkItem = item.type === "link";
   const hasDescription = !!item.description;
@@ -67,19 +84,23 @@ function SettingsCard({ item, isPrivacy, isHelp }: { item: ISettingsItem; isPriv
   const isLinkItem = item.type === "link";
   const isDanger = item.variant === "danger";
   const showIconBubble = !(isPrivacy && item.type === "switch");
+  const isPartnerSharingCard = isPrivacy && item.id === "partner-sharing";
+  const helpIconPalette = isHelp ? getHelpIconPalette(item.id) : undefined;
 
   return (
     <View
-      className={`overflow-hidden border ${isPrivacy ? "rounded-[34px] border-[#29456E]/45" : "rounded-[22px]"} ${isDanger ? "border-red-500/40" : "border-white/10"}`}
+      className={`overflow-hidden border ${isPrivacy ? "rounded-[34px] border-[#29456E]/45" : isHelp ? "rounded-[20px] border-[#2A4568]/70" : "rounded-[22px]"} ${isDanger ? "border-red-500/40" : isHelp ? "" : "border-white/10"}`}
     >
       <Pressable
-        className={`px-[18px] flex-row items-center justify-between ${isPrivacy ? "py-[16px]" : "py-[16px]"} ${isDanger ? "bg-[rgba(28,11,18,0.85)]" : isPrivacy ? "bg-[rgba(8,27,56,0.84)]" : "bg-[rgba(15,23,42,0.7)]"}`}
+        className={`px-[18px] flex-row items-center justify-between ${isPartnerSharingCard ? "py-[19px]" : "py-[16px]"} ${isDanger ? "bg-[rgba(28,11,18,0.85)]" : isPrivacy ? "bg-[rgba(8,27,56,0.84)]" : isHelp ? "bg-[rgba(25,36,51,0.6)]" : "bg-[rgba(15,23,42,0.7)]"}`}
         style={
           isHelp
             ? {
-                backgroundColor: "rgba(17, 35, 62, 0.85)",
-                borderColor: "rgba(86, 126, 180, 0.38)",
-                borderWidth: 1,
+                shadowColor: "#061B36",
+                shadowOpacity: 0.25,
+                shadowRadius: 8,
+                shadowOffset: { width: 0, height: 2 },
+                elevation: 3,
               }
             : undefined
         }
@@ -93,14 +114,14 @@ function SettingsCard({ item, isPrivacy, isHelp }: { item: ISettingsItem; isPriv
               style={
                 isHelp
                   ? {
-                      backgroundColor: "rgba(26, 77, 138, 0.35)",
+                      backgroundColor: helpIconPalette?.bg,
                       borderWidth: 1,
-                      borderColor: "rgba(70, 140, 225, 0.45)",
+                      borderColor: helpIconPalette?.border,
                     }
                   : undefined
               }
             >
-              <MaterialIcons name={item.icon} size={isPrivacy ? 20 : 20} color={isDanger ? "#F87171" : isHelp ? "#47A0FF" : "#60A5FA"} />
+              <MaterialIcons name={item.icon} size={isPrivacy ? 20 : 20} color={isDanger ? "#F87171" : isHelp ? helpIconPalette?.color : "#60A5FA"} />
             </View>
           )}
 
@@ -127,7 +148,7 @@ function SettingsCard({ item, isPrivacy, isHelp }: { item: ISettingsItem; isPriv
             style={Platform.OS === "ios" ? { marginTop: 0, transform: [{ scaleX: 1.03 }, { scaleY: 1.03 }] } : undefined}
           />
         ) : item.type === "link" ? (
-          <MaterialIcons name="chevron-right" size={24} color={isHelp ? "#5A7398" : "#7F95B8"} />
+          <MaterialIcons name="chevron-right" size={24} color={isHelp ? "#5F7494" : "#7F95B8"} />
         ) : null}
       </Pressable>
     </View>
@@ -139,7 +160,7 @@ function SettingsSectionBlock({ section, isPrivacy, isHelp }: { section: ISettin
 
   return (
     <View className={isPrivacy ? "  gap-[13px]" : "gap-[10px]"}>
-      <Text className={`uppercase tracking-[2.3px] text-[11px] font-interBold ${isPrivacy ? "text-[#7E96B9]" : isHelp ? "text-[#1CA6FF]" : "text-[#94A3B8]"}`}>
+      <Text className={`uppercase tracking-[2.3px] text-[11px] font-interBold ${isPrivacy ? "text-[#7E96B9]" : isHelp ? "text-[#1B99EB]" : "text-[#94A3B8]"}`}>
         {section.title}
       </Text>
 
@@ -175,28 +196,7 @@ export default function SettingsTemplate({
   const isHelp = templateVariant === "help";
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className={isPrivacy || isHelp ? "bg-[#031631]" : ""}>
-      {isPrivacy && (
-        <LinearGradient
-          pointerEvents="none"
-          colors={["#010915", "#031B39", "#083469"]}
-          locations={[0, 0.62, 1]}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-        />
-      )}
-
-      {isHelp && (
-        <LinearGradient
-          pointerEvents="none"
-          colors={["#010913", "#031D3C", "#0A3767"]}
-          locations={[0, 0.58, 1]}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-        />
-      )}
+    <SafeAreaView style={{ flex: 1 }}>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -217,7 +217,7 @@ export default function SettingsTemplate({
             paddingButtonStatus={""}
           />
 
-          <Text className={`uppercase tracking-[2px] text-[14px] font-interMedium ${isPrivacy || isHelp ? "text-[#D8E4F6]" : "text-[#E2E8F0]"}`}>
+          <Text className={`uppercase tracking-[2px] text-[14px] font-interMedium ${isPrivacy ? "text-[#D8E4F6]" : isHelp ? "text-[#DFE9F7]" : "text-[#E2E8F0]"}`}>
             {title}
           </Text>
 
@@ -232,11 +232,11 @@ export default function SettingsTemplate({
 
         {isHelp && (
           <View className="mb-[22px]">
-            <View className="rounded-[32px] border border-[#264A76] bg-[rgba(5,20,49,0.82)] h-[72px] px-[20px] flex-row items-center gap-[10px]">
-              <MaterialIcons name="search" size={22} color="#7A8FAE" />
+            <View className="rounded-[32px] border border-[#274465] bg-[rgba(7,22,44,0.86)] h-[72px] px-[20px] flex-row items-center gap-[10px]">
+              <MaterialIcons name="search" size={22} color="#7A8FAA" />
               <TextInput
                 placeholder={searchPlaceholder ?? "Busque por duvidas..."}
-                placeholderTextColor="#7A8FAE"
+                placeholderTextColor="#7A8FAA"
                 className="flex-1 text-[20px] text-[#D7E8FF] font-interRegular"
               />
             </View>
@@ -257,7 +257,25 @@ export default function SettingsTemplate({
 
         {!!supportCard && (
           <View className={isHelp ? "mb-2 mt-[20px]" : "p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2 mt-[8px]"}>
-            <View className={isHelp ? "rounded-[18px] bg-[#2A86EE] px-[20px] py-[18px] flex-row items-center justify-between" : "rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between"}>
+            {isHelp ? (
+              <Pressable
+                onPress={supportCard.onPress ?? (() => {})}
+                className="rounded-[18px] overflow-hidden border border-[#4D99ED]/45"
+              >
+                <LinearGradient
+                  colors={["#2B91F6", "#2A7EE8"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{ paddingHorizontal: 20, paddingVertical: 18 }}
+                >
+                  <View className="flex-row items-center justify-center gap-[10px]">
+                    <MaterialIcons name={supportCard.icon ?? "support-agent"} size={25} color="#FFFFFF" />
+                    <Text className="text-white text-[20px] font-interBold">{supportCard.title}</Text>
+                  </View>
+                </LinearGradient>
+              </Pressable>
+            ) : (
+              <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
               <View className="flex-row items-center gap-[12px] flex-1 pr-[10px]">
                 <View className={`items-center justify-center ${isHelp ? "w-[36px] h-[36px]" : "w-[40px] h-[40px] rounded-full bg-[#135BEC]/20"}`}>
                   <MaterialIcons name={supportCard.icon ?? "support-agent"} size={isHelp ? 28 : 22} color={isHelp ? "#FFFFFF" : "#60A5FA"} />
@@ -287,7 +305,8 @@ export default function SettingsTemplate({
                   <MaterialIcons name="chevron-right" size={26} color={isHelp ? "#FFFFFF" : "#3B82F6"} />
                 </View>
               </ButtonUI>
-            </View>
+              </View>
+            )}
           </View>
         )}
 
