@@ -11,21 +11,35 @@ import Toast from "react-native-toast-message";
 export function getInitialCitizenData(
   showPassword: boolean,
   onToggleShowPassword: () => void,
+  registerAuth: {
+    fullName: string;
+    email: string;
+    password: string;
+    phone: string;
+    cpf: string;
+  },
+  handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void,
 ): ISignInTemplateProps {
-  const { handleRegisterChange, registerAuth } = useAuth();
-  const role = useRolesStorage((state) => state.role)
+  const role = useRolesStorage((state) => state.role);
   const router = useRouter();
-  const handleRegister = async (data: ZodSingUpTypes) => {
+  console.log(registerAuth.password);
+  async function handleRegister(data: ZodSingUpTypes) {
     if (role === "citizen") {
-      const response = await SingUpCitizen(data)
+      const response = await SingUpCitizen(data);
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: response.fields && response.fields[0],
+        });
+        return;
+      }
       Toast.show({
-        type: response.success ? "success" : "error",
-        text1: response.fields && response.fields[0]
-      })
-      // router.push(
-      //   `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`)
-      console.log(response)
-      return response;
+        type: "success",
+        text1: "Cidadão criado"
+      });
+      return router.push(
+        `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
+      );
     }
   }
   return {

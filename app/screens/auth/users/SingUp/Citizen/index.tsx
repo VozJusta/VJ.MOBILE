@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { router } from "expo-router";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { getInitialCitizenData } from "@/utils/auth/users/SingUp/Citizen/data";
@@ -6,18 +6,19 @@ import passwordValidate from "@/utils/passwordValidate";
 import { useAuth } from "@/hooks/useAuth";
 import Toast from "react-native-toast-message";
 
-
 export default function Citizen() {
   const [showPassword, setShowPassword] = useState(false);
-  const { registerAuth } = useAuth();
-  const strength = passwordValidate(registerAuth.password);
-  console.log(registerAuth.password)
+  const { registerAuth, handleRegisterChange } = useAuth();
+  const strength = useMemo(() => {
+    return passwordValidate(registerAuth.password);
+  },[registerAuth.password]);
+  console.log("senha: ", strength);
   const citizenData = getInitialCitizenData(
-    
     showPassword,
-     () => setShowPassword((prev) => !prev),
+    () => setShowPassword((prev) => !prev),
+    registerAuth,
+    handleRegisterChange,
   );
-    
 
   return (
     <SignInTemplate
