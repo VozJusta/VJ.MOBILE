@@ -30,7 +30,7 @@ export default function Header({ ...props }: HeaderProps) {
       </Text>
       {props.isFirstPage ? (
         <TouchableOpacity
-          onPress={() => router.replace("screens/citizen/notifications")}
+          onPress={() => router.replace(props.isCitizen ? "screens/citizen/notifications" : "screens/lawyer/notifications")}
           className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]"
         >
           <MaterialIcons name="notifications" size={20} color="#2563EB" />

@@ -38,7 +38,7 @@ export default function NotificationTemplate({
         gradient={true}
         colorsStatus="blue"
         hover={false}
-        paddingButtonStatus="px-[16px] py-[12px]"
+        paddingButtonStatus="px-[16px] py-[12px] mt-12"
         onPress={() => console.log("Limpei tudo")}
         children={
           <View className="w-full h-full flex-row items-center justify-center gap-2">
