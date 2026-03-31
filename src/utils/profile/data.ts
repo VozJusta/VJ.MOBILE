@@ -38,7 +38,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#EA3323",
         icon: "logout",
         namebutton: "Sair da Conta",
-        path: "",
+        path: "/screens/Onboarding/roles",
         NextButton:false
     },
 ]
