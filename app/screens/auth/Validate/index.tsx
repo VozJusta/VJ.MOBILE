@@ -15,7 +15,7 @@ export default function ValidateEmail() {
   const emailValue = Array.isArray(email) ? email[0] : email;
   const resolvedSource: ValidationSource = sourceValue === "lawyer" ? "lawyer" : "citizen";
   const codeBackRoute =
-    resolvedSource === "lawyer" ? "/screens/auth/Lawyer" : "/screens/auth/Citizen";
+    resolvedSource === "lawyer" ? "/screens/auth/users/SingUp/Lawyer" : "/screens/auth/users/SingUp/Citizen";
 
   return (
     <ForgotPasswordTemplate

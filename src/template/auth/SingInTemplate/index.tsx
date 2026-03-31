@@ -48,7 +48,6 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const forgotPasswordRoute =
     props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
 
-
   if (props.onSubmit === undefined) {
     props.onSubmit = () => { }
   }
@@ -230,6 +229,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   onPress={props.onSubmit}
                   gradient={true}
                   bg="bg-[#135BEC]"
+                  disabled={props.disableSubmit}
                   hover={false}
                   size="w-full h-[56px]"
                   children={<View className="flex-1 justify-center items-center">

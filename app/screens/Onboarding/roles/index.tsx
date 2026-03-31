@@ -10,7 +10,6 @@ import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
 import { router } from "expo-router";
 import {useRolesStorage} from "@/store/roles.store"
 
-
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);

@@ -1,11 +1,13 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
+import { Email2FA } from "@/settings/users/citizen/email2FA";
 import { SingUpCitizen } from "@/settings/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
 import { useRouter } from "expo-router/build/exports";
+import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export function getInitialCitizenData(
@@ -23,29 +25,46 @@ export function getInitialCitizenData(
   const role = useRolesStorage((state) => state.role);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
-  console.log(registerAuth.password);
+
   async function handleRegister(data: ZodSingUpTypes) {
-    setLoading(false);
-    if (role === "citizen") {
-      const response = await SingUpCitizen(data);
-      if (!response.success) {
-        setLoading(true);
+    setLoading(true);
+    try {
+      if (role === "citizen") {
+        const response = await SingUpCitizen(data);
+        if (!response.success) {
+          Toast.show({
+            type: "error",
+            text1: response.fields && response.fields[0],
+          });
+          return;
+        }
         Toast.show({
-          type: "error",
-          text1: response.fields && response.fields[0],
+          type: "success",
+          text1: "Cidadão criado",
         });
 
+        const validateEmail2FA = await Email2FA(data.email);
+        if (!validateEmail2FA.success) {
+          Toast.show({
+            type: "error",
+            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+          });
+          return;
+        }
+         Toast.show({
+          type: "success",
+          text1: "Cidadão criado",
+        });
+        console.log("Resposta do Email2FA", validateEmail2FA.data);
+        console.log("validateEmail2FA:", JSON.stringify(validateEmail2FA));
+
+        // router.push(
+        //   `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
+        // );
         return;
       }
-      setLoading(true);
-      Toast.show({
-        type: "success",
-        text1: "Cidadão criado",
-      });
-
-      return router.push(
-        `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
-      );
+    } finally {
+      setLoading(false);
     }
   }
   return {
@@ -129,5 +148,6 @@ export function getInitialCitizenData(
     ],
     onSubmit: () => handleRegister(registerAuth),
     submitLabel: loading ? "carregando..." : "continuar",
+    disableSubmit: loading
   };
 }
