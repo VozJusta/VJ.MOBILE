@@ -24,7 +24,7 @@ export function getInitialCitizenData(
       })
       // router.push(
       //   `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`)
-      console.log()
+      console.log(response)
       return response;
     }
   }
