@@ -15,7 +15,7 @@ export default function Home() {
         style={{ flex: 1 }}
         className=" gap-[32px]"
       >
-        <Header isFirstPage={true} title="CIDADÃO" />
+        <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">

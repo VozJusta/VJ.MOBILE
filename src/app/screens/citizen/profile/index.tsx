@@ -20,7 +20,7 @@ export default function ProfileCitizen() {
       style={{ flex: 1 }}
       className="px-[16px] gap-[32px]"
     >
-      <Header isFirstPage={true} title="PERFIL" />
+      <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
       <View className="w-full justify-center items-center gap-[16px]">
         <LinearGradient
           style={{
