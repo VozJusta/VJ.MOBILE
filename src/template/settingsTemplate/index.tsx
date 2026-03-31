@@ -4,7 +4,7 @@ import { ISettingsItem, ISettingsSection, ISettingsTemplateProps } from "@/inter
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
+import { Platform, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean }) {
@@ -63,7 +63,7 @@ function SettingsRow({ item, isLast }: { item: ISettingsItem; isLast: boolean })
   );
 }
 
-function SettingsCard({ item, isPrivacy }: { item: ISettingsItem; isPrivacy: boolean }) {
+function SettingsCard({ item, isPrivacy, isHelp }: { item: ISettingsItem; isPrivacy: boolean; isHelp: boolean }) {
   const isLinkItem = item.type === "link";
   const isDanger = item.variant === "danger";
   const showIconBubble = !(isPrivacy && item.type === "switch");
@@ -74,23 +74,43 @@ function SettingsCard({ item, isPrivacy }: { item: ISettingsItem; isPrivacy: boo
     >
       <Pressable
         className={`px-[18px] flex-row items-center justify-between ${isPrivacy ? "py-[16px]" : "py-[16px]"} ${isDanger ? "bg-[rgba(28,11,18,0.85)]" : isPrivacy ? "bg-[rgba(8,27,56,0.84)]" : "bg-[rgba(15,23,42,0.7)]"}`}
+        style={
+          isHelp
+            ? {
+                backgroundColor: "rgba(17, 35, 62, 0.85)",
+                borderColor: "rgba(86, 126, 180, 0.38)",
+                borderWidth: 1,
+              }
+            : undefined
+        }
         onPress={isLinkItem ? item.onPress : undefined}
         disabled={!isLinkItem}
       >
         <View className="flex-1 flex-row items-start gap-[11px] pr-[14px]">
           {showIconBubble && (
-            <View className={`${isPrivacy ? "w-[42px] h-[42px]" : "w-[38px] h-[38px]"} rounded-full items-center justify-center ${isDanger ? "bg-red-500/20" : "bg-[#135BEC]/20"}`}>
-              <MaterialIcons name={item.icon} size={isPrivacy ? 20 : 20} color={isDanger ? "#F87171" : "#60A5FA"} />
+            <View
+              className={`${isPrivacy ? "w-[42px] h-[42px]" : "w-[38px] h-[38px]"} items-center justify-center ${isHelp ? "rounded-[12px]" : "rounded-full"} ${isDanger ? "bg-red-500/20" : "bg-[#135BEC]/20"}`}
+              style={
+                isHelp
+                  ? {
+                      backgroundColor: "rgba(26, 77, 138, 0.35)",
+                      borderWidth: 1,
+                      borderColor: "rgba(70, 140, 225, 0.45)",
+                    }
+                  : undefined
+              }
+            >
+              <MaterialIcons name={item.icon} size={isPrivacy ? 20 : 20} color={isDanger ? "#F87171" : isHelp ? "#47A0FF" : "#60A5FA"} />
             </View>
           )}
 
           <View className="flex-1">
-            <Text className={`${isPrivacy ? "text-[16px]" : "text-[18px]"} font-interMedium ${isDanger ? "text-[#F87171]" : "text-[#F1F5F9]"}`}>
+            <Text className={`${isPrivacy ? "text-[16px]" : isHelp ? "text-[17px]" : "text-[18px]"} font-interMedium ${isDanger ? "text-[#F87171]" : "text-[#F1F5F9]"}`}>
               {item.label}
             </Text>
 
             {!!item.description && (
-              <Text className={`${isPrivacy ? "text-[13px] leading-[21px]" : "text-[14px]"} text-[#94A3B8] font-interRegular mt-[5px]`}>
+              <Text className={`${isPrivacy ? "text-[13px] leading-[21px]" : isHelp ? "text-[13px]" : "text-[14px]"} text-[#94A3B8] font-interRegular mt-[5px]`}>
                 {item.description}
               </Text>
             )}
@@ -107,26 +127,26 @@ function SettingsCard({ item, isPrivacy }: { item: ISettingsItem; isPrivacy: boo
             style={Platform.OS === "ios" ? { marginTop: 0, transform: [{ scaleX: 1.03 }, { scaleY: 1.03 }] } : undefined}
           />
         ) : item.type === "link" ? (
-          <MaterialIcons name="chevron-right" size={24} color="#7F95B8" />
+          <MaterialIcons name="chevron-right" size={24} color={isHelp ? "#5A7398" : "#7F95B8"} />
         ) : null}
       </Pressable>
     </View>
   );
 }
 
-function SettingsSectionBlock({ section, isPrivacy }: { section: ISettingsSection; isPrivacy: boolean }) {
+function SettingsSectionBlock({ section, isPrivacy, isHelp }: { section: ISettingsSection; isPrivacy: boolean; isHelp: boolean }) {
   const variant = section.variant ?? "grouped";
 
   return (
     <View className={isPrivacy ? "  gap-[13px]" : "gap-[10px]"}>
-      <Text className={`uppercase tracking-[2.3px] text-[11px] font-interBold ${isPrivacy ? "text-[#7E96B9]" : "text-[#94A3B8]"}`}>
+      <Text className={`uppercase tracking-[2.3px] text-[11px] font-interBold ${isPrivacy ? "text-[#7E96B9]" : isHelp ? "text-[#1CA6FF]" : "text-[#94A3B8]"}`}>
         {section.title}
       </Text>
 
       {variant === "stacked" ? (
         <View className={isPrivacy ? "gap-[14px]" : "gap-[10px]"}>
           {section.items.map((item) => (
-            <SettingsCard key={item.id} item={item} isPrivacy={isPrivacy} />
+            <SettingsCard key={item.id} item={item} isPrivacy={isPrivacy} isHelp={isHelp} />
           ))}
         </View>
       ) : (
@@ -143,6 +163,7 @@ function SettingsSectionBlock({ section, isPrivacy }: { section: ISettingsSectio
 export default function SettingsTemplate({
   title,
   description,
+  searchPlaceholder,
   templateVariant = "default",
   onBack,
   sections,
@@ -151,9 +172,10 @@ export default function SettingsTemplate({
   dangerCard,
 }: ISettingsTemplateProps) {
   const isPrivacy = templateVariant === "privacy";
+  const isHelp = templateVariant === "help";
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className={isPrivacy ? "bg-[#031631]" : ""}>
+    <SafeAreaView style={{ flex: 1 }} className={isPrivacy || isHelp ? "bg-[#031631]" : ""}>
       {isPrivacy && (
         <LinearGradient
           pointerEvents="none"
@@ -165,15 +187,26 @@ export default function SettingsTemplate({
         />
       )}
 
+      {isHelp && (
+        <LinearGradient
+          pointerEvents="none"
+          colors={["#010913", "#031D3C", "#0A3767"]}
+          locations={[0, 0.58, 1]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+        />
+      )}
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 16,
-          paddingBottom: isPrivacy ? 32 : 28,
-          paddingTop: isPrivacy ? 4 : 0,
+          paddingBottom: isPrivacy ? 32 : isHelp ? 34 : 28,
+          paddingTop: isPrivacy || isHelp ? 4 : 0,
         }}
       >
-        <View className={`flex-row justify-between items-center ${isPrivacy ? "pt-2 pb-8" : "pt-2 pb-5"}`}>
+        <View className={`flex-row justify-between items-center ${isPrivacy ? "pt-2 pb-8" : isHelp ? "pt-2 pb-6" : "pt-2 pb-5"}`}>
           <ButtonUI
             goBack
             size="h-[40px] w-[40px]"
@@ -184,7 +217,7 @@ export default function SettingsTemplate({
             paddingButtonStatus={""}
           />
 
-          <Text className={`uppercase tracking-[2px] text-[14px] font-interMedium ${isPrivacy ? "text-[#D8E4F6]" : "text-[#E2E8F0]"}`}>
+          <Text className={`uppercase tracking-[2px] text-[14px] font-interMedium ${isPrivacy || isHelp ? "text-[#D8E4F6]" : "text-[#E2E8F0]"}`}>
             {title}
           </Text>
 
@@ -197,9 +230,22 @@ export default function SettingsTemplate({
           </Text>
         )}
 
+        {isHelp && (
+          <View className="mb-[22px]">
+            <View className="rounded-[32px] border border-[#264A76] bg-[rgba(5,20,49,0.82)] h-[72px] px-[20px] flex-row items-center gap-[10px]">
+              <MaterialIcons name="search" size={22} color="#7A8FAE" />
+              <TextInput
+                placeholder={searchPlaceholder ?? "Busque por duvidas..."}
+                placeholderTextColor="#7A8FAE"
+                className="flex-1 text-[20px] text-[#D7E8FF] font-interRegular"
+              />
+            </View>
+          </View>
+        )}
+
         <View className={isPrivacy ? "gap-[26px]" : "gap-[18px]"}>
           {sections.map((section) => (
-            <SettingsSectionBlock key={section.id} section={section} isPrivacy={isPrivacy} />
+            <SettingsSectionBlock key={section.id} section={section} isPrivacy={isPrivacy} isHelp={isHelp} />
           ))}
         </View>
 
@@ -210,16 +256,20 @@ export default function SettingsTemplate({
         )}
 
         {!!supportCard && (
-          <View className="p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2 mt-[8px]">
-            <View className="rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between">
+          <View className={isHelp ? "mb-2 mt-[20px]" : "p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2 mt-[8px]"}>
+            <View className={isHelp ? "rounded-[18px] bg-[#2A86EE] px-[20px] py-[18px] flex-row items-center justify-between" : "rounded-[18px] bg-[rgba(2,6,23,0.88)] px-[14px] py-[16px] flex-row items-center justify-between"}>
               <View className="flex-row items-center gap-[12px] flex-1 pr-[10px]">
-                <View className="w-[40px] h-[40px] rounded-full bg-[#135BEC]/20 items-center justify-center">
-                  <MaterialIcons name={supportCard.icon ?? "support-agent"} size={22} color="#60A5FA" />
+                <View className={`items-center justify-center ${isHelp ? "w-[36px] h-[36px]" : "w-[40px] h-[40px] rounded-full bg-[#135BEC]/20"}`}>
+                  <MaterialIcons name={supportCard.icon ?? "support-agent"} size={isHelp ? 28 : 22} color={isHelp ? "#FFFFFF" : "#60A5FA"} />
                 </View>
 
                 <View className="flex-1">
-                  <Text className="text-white text-[18px] font-interBold">{supportCard.title}</Text>
-                  <Text className="text-[#94A3B8] text-[13px] font-interRegular">{supportCard.description}</Text>
+                  <Text className={`${isHelp ? "text-white text-[20px]" : "text-white text-[18px]"} font-interBold`}>{supportCard.title}</Text>
+                  {!!supportCard.description && (
+                    <Text className={`${isHelp ? "text-white/75 text-[12px]" : "text-[#94A3B8] text-[13px]"} font-interRegular`}>
+                      {supportCard.description}
+                    </Text>
+                  )}
                 </View>
               </View>
 
@@ -234,7 +284,7 @@ export default function SettingsTemplate({
                 paddingButtonStatus={""}
               >
                 <View className="flex-1 items-center justify-center">
-                  <MaterialIcons name="chevron-right" size={26} color="#3B82F6" />
+                  <MaterialIcons name="chevron-right" size={26} color={isHelp ? "#FFFFFF" : "#3B82F6"} />
                 </View>
               </ButtonUI>
             </View>

@@ -67,6 +67,15 @@ export default function MainSettings() {
         title: "Informações",
         items: [
           {
+            id: "help-center",
+            type: "link",
+            icon: "support-agent",
+            label: "Central de Ajuda",
+            onPress: () => {
+              router.push("/screens/citizen/settings/help");
+            },
+          },
+          {
             id: "terms",
             type: "link",
             icon: "description",
