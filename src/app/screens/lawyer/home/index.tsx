@@ -48,6 +48,11 @@ export default function LawyerHome() {
           ))}
         </View>
         <OperationalStats />
+        <View  className="flex flex-col gap-3">
+          {
+            
+          }
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
