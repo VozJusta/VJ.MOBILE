@@ -2,8 +2,6 @@ import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function Email2FA(email: string) {
   try {
-    console.log("api: ", BASE_URL);
-    console.log("dados batendo na api: ", email);
 
     const response = await fetch(`${BASE_URL}/auth/send/email`, {
       method: "POST",
@@ -16,18 +14,17 @@ export async function Email2FA(email: string) {
     });
 
 
-    console.log("response:", response.json());
     if (!response.ok) {
       return {
         success: false,
         fields: ["Erro na validação de 2 Fatores"],
       };
     }
-    console.log("message:", response.statusText);
+    const message = await response.text();
 
     return {
       success: true,
-      data: response.text(),
+      data: message,
     };
   } catch (err: any) {
     console.log("ERRO NA REQUISIÇÃO:", err);

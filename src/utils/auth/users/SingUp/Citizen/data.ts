@@ -7,7 +7,6 @@ import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
 import { useRouter } from "expo-router/build/exports";
-import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export function getInitialCitizenData(
@@ -51,16 +50,14 @@ export function getInitialCitizenData(
           });
           return;
         }
-         Toast.show({
+        Toast.show({
           type: "success",
-          text1: "Cidadão criado",
+          text1: validateEmail2FA.data,
         });
-        console.log("Resposta do Email2FA", validateEmail2FA.data);
-        console.log("validateEmail2FA:", JSON.stringify(validateEmail2FA));
-
-        // router.push(
-        //   `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
-        // );
+        
+        router.push(
+          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
+        );
         return;
       }
     } finally {
