@@ -38,6 +38,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const isLoginLayout = props.layout === "login";
+  const sharedContainerWidth = isLoginLayout ? "w-[94%]" : "w-[90%]";
   const showHeader = props.showHeader ?? true;
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
@@ -79,7 +80,9 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
             }
           >
             {showHeader && (
-              <View className="flex-row justify-between items-center px-4 mb-8">
+              <View
+                className={`self-center ${sharedContainerWidth} flex-row justify-between items-center px-4 mb-8`}
+              >
                 <ButtonUI
                   goBack
                   size="h-[40px] w-[40px]"
@@ -92,8 +95,8 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
 
             <View
               className={`${isLoginLayout
-                ? "self-center w-[94%] flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12"
-                : "self-center w-[90%] mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11"
+                ? `self-center ${sharedContainerWidth} flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
+                : `self-center ${sharedContainerWidth} mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11`
                 }`}
             >
               <View className="flex-col gap-2">
