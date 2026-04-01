@@ -16,8 +16,6 @@ export default function SelectionUserRole() {
   const setRole = useRolesStorage((state) => state.setRole)
   const role = useRolesStorage((state) => state.role)
 
-  console.log(role)
-  
   const handleSelectedRole = () => {
     if (activeCitizen) {
       setRole("citizen")
