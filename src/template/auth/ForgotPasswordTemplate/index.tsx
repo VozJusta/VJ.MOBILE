@@ -63,7 +63,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                 size="w-[40px] h-[40px]"
                 onPress={() => {
                   props.screen === ScreensForgotPassword.Email
-                    ? router.replace("/screens/auth/SingIn")
+                    ? router.replace("/screens/auth/users/SingIn")
                     : props.screen === ScreensForgotPassword.Code
                       ? router.replace(props.codeBackRoute ?? "/screens/auth/ForgotPassword/Email")
                       : router.replace("/screens/auth/ForgotPassword/Code");
@@ -114,7 +114,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     bg="bg-transparent"
                     gradient={false}
                     hover={false}
-                    onPress={() => { } }
+                    onPress={() => router.replace("/screens/auth/users/SingIn")}
                     children={<View
                       style={{ gap: 8 }}
                       className="flex-row items-center gap-2"

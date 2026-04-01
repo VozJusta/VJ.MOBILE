@@ -5,15 +5,21 @@ import * as DocumentPicker from "expo-document-picker";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import Document from "@/assets/svg/icons/document.svg";
+import React, { useState } from "react";
+import { DocumentPickerAsset } from "expo-document-picker";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function DocumentsCitizen() {
+  const [checkedFile, setCheckedFile] = useState<DocumentPickerAsset[] | null>(
+    null,
+  );
   const pickFile = async () => {
     let result = await DocumentPicker.getDocumentAsync({
       type: "*/*",
       copyToCacheDirectory: true,
     });
 
-    console.log(result);
+    setCheckedFile(result.assets);
 
     if (result.canceled === false) {
       console.log("Arquivo selecionado:", result.assets[0]);
@@ -21,7 +27,7 @@ export default function DocumentsCitizen() {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="pt-[32px] px-[16px] gap-[32px]">
+      <View className="px-[16px] gap-[32px]">
         <View className="w-full  flex-row justify-between ">
           <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
             Documentos
@@ -29,23 +35,67 @@ export default function DocumentsCitizen() {
           <Logo width={40} height={29} />
         </View>
         <View className="w-full justify-center items-center py-[32px] bg-[rgba(255,255,255,0.03)] border border-solid border-[rgba(19,91,236,0.3)] rounded-[48px]">
-          <ButtonUI
-            children={
-              <View className="w-[80px] h-[80px] rounded-full bg-[#135BEC] justify-center items-center ">
-                <MaterialIcons name="add" size={40} color="white" />
-              </View>
-            }
-            onPress={pickFile}
-            gradient={false}
-            hover={false}
-            iconLeft={false}
-            paddingButtonStatus={""}
-          />
+          {checkedFile === null ? (
+            <ButtonUI
+              children={
+                <View
+                  className={`w-[80px] h-[80px] rounded-full bg-[#135BEC] justify-center items-center `}
+                >
+                  <MaterialIcons name="add" size={40} color="white" />
+                </View>
+              }
+              onPress={pickFile}
+              gradient={false}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+            />
+          ) : (
+            <ButtonUI
+              children={
+                <View className="items-center justify-center">
+                  <View
+                    style={{
+                      position: "absolute",
+                      width: 154,
+                      height: 154,
+                      borderRadius: 9999,
+                      backgroundColor: "rgba(34,197,94,0.2)",
+                      filter: "blur(64px)",
+                    }}
+                  />
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0.8, y: 1 }}
+                    colors={["#16A34A", "#4ADE80"]}
+                    style={{
+                      width: 80,
+                      height: 80,
+                      borderRadius: 999,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <MaterialIcons name="done" size={40} color="white" />
+                  </LinearGradient>
+                </View>
+              }
+              onPress={pickFile}
+              gradient={false}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+            />
+          )}
           <Text className="font-inter text-[20px] text-white mt-[16px] mb-[4px]">
-            Novo Documento
+            {checkedFile === null ? "Novo Documento" : "Upload concluído"}
           </Text>
-          <Text className="font-inter text-[14px] text-[#94A3B8]">
-            PDF, PNG ou JPG (máx 10MB)
+          <Text
+            className={`font-inter text-[14px] ${checkedFile === null ? "text-[#94A3B8]" : "text-[#75FB4C]"}`}
+          >
+            {checkedFile === null
+              ? "PDF, PNG ou JPG (máx 10MB)"
+              : "Toque para visualizar o documento"}
           </Text>
         </View>
         <View className="flex-row justify-between w-full">
@@ -61,7 +111,7 @@ export default function DocumentsCitizen() {
             <View className="w-[48px] h-[48px] bg-[rgba(19,91,236,0.2)] justify-center items-center rounded-full">
               <Document width={24} height={24} />
             </View>
-            <View className="flex-col gap-[0.5] items-center w-[164px]">
+            <View className="flex-col gap-[0.5] items-start w-[164px]">
               <Text
                 numberOfLines={1}
                 ellipsizeMode="clip"
@@ -83,7 +133,7 @@ export default function DocumentsCitizen() {
             <View className="w-[48px] h-[48px] bg-[rgba(19,91,236,0.2)] justify-center items-center rounded-full">
               <Document width={24} height={24} />
             </View>
-            <View className="flex-col gap-[0.5] items-center w-[164px]">
+            <View className="flex-col gap-[0.5] items-start w-[164px]">
               <Text
                 numberOfLines={1}
                 ellipsizeMode="clip"
@@ -106,7 +156,7 @@ export default function DocumentsCitizen() {
       </View>
       <View className="flex-col gap-[25px]">
         <View className="w-full bg-white/5 h-[1px] mt-[32px]"></View>
-        <View className=" w-full px-[24px] pt-[25px] py-[24px]">
+        <View className=" w-full px-[24px] pt-6 py-[24px]">
           <ButtonUI
             onPress={function (): void {
               throw new Error("Function not implemented.");
@@ -117,7 +167,9 @@ export default function DocumentsCitizen() {
             paddingButtonStatus={""}
             children={
               <View className="flex-1 justify-center items-center">
-                <Text className="text-[15px] font-interSemiBold text-white">Salvar documento</Text>
+                <Text className="text-[15px] font-interSemiBold text-white">
+                  Salvar documento
+                </Text>
               </View>
             }
           />
