@@ -35,7 +35,7 @@ export default function RequestCard(props: RequestCardProps) {
                 "Esta funcionalidade está em desenvolvimento ainda.",
               )
             }
-            className="flex rounded-full py-3 px-2 items-center justify-center bg-[#161E29] border-[#2B86EE]/20 border"
+            className="flex rounded-full py-3 px-3 items-center justify-center bg-[#161E29] border-[#2B86EE]/20 border"
           >
             <MaterialIcons name="visibility" size={20} color={"#2B86EE"} />
           </TouchableOpacity>
