@@ -1,14 +1,14 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodSingUpSchema } from "@/validation/schema.zod";
+import { ZodLoginSchema } from "@/validation/schema.zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
   try {
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 
-    const validate = ZodValidate(ZodSingUpSchema, data);
+    const validate = ZodValidate(ZodLoginSchema, data);
 
     if (!validate.success) {
       return {
