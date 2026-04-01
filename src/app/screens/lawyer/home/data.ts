@@ -23,3 +23,4 @@ export const lawyerStats: StatsCardProps[] = [
     bgColor: StatsCardBgColor.SPEED,
   },
 ];
+
