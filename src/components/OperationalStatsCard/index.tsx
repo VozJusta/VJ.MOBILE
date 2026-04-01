@@ -7,15 +7,15 @@ export default function OperationalStatsCard({
 }: OperationalStatsCardProps) {
   return (
     <View
-      className="flex flex-col border gap-2 w-full py-8 px-4 h-[155px]"
+      className="flex-1 flex-col border gap-2 py-8 px-4 h-[155px] rounded-2xl"
       style={{ backgroundColor: props.bgColor, borderColor: props.borderColor }}
     >
-      <MaterialIcons name={props.icon} size={20} />
+      <MaterialIcons name={props.icon} color={props.iconColor} size={20} />
       <Text className="text-[24px] font-interBold text-white">
-        {props.title}
+        {props.stat}
       </Text>
       <Text className="text-[14px] font-inter text-[#94A3B8]">
-        {props.stat}
+        {props.title}
       </Text>
     </View>
   );

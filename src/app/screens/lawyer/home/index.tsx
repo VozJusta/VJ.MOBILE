@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
 import { lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
+import OperationalStats from "@/components/OperationalStats";
 
 export default function LawyerHome() {
   return (
@@ -46,6 +47,7 @@ export default function LawyerHome() {
             <StatsCard key={index} {...stat} />
           ))}
         </View>
+        <OperationalStats />
       </ScrollView>
     </SafeAreaView>
   );
