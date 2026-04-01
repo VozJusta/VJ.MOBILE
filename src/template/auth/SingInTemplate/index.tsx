@@ -81,7 +81,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
           >
             {showHeader && (
               <View
-                className={`self-center ${sharedContainerWidth} flex-row justify-between items-center px-4 mb-8`}
+                className={`self-center ${sharedContainerWidth} flex-row justify-between items-center mb-8`}
               >
                 <ButtonUI
                   goBack
@@ -96,7 +96,7 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
             <View
               className={`${isLoginLayout
                 ? `self-center ${sharedContainerWidth} flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
-                : `self-center ${sharedContainerWidth} mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-11`
+                : `self-center ${sharedContainerWidth} mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] pt-8 pb-12`
                 }`}
             >
               <View className="flex-col gap-2">
