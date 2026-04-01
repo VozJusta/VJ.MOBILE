@@ -9,7 +9,7 @@ export default function Navbar() {
   const [isActive, setIsActive] = useState(0);
   const router = useRouter();
   return (
-    <View className="bg-[rgba(255,255,255,0.1)] rounded-[16px] flex-row  border boder-solid border-[rgba(255,255,255,0.2)] w-[343px] h-[64px] absolute bottom-0 justify-between items-center self-center mb-8 px-[16px] py-[9.5px] ">
+    <View className="bg-[rgba(255,255,255,0.1)] rounded-[16px] flex-row  border border-solid border-[rgba(255,255,255,0.2)] w-[343px] h-[64px] absolute bottom-0 justify-between items-center self-center mb-8 px-[16px] py-[9.5px] ">
       {NavbarItemsCitizen.map((item, index) => {
         const activeItem = isActive === index;
         return (
