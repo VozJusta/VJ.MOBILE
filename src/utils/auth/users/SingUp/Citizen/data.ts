@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { Email2FA } from "@/settings/users/citizen/email2FA";
-import { SingUpCitizen } from "@/settings/users/citizen/SingUp";
+import { Email2FA } from "@/services/users/citizen/email2FA";
+import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
@@ -54,7 +54,7 @@ export function getInitialCitizenData(
           type: "success",
           text1: validateEmail2FA.data,
         });
-        
+
         router.push(
           `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
         );
