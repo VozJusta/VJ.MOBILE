@@ -37,6 +37,6 @@ export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
-    path: "/screens/citizen/profile",
+    path: "/screens/shared/profile",
   },
 ];

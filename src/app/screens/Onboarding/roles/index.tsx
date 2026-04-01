@@ -8,10 +8,23 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "@/assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
 import { router } from "expo-router";
+import {useRolesStorage} from "@/store/roles.store"
 
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
+  const setRole = useRolesStorage((state) => state.setRole)
+  const role = useRolesStorage((state) => state.role)
+
+  const handleSelectedRole = () => {
+    if (activeCitizen) {
+      setRole("citizen")
+      router.replace("/screens/auth/users/SingUp/Citizen");
+    } else if (activeLawyer) {
+      setRole("lawyer");
+      router.replace("/screens/auth/users/SingUp/Lawyer");
+    }
+  };
 
   return (
     <SafeAreaView
@@ -119,13 +132,7 @@ export default function SelectionUserRole() {
               />
             </View>
           }
-          onPress={() => {
-            if (activeCitizen) {
-              router.replace("/screens/auth/users/SingUp/Citizen");
-            } else if (activeLawyer) {
-              router.replace("/screens/auth/users/SingUp/Lawyer");
-            }
-          }}
+          onPress={handleSelectedRole}
           hover={false}
           iconLeft={false}
           paddingButtonStatus={""}
