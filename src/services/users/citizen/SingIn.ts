@@ -1,14 +1,14 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
-import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodSingUpSchema } from "@/validation/schema.zod";
+import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
+import { BASE_URL } from "@/services/BASE_URL";
+import { ZodLoginSchema } from "@/validation/schema.zod";
 
-export async function SingUpCitizen(data: ZodSingUpTypes) {
+export async function SingInCitizen(data: ZodLoginTypes) {
   try {
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 
-    const validate = ZodValidate(ZodSingUpSchema, data);
+    const validate = ZodValidate(ZodLoginSchema, data);
 
     if (!validate.success) {
       return {
@@ -18,16 +18,13 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
     }
     console.log(validate);
 
-    const response = await fetch(`${BASE_URL}/citizen`, {
+    const response = await fetch(`${BASE_URL}/auth/authenticate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({
-        fullName: validate.data?.fullName.trim(),
-        cpf: validate.data?.cpf,
-        phone: validate.data?.phone,
         email: validate.data?.email,
         password: validate.data?.password,
       }),
@@ -37,7 +34,7 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
     if (!response.ok) {
       return {
         success: false,
-        fields: json?.errors || [json?.message || "Erro ao cadastrar"],
+        fields: json?.errors || [json?.message || "Erro ao autenticar"],
       };
     }
     console.log("message:", response.statusText);

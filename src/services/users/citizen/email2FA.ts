@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/settings/BASE_URL";
+import { BASE_URL } from "@/services/BASE_URL";
 
 export async function Email2FA(email: string) {
   try {
