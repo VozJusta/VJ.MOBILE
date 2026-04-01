@@ -34,7 +34,7 @@ export async function SingInCitizen(data: ZodLoginTypes) {
     if (!response.ok) {
       return {
         success: false,
-        fields: json?.errors || [json?.message || "Erro ao cadastrar"],
+        fields: json?.errors || [json?.message || "Erro ao autenticar"],
       };
     }
     console.log("message:", response.statusText);
