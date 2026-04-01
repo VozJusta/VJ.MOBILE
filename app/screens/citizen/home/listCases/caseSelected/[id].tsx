@@ -44,7 +44,7 @@ export default function CaseSelected() {
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
-          <Text className="text-[14px] text-[#94A3B8] w-[] font-interRegular">
+          <Text className="text-[14px] text-[#94A3B8] font-interRegular">
             Nossa inteligência artificial está processando as provas anexadas.
           </Text>
         </View>
