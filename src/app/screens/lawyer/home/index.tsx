@@ -10,11 +10,8 @@ import RequestCard from "@/components/RequestCard";
 
 export default function LawyerHome() {
   return (
-    <SafeAreaView className="flex-1">
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerClassName="flex flex-col gap-6"
-      >
+    <ScrollView>
+      <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
@@ -68,7 +65,7 @@ export default function LawyerHome() {
             ))}
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 }

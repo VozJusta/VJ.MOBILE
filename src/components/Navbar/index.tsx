@@ -10,7 +10,7 @@ export default function Navbar({ isLawyer }: { isLawyer: boolean }) {
   const router = useRouter();
 
   return (
-    <View className="bg-[rgba(255,255,255,0.03)] rounded-[16px] flex-row  border boder-solid border-[rgba(255,255,255,0.1)] w-[343px] h-[64px] absolute bottom-8 justify-between items-center self-center mb-8 px-[16px] py-[9.5px] ">
+    <View className="bg-[#161E29] rounded-[16px] flex-row border border-solid border-[rgba(255,255,255,0.1)] w-[343px] h-[64px] absolute bottom-6 justify-between items-center self-center px-[16px] mb-6 py-[9.5px] ">
       {!isLawyer
         ? NavbarItemsCitizen.map((item, index) => {
             const activeItem = isActive === index;
