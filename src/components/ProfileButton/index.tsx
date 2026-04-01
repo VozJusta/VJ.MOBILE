@@ -52,7 +52,12 @@ export default function ProfileButton({ ...item }: IButtonProfile) {
           )}
         </View>
       }
-      onPress={() => router.replace(item.path)}
+      onPress={() => {
+        if (!item.path) {
+          return;
+        }
+        router.replace(item.path);
+      }}
       gradient={false}
       hover={false}
       iconLeft={false}
