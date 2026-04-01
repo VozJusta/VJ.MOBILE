@@ -206,7 +206,7 @@ export default function SettingsTemplate({
           paddingTop: isPrivacy || isHelp ? 4 : 0,
         }}
       >
-        <View className={`flex-row justify-between items-center ${isPrivacy ? "pt-2 pb-8" : isHelp ? "pt-2 pb-6" : "pt-2 pb-5"}`}>
+        <View className={`flex-row justify-between items-center ${isPrivacy ? "pt-2 pb-6" : isHelp ? "pt-2 pb-6" : "pt-2 pb-6"}`}>
           <ButtonUI
             goBack
             size="h-[40px] w-[40px]"
