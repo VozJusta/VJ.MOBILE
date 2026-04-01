@@ -37,7 +37,7 @@ export default function ListCases() {
         {casesData.map((item) => (
           <ButtonUI
             key={item.title}
-            onPress={() => router.replace(`/screens/citizen/home/caseSelected/${item.id}`)}
+            onPress={() => router.replace(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
             gradient={false}
             hover={false}
             iconLeft
