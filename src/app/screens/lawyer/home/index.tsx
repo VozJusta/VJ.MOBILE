@@ -3,9 +3,10 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lawyerStats } from "./data";
+import { lawyerRequests, lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
+import RequestCard from "@/components/RequestCard";
 
 export default function LawyerHome() {
   return (
@@ -23,6 +24,7 @@ export default function LawyerHome() {
             Bem-vindo ao seu painel jurídico.
           </Text>
         </View>
+
         <View className="flex flex-col bg-[#161E29]/70 border border-[#2B86EE]/20 gap-8 rounded-3xl p-8">
           <View className="flex flex-row items-center gap-2">
             <MaterialIcons name="insights" size={24} color="#2B86EE" />
@@ -43,15 +45,28 @@ export default function LawyerHome() {
           />
         </View>
         <View className="flex flex-col gap-6">
+          <Text className="text-white text-[20px] font-interBold">
+            Resumo geral
+          </Text>
           {lawyerStats.map((stat, index) => (
             <StatsCard key={index} {...stat} />
           ))}
         </View>
-        <OperationalStats />
-        <View  className="flex flex-col gap-3">
-          {
-            
-          }
+        <View className="flex flex-col gap-6">
+          <Text className="font-interBold text-white text-[18px]">
+            Status Operacional dos casos
+          </Text>
+          <OperationalStats />
+        </View>
+        <View className="flex flex-col gap-6">
+          <Text className="text-white text-[20px] font-interBold">
+            Solicitações relevantes
+          </Text>
+          <View className="flex flex-col gap-3">
+            {lawyerRequests.map((request, index) => (
+              <RequestCard key={index} {...request} />
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
