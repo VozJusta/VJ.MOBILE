@@ -24,6 +24,7 @@ export default function Lawyer() {
     (text) => setCpf(formatCPF(text)),
     oabNumber,
     (text) => setOabNumber(formatOABNumber(text)),
+
     email,
     setEmail,
     uf,

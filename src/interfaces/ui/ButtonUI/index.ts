@@ -16,5 +16,6 @@ export interface IButtonProps {
   paddingButtonStatus: string;
   status?: "Em Análise" | "Concluído" | "Aguardando Advogado";
   statusBorder?: boolean;
+  disabled?: boolean;
   iconName?: React.ComponentProps<typeof MaterialIcons>["name"];
 }

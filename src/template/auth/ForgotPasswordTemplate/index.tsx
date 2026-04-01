@@ -110,7 +110,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     bg="bg-transparent"
                     gradient={false}
                     hover={false}
-                    onPress={() => { } }
+                    onPress={() => router.replace("/screens/auth/users/SingIn")}
                     children={<View
                       style={{ gap: 8 }}
                       className="flex-row items-center gap-2"
