@@ -11,16 +11,16 @@ export enum OperationalStatsCardIconColor {
 }
 
 export enum OperationalStatsCardBgColor {
-  ACCEPTED = "rgba(52, 211, 153, 0.2)",
-  REJECTED = "rgba(239, 68, 68, 0.2)",
-  PENDING = "rgba(245, 158, 11, 0.2)",
+  ACCEPTED = "rgba(52, 211, 153, 0.05)",
+  REJECTED = "rgba(239, 68, 68, 0.05)",
+  PENDING = "rgba(245, 158, 11, 0.05)",
 }
 
 
 export enum OperationalStatsCardBorderColor {
-  ACCEPTED = "rgba(52, 211, 153, 0.3)",
-  REJECTED = "rgba(239, 68, 68, 0.3)",
-  PENDING = "rgba(245, 158, 11, 0.3)",
+  ACCEPTED = "rgba(52, 211, 153, 0.1)",
+  REJECTED = "rgba(239, 68, 68, 0.1)",
+  PENDING = "rgba(245, 158, 11, 0.1)",
 }
 
 export interface OperationalStatsCardProps {
