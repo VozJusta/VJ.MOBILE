@@ -54,7 +54,7 @@ export default function LawyerHome() {
         </View>
         <View className="flex flex-col gap-6">
           <Text className="font-interBold text-white text-[18px]">
-            Status Operacional dos casos
+            Status operacional dos casos
           </Text>
           <OperationalStats />
         </View>
