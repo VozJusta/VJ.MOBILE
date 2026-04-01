@@ -1,7 +1,7 @@
 "use client";
 import { useMemo } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { LineChart } from "react-native-gifted-charts";
+import { CurveType, LineChart } from "react-native-gifted-charts";
 import type { ChartDataPoint } from "@/types/dashboard.types";
 
 type ProductivityChartProps = {
@@ -93,6 +93,8 @@ export function ProductivityChart({ data, style }: ProductivityChartProps) {
         animateOnDataChange
         animationDuration={1500}
         onDataChangeAnimationDuration={1500}
+        curveType={CurveType.CUBIC}
+        curved
       />
     </View>
   );
