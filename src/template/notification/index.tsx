@@ -11,7 +11,7 @@ export default function NotificationTemplate({
   notifications,
 }: NotificationTemplateProps) {
   return (
-    <SafeAreaView className="flex-1 px-8 pb-24 gap-4">
+    <SafeAreaView className="flex-1  gap-4">
       <Header isFirstPage={false} title="NOTIFICAÇÕES"></Header>
       <FlatList
         className="mt-8"
