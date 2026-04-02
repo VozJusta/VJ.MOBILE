@@ -1,4 +1,4 @@
-import { RequestCardProps } from "@/interfaces/components/RequestCard";
+import { RequestCardProps } from "@/interfaces/components/ImportantRequestCard";
 import { StatsCardBgColor, StatsCardIcon, StatsCardIconColor, StatsCardProps } from "@/interfaces/components/StatCard";
 
 export const lawyerStats: StatsCardProps[] = [
