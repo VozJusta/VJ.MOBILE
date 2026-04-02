@@ -5,7 +5,7 @@ import { ZodLoginSchema } from "@/validation/schema.zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
   try {
-    console.log("api: ", BASE_URL);
+
     console.log("dados batendo na api: ", data);
 
     const validate = ZodValidate(ZodLoginSchema, data);
@@ -29,19 +29,14 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         password: validate.data?.password,
       }),
     });
-    console.log(response);
     const json = await response.json();
+    console.log("Resposta do SingIn:", json);
     if (!response.ok) {
       return {
         success: false,
         fields: json?.errors || [json?.message || "Erro ao autenticar"],
       };
     }
-    console.log("message:", response.statusText);
-
-    console.log("response:", response);
-    console.log("json:", json);
-
     return {
       success: true,
       data: json,
