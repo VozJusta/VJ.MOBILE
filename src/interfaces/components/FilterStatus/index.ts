@@ -9,4 +9,5 @@ export interface IFilterStatus {
     status: StatusText;
     amount: number;
     onPress: () => void;
+    isSelected: boolean;
 }
