@@ -6,26 +6,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { lawyerRequests, lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
-import {
-  RequestCardBadgeColor,
-  RequestCardTextBadge,
-} from "@/interfaces/components/RequestCard";
 import RequestCard from "@/components/RequestCard";
 
 export default function LawyerHome() {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 gap-6">
-        <RequestCard
-          nameCase="Divulgação de conteúdo digital"
-          badgeColor={RequestCardBadgeColor.PENDING}
-          textBadge={RequestCardTextBadge.PENDING}
-          area="Direito Digital"
-          nameCitizen="Maria Silva"
-          requestDate={"2024-06-15"}
-        />
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
-        <View className="mt-[32px] gap-[4px]">
+        <View className="mt-[32px] gap-3">
           <Text className="font-interBold text-[30px] text-white">
             Olá, Ricardo!
           </Text>
