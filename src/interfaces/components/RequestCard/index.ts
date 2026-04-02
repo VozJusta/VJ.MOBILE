@@ -1,6 +1,20 @@
-import { BadgeProps } from "../Badge";
+export enum RequestCardBadgeColor {
+  ACCEPTED = "#34D399",
+  REJECTED = "#EF4444",
+  PENDING = "#F59E0B",
+}
 
-export type RequestCardProps = BadgeProps & {
-  title: string;
-  score: number;
-};
+export enum RequestCardTextBadge {
+  ACCEPTED = "Aceito",
+  REJECTED = "Recusado",
+  PENDING = "Pendente",
+}
+
+export interface RequestCardProps {
+  area: string;
+  nameCase: string;
+  nameCitizen: string;
+  requestDate: string;
+  badgeColor: RequestCardBadgeColor;
+  textBadge: RequestCardTextBadge;
+}

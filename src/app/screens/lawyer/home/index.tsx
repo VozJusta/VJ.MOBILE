@@ -6,20 +6,24 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { lawyerRequests, lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
+import {
+  RequestCardBadgeColor,
+  RequestCardTextBadge,
+} from "@/interfaces/components/RequestCard";
 import RequestCard from "@/components/RequestCard";
-import { useState } from "react";
-import FilterStatus from "@/components/FilterStatus";
-import { StatusText } from "@/interfaces/components/FilterStatus";
-import Filters from "@/components/Filters";
-
 
 export default function LawyerHome() {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 gap-6">
-        <Filters />
+        <RequestCard
+          nameCase="Divulgação de conteúdo digital"
+          badgeColor={RequestCardBadgeColor.PENDING}
+          textBadge={RequestCardTextBadge.PENDING}
+          area="Direito Digital"
+          nameCitizen="Maria Silva"
+          requestDate={"2024-06-15"}
+        />
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
