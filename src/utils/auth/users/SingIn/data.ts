@@ -1,12 +1,61 @@
+import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
+import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
+import { Email2FA } from "@/services/users/citizen/email2FA";
+import { SingInCitizen } from "@/services/users/citizen/SingIn";
+import { SingUpCitizen } from "@/services/users/citizen/SingUp";
+import { useRolesStorage } from "@/store/roles.store";
+import { useRouter } from "expo-router";
+import Toast from "react-native-toast-message";
 
-export function getInitialSignInData(email: string,
-  onEmailChange: (text: string) => void,
-  password: string,
-  onPasswordChange: (text: string) => void,
+export function getInitialSignInData(
+  loginAuth: {
+    email: string;
+    password: string;
+  },
+  handleLoginChange: (name: keyof ZodLoginTypes, value: string) => void,
   showPassword: boolean,
   onToggleShowPassword: () => void,
 ): ISignInTemplateProps {
+  const role = useRolesStorage((state) => state.role);
+  const { loading, setLoading } = useAuth();
+  const router = useRouter();
+
+  async function handleLogin(data: ZodLoginTypes) {
+    setLoading(true);
+    try {
+      if (role === "citizen") {
+        const response = await SingInCitizen(data);
+        if (!response.success) {
+          Toast.show({
+            type: "error",
+            text1: response.fields && response.fields[0],
+          });
+          return;
+        }
+
+        const validateEmail2FA = await Email2FA(data.email);
+        if (!validateEmail2FA.success) {
+          Toast.show({
+            type: "error",
+            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+          });
+          return;
+        }
+        Toast.show({
+          type: "success",
+          text1: validateEmail2FA.data,
+        });
+
+        router.push(
+          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(loginAuth.email)}`,
+        );
+        return;
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return {
     layout: "login",
@@ -14,7 +63,7 @@ export function getInitialSignInData(email: string,
     title: "Entrar no VozJusta",
     description: "Acesse sua conta para continuar",
     descriptionToFieldsSpacing: 32,
-    submitLabel: "Entrar",
+    submitLabel: loading ? "Entrando..." : "Entrar",
     showTerms: false,
     showForgotPassword: true,
     forgotPasswordRoute: "/screens/auth/ForgotPassword/Email",
@@ -33,8 +82,8 @@ export function getInitialSignInData(email: string,
         iconSize: 24,
         iconNameProps: "email",
         type: "email",
-        value: email,
-        onChangeText: onEmailChange,
+        value: loginAuth.email,
+        onChangeText: (text) => handleLoginChange("email", text),
       },
       {
         label: "Senha",
@@ -46,10 +95,12 @@ export function getInitialSignInData(email: string,
         iconSize: 24,
         iconNameProps: "lock-outline",
         type: "password",
-        value: password,
-        onChangeText: onPasswordChange,
+        value: loginAuth.password,
+        onChangeText: (text) => handleLoginChange("password", text),
         onRightIconPress: onToggleShowPassword,
       },
     ],
-  }
-};
+    onSubmit: () => handleLogin(loginAuth),
+    disableSubmit: loading,
+  };
+}

@@ -11,8 +11,8 @@ export default function Citizen() {
   const { registerAuth, handleRegisterChange } = useAuth();
   const strength = useMemo(() => {
     return passwordValidate(registerAuth.password);
-  },[registerAuth.password]);
-  console.log("senha: ", strength);
+  }, [registerAuth.password]);
+
   const citizenData = getInitialCitizenData(
     showPassword,
     () => setShowPassword((prev) => !prev),

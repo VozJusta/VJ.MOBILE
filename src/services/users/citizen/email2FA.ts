@@ -2,7 +2,6 @@ import { BASE_URL } from "@/services/BASE_URL";
 
 export async function Email2FA(email: string) {
   try {
-
     const response = await fetch(`${BASE_URL}/auth/send/email`, {
       method: "POST",
       headers: {
@@ -12,8 +11,9 @@ export async function Email2FA(email: string) {
         email: email,
       }),
     });
+    const json = await response.toString()
 
-
+    console.log("json:", json);
     if (!response.ok) {
       return {
         success: false,
