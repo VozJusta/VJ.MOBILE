@@ -1,17 +1,15 @@
 import { useState } from "react";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { getInitialSignInData } from "@/utils/auth/users/SingIn/data";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { loginAuth, handleLoginChange } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const signInData = getInitialSignInData(
-    email,
-    setEmail,
-    password,
-    setPassword,
+    loginAuth,
+    handleLoginChange,
     showPassword,
     () => setShowPassword((prev) => !prev),
   );

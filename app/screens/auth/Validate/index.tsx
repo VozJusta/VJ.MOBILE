@@ -17,6 +17,9 @@ export default function ValidateEmail() {
   const codeBackRoute =
     resolvedSource === "lawyer" ? "/screens/auth/users/SingUp/Lawyer" : "/screens/auth/users/SingUp/Citizen";
 
+    const handleValidateCode = (code: string) => {
+
+    }
   return (
     <ForgotPasswordTemplate
       screen={ScreensForgotPassword.Code}
