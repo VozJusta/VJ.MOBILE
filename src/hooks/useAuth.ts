@@ -16,7 +16,6 @@ export const useAuth = () => {
   });
 
 
-
   const [loading, setLoading] = useState(false);
 
   function handleLoginChange(name: keyof ZodLoginTypes, value: string) {
@@ -26,11 +25,13 @@ export const useAuth = () => {
     setRegisterAuth((prev) => ({ ...prev, [name]: value }));
   }
 
+
   return {
     loginAuth,
     registerAuth,
     handleLoginChange,
     handleRegisterChange,
+
     loading,
     setLoading,
   };

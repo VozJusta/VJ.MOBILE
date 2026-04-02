@@ -17,4 +17,5 @@ export interface IInputProps {
   onRightIconPress?: () => void;
   iconColor?: string;
   inputOTP?: boolean
+  onFilledOTP?: (code: string) => void;
 }

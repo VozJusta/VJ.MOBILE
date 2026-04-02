@@ -6,18 +6,27 @@ export async function Email2FA(email: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify({
         email: email,
       }),
     });
-    const json = await response.toString()
+    const text = await response.text();
+    console.log("RAW 2FA:", text);
 
-    console.log("json:", json);
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch {
+      json = {};
+    }
+console.log("JSON 2FA:", json);
+
     if (!response.ok) {
       return {
         success: false,
-        fields: ["Erro na validação de 2 Fatores"],
+        fields: json?.errors || [json?.message || text],
       };
     }
     const message = await response.text();

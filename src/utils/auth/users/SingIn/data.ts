@@ -20,6 +20,7 @@ export function getInitialSignInData(
   const role = useRolesStorage((state) => state.role);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
+  console.log(loginAuth);
 
   async function handleLogin(data: ZodLoginTypes) {
     setLoading(true);
@@ -35,6 +36,21 @@ export function getInitialSignInData(
         }
 
         const validateEmail2FA = await Email2FA(data.email);
+        console.log("Resposta do Email2FA:", validateEmail2FA);
+        if (
+          !validateEmail2FA.success &&
+          validateEmail2FA.fields &&
+          validateEmail2FA.fields[0] === "Código já enviado"
+        ) {
+          Toast.show({
+            type: "error",
+            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+          });
+          router.push(
+            `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(loginAuth.email)}`,
+          );
+          return;
+        }
         if (!validateEmail2FA.success) {
           Toast.show({
             type: "error",
