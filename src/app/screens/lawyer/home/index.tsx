@@ -8,6 +8,7 @@ import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
 import RequestCard from "@/components/RequestCard";
 
+
 export default function LawyerHome() {
   return (
     <ScrollView>
