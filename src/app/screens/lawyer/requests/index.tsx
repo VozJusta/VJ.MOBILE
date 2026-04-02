@@ -39,27 +39,29 @@ export const requestsCards: RequestCardProps[] = [
 
 export default function RequestsScreens() {
   return (
-    <SafeAreaView className="flex-1 gap-6">
-      <Header isFirstPage={true} title="SOLICITAÇÕES" isCitizen={false} />
-      <View className="mt-[32px] gap-3">
-        <Text className="font-interBold text-[30px] text-white">
-          Solicitações para você
-        </Text>
-        <Text className="text-[16px] text-[#94A3B8] font-interLight">
-          Aqui estão todas as solicitações feitas para você, as pendentes,
-          aceitas e recusadas. Para saber mais sobre o caso, clique no nome do
-          caso.
-        </Text>
-      </View>
-
-      <Filters />
-
+    <SafeAreaView className="flex-1">
       <FlatList
         data={requestsCards}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <RequestCard {...item} />}
-        contentContainerClassName="flex flex-col gap-3"
+        contentContainerClassName="gap-8 pb-6"
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <>
+            <Header isFirstPage={true} title="SOLICITAÇÕES" isCitizen={false} />
+            <View className="gap-3 my-8">
+              <Text className="font-interBold text-[30px] text-white">
+                Solicitações para você
+              </Text>
+              <Text className="text-[16px] text-[#94A3B8] font-interLight">
+                Aqui estão todas as solicitações feitas para você, as pendentes,
+                aceitas e recusadas. Para saber mais sobre o caso, clique no
+                nome do caso.
+              </Text>
+            </View>
+            <Filters />
+          </>
+        }
       />
     </SafeAreaView>
   );

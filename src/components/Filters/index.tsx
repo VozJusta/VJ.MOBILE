@@ -14,7 +14,7 @@ export default function Filters() {
 
   return (
     <ScrollView
-      contentContainerClassName="flex flex-row gap-2"
+      contentContainerClassName="flex flex-row gap-2 h-fit mb-8"
       showsHorizontalScrollIndicator={false}
       horizontal
     >
