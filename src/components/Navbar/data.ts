@@ -8,8 +8,8 @@ export const NavbarItemsLawyer: INavbar[] = [
   },
   {
     iconName: "cases",
-    name: "Meus casos",
-    path: "/screens/lawyer/cases",
+    name: "Solicitações",
+    path: "/screens/lawyer/requests",
   },
   {
     iconName: "person",

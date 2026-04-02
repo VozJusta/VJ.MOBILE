@@ -15,7 +15,7 @@ export default function Filters() {
   return (
     <ScrollView
       contentContainerClassName="flex flex-row gap-2"
-      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       horizontal
     >
       {filters.map((filter, index) => (

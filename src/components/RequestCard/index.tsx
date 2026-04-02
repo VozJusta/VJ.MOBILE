@@ -2,7 +2,10 @@ import { View, Text, Alert } from "react-native";
 import React from "react";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
-import { RequestCardProps } from "@/interfaces/components/RequestCard";
+import {
+  RequestCardProps,
+  RequestCardTextBadge,
+} from "@/interfaces/components/RequestCard";
 
 export default function RequestCard({ ...props }: RequestCardProps) {
   return (
@@ -37,13 +40,14 @@ export default function RequestCard({ ...props }: RequestCardProps) {
           </Text>
         </View>
       </View>
-      <View className="flex flex-col gap-3">
+      {props.textBadge === RequestCardTextBadge.ACCEPTED && (
         <ButtonUI
           paddingButtonStatus="0"
           gradient
           hover={false}
-          onPress={() => Alert.alert("Caso recusado.")}
-          iconLeft={false}
+          onPress={() => Alert.alert("Dossiê aberto.")}
+          iconLeft={true}
+          iconName="remove-red-eye"
           children={
             <View className="flex flex-row items-center gap-2 w-full justify-center h-full">
               <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
@@ -52,21 +56,40 @@ export default function RequestCard({ ...props }: RequestCardProps) {
             </View>
           }
         />
-        <ButtonUI
-          paddingButtonStatus="0"
-          gradient
-          hover={false}
-          onPress={() => Alert.alert("Caso recusado.")}
-          iconLeft={false}
-          children={
-            <View className="flex flex-row items-center gap-2 w-full justify-center h-full bg-[#EF4444]">
-              <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
-                RECUSAR
-              </Text>
-            </View>
-          }
-        />
-      </View>
+      )}
+
+      {props.textBadge === RequestCardTextBadge.PENDING && (
+        <View className="flex flex-col gap-3">
+          <ButtonUI
+            paddingButtonStatus="0"
+            gradient
+            hover={false}
+            onPress={() => Alert.alert("Caso aceito")}
+            iconLeft={false}
+            children={
+              <View className="flex flex-row items-center gap-2 w-full justify-center h-full">
+                <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
+                  ACEITAR
+                </Text>
+              </View>
+            }
+          />
+          <ButtonUI
+            paddingButtonStatus="0"
+            gradient
+            hover={false}
+            onPress={() => Alert.alert("Caso recusado.")}
+            iconLeft={false}
+            children={
+              <View className="flex flex-row items-center gap-2 w-full justify-center h-full bg-[#EF4444]">
+                <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
+                  RECUSAR
+                </Text>
+              </View>
+            }
+          />
+        </View>
+      )}
     </View>
   );
 }
