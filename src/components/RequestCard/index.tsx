@@ -51,7 +51,7 @@ export default function RequestCard({ ...props }: RequestCardProps) {
           children={
             <View className="flex flex-row items-center gap-2 w-full justify-center h-full">
               <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
-                ACEITAR
+                VER DOSSIÊ
               </Text>
             </View>
           }
