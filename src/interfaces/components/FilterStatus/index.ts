@@ -8,6 +8,6 @@ export enum StatusText {
 export interface IFilterStatus {
     status: StatusText;
     amount: number;
-    onPress: () => void;
-    isSelected: boolean;
+    onPress: (filter: StatusText) => void;
+    statusSelected: StatusText;
 }

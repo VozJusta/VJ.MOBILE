@@ -10,6 +10,7 @@ import RequestCard from "@/components/RequestCard";
 import { useState } from "react";
 import FilterStatus from "@/components/FilterStatus";
 import { StatusText } from "@/interfaces/components/FilterStatus";
+import Filters from "@/components/Filters";
 
 
 export default function LawyerHome() {
@@ -18,7 +19,7 @@ export default function LawyerHome() {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 gap-6">
-        <FilterStatus status={StatusText.ALL} amount={10} onPress={() => setIsSelected(!isSelected)} isSelected={isSelected} />
+        <Filters />
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
