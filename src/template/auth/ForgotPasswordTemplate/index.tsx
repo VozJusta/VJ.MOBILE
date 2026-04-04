@@ -22,12 +22,11 @@ import { usePathname, useRouter } from "expo-router";
 import PasswordStrength from "@/components/PasswordStrengh";
 import { ValidateEmail } from "@/services/users/citizen/validateEmail";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useAuth } from "@/hooks/useAuth";
-import { set } from "zod";
+import { useTokenStorage } from "@/store/token.store";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
   const [codeAuth, setCodeChange] = useState("");
-
+  const token = useTokenStorage((state) => state.token);
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
@@ -58,9 +57,13 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
 
   const pathName = usePathname();
-  const handleValidateCode = async (email: string, code: string) => {
+  const handleValidateCode = async (
+    email: string,
+    code: string,
+    token: string,
+  ) => {
     if (pathName === "/screens/auth/Validate") {
-      const response = await ValidateEmail(email, code);
+      const response = await ValidateEmail(email, code, token);
       console.log("Resposta da validação de email:", response);
       if (!response.success) {
         Toast.show({
@@ -69,7 +72,12 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
         });
         return;
       }
-      return
+      Toast.show({
+        type: "success",
+        text1: "Email validado com sucesso!",
+      });
+      router.replace("/screens/citizen/home");
+      return;
     }
   };
   return (
@@ -190,7 +198,11 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     onChangeText={(value) => setCodeChange(value)}
                     onFilledOTP={(value) => {
                       setCodeChange(value);
-                      handleValidateCode(props.email, value);
+                      handleValidateCode(
+                        props.email,
+                        value,
+                        token ? token : "",
+                      );
                     }}
                     placeholder={""}
                     iconSize={0}
@@ -203,14 +215,13 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   </Text>
                   <View className="w-full pb-[16px]">
                     <ButtonUI
-                      onPress={() => {
-                        if (props.onCodeVerified) {
-                          props.onCodeVerified();
-                          return;
-                        }
-
-                        router.replace("/screens/auth/ForgotPassword/Update");
-                      }}
+                      onPress={() =>
+                        handleValidateCode(
+                          props.email,
+                          codeAuth,
+                          token ? token : "",
+                        )
+                      }
                       gradient={false}
                       bg="bg-[#135BEC]"
                       hover={false}
@@ -292,7 +303,13 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                       />
                     )}
                   <ButtonUI
-                    onPress={() => handleValidateCode(props.email, codeAuth)}
+                    onPress={() =>
+                      handleValidateCode(
+                        props.email,
+                        codeAuth,
+                        token ? token : "",
+                      )
+                    }
                     gradient={true}
                     hover={false}
                     children={

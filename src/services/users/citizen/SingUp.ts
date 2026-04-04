@@ -5,9 +5,6 @@ import { ZodSingUpSchema } from "@/validation/schema.zod";
 
 export async function SingUpCitizen(data: ZodSingUpTypes) {
   try {
-    console.log("api: ", BASE_URL);
-    console.log("dados batendo na api: ", data);
-
     const validate = ZodValidate(ZodSingUpSchema, data);
 
     if (!validate.success) {
@@ -16,7 +13,6 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
         fields: validate.fields,
       };
     }
-    console.log(validate);
 
     const response = await fetch(`${BASE_URL}/citizen`, {
       method: "POST",
@@ -32,7 +28,7 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
         password: validate.data?.password,
       }),
     });
-    console.log(response);
+
     const json = await response.json();
     if (!response.ok) {
       return {
@@ -40,10 +36,6 @@ export async function SingUpCitizen(data: ZodSingUpTypes) {
         fields: json?.errors || [json?.message || "Erro ao cadastrar"],
       };
     }
-    console.log("message:", response.statusText);
-
-    console.log("response:", response);
-    console.log("json:", json);
 
     return {
       success: true,

@@ -35,6 +35,13 @@ export interface IButtonProfile {
   NextButton: boolean;
 }
 
+export interface ITokenStore {
+  token: string | null;
+  setToken: (token: string) => void;
+  clearToken: () => void;
+}
+
+
 export type Role = "citizen" | "lawyer";
 export interface IRoleStore {
   role: Role | null;
