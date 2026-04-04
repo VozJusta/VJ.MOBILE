@@ -35,7 +35,7 @@ export interface IButtonProfile {
   NextButton: boolean;
 }
 
-export interface ITokenStore {
+export interface IXTokenStore {
   token: string | null;
   setToken: (token: string) => void;
   clearToken: () => void;

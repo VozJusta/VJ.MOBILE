@@ -1,4 +1,5 @@
 import { BASE_URL } from "@/services/BASE_URL";
+import { Alert } from "react-native";
 
 export async function ValidateEmail(
   email: string,
@@ -18,7 +19,6 @@ export async function ValidateEmail(
         code: code,
       }),
     });
-    console.log("RAW ValidateEmail:", response);
 
     if (!response.ok) {
       return {
@@ -28,7 +28,8 @@ export async function ValidateEmail(
     }
 
     const json = await response.json();
-    console.log("JSON da validação de email:", json);
+    console.log("JSON da validação de email:", json.access_token);
+    console.log("Resposta da validação de email (raw):", response);
 
     return {
       success: true,
