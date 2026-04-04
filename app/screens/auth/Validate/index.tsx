@@ -22,7 +22,6 @@ export default function ValidateEmail() {
       ? "/screens/auth/users/SingUp/Lawyer"
       : "/screens/auth/users/SingUp/Citizen";
 
-  const handleValidateCode = (code: string) => {};
   return (
     <ForgotPasswordTemplate
       email={emailValue? emailValue : ""}
@@ -33,7 +32,6 @@ export default function ValidateEmail() {
           : "Enviamos um código de 6 dígitos para seu email"
       }
       codeBackRoute={codeBackRoute}
-      onCodeVerified={() => router.replace("/screens/citizen/home")}
     />
   );
 }

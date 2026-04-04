@@ -1,12 +1,14 @@
-
-
-export const useRolesStorage = create<>()(
+import { ITokenStore } from "@/interfaces/interfaces";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+export const useTokenStorage = create<ITokenStore>()(
   persist(
     (set) => ({
-      role: null,
-      setRole: (role) => set({ role }),
-      clearRole: () => set({ role: null }),
+      token: null,
+      setToken: (token) => set({ token }),
+      clearToken: () => set({ token: null }),
     }),
-    { name: "role", storage: createJSONStorage(() => AsyncStorage) },
+    { name: "token", storage: createJSONStorage(() => AsyncStorage) },
   ),
 );
