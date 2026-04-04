@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "@/ui/ButtonUI";
@@ -64,7 +65,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   ) => {
     if (pathName === "/screens/auth/Validate") {
       const response = await ValidateEmail(email, code, token);
-      console.log("Resposta da validação de email:", response);
+      console.log("Resposta da validação de email (raw):", response);
       if (!response.success) {
         Toast.show({
           type: "error",
