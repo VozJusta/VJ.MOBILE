@@ -3,8 +3,11 @@ import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import passwordValidate from "@/utils/passwordValidate";
 import Toast from "react-native-toast-message";
+import { usePathname } from "expo-router";
 
 export default function UpdatePassword() {
+  const pathName = usePathname();
+  console.log("PATHNAME:", pathName);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const isMismatch =
@@ -23,6 +26,7 @@ export default function UpdatePassword() {
   const strength = passwordValidate(response);
   return (
     <ForgotPasswordTemplate
+      email=""
       confirmPassword={confirmPassword}
       newPassword={newPassword}
       setConfirmPassword={setConfirmPassword}

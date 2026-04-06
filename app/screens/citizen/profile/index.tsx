@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,9 +6,21 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
+import { IDecodedToken } from "@/interfaces/services/token/token";
+import { useAccessTokenStorage } from "@/store/token.store";
+import { useRouter } from "expo-router";
+import { jwtDecode } from "jwt-decode";
 
 export default function ProfileCitizen() {
   const sections = [[0, 1], [2, 3], [4]];
+  const router = useRouter();
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  if (token === null) {
+    Alert.alert("Token de acesso não encontrado");
+    router.replace("/screens/auth/login");
+    return null;
+  }
+  const decodedToken = jwtDecode<IDecodedToken>(token);
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">
@@ -39,7 +51,7 @@ export default function ProfileCitizen() {
           </LinearGradient>
           <View className="flex-col justify-center items-center">
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
-              Ricardo
+              {decodedToken.fullName}
             </Text>
             <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
@@ -65,7 +77,6 @@ export default function ProfileCitizen() {
                       namebutton={item.namebutton}
                       NextButton={item.NextButton}
                       path={item.path}
-
                     />
 
                     {i < group.length - 1 && (

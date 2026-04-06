@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter  } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 
@@ -11,8 +11,6 @@ export default function ValidateEmail() {
     email?: string | string[];
   }>();
 
-
-
   const sourceValue = Array.isArray(source) ? source[0] : source;
   const emailValue = Array.isArray(email) ? email[0] : email;
   const resolvedSource: ValidationSource =
@@ -24,7 +22,7 @@ export default function ValidateEmail() {
 
   return (
     <ForgotPasswordTemplate
-      email={emailValue? emailValue : ""}
+      email={emailValue ? emailValue : ""}
       screen={ScreensForgotPassword.Code}
       codeDescription={
         emailValue

@@ -22,9 +22,6 @@ export default function Home() {
     router.replace("/screens/auth/login");
     return null;
   }
-
-  console.log("Access Token:", token);
-  Alert.alert("Token de acesso encontrado: " + token);
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
