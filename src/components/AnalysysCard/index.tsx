@@ -9,7 +9,7 @@ export default function AnalysysCard({ ...props }: AnalysysCardProps) {
         <Text className="font-interSemiBold text-[16px] text-white">
           {props.title}
         </Text>
-        <Text className="font-interRegular text-[12px] text-[#FFFFFF]">
+        <Text className="font-interRegular text-[14px] text-[#FFFFFF]">
           {props.text}
         </Text>
       </View>
