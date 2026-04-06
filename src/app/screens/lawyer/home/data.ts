@@ -1,4 +1,4 @@
-import { RequestCardProps } from "@/interfaces/components/ImportantRequestCard";
+import { ImportantRequestCardProps } from "@/interfaces/components/ImportantRequestCard";
 import { StatsCardBgColor, StatsCardIcon, StatsCardIconColor, StatsCardProps } from "@/interfaces/components/StatCard";
 
 export const lawyerStats: StatsCardProps[] = [
@@ -25,7 +25,7 @@ export const lawyerStats: StatsCardProps[] = [
   },
 ];
 
-export const lawyerRequests: RequestCardProps[] = [
+export const lawyerRequests: ImportantRequestCardProps[] = [
   {
     title: "Divulgação de conteúdo digital",
     score: 85,
