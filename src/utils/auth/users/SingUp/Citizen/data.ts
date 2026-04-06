@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { Email2FA } from "@/services/users/citizen/email2FA";
+import { Email2FA } from "@/services/users/security/email2FA";
 import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
@@ -145,6 +145,6 @@ export function getInitialCitizenData(
     ],
     onSubmit: () => handleRegister(registerAuth),
     submitLabel: loading ? "carregando..." : "continuar",
-    disableSubmit: loading
+    disableSubmit: loading,
   };
 }

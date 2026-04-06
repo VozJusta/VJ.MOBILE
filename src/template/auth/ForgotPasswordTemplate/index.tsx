@@ -21,14 +21,16 @@ import {
 import React, { use, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "expo-router";
 import PasswordStrength from "@/components/PasswordStrengh";
-import { ValidateEmail } from "@/services/users/citizen/validateEmail";
+import { ValidateEmail } from "@/services/users/security/validateEmail";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useXTokenStorage, useAccessTokenStorage } from "@/store/token.store";
+import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
+  const [email, setEmail] = useState(props.email);
   const [codeAuth, setCodeChange] = useState("");
   const token = useXTokenStorage((state) => state.token);
-    const accessToken = useAccessTokenStorage((state) => state.accessToken);
+  const accessToken = useAccessTokenStorage((state) => state.accessToken);
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
@@ -59,12 +61,40 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
 
   const pathName = usePathname();
+
+  const handleCodeSending = async (email: string) => {
+    const response = await CodeSeding(email);
+console.log("Resposta do CodeSeding:", response);
+    if (
+      !response.success &&
+      response.fields &&
+      response.fields[0] === "Código já enviado"
+    ) {
+      Toast.show({
+        type: "error",
+        text1: response.fields && response.fields[0],
+      });
+      router.replace("/screens/auth/ForgotPassword/Code");
+      return;
+    }
+    if (!response.success) {
+      Toast.show({
+        type: "error",
+        text1: response.fields[0][0],
+      });
+      return;
+    }
+
+    router.replace("/screens/auth/ForgotPassword/Code");
+  };
+
   const handleValidateCode = async (
     email: string,
     code: string,
     token: string,
   ) => {
-    if (pathName === "/screens/auth/Validate") {
+    if (pathName.includes("/screens/auth/Validate")) {
+      console.log("Validando código para email:", email);
       const response = await ValidateEmail(email, code, token);
 
       if (!response.success) {
@@ -135,14 +165,14 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     leftIcon
                     keyboardType="email-address"
                     iconSize={24}
+                    value={email}
+                    onChangeText={setEmail}
                     iconNameProps={"mail"}
                     type={"email"}
                   />
 
                   <ButtonUI
-                    onPress={() =>
-                      router.replace("/screens/auth/ForgotPassword/Code")
-                    }
+                    onPress={() => handleCodeSending(email)}
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}

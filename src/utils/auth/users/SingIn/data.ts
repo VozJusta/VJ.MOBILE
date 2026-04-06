@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
-import { Email2FA } from "@/services/users/citizen/email2FA";
-import { SingInCitizen } from "@/services/users/citizen/SingIn";
+import { Email2FA } from "@/services/users/security/email2FA";
+import { SingInCitizen } from "@/services/users/SingIn";
 import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { useRouter } from "expo-router";
