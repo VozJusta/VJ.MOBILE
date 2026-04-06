@@ -25,6 +25,9 @@ import { ValidateEmail } from "@/services/users/security/validateEmail";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useXTokenStorage, useAccessTokenStorage } from "@/store/token.store";
 import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
+import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
+import { useAuth } from "@/hooks/useAuth";
+import { set } from "zod";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
   const [email, setEmail] = useState(props.email);
@@ -37,7 +40,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
     props.codeDescription ?? "Enviamos um código de 6 dígitos para seu email";
   const resolvedVerifyButtonLabel =
     props.verifyButtonLabel ?? "Verificar Email";
-
+  const {loading, setLoading} = useAuth()
   useEffect(() => {
     if (props.screen !== ScreensForgotPassword.Code) {
       return;
@@ -63,8 +66,9 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const pathName = usePathname();
 
   const handleCodeSending = async (email: string) => {
+    setLoading(true);
     const response = await CodeSeding(email);
-console.log("Resposta do CodeSeding:", response);
+    console.log("Resposta do CodeSeding:", response);
     if (
       !response.success &&
       response.fields &&
@@ -75,6 +79,7 @@ console.log("Resposta do CodeSeding:", response);
         text1: response.fields && response.fields[0],
       });
       router.replace("/screens/auth/ForgotPassword/Code");
+      setLoading(false);
       return;
     }
     if (!response.success) {
@@ -82,10 +87,12 @@ console.log("Resposta do CodeSeding:", response);
         type: "error",
         text1: response.fields[0][0],
       });
+      setLoading(false);
       return;
     }
 
     router.replace("/screens/auth/ForgotPassword/Code");
+    return
   };
 
   const handleValidateCode = async (
@@ -94,6 +101,7 @@ console.log("Resposta do CodeSeding:", response);
     token: string,
   ) => {
     if (pathName.includes("/screens/auth/Validate")) {
+      setLoading(true);
       console.log("Validando código para email:", email);
       const response = await ValidateEmail(email, code, token);
 
@@ -102,6 +110,7 @@ console.log("Resposta do CodeSeding:", response);
           type: "error",
           text1: response.fields && response.fields[0],
         });
+        setLoading(false);
         return;
       }
       Toast.show({
@@ -110,8 +119,27 @@ console.log("Resposta do CodeSeding:", response);
       });
       router.replace("/screens/citizen/home");
       return;
-    }
-  };
+    } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
+      console.log("Validando código para email:", email);
+      const response = await ValidateCode(email, code);
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: response.fields && response.fields[0],
+        });
+        setLoading(false);
+        return;
+      }
+      Toast.show({
+        type: "success",
+        text1: "Email validado com sucesso!",
+      });
+      router.replace("/screens/citizen/home");
+      setLoading(false);
+      return;
+    };
+  }
 
   return (
     <KeyboardAvoidingView
@@ -126,14 +154,7 @@ console.log("Resposta do CodeSeding:", response);
                 goBack
                 size="w-[40px] h-[40px]"
                 onPress={() => {
-                  props.screen === ScreensForgotPassword.Email
-                    ? router.replace("/screens/auth/users/SingIn")
-                    : props.screen === ScreensForgotPassword.Code
-                      ? router.replace(
-                          props.codeBackRoute ??
-                            "/screens/auth/ForgotPassword/Email",
-                        )
-                      : router.replace("/screens/auth/ForgotPassword/Code");
+                  router.back();
                 }}
                 gradient={false}
                 hover={false}
@@ -180,7 +201,7 @@ console.log("Resposta do CodeSeding:", response);
                     children={
                       <View className="flex-1 justify-center items-center">
                         <Text className="text-[16px] font-interBold text-white">
-                          Enviar código
+                          {loading ? "Enviando código..." : "Enviar código"}
                         </Text>
                       </View>
                     }
@@ -232,7 +253,7 @@ console.log("Resposta do CodeSeding:", response);
                     onFilledOTP={(value) => {
                       setCodeChange(value);
                       handleValidateCode(
-                        props.email,
+                        email.length > 1 ? email : props.email,
                         value,
                         token ? token : "",
                       );
@@ -292,7 +313,7 @@ console.log("Resposta do CodeSeding:", response);
                     secureTextEntry={true}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => {}}
+                    onRightIconPress={() => { }}
                     value={
                       props.screen === ScreensForgotPassword.Update
                         ? props.newPassword
@@ -315,7 +336,7 @@ console.log("Resposta do CodeSeding:", response);
                     type={"password"}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => {}}
+                    onRightIconPress={() => { }}
                     value={
                       props.screen === ScreensForgotPassword.Update
                         ? props.confirmPassword
