@@ -8,6 +8,7 @@ import RequestCard from "@/components/RequestCard";
 import { requestSelectedAnalysysData } from "./data";
 import AnalysysCard from "@/components/AnalysysCard";
 import ContactCard from "@/components/ContactCard";
+import EvidencesCard from "@/components/EnvidencesCard";
 
 export default function RequestSelected() {
   const { id } = useLocalSearchParams();
@@ -41,22 +42,17 @@ export default function RequestSelected() {
         {requestSelectedAnalysysData.map((analysys, index) => (
           <AnalysysCard key={index} {...analysys} />
         ))}
+
         <ContactCard
           nameCitizen={requestSelected[0].nameCitizen}
           phone="(11) 98765-4321"
           email="exemplo@gmail.com"
         />
-        <TouchableOpacity
-          onPress={() =>
-            Alert.alert(
-              "Parâmetros da solicitação",
-              JSON.stringify(requestSelected[0]),
-            )
-          }
-          className="mt-4 px-4 py-2 bg-[#2B86EE] rounded-lg"
-        >
-          <Text className="text-white font-interSemiBold">Ver parametros</Text>
-        </TouchableOpacity>
+
+        <EvidencesCard/>
+
+
+        
       </SafeAreaView>
     </ScrollView>
   );
