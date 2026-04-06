@@ -14,3 +14,10 @@ export interface ITokenService {
   access_token: string | null;
   refresh_token: string | null;
 }
+
+export interface IDecodedToken {
+  fullName: string;
+  email: string;
+  sub: string;
+  role: string;
+}

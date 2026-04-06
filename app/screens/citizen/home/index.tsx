@@ -7,14 +7,25 @@ import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
 import { casesData } from "@/utils/home/cases/data";
-import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/token.store";
+import { jwtDecode,JwtPayload } from "jwt-decode";
+import {
+  useAccessTokenStorage,
+  useRefreshTokenStorage,
+} from "@/store/token.store";
+import { IDecodedToken } from "@/interfaces/services/token/token";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
-  const tokenRefresh = useRefreshTokenStorage((state) => state.refreshToken);
-    Alert.alert("Token de acesso no Home:", token || "null");
-    Alert.alert("Token de atualização no Home:", tokenRefresh || "null");
+  if (token === null) {
+    Alert.alert("Token de acesso não encontrado");
+    router.replace("/screens/auth/login");
+    return null;
+  }
+
+  console.log("Access Token:", token);
+  Alert.alert("Token de acesso encontrado: " + token);
+  const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
     <ScrollView>
@@ -30,7 +41,7 @@ export default function Home() {
         </View>
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
-            Olá, Ricardo!
+            Olá, {decodedToken.fullName}!
           </Text>
           <Text className="text-[16px] text-[#94A3B8] font-interLight">
             Bem-vindo ao seu painel jurídico.
@@ -81,7 +92,11 @@ export default function Home() {
           {casesData.slice(0, 2).map((item) => (
             <ButtonUI
               key={item.id}
-              onPress={() => router.replace(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
+              onPress={() =>
+                router.replace(
+                  `/screens/citizen/home/listCases/caseSelected/${item.id}`,
+                )
+              }
               gradient={false}
               hover={false}
               iconLeft
@@ -94,13 +109,14 @@ export default function Home() {
           ))}
         </View>
         <View
-        style={{
+          style={{
             borderRadius: 24,
             backgroundColor: "rgba(255,255,255,0.03)",
             paddingVertical: 24,
             paddingHorizontal: 24,
             marginBottom: 128,
-          }}>
+          }}
+        >
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
