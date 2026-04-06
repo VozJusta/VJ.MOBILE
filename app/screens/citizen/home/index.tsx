@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,9 +7,15 @@ import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
 import { casesData } from "@/utils/home/cases/data";
+import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/token.store";
 
 export default function Home() {
   const router = useRouter();
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  const tokenRefresh = useRefreshTokenStorage((state) => state.refreshToken);
+    Alert.alert("Token de acesso no Home:", token || "null");
+    Alert.alert("Token de atualização no Home:", tokenRefresh || "null");
+
   return (
     <ScrollView>
       <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">

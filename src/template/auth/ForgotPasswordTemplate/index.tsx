@@ -23,11 +23,12 @@ import { usePathname, useRouter } from "expo-router";
 import PasswordStrength from "@/components/PasswordStrengh";
 import { ValidateEmail } from "@/services/users/citizen/validateEmail";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useTokenStorage } from "@/store/token.store";
+import { useXTokenStorage, useAccessTokenStorage } from "@/store/token.store";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
   const [codeAuth, setCodeChange] = useState("");
-  const token = useTokenStorage((state) => state.token);
+  const token = useXTokenStorage((state) => state.token);
+    const accessToken = useAccessTokenStorage((state) => state.accessToken);
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
@@ -65,7 +66,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   ) => {
     if (pathName === "/screens/auth/Validate") {
       const response = await ValidateEmail(email, code, token);
-      console.log("Resposta da validação de email (raw):", response);
+
       if (!response.success) {
         Toast.show({
           type: "error",
@@ -81,6 +82,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
       return;
     }
   };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}

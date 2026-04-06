@@ -2,11 +2,11 @@ import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/services/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
-import { useTokenStorage } from "@/store/token.store";
+import { useXTokenStorage } from "@/store/token.store";
 import { set } from "zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
-  const setToken = useTokenStorage.getState().setToken;
+  const setToken = useXTokenStorage.getState().setToken;
   try {
     const validate = ZodValidate(ZodLoginSchema, data);
 
@@ -31,7 +31,6 @@ export async function SingInCitizen(data: ZodLoginTypes) {
     });
 
     const token = response.headers.get("x-security-token");
-    console.log("Token recebido:", token);
     if (token) {
       setToken(token);
     }
