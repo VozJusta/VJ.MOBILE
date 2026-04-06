@@ -3,46 +3,15 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import Filters from "@/components/Filters";
-import {
-  RequestCardBadgeColor,
-  RequestCardProps,
-  RequestCardTextBadge,
-} from "@/interfaces/components/RequestCard";
 import RequestCard from "@/components/RequestCard";
-
-export const requestsCards: RequestCardProps[] = [
-  {
-    area: "Direito Civil",
-    badgeColor: RequestCardBadgeColor.PENDING,
-    textBadge: RequestCardTextBadge.PENDING,
-    nameCase: "Ricardo Silva vs. João Pereira",
-    nameCitizen: "Ricardo Silva",
-    requestDate: "12/09/2024",
-  },
-  {
-    area: "Direito Penal",
-    badgeColor: RequestCardBadgeColor.ACCEPTED,
-    textBadge: RequestCardTextBadge.ACCEPTED,
-    nameCase: "Maria Oliveira vs. Carlos Souza",
-    nameCitizen: "Maria Oliveira",
-    requestDate: "10/09/2024",
-  },
-  {
-    area: "Direito Trabalhista",
-    badgeColor: RequestCardBadgeColor.REJECTED,
-    textBadge: RequestCardTextBadge.REJECTED,
-    nameCase: "Ana Costa vs. Empresa XYZ",
-    nameCitizen: "Ana Costa",
-    requestDate: "08/09/2024",
-  },
-];
+import { requestsCards } from "./data";
 
 export default function RequestsScreens() {
   return (
     <SafeAreaView className="flex-1">
       <FlatList
         data={requestsCards}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id}
         renderItem={({ item }) => <RequestCard {...item} />}
         contentContainerClassName="gap-8 pb-6"
         showsVerticalScrollIndicator={false}
