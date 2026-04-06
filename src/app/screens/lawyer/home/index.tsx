@@ -6,7 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { lawyerRequests, lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
-import RequestCard from "@/components/RequestCard";
+import ImportantRequestCard from "@/components/ImportantRequestCard";
 
 export default function LawyerHome() {
   return (
@@ -61,7 +61,7 @@ export default function LawyerHome() {
           </Text>
           <View className="flex flex-col gap-3">
             {lawyerRequests.map((request, index) => (
-              <RequestCard key={index} {...request} />
+              <ImportantRequestCard key={index} {...request} />
             ))}
           </View>
         </View>

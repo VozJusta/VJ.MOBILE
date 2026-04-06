@@ -11,6 +11,7 @@ export enum RequestCardTextBadge {
 }
 
 export interface RequestCardProps {
+  id: string;
   area: string;
   nameCase: string;
   nameCitizen: string;

@@ -1,4 +1,4 @@
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, TouchableOpacity } from "react-native";
 import React from "react";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
@@ -6,12 +6,14 @@ import {
   RequestCardProps,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
+import { router } from "expo-router/build/exports";
 
 export default function RequestCard({ ...props }: RequestCardProps) {
   return (
-    <View
+    <TouchableOpacity
       className="flex flex-col w-full h-fit border-l-4 rounded-xl p-5 bg-[#161E29]/70 gap-6"
       style={{ borderLeftColor: props.badgeColor }}
+      onPress={() => router.push(`screens/lawyer/requests/requestSelected/${props.id}`)}
     >
       <View className="flex flex-row justify-between items-start w-full">
         <View className="flex flex-col gap-2 text-start">
@@ -90,6 +92,6 @@ export default function RequestCard({ ...props }: RequestCardProps) {
           />
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
