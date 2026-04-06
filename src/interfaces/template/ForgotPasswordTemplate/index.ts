@@ -10,7 +10,7 @@ type CodeScreenOptions = {
   codeTitle?: string;
   codeDescription?: string;
   verifyButtonLabel?: string;
-  codeBackRoute?: string;
+  codeBackRoute?: () => void;
   onCodeVerified?: () => void;
 };
 

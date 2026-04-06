@@ -1,5 +1,23 @@
 import { INavbar } from "@/interfaces/components/Navbar";
 
+export const NavbarItemsLawyer: INavbar[] = [
+  {
+    iconName: "home",
+    name: "Início",
+    path: "/screens/lawyer/home",
+  },
+  {
+    iconName: "cases",
+    name: "Solicitações",
+    path: "/screens/lawyer/requests",
+  },
+  {
+    iconName: "person",
+    name: "Perfil",
+    path: "/screens/shared/profile",
+  },
+]
+
 export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "home",
@@ -19,6 +37,6 @@ export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
-    path: "/screens/citizen/profile",
+    path: "/screens/shared/profile",
   },
 ];
