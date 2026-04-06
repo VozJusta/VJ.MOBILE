@@ -15,7 +15,7 @@ export default function RequestSelected() {
 
   return (
     <SafeAreaView className="flex-1 gap-6">
-      <Header title={requestSelected[0].nameCase} isFirstPage={false} isCitizen={false} />
+      <Header title={requestSelected[0].nameCase.toUpperCase()} isFirstPage={false} isCitizen={false} />
 
       <RequestCard {...requestSelected[0]} />
 
