@@ -17,3 +17,5 @@ export const requestSelectedAnalysysData: AnalysysCardProps[] = [
     text: "O cliente foi demitido sem um contrato formal e trabalhou muitas horas extras sem receber por isso. Ele tem direito a receber uma compensação por isso, e as provas que ele tem ajudam a mostrar que ele merece esses direitos.",
   },
 ];
+
+
