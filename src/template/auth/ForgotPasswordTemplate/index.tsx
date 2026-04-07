@@ -27,20 +27,22 @@ import { useXTokenStorage, useAccessTokenStorage } from "@/store/token.store";
 import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
 import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
 import { useAuth } from "@/hooks/useAuth";
+import { useEmailStorage } from "@/store/email.store";
 import { set } from "zod";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
   const [email, setEmail] = useState(props.email);
   const [codeAuth, setCodeChange] = useState("");
   const token = useXTokenStorage((state) => state.token);
-  const accessToken = useAccessTokenStorage((state) => state.accessToken);
+  const emailStorage = useEmailStorage((state) => state.email);
+  const setEmailStorage = useEmailStorage((state) => state.setEmail);
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
     props.codeDescription ?? "Enviamos um código de 6 dígitos para seu email";
   const resolvedVerifyButtonLabel =
     props.verifyButtonLabel ?? "Verificar Email";
-  const {loading, setLoading} = useAuth()
+  const { loading, setLoading } = useAuth();
   useEffect(() => {
     if (props.screen !== ScreensForgotPassword.Code) {
       return;
@@ -90,9 +92,13 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
       setLoading(false);
       return;
     }
-
+    setEmailStorage(email);
+    Toast.show({
+      type: "success",
+      text1: "Código enviado com sucesso!",
+    });
     router.replace("/screens/auth/ForgotPassword/Code");
-    return
+    return;
   };
 
   const handleValidateCode = async (
@@ -100,46 +106,52 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
     code: string,
     token: string,
   ) => {
-    if (pathName.includes("/screens/auth/Validate")) {
-      setLoading(true);
-      console.log("Validando código para email:", email);
-      const response = await ValidateEmail(email, code, token);
+    setLoading(true);
+    console.log("Validando código para email:", email);
+    const response = await ValidateEmail(email, code, token);
 
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields && response.fields[0],
-        });
-        setLoading(false);
-        return;
-      }
+    if (!response.success) {
       Toast.show({
-        type: "success",
-        text1: "Email validado com sucesso!",
+        type: "error",
+        text1: response.fields && response.fields[0],
       });
-      router.replace("/screens/citizen/home");
-      return;
-    } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
-      console.log("Validando código para email:", email);
-      const response = await ValidateCode(email, code);
-
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields && response.fields[0],
-        });
-        setLoading(false);
-        return;
-      }
-      Toast.show({
-        type: "success",
-        text1: "Email validado com sucesso!",
-      });
-      router.replace("/screens/citizen/home");
       setLoading(false);
       return;
-    };
-  }
+    }
+    Toast.show({
+      type: "success",
+      text1: "Email validado com sucesso!",
+    });
+    router.replace("/screens/citizen/home");
+    return;
+  };
+
+  const handleValidateCodeForgotPassword = async (
+    email: string,
+    code: string,
+  ) => {
+    setLoading(true);
+    Alert.alert(
+      "Iniciando validação",
+      `Email: ${emailStorage}\nCódigo: ${code}`,
+    );
+    const response = await ValidateCode(emailStorage, code);
+
+    if (!response.success) {
+      Toast.show({
+        type: "error",
+        text1: response.fields && response.fields[0][0],
+      });
+      setLoading(false);
+      return;
+    }
+    Toast.show({
+      type: "success",
+      text1: "Email validado com sucesso!",
+    });
+    router.replace("/screens/citizen/home");
+    setLoading(false);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -187,7 +199,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     keyboardType="email-address"
                     iconSize={24}
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={(value) => setEmail(value)}
                     iconNameProps={"mail"}
                     type={"email"}
                   />
@@ -252,11 +264,20 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     onChangeText={(value) => setCodeChange(value)}
                     onFilledOTP={(value) => {
                       setCodeChange(value);
-                      handleValidateCode(
-                        email.length > 1 ? email : props.email,
-                        value,
-                        token ? token : "",
-                      );
+                      if (pathName.includes("/screens/auth/Validate")) {
+                        handleValidateCode(
+                          props.email,
+                          value,
+                          token ? token : "",
+                        );
+                      } else if (
+                        pathName.includes("/screens/auth/ForgotPassword/Code")
+                      ) {
+                        handleValidateCodeForgotPassword(
+                          emailStorage,
+                          value,
+                        );
+                      }
                     }}
                     placeholder={""}
                     iconSize={0}
@@ -269,13 +290,22 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   </Text>
                   <View className="w-full pb-[16px]">
                     <ButtonUI
-                      onPress={() =>
-                        handleValidateCode(
-                          props.email,
-                          codeAuth,
-                          token ? token : "",
-                        )
-                      }
+                      onPress={() => {
+                        if (pathName.includes("/screens/auth/Validate")) {
+                          handleValidateCode(
+                            props.email,
+                            codeAuth,
+                            token ? token : "",
+                          );
+                        } else if (
+                          pathName.includes("/screens/auth/ForgotPassword/Code")
+                        ) {
+                          handleValidateCodeForgotPassword(
+                            emailStorage,
+                            codeAuth,
+                          );
+                        }
+                      }}
                       gradient={false}
                       bg="bg-[#135BEC]"
                       hover={false}
@@ -313,7 +343,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     secureTextEntry={true}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => { }}
+                    onRightIconPress={() => {}}
                     value={
                       props.screen === ScreensForgotPassword.Update
                         ? props.newPassword
@@ -336,7 +366,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     type={"password"}
                     rightIcon
                     rightIconName="visibility"
-                    onRightIconPress={() => { }}
+                    onRightIconPress={() => {}}
                     value={
                       props.screen === ScreensForgotPassword.Update
                         ? props.confirmPassword
