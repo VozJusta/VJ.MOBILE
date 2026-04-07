@@ -72,7 +72,7 @@ export default function MainSettings() {
             icon: "support-agent",
             label: "Central de Ajuda",
             onPress: () => {
-              router.push("/screens/citizen/settings/help");
+              router.push("/screens/citizen/help");
             },
           },
           {
@@ -87,7 +87,9 @@ export default function MainSettings() {
             type: "link",
             icon: "policy",
             label: "Privacidade",
-            onPress: () => {},
+            onPress: () => {
+              router.push("/screens/citizen/privacity");
+            },
           },
         ],
       },
