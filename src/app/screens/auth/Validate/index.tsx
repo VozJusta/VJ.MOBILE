@@ -25,7 +25,13 @@ export default function ValidateEmail() {
           ? `Enviamos um código de 6 dígitos para ${emailValue}`
           : "Enviamos um código de 6 dígitos para seu email"
       }
-      onCodeVerified={() => router.replace(resolvedSource === "lawyer" ? "/screens/lawyer/home" : "/screens/citizen/home")}
+      onCodeVerified={() =>
+        router.replace(
+          resolvedSource === "lawyer"
+            ? "/screens/lawyer/home"
+            : "/screens/citizen/home",
+        )
+      }
     />
   );
 }
