@@ -24,6 +24,7 @@ import { usePathname, useRouter } from "expo-router";
 import { useXTokenStorage } from "@/store/token.store";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
+import { UpdateForgotPassword } from "@/components/form/UpdateForgotPassword";
 
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
@@ -56,7 +57,6 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   }, [props.screen]);
 
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
-
 
   return (
     <KeyboardAvoidingView
@@ -96,6 +96,15 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   resolvedVerifyButtonLabel={resolvedVerifyButtonLabel}
                   timerLabel={timerLabel}
                   emailValidateScreen={props.email}
+                />
+              )}
+              {props.screen === ScreensForgotPassword.Update && (
+                <UpdateForgotPassword
+                  confirmPassword={props.confirmPassword}
+                  newPassword={props.newPassword}
+                  passwordStrength={props.passwordStrength}
+                  setConfirmPassword={props.setConfirmPassword}
+                  setNewPassword={props.setNewPassword}
                 />
               )}
             </View>
