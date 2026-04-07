@@ -3,16 +3,21 @@ import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import passwordValidate from "@/utils/passwordValidate";
 import Toast from "react-native-toast-message";
-import { usePathname } from "expo-router";
+import { useEmailStorage } from "@/store/email.store";
+import { useAuth } from "@/hooks/useAuth";
+import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
+import { Alert } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function UpdatePassword() {
-  const pathName = usePathname();
-  console.log("PATHNAME:", pathName);
+  const email = useEmailStorage((state) => state.email);
+  const { loading, setLoading } = useAuth()
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const isMismatch =
     newPassword !== confirmPassword && confirmPassword.length > 0;
   const wasMismatchRef = useRef(false);
+  const clearEmail = useEmailStorage((state) => state.clearEmail);
 
   useEffect(() => {
     if (isMismatch && !wasMismatchRef.current) {
@@ -24,6 +29,37 @@ export default function UpdatePassword() {
 
   const response = newPassword === confirmPassword ? newPassword : "";
   const strength = passwordValidate(response);
+  const router = useRouter();
+
+  const handleUpdatePassword = async (confirmPassword: string, newPassword: string) => {
+    setLoading(true);
+    Alert.alert("Iniciando envio de código", `Email: ${email}`);
+    const response = await UpdatePasswordService({
+      confirmPassword: confirmPassword,
+      password: newPassword,
+      email: email
+    });
+    console.log("Resposta do CodeSeding:", response);
+
+    if (!response.success) {
+      Toast.show({
+        type: "error",
+        text1:  response.fields && response.fields[0],
+      });
+      setLoading(false);
+      return;
+    }
+
+    console.log("Senha atualizada com sucesso:", response.data);
+    Toast.show({
+      type: "success",
+      text1: response.data || "Senha atualizada com sucesso!",
+    });
+    router.replace("/screens/auth/users/SingIn");
+    clearEmail();
+    return;
+  };
+
   return (
     <ForgotPasswordTemplate
       email=""
@@ -32,6 +68,8 @@ export default function UpdatePassword() {
       setConfirmPassword={setConfirmPassword}
       setNewPassword={setNewPassword}
       screen={ScreensForgotPassword.Update}
+      onSubmit={() => handleUpdatePassword(confirmPassword, newPassword)}
+      labelButton={loading ? "Atualizando..." : "Redefinir senha"}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
