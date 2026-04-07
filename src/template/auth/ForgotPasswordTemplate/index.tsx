@@ -31,18 +31,17 @@ import { useEmailStorage } from "@/store/email.store";
 import { set } from "zod";
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
-  const [email, setEmail] = useState(props.email);
+
   const [codeAuth, setCodeChange] = useState("");
   const token = useXTokenStorage((state) => state.token);
-  const emailStorage = useEmailStorage((state) => state.email);
-  const setEmailStorage = useEmailStorage((state) => state.setEmail);
+
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
   const resolvedCodeDescription =
     props.codeDescription ?? "Enviamos um código de 6 dígitos para seu email";
   const resolvedVerifyButtonLabel =
     props.verifyButtonLabel ?? "Verificar Email";
-  const { loading, setLoading } = useAuth();
+
   useEffect(() => {
     if (props.screen !== ScreensForgotPassword.Code) {
       return;
@@ -67,39 +66,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
 
   const pathName = usePathname();
 
-  const handleCodeSending = async (email: string) => {
-    setLoading(true);
-    const response = await CodeSeding(email);
-    console.log("Resposta do CodeSeding:", response);
-    if (
-      !response.success &&
-      response.fields &&
-      response.fields[0] === "Código já enviado"
-    ) {
-      Toast.show({
-        type: "error",
-        text1: response.fields && response.fields[0],
-      });
-      router.replace("/screens/auth/ForgotPassword/Code");
-      setLoading(false);
-      return;
-    }
-    if (!response.success) {
-      Toast.show({
-        type: "error",
-        text1: response.fields[0][0],
-      });
-      setLoading(false);
-      return;
-    }
-    setEmailStorage(email);
-    Toast.show({
-      type: "success",
-      text1: "Código enviado com sucesso!",
-    });
-    router.replace("/screens/auth/ForgotPassword/Code");
-    return;
-  };
+  
 
   const handleValidateCode = async (
     email: string,
@@ -182,231 +149,10 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
               className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${props.screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
             >
               {props.screen === ScreensForgotPassword.Email ? (
-                <>
-                  <View className="gap-[11.40px] items-center justify-center">
-                    <Text className="font-interBold text-[24px] text-white">
-                      Esqueceu a Senha?
-                    </Text>
-                    <Text className="font-interRegular text-[14px] text-white/60 text-center">
-                      Não se preocupe! Informe seu e-mail cadastrado para
-                      receber as instruções de recuperação.
-                    </Text>
-                  </View>
-
-                  <InputUI
-                    placeholder={"seu@email.com"}
-                    leftIcon
-                    keyboardType="email-address"
-                    iconSize={24}
-                    value={email}
-                    onChangeText={(value) => setEmail(value)}
-                    iconNameProps={"mail"}
-                    type={"email"}
-                  />
-
-                  <ButtonUI
-                    onPress={() => handleCodeSending(email)}
-                    gradient={false}
-                    bg="bg-[#135BEC]"
-                    hover={false}
-                    size="w-full h-[56px]"
-                    children={
-                      <View className="flex-1 justify-center items-center">
-                        <Text className="text-[16px] font-interBold text-white">
-                          {loading ? "Enviando código..." : "Enviar código"}
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
-                  <ButtonUI
-                    bg="bg-transparent"
-                    gradient={false}
-                    hover={false}
-                    onPress={() => router.replace("/screens/auth/users/SingIn")}
-                    children={
-                      <View
-                        style={{ gap: 8 }}
-                        className="flex-row items-center gap-2"
-                      >
-                        <MaterialIcons
-                          name="arrow-forward"
-                          size={20}
-                          style={{ transform: [{ rotate: "-180deg" }] }}
-                          color={"rgba(255,255,255,0.5)"}
-                        />
-                        <Text className="font-inter text-[14px] text-white/50">
-                          Voltar para o Login
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
-                </>
-              ) : props.screen === ScreensForgotPassword.Code ? (
-                <>
-                  <View className="gap-[16px] items-center justify-center mb-[40px]">
-                    <View className="w-[64px] h-[64px] flex justify-center items-center bg-[rgba(19,91,236,0.1)] rounded-full">
-                      <Shield width={30} height={36} />
-                    </View>
-                    <Text className="font-interBold text-[24px] text-white text-center">
-                      {resolvedCodeTitle}
-                    </Text>
-                    <Text className="font-interRegular text-[14px] px-[30.5px] text-[#94A3B8] text-center">
-                      {resolvedCodeDescription}
-                    </Text>
-                  </View>
-
-                  <InputUI
-                    inputOTP
-                    onChangeText={(value) => setCodeChange(value)}
-                    onFilledOTP={(value) => {
-                      setCodeChange(value);
-                      if (pathName.includes("/screens/auth/Validate")) {
-                        handleValidateCode(
-                          props.email,
-                          value,
-                          token ? token : "",
-                        );
-                      } else if (
-                        pathName.includes("/screens/auth/ForgotPassword/Code")
-                      ) {
-                        handleValidateCodeForgotPassword(
-                          emailStorage,
-                          value,
-                        );
-                      }
-                    }}
-                    placeholder={""}
-                    iconSize={0}
-                    iconNameProps={"sort"}
-                    type={"email"}
-                  />
-                  <Text className="font-inter text-[12px] text-[rgba(96,165,250,0.8)]">
-                    O código expira em{" "}
-                    <Text className="font-interBold"> {timerLabel} </Text>
-                  </Text>
-                  <View className="w-full pb-[16px]">
-                    <ButtonUI
-                      onPress={() => {
-                        if (pathName.includes("/screens/auth/Validate")) {
-                          handleValidateCode(
-                            props.email,
-                            codeAuth,
-                            token ? token : "",
-                          );
-                        } else if (
-                          pathName.includes("/screens/auth/ForgotPassword/Code")
-                        ) {
-                          handleValidateCodeForgotPassword(
-                            emailStorage,
-                            codeAuth,
-                          );
-                        }
-                      }}
-                      gradient={false}
-                      bg="bg-[#135BEC]"
-                      hover={false}
-                      size="w-full h-[56px]"
-                      children={
-                        <View className="flex-1 justify-center items-center">
-                          <Text className="text-[16px] font-interBold text-white">
-                            {resolvedVerifyButtonLabel}
-                          </Text>
-                        </View>
-                      }
-                      iconLeft={false}
-                      paddingButtonStatus={""}
-                    />
-                  </View>
-                </>
+                rops.screen === ScreensForgotPassword.Code ? (
+                
               ) : (
-                <>
-                  <View className="gap-[7px] w-full items-start">
-                    <Text className="font-interBold text-[24px] text-white">
-                      Nova senha
-                    </Text>
-                    <Text className="font-interRegular text-[14px] max-w-[300px] text-white/60 ">
-                      Crie uma nova senha forte para proteger sua conta
-                    </Text>
-                  </View>
-                  <InputUI
-                    label="Nova senha"
-                    placeholder={"••••••••"}
-                    leftIcon
-                    keyboardType="visible-password"
-                    iconSize={24}
-                    iconNameProps={"lock"}
-                    type={"password"}
-                    secureTextEntry={true}
-                    rightIcon
-                    rightIconName="visibility"
-                    onRightIconPress={() => {}}
-                    value={
-                      props.screen === ScreensForgotPassword.Update
-                        ? props.newPassword
-                        : ""
-                    }
-                    onChangeText={(e) => {
-                      if (props.screen === ScreensForgotPassword.Update) {
-                        props.setNewPassword(e);
-                      }
-                    }}
-                  />
-                  <InputUI
-                    label="Confirme a nova senha"
-                    placeholder={"••••••••"}
-                    leftIcon
-                    keyboardType="visible-password"
-                    iconSize={24}
-                    iconNameProps={"lock"}
-                    secureTextEntry={true}
-                    type={"password"}
-                    rightIcon
-                    rightIconName="visibility"
-                    onRightIconPress={() => {}}
-                    value={
-                      props.screen === ScreensForgotPassword.Update
-                        ? props.confirmPassword
-                        : ""
-                    }
-                    onChangeText={(e) => {
-                      if (props.screen === ScreensForgotPassword.Update) {
-                        props.setConfirmPassword(e);
-                      }
-                    }}
-                  />
-                  {props.screen === ScreensForgotPassword.Update &&
-                    props.passwordStrength && (
-                      <PasswordStrength
-                        score={props.passwordStrength.score}
-                        color={props.passwordStrength.color}
-                        checklist={props.passwordStrength.checklist}
-                      />
-                    )}
-                  <ButtonUI
-                    onPress={() =>
-                      handleValidateCode(
-                        props.email,
-                        codeAuth,
-                        token ? token : "",
-                      )
-                    }
-                    gradient={true}
-                    hover={false}
-                    children={
-                      <View className="flex-1 justify-center items-center">
-                        <Text className="text-[16px] font-interBold text-white">
-                          Redefinir senha
-                        </Text>
-                      </View>
-                    }
-                    iconLeft={false}
-                    paddingButtonStatus={""}
-                  />
-                </>
+                
               )}
             </View>
             {props.screen === ScreensForgotPassword.Code && (
