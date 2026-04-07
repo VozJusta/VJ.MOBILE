@@ -5,6 +5,13 @@ import { ZodLoginSchema } from "@/validation/schema.zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
   try {
+    if (!BASE_URL) {
+      return {
+        success: false,
+        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
+      };
+    }
+
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 
