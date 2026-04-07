@@ -13,27 +13,20 @@ import ButtonUI from "@/ui/ButtonUI";
 import Logo from "@/assets/svg/icons/logo.svg";
 import InputUI from "@/ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Shield from "@/assets/svg/icons/shield.svg";
+
 import {
   IForgotPasswordProps,
   ScreensForgotPassword,
 } from "@/interfaces/template/ForgotPasswordTemplate";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "expo-router";
-import PasswordStrength from "@/components/PasswordStrengh";
-import { ValidateEmail } from "@/services/users/security/validateEmail";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useXTokenStorage, useAccessTokenStorage } from "@/store/token.store";
-import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
-import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
-import { useAuth } from "@/hooks/useAuth";
-import { useEmailStorage } from "@/store/email.store";
-import { set } from "zod";
+
+import { useXTokenStorage } from "@/store/token.store";
+import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
+import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
+
 export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
   const router = useRouter();
-
-  const [codeAuth, setCodeChange] = useState("");
-  const token = useXTokenStorage((state) => state.token);
 
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
   const resolvedCodeTitle = props.codeTitle ?? "Verificação de Email";
@@ -64,61 +57,6 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
 
   const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
 
-  const pathName = usePathname();
-
-  
-
-  const handleValidateCode = async (
-    email: string,
-    code: string,
-    token: string,
-  ) => {
-    setLoading(true);
-    console.log("Validando código para email:", email);
-    const response = await ValidateEmail(email, code, token);
-
-    if (!response.success) {
-      Toast.show({
-        type: "error",
-        text1: response.fields && response.fields[0],
-      });
-      setLoading(false);
-      return;
-    }
-    Toast.show({
-      type: "success",
-      text1: "Email validado com sucesso!",
-    });
-    router.replace("/screens/citizen/home");
-    return;
-  };
-
-  const handleValidateCodeForgotPassword = async (
-    email: string,
-    code: string,
-  ) => {
-    setLoading(true);
-    Alert.alert(
-      "Iniciando validação",
-      `Email: ${emailStorage}\nCódigo: ${code}`,
-    );
-    const response = await ValidateCode(emailStorage, code);
-
-    if (!response.success) {
-      Toast.show({
-        type: "error",
-        text1: response.fields && response.fields[0][0],
-      });
-      setLoading(false);
-      return;
-    }
-    Toast.show({
-      type: "success",
-      text1: "Email validado com sucesso!",
-    });
-    router.replace("/screens/citizen/home");
-    setLoading(false);
-  };
 
   return (
     <KeyboardAvoidingView
@@ -148,11 +86,17 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
               }}
               className={`w-full gap-[32px] bg-white/5 rounded-xl h-auto flex-col items-center border border-solid border-[rgba(255,255,255,0.13)] ${props.screen === ScreensForgotPassword.Update ? "px-4 pt-[29px] pb-[45px]" : "px-4 py-8"}`}
             >
-              {props.screen === ScreensForgotPassword.Email ? (
-                rops.screen === ScreensForgotPassword.Code ? (
-                
-              ) : (
-                
+              {props.screen === ScreensForgotPassword.Email && (
+                <EmailForgotPassword />
+              )}
+              {props.screen === ScreensForgotPassword.Code && (
+                <CodeForgotPassword
+                  resolvedCodeDescription={resolvedCodeDescription}
+                  resolvedCodeTitle={resolvedCodeTitle}
+                  resolvedVerifyButtonLabel={resolvedVerifyButtonLabel}
+                  timerLabel={timerLabel}
+                  emailValidateScreen={props.email}
+                />
               )}
             </View>
             {props.screen === ScreensForgotPassword.Code && (
