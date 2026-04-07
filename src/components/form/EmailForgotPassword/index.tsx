@@ -11,9 +11,9 @@ import Toast from "react-native-toast-message";
 
 export function EmailForgotPassword() {
   const [email, setEmail] = useState("");
-  const emailStorage = useEmailStorage((state) => state.email);
   const { loading, setLoading } = useAuth();
   const setEmailStorage = useEmailStorage((state) => state.setEmail);
+
   const handleCodeSending = async (email: string) => {
     setLoading(true);
     const response = await CodeSeding(email);
