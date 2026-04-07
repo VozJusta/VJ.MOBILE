@@ -47,7 +47,6 @@ export function EmailForgotPassword() {
       text1: "Código enviado com sucesso!",
     });
     router.replace("/screens/auth/ForgotPassword/Code");
-    return;
   };
   return (
     <>

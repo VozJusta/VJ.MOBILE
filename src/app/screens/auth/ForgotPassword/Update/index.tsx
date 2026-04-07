@@ -7,7 +7,7 @@ import { usePathname } from "expo-router";
 
 export default function UpdatePassword() {
   const pathName = usePathname();
-  console.log("PATHNAME:", pathName);
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const isMismatch =
