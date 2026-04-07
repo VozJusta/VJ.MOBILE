@@ -1,10 +1,11 @@
 import PasswordStrength from "@/components/PasswordStrengh";
+import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { View, Text } from "react-native";
 
-export function UpdateForgotPassword() {
+export function UpdateForgotPassword({...props}:IUpdateForgotPasswordProps) {
   return (
     <>
       <View className="gap-[7px] w-full items-start">
@@ -27,14 +28,8 @@ export function UpdateForgotPassword() {
         rightIcon
         rightIconName="visibility"
         onRightIconPress={() => {}}
-        value={
-          props.screen === ScreensForgotPassword.Update ? props.newPassword : ""
-        }
-        onChangeText={(e) => {
-          if (props.screen === ScreensForgotPassword.Update) {
-            props.setNewPassword(e);
-          }
-        }}
+        value={ props.newPassword }
+        onChangeText={(e) => props.setNewPassword(e)}
       />
       <InputUI
         label="Confirme a nova senha"
@@ -48,19 +43,12 @@ export function UpdateForgotPassword() {
         rightIcon
         rightIconName="visibility"
         onRightIconPress={() => {}}
-        value={
-          props.screen === ScreensForgotPassword.Update
-            ? props.confirmPassword
-            : ""
+        value={ props.confirmPassword}
+        onChangeText={(e) => props.setConfirmPassword(e)
+          
         }
-        onChangeText={(e) => {
-          if (props.screen === ScreensForgotPassword.Update) {
-            props.setConfirmPassword(e);
-          }
-        }}
       />
-      {props.screen === ScreensForgotPassword.Update &&
-        props.passwordStrength && (
+      { props.passwordStrength && (
           <PasswordStrength
             score={props.passwordStrength.score}
             color={props.passwordStrength.color}
@@ -68,9 +56,7 @@ export function UpdateForgotPassword() {
           />
         )}
       <ButtonUI
-        onPress={() =>
-          handleValidateCode(props.email, codeAuth, token ? token : "")
-        }
+        onPress={() => {}}
         gradient={true}
         hover={false}
         children={

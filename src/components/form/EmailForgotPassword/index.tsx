@@ -6,7 +6,7 @@ import InputUI from "@/ui/InputUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import Toast from "react-native-toast-message";
 
 export function EmailForgotPassword() {
@@ -16,6 +16,8 @@ export function EmailForgotPassword() {
 
   const handleCodeSending = async (email: string) => {
     setLoading(true);
+    Alert.alert("Iniciando envio de código", `Email: ${email}`);
+    setEmailStorage(email);
     const response = await CodeSeding(email);
     console.log("Resposta do CodeSeding:", response);
     if (
@@ -34,12 +36,12 @@ export function EmailForgotPassword() {
     if (!response.success) {
       Toast.show({
         type: "error",
-        text1: response.fields[0][0],
+        text1: response.fields[0],
       });
       setLoading(false);
       return;
     }
-    setEmailStorage(email);
+    
     Toast.show({
       type: "success",
       text1: "Código enviado com sucesso!",

@@ -73,7 +73,7 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.replace("/screens/citizen/home");
+    router.replace("/screens/auth/ForgotPassword/Update");
     setLoading(false);
   };
 
@@ -131,7 +131,7 @@ export function CodeForgotPassword({
           children={
             <View className="flex-1 justify-center items-center">
               <Text className="text-[16px] font-interBold text-white">
-                {resolvedVerifyButtonLabel}
+                {loading ? "Validando..." : resolvedVerifyButtonLabel}
               </Text>
             </View>
           }
