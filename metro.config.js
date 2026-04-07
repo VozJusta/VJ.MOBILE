@@ -4,6 +4,10 @@ const path = require("path");
 
 let config = getDefaultConfig(__dirname);
 
+config.resolver.alias = {
+  "@": path.resolve(__dirname, "src"),
+};
+
 config.transformer.babelTransformerPath =
   require.resolve("react-native-svg-transformer");
 config.resolver.assetExts = config.resolver.assetExts.filter(
@@ -12,7 +16,6 @@ config.resolver.assetExts = config.resolver.assetExts.filter(
 config.resolver.sourceExts.push("svg");
 config.resolver.sourceExts.push("cjs");
 
-// Exclude pnpm cache directories
 config.resolver.blockList = [
   /.*[\\\/]\.pnpm-cache[\\\/].*/,
   /.*[\\\/]AppData[\\\/]Local[\\\/]pnpm-cache[\\\/].*/,
@@ -22,6 +25,6 @@ config.resolver.blockList = [
 config.watchFolders = [path.resolve(__dirname)];
 config.projectRoot = __dirname;
 
-config = withNativeWind(config, { input: "./global.css" });
+config = withNativeWind(config, { input: "./src/styles/global.css" });
 
 module.exports = config;

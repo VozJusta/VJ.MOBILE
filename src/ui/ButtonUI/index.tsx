@@ -55,7 +55,7 @@ export default function ButtonUI({
         end={{ x: 1, y: 1 }}
         colors={["#135BEC", "#0A44B8"]}
       >
-        <Pressable onPress={props.onPress} className={`w-full h-[56px]`}>
+        <Pressable disabled={props.disabled} onPress={props.onPress} className={`w-full h-[56px]`}>
           {props.children}
         </Pressable>
       </LinearGradient>
@@ -80,8 +80,8 @@ export default function ButtonUI({
       props.status === "Em Análise"
         ? "bg-[rgba(249,115,22,0.1)] border border-solid border-[rgba(249,115,22,0.2)]"
         : props.status === "Concluído"
-          ? "bg-[rgba(59,130,246,0.1)] border border-solid border-[rgba(59,130,246,0.2)]"
-          : "bg-[rgba(34,197,94,0.1)] border border-solid border-[rgba(34,197,94,0.2)]";
+          ? "bg-[rgba(34,197,94,0.1)] border border-solid border-[rgba(34,197,94,0.2)]"
+          : "bg-[rgba(59,130,246,0.1)] border border-solid border-[rgba(59,130,246,0.2)]";
     return (
       <Pressable
         onPress={props.onPress}
@@ -104,17 +104,19 @@ export default function ButtonUI({
                 }
               />
             </View>
-            <View className="flex-col gap-[2px]">
-              <Text>{props.children}</Text>
+            <View className="flex-col gap-[6px]">
+              <Text className="text-white font-interSemiBold text-[14px]">
+                {props.children}
+              </Text>
               {props.statusBorder ? (
                 <View
                   style={{
                     boxShadow: `0px 0px 10px ${statusBorder}`,
                   }}
-                  className={`py-[4px] px-[10px] gap-[8px] flex-row items-center ${statusBorderBg}`}
+                  className={`py-[4px] px-[10px] gap-[8px] flex-row justify-center items-center rounded-full self-start ${statusBorderBg}`}
                 >
                   <View
-                    className={`min-w-[6px] min-h-[6px] ${statusColor}`}
+                    className={`min-w-[6px] min-h-[6px] rounded-full ${statusColor}`}
                   ></View>
 
                   <Text

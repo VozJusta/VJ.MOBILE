@@ -1,5 +1,3 @@
-import { IButtonProfile } from "@/interfaces/interfaces";
-
 export const ButtonsProfile:IButtonProfile[] = [
     {
         bgIcon: "rgba(59,130,246,0.1)",
@@ -38,7 +36,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#EA3323",
         icon: "logout",
         namebutton: "Sair da Conta",
-        path: "/screens/Onboarding/roles",
+        path: "/screens/auth/users/SingIn",
         NextButton:false
     },
 ]

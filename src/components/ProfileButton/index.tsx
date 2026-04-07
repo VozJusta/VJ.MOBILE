@@ -1,32 +1,18 @@
 import { IButtonProfile } from "@/interfaces/interfaces";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
 export default function ProfileButton({ ...item }: IButtonProfile) {
-  const resolveRoutePath = (path: string) => {
-    if (!path) {
-      return "";
-    }
-
-    if (path.startsWith("@screen/")) {
-      return `/screens/${path.replace("@screen/", "")}`;
-    }
-
-    return path;
-  };
+  const router = useRouter();
 
   const handleNavigate = () => {
-    const routePath = resolveRoutePath(item.path);
-
-    if (!routePath) {
+    if (!item.path) {
       return;
     }
-
-    router.push(routePath as any);
+    router.push(item.path);
   };
-
   return (
     <ButtonUI
       key={item.namebutton}

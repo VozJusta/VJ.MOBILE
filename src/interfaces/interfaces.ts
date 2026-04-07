@@ -22,15 +22,31 @@ export interface CareerSelectProps {
   onValueChange: (value: string) => void;
 }
 
+export interface ICaseSelectProps {
+  title: string;
+}
+
 export interface IButtonProfile {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
   colorIcon: string;
   bgIcon: string;
   namebutton: string;
   path: string;
-  NextButton: boolean
+  NextButton: boolean;
 }
 
+export type Role = "citizen" | "lawyer";
+export interface IRoleStore {
+  role: Role | null;
+  setRole: (role: Role) => void;
+  clearRole: () => void;
+}
+
+export interface IEmail2FAStore {
+  email: string;
+  setEmail: (email:string) => void;
+  clearEmail: () => void 
+}
 
 export interface IButtonRequest {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
@@ -39,5 +55,4 @@ export interface IButtonRequest {
   title: string;
   path: string;
   description: string;
-
 }
