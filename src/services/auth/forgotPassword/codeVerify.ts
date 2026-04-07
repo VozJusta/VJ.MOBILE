@@ -2,14 +2,9 @@ import { ITokenService } from "@/interfaces/services/token/token";
 import { BASE_URL } from "@/services/BASE_URL";
 import { Alert } from "react-native";
 
-
-
-export async function ValidateCode(
-  email: string,
-  code: string,
-) {
-
+export async function ValidateCode(email: string, code: string) {
   try {
+    Alert.alert("Enviando requisição", `Email: ${email}\nCódigo: ${code}`);
     const response = await fetch(`${BASE_URL}/auth/forgot/verify-code`, {
       method: "POST",
       headers: {
@@ -21,19 +16,18 @@ export async function ValidateCode(
         code: code,
       }),
     });
-    const jsonResponse: ITokenService = await response.json();
-    Alert.alert("Resposta do servidor", JSON.stringify(jsonResponse));
+    const json: ITokenService = await response.json();
 
     if (!response.ok) {
       return {
         success: false,
-        fields: ["Erro na validação de 2 Fatores"],
+        fields: json.message,
       };
     }
 
     return {
       success: true,
-      data: jsonResponse,
+      data: json,
     };
   } catch (err: any) {
     console.log("ERRO NA REQUISIÇÃO:", err);
