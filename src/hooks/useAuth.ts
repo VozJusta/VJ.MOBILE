@@ -1,4 +1,4 @@
-import { ZodLoginTypes, ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
+import { ZodLoginTypes, ZodSingUpTypes, ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
 import { useState } from "react";
 
 export const useAuth = () => {
@@ -15,6 +15,10 @@ export const useAuth = () => {
     phone: "",
   });
 
+  const [password,setPassword] = useState<ZodUpdatePasswordTypes>({
+    password: "",
+    confirmPassword: "",
+  });
 
   const [loading, setLoading] = useState(false);
 

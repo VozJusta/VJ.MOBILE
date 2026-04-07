@@ -1,11 +1,51 @@
 import PasswordStrength from "@/components/PasswordStrengh";
+import { useAuth } from "@/hooks/useAuth";
 import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
+import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
+import { UpdatePassword } from "@/services/auth/forgotPassword/updatePassword";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
+import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
-export function UpdateForgotPassword({...props}:IUpdateForgotPasswordProps) {
+export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
+  const { loading, setLoading } = useAuth();
+  const router = useRouter();
+  const handleUpdatePassword = async (data: ZodUpdatePasswordTypes) => {
+    setLoading(true);
+
+    const response = await UpdatePassword(data);
+    console.log("Resposta do CodeSeding:", response);
+    if (
+      !response.success &&
+      response.fields &&
+      response.fields[0] === "Código já enviado"
+    ) {
+      Toast.show({
+        type: "error",
+        text1: response.fields && response.fields[0],
+      });
+      router.replace("/screens/auth/ForgotPassword/Code");
+      setLoading(false);
+      return;
+    }
+    if (!response.success) {
+      Toast.show({
+        type: "error",
+        text1: response.fields[0],
+      });
+      setLoading(false);
+      return;
+    }
+
+    Toast.show({
+      type: "success",
+      text1: "Código enviado com sucesso!",
+    });
+    router.replace("/screens/auth/ForgotPassword/Code");
+  };
   return (
     <>
       <View className="gap-[7px] w-full items-start">
@@ -28,7 +68,7 @@ export function UpdateForgotPassword({...props}:IUpdateForgotPasswordProps) {
         rightIcon
         rightIconName="visibility"
         onRightIconPress={() => {}}
-        value={ props.newPassword }
+        value={props.newPassword}
         onChangeText={(e) => props.setNewPassword(e)}
       />
       <InputUI
@@ -43,18 +83,16 @@ export function UpdateForgotPassword({...props}:IUpdateForgotPasswordProps) {
         rightIcon
         rightIconName="visibility"
         onRightIconPress={() => {}}
-        value={ props.confirmPassword}
-        onChangeText={(e) => props.setConfirmPassword(e)
-          
-        }
+        value={props.confirmPassword}
+        onChangeText={(e) => props.setConfirmPassword(e)}
       />
-      { props.passwordStrength && (
-          <PasswordStrength
-            score={props.passwordStrength.score}
-            color={props.passwordStrength.color}
-            checklist={props.passwordStrength.checklist}
-          />
-        )}
+      {props.passwordStrength && (
+        <PasswordStrength
+          score={props.passwordStrength.score}
+          color={props.passwordStrength.color}
+          checklist={props.passwordStrength.checklist}
+        />
+      )}
       <ButtonUI
         onPress={() => {}}
         gradient={true}

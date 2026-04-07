@@ -1,15 +1,34 @@
+import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/services/BASE_URL";
-import { Alert } from "react-native";
+import { useEmailStorage } from "@/store/email.store";
+import { ZodValidate } from "@/validation/safeValidate.zod";
+import { ZodUpdatePasswordSchema } from "@/validation/schema.zod";
 
-export async function UpdatePassword(email: string) {
+export async function UpdatePassword(data: ZodUpdatePasswordTypes) {
   try {
-    const response = await fetch(`${BASE_URL}/auth/send/forgot/email`, {
+    const email = useEmailStorage.getState().email;
+    const validate = ZodValidate(ZodUpdatePasswordSchema, data);
+    if (!validate.success) {
+      return {
+        success: false,
+        fields: validate.fields,
+      };
+    }
+
+    if (validate.data?.password !== validate.data?.confirmPassword) {
+      return {
+        success: false,
+        fields: ["As senhas não coincidem"],
+      };
+    }
+
+    const response = await fetch(`${BASE_URL}/auth/forgot/password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, password: validate.data?.password }),
     });
 
     const json = await response.json();
