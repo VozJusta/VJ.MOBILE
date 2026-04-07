@@ -10,8 +10,10 @@ export interface ICodeForgotPasswordProps {
 
 export interface IUpdateForgotPasswordProps {
   passwordStrength: PasswordStrengthSection;
+  labelButton?: string;
   newPassword: string;
   setNewPassword: (password: string) => void;
   confirmPassword: string;
   setConfirmPassword: (password: string) => void;
+  onSubmit: () => void;
 }

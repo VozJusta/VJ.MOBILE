@@ -56,13 +56,13 @@ export function UpdateForgotPassword({...props}:IUpdateForgotPasswordProps) {
           />
         )}
       <ButtonUI
-        onPress={() => {}}
+        onPress={() => props.onSubmit()}
         gradient={true}
         hover={false}
         children={
           <View className="flex-1 justify-center items-center">
             <Text className="text-[16px] font-interBold text-white">
-              Redefinir senha
+              {props.labelButton || "Redefinir senha"}
             </Text>
           </View>
         }
