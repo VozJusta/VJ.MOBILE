@@ -1,5 +1,6 @@
 import Logo from "@/assets/svg/icons/logo.svg";
 import DangerAlertIcon from "@/assets/svg/icons/danger-alert.svg";
+import Header from "@/components/Header";
 import { ISettingsItem, ISettingsSection, ISettingsTemplateProps } from "@/interfaces/template/configTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -203,27 +204,17 @@ export default function SettingsTemplate({
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: 16,
           paddingBottom: isPrivacy ? 0 : isHelp ? 220 : 28,
           paddingTop: isPrivacy || isHelp ? 4 : 0,
+          paddingHorizontal: 16,
         }}
       >
-        <View className={`flex-row justify-between items-center ${isPrivacy ? "pt-2 pb-6" : isHelp ? "pt-2 pb-6" : "pt-2 pb-6"}`}>
-          <ButtonUI
-            goBack
-            size="h-[40px] w-[40px]"
-            onPress={onBack}
-            gradient={false}
-            hover={false}
-            iconLeft={false}
-            paddingButtonStatus={""}
+        <View className="mb-[32px] px-[0]">
+          <Header 
+            isCitizen={true} 
+            title={title.toUpperCase()} 
+            isFirstPage={false}
           />
-
-          <Text className={`uppercase tracking-[2px] text-[14px] font-interMedium ${isPrivacy ? "text-[#D8E4F6]" : isHelp ? "text-[#DFE9F7]" : "text-[#E2E8F0]"}`}>
-            {title}
-          </Text>
-
-          <Logo width={40} height={29} />
         </View>
 
         {!!description && (

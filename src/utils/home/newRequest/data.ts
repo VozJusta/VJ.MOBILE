@@ -1,4 +1,4 @@
-import { IButtonRequest } from "@/interfaces/interfaces";
+import { IButtonRequest } from "@/interfaces/utils/requests/interface";
 
 export const newRequestData: IButtonRequest[] = [
     {
