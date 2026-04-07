@@ -5,7 +5,7 @@ import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 function getHelpIconPalette(itemId: string) {
   switch (itemId) {
@@ -194,6 +194,8 @@ export default function SettingsTemplate({
 }: ISettingsTemplateProps) {
   const isPrivacy = templateVariant === "privacy";
   const isHelp = templateVariant === "help";
+  const insets = useSafeAreaInsets();
+  const helpSupportBottomOffset =  + insets.bottom;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -202,7 +204,7 @@ export default function SettingsTemplate({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 16,
-          paddingBottom: isPrivacy ? 32 : isHelp ? 34 : 28,
+          paddingBottom: isPrivacy ? 0 : isHelp ? 220 : 28,
           paddingTop: isPrivacy || isHelp ? 4 : 0,
         }}
       >
@@ -255,7 +257,7 @@ export default function SettingsTemplate({
           </Text>
         )}
 
-        {!!supportCard && (
+        {!!supportCard && !isHelp && (
           <View className={isHelp ? "mb-2 mt-[20px]" : "p-[1px] rounded-[18px] bg-[#135BEC]/70 mb-2 mt-[8px]"}>
             {isHelp ? (
               <Pressable
@@ -312,7 +314,7 @@ export default function SettingsTemplate({
 
         {!!dangerCard && (
           <View
-            className={`border bg-[rgba(8,11,31,0.97)] ${isPrivacy ? "rounded-[36px] border-[#F0455A]/45 p-[20px] mt-[32px] mb-[54px]" : "rounded-[26px] border-red-500/40 p-[14px] mt-[10px]"}`}
+            className={`border bg-[rgba(8,11,31,0.97)] ${isPrivacy ? "rounded-[36px] border-[#F0455A]/45 p-[20px] mt-[32px] mb-0" : "rounded-[26px] border-red-500/40 p-[14px] mt-[10px]"}`}
             style={
               isPrivacy
                 ? {
@@ -355,6 +357,30 @@ export default function SettingsTemplate({
           </View>
         )}
       </ScrollView>
+
+      {!!supportCard && isHelp && (
+        <View
+          className="absolute left-4 right-4"
+          style={{ bottom: helpSupportBottomOffset }}
+        >
+          <Pressable
+            onPress={supportCard.onPress ?? (() => {})}
+            className="rounded-[18px] overflow-hidden border border-[#4D99ED]/45"
+          >
+            <LinearGradient
+              colors={["#2B91F6", "#2A7EE8"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{ paddingHorizontal: 20, paddingVertical: 18 }}
+            >
+              <View className="flex-row items-center justify-center gap-[10px]">
+                <MaterialIcons name={supportCard.icon ?? "support-agent"} size={25} color="#FFFFFF" />
+                <Text className="text-white text-[20px] font-interBold">{supportCard.title}</Text>
+              </View>
+            </LinearGradient>
+          </Pressable>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

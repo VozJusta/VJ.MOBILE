@@ -6,7 +6,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#3C77E8",
         icon: "account-circle",
         namebutton: "Meus Dados",
-        path: "",
+        path: "/screens/citizen/myData",
         NextButton:true
     },
     {
