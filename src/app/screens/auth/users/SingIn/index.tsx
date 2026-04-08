@@ -1,61 +1,53 @@
-import { useState } from "react";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { getInitialSignInData } from "@/utils/auth/users/SingIn/data";
-import { useRouter } from "expo-router";
-import { useRolesStorage } from "@/store/roles.store";
-import Toast from "react-native-toast-message";
-import { SingInCitizen } from "@/settings/users/citizen/SingIn";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
+import { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
-export default function SignIn() {
-  const router = useRouter();
-  const setRole = useRolesStorage((state) => state.setRole);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const signInData = getInitialSignInData(
-    email,
-    setEmail,
-    password,
-    setPassword,
-    showPassword,
-    () => setShowPassword((prev) => !prev),
-  );
-
-  async function handleSubmit() {
-    setLoading(true);
-    try {
-      const response = await SingInCitizen({ email, password });
-
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields?.[0] ?? "Falha no login",
-        });
-        return;
-      }
-
-      const resolvedRole = resolveRoleFromApi(response.data, "citizen");
-      setRole(resolvedRole);
-
-      router.replace(
-        resolvedRole === "lawyer"
-          ? "/screens/lawyer/home"
-          : "/screens/citizen/home",
-      );
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { handleLogin, loading, loginAuth, handleLoginChange } = useLogin();
 
   return (
     <SignInTemplate
-      {...signInData}
-      onSubmit={handleSubmit}
-      submitLabel={loading ? "Entrando..." : signInData.submitLabel}
+      title="Entrar no VozJusta"
+      description="Acesse sua conta para continuar"
+      fields={buildLoginFields({ showPassword, onToggleShowPassword: () => setShowPassword(p => !p), loginAuth, handleLoginChange })}
+      onSubmit={() => handleLogin(loginAuth)}
+      submitLabel={loading ? "Carregando..." : "Entrar"}
       disableSubmit={loading}
+      extraActions={
+        <>
+          <Text
+            className="text-[#60A5FA] text-[12px] font-interBold underline text-right"
+            onPress={() => router.push("/screens/auth/ForgotPassword/Email")}
+          >
+            ESQUECI MINHA SENHA
+          </Text>
+
+          <View className="flex-row items-center gap-3">
+            <View className="flex-1 h-[1px] bg-white/10" />
+            <Text className="text-white/40 text-[12px] font-interBold tracking-[2px]">
+              OU ENTRE COM
+            </Text>
+            <View className="flex-1 h-[1px] bg-white/10" />
+          </View>
+
+          <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
+            <GoogleIcon width={20} height={20} />
+            <Text className="text-white text-[14px] font-inter">Google</Text>
+          </TouchableOpacity>
+        </>
+      }
+      footer={
+        <Text className="text-[#64748B] text-[14px] font-interRegular">
+          Ainda não tem conta?{" "}
+          <Text
+            className="text-white underline font-interBold"
+            onPress={() => router.push("/screens/Onboarding/roles")}
+          >
+            Cadastre-se
+          </Text>
+        </Text>
+      }
     />
   );
 }
