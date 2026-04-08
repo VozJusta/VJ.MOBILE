@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 
 export interface TermsContentProps {
+  numberSection: number;
   title: string;
   content: string;
 }
