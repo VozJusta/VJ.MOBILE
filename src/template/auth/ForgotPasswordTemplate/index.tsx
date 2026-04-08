@@ -100,7 +100,9 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
               )}
               {props.screen === ScreensForgotPassword.Update && (
                 <UpdateForgotPassword
+                onSubmit={() => props.onSubmit && props.onSubmit()}
                   confirmPassword={props.confirmPassword}
+                  labelButton={props.labelButton}
                   newPassword={props.newPassword}
                   passwordStrength={props.passwordStrength}
                   setConfirmPassword={props.setConfirmPassword}
