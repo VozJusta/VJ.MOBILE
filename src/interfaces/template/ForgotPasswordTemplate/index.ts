@@ -21,6 +21,8 @@ export type IForgotPasswordProps =
     } & CodeScreenOptions)
   | ({
       email: string;
+      labelButton?: string;
+      onSubmit?: () => void;
       screen: ScreensForgotPassword.Update;
       passwordStrength: PasswordStrengthSection;
       newPassword: string;

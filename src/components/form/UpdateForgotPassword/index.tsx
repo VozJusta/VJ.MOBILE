@@ -1,9 +1,12 @@
 import PasswordStrength from "@/components/PasswordStrengh";
 import { useAuth } from "@/hooks/useAuth";
 import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
+<<<<<<< HEAD
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
 import { UpdatePassword } from "@/services/auth/forgotPassword/updatePassword";
+=======
+>>>>>>> 9f7926e5bc921693f28d60e01ca2cd85aaf96c80
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { useRouter } from "expo-router";
@@ -94,13 +97,13 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
         />
       )}
       <ButtonUI
-        onPress={() => {}}
+        onPress={() => props.onSubmit()}
         gradient={true}
         hover={false}
         children={
           <View className="flex-1 justify-center items-center">
             <Text className="text-[16px] font-interBold text-white">
-              Redefinir senha
+              {props.labelButton || "Redefinir senha"}
             </Text>
           </View>
         }

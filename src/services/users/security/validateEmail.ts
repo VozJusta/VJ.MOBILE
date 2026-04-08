@@ -4,6 +4,8 @@ import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
 } from "@/store/token.store";
+import { fetch } from "expo/fetch"
+import { Alert } from "react-native";
 
 
 export async function ValidateEmail(
@@ -11,7 +13,6 @@ export async function ValidateEmail(
   code: string,
   token: string,
 ) {
-  console.log("🔥 ENTROU NO ValidateEmail");
   const setAccessToken = useAccessTokenStorage.getState().setTokens;
   const setRefreshToken = useRefreshTokenStorage.getState().setTokens;
 
@@ -21,21 +22,22 @@ export async function ValidateEmail(
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "x-security-token": token,
+        "x-security-token":`${token}`,
       },
       body: JSON.stringify({
         email: email,
         code: code,
       }),
     });
-    const jsonResponse: ITokenService = await response.json();
+    const text = await response.text();
+
+    const jsonResponse: ITokenService = JSON.parse(text);
     setAccessToken(jsonResponse.access_token || "");
     setRefreshToken(jsonResponse.refresh_token || "");
-
     if (!response.ok) {
       return {
         success: false,
-        fields: ["Erro na validação de 2 Fatores"],
+        fields: jsonResponse.message || ["Erro desconhecido"],
       };
     }
 
@@ -44,7 +46,9 @@ export async function ValidateEmail(
       data: "",
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
+    console.log("ERRO MENSAGEM:", err.message);
+    console.log("ERRO COMPLETO:", JSON.stringify(err));
+    console.log("ERRO STACK:", err.stack);
 
     return {
       success: false,

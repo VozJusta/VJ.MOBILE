@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 
 export async function CodeSeding(email: string) {
   try {
+
     const response = await fetch(`${BASE_URL}/auth/send/forgot/email`, {
       method: "POST",
       headers: {
@@ -12,7 +13,14 @@ export async function CodeSeding(email: string) {
       body: JSON.stringify({ email }),
     });
 
-    const json = await response.json();
+    const text = await response.text();
+
+    let json: any = {};
+    try {
+      json = text ? JSON.parse(text) : {};
+    } catch {
+      json = { message: text };
+    }
 
     if (!response.ok) {
       return {
@@ -21,16 +29,15 @@ export async function CodeSeding(email: string) {
       };
     }
 
-    return {
-      success: true,
-      data: json || "",
-    };
-  } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
 
+    return { success: true, data: json || "" };
+
+  } catch (err: any) {
+    console.log("ERRO NA REQUISIÇÃO:", err.name, err.message);
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],
     };
   }
+
 }

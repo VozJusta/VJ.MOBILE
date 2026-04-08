@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { email, string, z } from "zod";
 
 export const ZodSingUpSchema = z.object({
   fullName: z.string(),
@@ -18,7 +18,7 @@ export const ZodSingUpSchema = z.object({
   phone: z.preprocess(
     (input) => {
       if (typeof input === "string") {
-        return input.replace(/\D/g, ""); 
+        return input.replace(/\D/g, "");
       }
       return input;
     },
@@ -41,6 +41,7 @@ export const ZodLoginSchema = z.object({
 });
 
 export const ZodUpdatePasswordSchema = z.object({
+  email: z.email("Email inválido"),
   password: z
     .string()
     .min(8, { message: "Senha com no mínimo 8 caracteres" })
@@ -53,7 +54,7 @@ export const ZodUpdatePasswordSchema = z.object({
       (val) => /[!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]/.test(val),
       "A senha deve conter pelo menos um caractere especial",
     ),
-    confirmPassword: z
+  confirmPassword: z
     .string()
     .min(8, { message: "Senha com no mínimo 8 caracteres" })
     .refine(
@@ -63,6 +64,6 @@ export const ZodUpdatePasswordSchema = z.object({
     .refine((val) => /\d/.test(val), "A senha deve conter pelo menos um número")
     .refine(
       (val) => /[!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]/.test(val),
-      "A senha deve conter pelo menos um caractere especial",
-    ),
-});
+      "A senha deve conter pelo menos um caractere especial"
+    )
+})
