@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 
 export default function UpdatePassword() {
   const email = useEmailStorage((state) => state.email);
-  const { loading, setLoading } = useAuth()
+  const { loading, setLoading } = useAuth();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const isMismatch =
@@ -31,29 +31,31 @@ export default function UpdatePassword() {
   const strength = passwordValidate(response);
   const router = useRouter();
 
-  const handleUpdatePassword = async (email: string, confirmPassword: string, newPassword: string) => {
+  const handleUpdatePassword = async (
+    email: string,
+    confirmPassword: string,
+    newPassword: string,
+  ) => {
     setLoading(true);
-    Alert.alert("Iniciando envio de código", `Email: ${email}`);
+
     const response = await UpdatePasswordService({
       confirmPassword: confirmPassword,
       password: newPassword,
-      email: email
+      email: email,
     });
-    console.log("Resposta do CodeSeding:", response);
 
     if (!response.success) {
       Toast.show({
         type: "error",
-        text1:  response.fields && response.fields[0],
+        text1: response.fields && response.fields[0],
       });
       setLoading(false);
       return;
     }
 
-    console.log("Senha atualizada com sucesso:", response.data);
     Toast.show({
       type: "success",
-      text1: response.data || "Senha atualizada com sucesso!",
+      text1: response.data?.message || "Senha atualizada com sucesso!",
     });
     router.replace("/screens/auth/users/SingIn");
     clearEmail();

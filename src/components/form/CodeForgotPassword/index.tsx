@@ -54,10 +54,6 @@ export function CodeForgotPassword({
     code: string,
   ) => {
     setLoading(true);
-    Alert.alert(
-      "Iniciando validação",
-      `Email: ${emailStorage}\nCódigo: ${code}`,
-    );
     const response = await ValidateCode(email, code);
 
     if (!response.success) {

@@ -3,11 +3,9 @@ import { BASE_URL } from "@/services/BASE_URL";
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodUpdatePasswordSchema } from "@/validation/schema.zod";
 
-
 export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
   try {
     const validate = ZodValidate(ZodUpdatePasswordSchema, data);
-    console.log("Dados validados para atualização de senha:", validate);
 
     if (!validate.success) {
       return {
@@ -15,6 +13,7 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
         fields: validate.fields,
       };
     }
+
     if (validate.data?.password !== validate.data?.confirmPassword) {
       return {
         success: false,
@@ -28,18 +27,21 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ email: validate.data?.email, new_password: validate.data?.password }),
+      body: JSON.stringify({
+        email: validate.data?.email,
+        new_password: validate.data?.password,
+      }),
     });
-    console.log("Resposta da API de atualização de senha:", response);
+
     const text = await response.text();
-    console.log("Resposta em texto da API de atualização de senha:", text);
+
     let json: any = {};
     try {
       json = text ? JSON.parse(text) : {};
     } catch {
       json = { message: text };
     }
-    console.log("Resposta em JSON da API de atualização de senha:", json);
+
     if (!response.ok) {
       return {
         success: false,
@@ -47,9 +49,10 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
       };
     }
 
-    return { success: true, data: json || "" };;
+    return { success: true, data: json || "" };
   } catch (err: any) {
     console.log("ERRO NA REQUISIÇÃO:", err);
+    console.log("ERRO NA REQUISIÇÃO - MENSAGEM:", err.message);
 
     return {
       success: false,

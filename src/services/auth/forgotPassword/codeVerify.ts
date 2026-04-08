@@ -4,7 +4,6 @@ import { Alert } from "react-native";
 
 export async function ValidateCode(email: string, code: string) {
   try {
-    Alert.alert("Enviando requisição", `Email: ${email}\nCódigo: ${code}`);
     const response = await fetch(`${BASE_URL}/auth/forgot/verify-code`, {
       method: "POST",
       headers: {
