@@ -12,39 +12,6 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
   const { loading, setLoading } = useAuth();
   const router = useRouter();
-  const handleUpdatePassword = async (data: ZodUpdatePasswordTypes) => {
-    setLoading(true);
-
-    const response = await UpdatePasswordService(data);
-    console.log("Resposta do CodeSeding:", response);
-    if (
-      !response.success &&
-      response.fields &&
-      response.fields[0] === "Código já enviado"
-    ) {
-      Toast.show({
-        type: "error",
-        text1: response.fields && response.fields[0],
-      });
-      router.replace("/screens/auth/ForgotPassword/Code");
-      setLoading(false);
-      return;
-    }
-    if (!response.success) {
-      Toast.show({
-        type: "error",
-        text1: response.fields[0],
-      });
-      setLoading(false);
-      return;
-    }
-
-    Toast.show({
-      type: "success",
-      text1: "Código enviado com sucesso!",
-    });
-    router.replace("/screens/auth/ForgotPassword/Code");
-  };
   return (
     <>
       <View className="gap-[7px] w-full items-start">
@@ -93,7 +60,7 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
         />
       )}
       <ButtonUI
-        onPress={() => props.onSubmit()}
+        onPress={() =>  props.onSubmit()}
         gradient={true}
         hover={false}
         children={
