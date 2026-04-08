@@ -25,7 +25,7 @@ export default function Header({ ...props }: HeaderProps) {
           paddingButtonStatus={""}
         />
       )}
-      <Text className="font-interBold text-[10px] text-[#94A3B8]">
+      <Text className="font-interBold text-[14px] text-[#94A3B8]">
         {props.title}
       </Text>
       {props.isFirstPage ? (
