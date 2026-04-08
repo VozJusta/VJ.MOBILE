@@ -6,8 +6,9 @@ import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
-import { useRouter } from "expo-router/build/exports";
+import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
+import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 
 export function getInitialCitizenData(
   showPassword: boolean,
@@ -21,25 +22,18 @@ export function getInitialCitizenData(
   },
   handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void,
 ): ISignInTemplateProps {
-  const role = useRolesStorage((state) => state.role);
+  const setRole = useRolesStorage((state) => state.setRole);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
 
   async function handleRegister(data: ZodSingUpTypes) {
     setLoading(true);
     try {
-      if (role === "citizen") {
-        const response = await SingUpCitizen(data);
-        if (!response.success) {
-          Toast.show({
-            type: "error",
-            text1: response.fields && response.fields[0],
-          });
-          return;
-        }
+      const response = await SingUpCitizen(data);
+      if (!response.success) {
         Toast.show({
-          type: "success",
-          text1: "Cidadão criado",
+          type: "error",
+          text1: response.fields && response.fields[0],
         });
 
         const validateEmail2FA = await Email2FA(data.email);
@@ -60,6 +54,32 @@ export function getInitialCitizenData(
         );
         return;
       }
+
+      const resolvedRole = resolveRoleFromApi(response.data, "citizen");
+      setRole(resolvedRole);
+
+      Toast.show({
+        type: "success",
+        text1: "Cadastro realizado",
+      });
+
+      const validateEmail2FA = await Email2FA(data.email);
+      if (!validateEmail2FA.success) {
+        Toast.show({
+          type: "error",
+          text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: validateEmail2FA.data,
+      });
+
+      router.push(
+        `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(registerAuth.email)}`,
+      );
     } finally {
       setLoading(false);
     }
