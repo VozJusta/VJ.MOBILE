@@ -1,34 +1,19 @@
 import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Platform,
-  KeyboardAvoidingView,
+  ScrollView, Text, View,
+  Keyboard, TouchableWithoutFeedback,
+  Platform, KeyboardAvoidingView, Animated,
 } from "react-native";
-import Logo from "@/assets/svg/icons/logo.svg";
-import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
-import ButtonUI from "@/ui/ButtonUI";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Checkbox from "@/ui/CheckboxUI";
-import { router } from "expo-router";
+import { useRef, useEffect } from "react";
+import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { CareerSelectProps, UfSelectProps } from "@/interfaces/interfaces";
-import { useEffect, useRef, useState } from "react";
+import Header from "@/components/Header";
+import Input from "@/ui/InputUI";
 import UfSelect from "@/ui/UfSelectUI";
 import CareerSelect from "@/ui/CareerSelectUI";
-import Input from "@/ui/InputUI";
-import {
-  FieldsType,
-  ISignInTemplateProps,
-} from "@/interfaces/template/SignInTemplate";
+import ButtonUI from "@/ui/ButtonUI";
 import CheckListFunction from "@/ui/CheckListFunctionUI";
-import Header from "@/components/Header";
-
-
-
+import { FieldsType } from "@/interfaces/template/SignInTemplate";
 
 function isUfField(field: FieldsType): field is UfSelectProps {
   return "onValueChange" in field && !("options" in field);
@@ -38,33 +23,29 @@ function isCareerField(field: FieldsType): field is CareerSelectProps {
   return "onValueChange" in field && "options" in field;
 }
 
-export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
+export default function SignInTemplate({
+  title,
+  description,
+  fields,
+  onSubmit,
+  submitLabel,
+  disableSubmit,
+  passwordStrength,
+  extraActions,
+  footer,
+}: ISignInTemplateProps) {
   const animatedWidth = useRef(new Animated.Value(0)).current;
-  const isLoginLayout = props.layout === "login";
-  const showHeader = props.showHeader ?? true;
-  const showTerms = props.showTerms ?? true;
-  const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
-  const footerActionText = props.footerActionText ?? "Fazer Login";
-  const forgotPasswordRoute =
-    props.forgotPasswordRoute ?? "/screens/auth/ForgotPassword/Email";
-
-  if (props.onSubmit === undefined) {
-    props.onSubmit = () => { }
-  }
 
   useEffect(() => {
-    const percentage = props.passwordStrength
-      ? (props.passwordStrength.score / 5) * 100
+    const percentage = passwordStrength
+      ? (passwordStrength.score / 5) * 100
       : 0;
-
     Animated.timing(animatedWidth, {
       toValue: percentage,
       duration: 300,
       useNativeDriver: false,
     }).start();
-  }, [animatedWidth, props.passwordStrength]);
-
+  }, [passwordStrength]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -75,77 +56,39 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={
-              isLoginLayout
-                ? {
-                  paddingBottom: 40,
-                  paddingTop: 32,
-                  flexGrow: 1,
-                  justifyContent: "center",
-                  paddingHorizontal: 16
-                }
-                : { paddingBottom: 40, paddingTop: 32, paddingHorizontal: 16 }
-            }
+            contentContainerStyle={{
+              paddingBottom: 40,
+              paddingTop: 32,
+              paddingHorizontal: 16,
+              flexGrow: 1,
+            }}
           >
-            <Header isFirstPage={false} title={isLoginLayout ? "LOGIN" : "CADASTRO DE USUÁRIO"} />
+            <Header isFirstPage={false} title={title.toUpperCase()} />
 
-            <View
-              className={`${isLoginLayout
-                ? `self-center w-full mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
-                : `self-center w-full mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] pt-8 pb-12`
-                }`}
-            >
+            <View className="self-center w-full mt-8 px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12">
+
               <View className="flex-col gap-2">
-                <Text className="text-white text-[24px] font-interBold ">
-                  {props.title}
+                <Text className="text-white text-[24px] font-interBold">
+                  {title}
                 </Text>
-
                 <Text className="text-[#94A3B8] text-[14px] font-interRegular leading-7">
-                  {props.description}
+                  {description}
                 </Text>
               </View>
 
-              <View
-                style={{
-                  marginTop: props.descriptionToFieldsSpacing ?? 0,
-                  gap: 24,
-                  flexDirection: "column",
-                }}
-              >
-                {props.fields.map((field, index) => {
-                  if (isUfField(field)) {
-                    return (
-                      <UfSelect
-                        key={index}
-                        label={field.label}
-                        value={field.value}
-                        onValueChange={field.onValueChange}
-                      />
-                    );
-                  }
-
-                  if (isCareerField(field)) {
-                    return (
-                      <CareerSelect
-                        key={index}
-                        label={field.label}
-                        value={field.value}
-                        options={field.options}
-                        onValueChange={field.onValueChange}
-                      />
-                    );
-                  }
-
+              <View style={{ gap: 24, flexDirection: "column" }}>
+                {fields.map((field, index) => {
+                  if (isUfField(field)) return <UfSelect key={index} {...field} />;
+                  if (isCareerField(field)) return <CareerSelect key={index} {...field} />;
                   return <Input key={index} {...field} />;
                 })}
               </View>
 
-              {!!props.passwordStrength && (
-                <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px] ">
+              {!!passwordStrength && (
+                <View className="bg-[#fff]/5 border border-[rgba(255,255,255,0.12)] rounded-[12px] p-[16px]">
                   <Text className="text-[10px] text-[#94A3B8] pb-[8px] font-inter">
                     Força da Segurança
                   </Text>
-
                   <View className="w-full h-3 bg-[#fff]/5 rounded-full mt-1">
                     <Animated.View
                       className="h-full rounded-full"
@@ -154,114 +97,55 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                           inputRange: [0, 100],
                           outputRange: ["0%", "100%"],
                         }),
-                        backgroundColor: props.passwordStrength.color,
+                        backgroundColor: passwordStrength.color,
                       }}
                     />
                   </View>
-
                   <View className="flex-row gap-[90px] mt-[8px]">
                     <View className="flex-col">
-                      {props.passwordStrength.checklist
-                        .slice(0, 2)
-                        .map((item) => (
-                          <CheckListFunction
-                            key={item.label}
-                            valid={item.valid}
-                            label={item.label}
-                          />
-                        ))}
+                      {passwordStrength.checklist.slice(0, 2).map((item) => (
+                        <CheckListFunction key={item.label} {...item} />
+                      ))}
                     </View>
                     <View className="flex-col">
-                      {props.passwordStrength.checklist
-                        .slice(2, 4)
-                        .map((item) => (
-                          <CheckListFunction
-                            key={item.label}
-                            valid={item.valid}
-                            label={item.label}
-                          />
-                        ))}
+                      {passwordStrength.checklist.slice(2, 4).map((item) => (
+                        <CheckListFunction key={item.label} {...item} />
+                      ))}
                     </View>
                   </View>
                 </View>
               )}
 
-              <View className=" flex-col gap-[24px]">
-                {showTerms && (
-                  <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
-                    <Text className="text-[#fff]/40 text-sm font-inter leading-5">
-                      Aceito os{" "}
-                      <Text
-                        className="text-[#fff]/80 underline font-semibold"
-                        onPress={() => router.push("/screens/shared/terms")}
-                      >
-                        Termos de Uso
-                      </Text>{" "}
-                    </Text>
-                  </Checkbox>
-                )}
-
-                {props.showForgotPassword && (
-                  <Text
-                    className="text-[#60A5FA] text-[12px] font-interBold underline text-right  "
-                    onPress={() => router.push(forgotPasswordRoute as any)}
-                  >
-                    ESQUECI MINHA SENHA
-                  </Text>
-                )}
+              <View className="flex-col gap-[24px]">
+                {extraActions}
 
                 <ButtonUI
-                  onPress={props.onSubmit}
-                  gradient={true}
+                  onPress={onSubmit}
+                  gradient
                   bg="bg-[#135BEC]"
-                  disabled={props.disableSubmit}
+                  disabled={disableSubmit}
                   hover={false}
                   size="w-full h-[56px]"
-                  children={<View className="flex-1 justify-center items-center">
+                  iconLeft={false}
+                  paddingButtonStatus=""
+                >
+                  <View className="flex-1 justify-center items-center">
                     <Text className="text-[16px] font-interBold text-white text-center">
-                      {props.submitLabel}
+                      {submitLabel}
                     </Text>
-                  </View>} iconLeft={false} paddingButtonStatus={""} />
-
-                {props.showSocialGoogle && (
-                  <View className="gap-[24px]">
-                    <View className="flex-row items-center gap-3">
-                      <View className="flex-1 h-[1px] bg-white/10" />
-                      <Text className="text-white/40 text-[12px] font-interBold tracking-[2px]">
-                        OU ENTRE COM
-                      </Text>
-                      <View className="flex-1 h-[1px] bg-white/10" />
-                    </View>
-
-                    <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
-                      <GoogleIcon width={20} height={20} />
-                      <Text className="text-white text-[14px] font-inter">
-                        Google
-                      </Text>
-                    </TouchableOpacity>
                   </View>
-                )}
+                </ButtonUI>
               </View>
             </View>
-            <View className="items-center mt-8 flex-row w-full justify-center ]">
-              <Text className="text-[#64748B] text-[14px] font-interRegular leading-5">
-                {footerPrefixText}{" "}
-                <Text
-                  className={"text-white underline font-interBold"}
-                  onPress={
-                    props.showForgotPassword
-                      ? () => router.push("/screens/Onboarding/roles")
-                      : () => router.push("/screens/auth/users/SingIn")
-                  }
-                >
-                  {footerActionText}
-                </Text>
-              </Text>
-            </View>
+
+            {footer && (
+              <View className="items-center mt-8 flex-row w-full justify-center">
+                {footer}
+              </View>
+            )}
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-
     </SafeAreaView>
   );
 }
