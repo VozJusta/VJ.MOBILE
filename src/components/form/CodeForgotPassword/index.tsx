@@ -31,7 +31,6 @@ export function CodeForgotPassword({
     token: string,
   ) => {
     setLoading(true);
-    console.log("Validando código para email:", email);
     const response = await ValidateEmail(email, code, token);
 
     if (!response.success) {
@@ -59,12 +58,12 @@ export function CodeForgotPassword({
       "Iniciando validação",
       `Email: ${emailStorage}\nCódigo: ${code}`,
     );
-    const response = await ValidateCode(emailStorage, code);
+    const response = await ValidateCode(email, code);
 
     if (!response.success) {
       Toast.show({
         type: "error",
-        text1: response.fields && response.fields[0][0],
+        text1: response.fields && response.fields[0],
       });
       setLoading(false);
       return;

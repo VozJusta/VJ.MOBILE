@@ -1,6 +1,5 @@
 import PasswordStrength from "@/components/PasswordStrengh";
 import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
-import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { View, Text } from "react-native";
