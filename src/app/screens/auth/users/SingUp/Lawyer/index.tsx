@@ -1,19 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Text } from "react-native";
 import { router } from "expo-router";
-import { formatCPF } from "@/utils/mask";
-import SignInTemplate from "@/template/auth/SingInTemplate/index";
-import { getInitialLawyerData } from "@/utils/auth/users/SingUp/Lawyer/data";
+import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
-import { formatOABNumber } from "@/utils/oabValidate";
-import Toast from "react-native-toast-message";
-import { SingUpLawyer } from "@/settings/users/lawyer/SingUp";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
-import { useRolesStorage } from "@/store/roles.store";
-import { Email2FA } from "@/settings/users/citizen/email2FA";
+import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
+import SignInTemplate from "@/template/auth/SingInTemplate";
+import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
+
+
 
 export default function Lawyer() {
-  const setRole = useRolesStorage((state) => state.setRole);
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [cpf, setCpf] = useState("");
   const [oabNumber, setOabNumber] = useState("");
   const [uf, setUf] = useState("");
@@ -21,98 +18,129 @@ export default function Lawyer() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const strength = passwordValidate(password);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const lawyerData = getInitialLawyerData(
-    name,
-    setName,
-    cpf,
-    (text) => setCpf(formatCPF(text)),
-    oabNumber,
-    (text) => setOabNumber(formatOABNumber(text)),
+  const strength = useMemo(() => passwordValidate(password), [password]);
 
-    email,
-    setEmail,
-    uf,
-    setUf,
-    specialization,
-    setSpecialization,
-    password,
-    setPassword,
-    showPassword,
-    () => setShowPassword((prev) => !prev),
-  );
+  function buildPasswordChecklist(
+    password: string
+  ): import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem[] {
+    const hasMinLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
 
-  async function handleSubmit() {
-    setLoading(true);
-    try {
-      const response = await SingUpLawyer({
-        fullName: name,
-        cpf,
-        oabNumber,
-        uf,
-        specialization,
-        email,
-        password,
-      });
+    const checklist = [
+      {
+        label: "Pelo menos 8 caracteres",
+        checked: hasMinLength,
+        isValid: hasMinLength,
+        valid: hasMinLength,
+        met: hasMinLength,
+      },
+      {
+        label: "Uma letra maiúscula",
+        checked: hasUppercase,
+        isValid: hasUppercase,
+        valid: hasUppercase,
+        met: hasUppercase,
+      },
+      {
+        label: "Uma letra minúscula",
+        checked: hasLowercase,
+        isValid: hasLowercase,
+        valid: hasLowercase,
+        met: hasLowercase,
+      },
+      {
+        label: "Um número",
+        checked: hasNumber,
+        isValid: hasNumber,
+        valid: hasNumber,
+        met: hasNumber,
+      },
+      {
+        label: "Um caractere especial",
+        checked: hasSpecialChar,
+        isValid: hasSpecialChar,
+        valid: hasSpecialChar,
+        met: hasSpecialChar,
+      },
+    ];
 
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields?.[0] ?? "Erro ao cadastrar advogado",
-        });
-        return;
-      }
-
-      const resolvedRole = resolveRoleFromApi(response.data, "lawyer");
-      setRole(resolvedRole);
-
-      const validateEmail2FA = await Email2FA(email);
-      if (!validateEmail2FA.success) {
-        Toast.show({
-          type: "error",
-          text1: validateEmail2FA.fields?.[0] ?? "Falha ao enviar codigo",
-        });
-        return;
-      }
-
-      router.push(
-        `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(email)}`,
-      );
-    } finally {
-      setLoading(false);
-    }
+    return checklist as unknown as import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem[];
   }
-
   return (
     <SignInTemplate
-      {...lawyerData}
-      onSubmit={handleSubmit}
-      submitLabel={loading ? "carregando..." : "continuar"}
-      disableSubmit={loading}
+      title="Cadastro de Advogado"
+      description="Solicite seu acesso profissional para começar a atender cidadãos na plataforma."
+      fields={buildLawyerFields({
+        showPassword,
+        onToggleShowPassword: () => setShowPassword((prev) => !prev),
+        registerAuth: { fullName, cpf, oabNumber, uf, specialization, email, password },
+        handleRegisterChange: (name, value) => {
+          switch (name) {
+            case "fullName":
+              setFullName(value);
+              break;
+            case "cpf":
+              setCpf(value);
+              break;
+            case "oabNumber":
+              setOabNumber(value);
+              break;
+            case "uf":
+              setUf(value);
+              break;
+            case "specialization":
+              setSpecialization(value);
+              break;
+            case "email":
+              setEmail(value);
+              break;
+            case "password":
+              setPassword(value);
+              break;
+          }
+        },
+        specializationOptions: specializationOptions.map((spec) => ({
+          label: spec,
+          value: spec,
+        })),
+      })}
+      onSubmit={() => {}}
+      submitLabel="Cadastrar"
+      disableSubmit={!acceptedTerms}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: [
-          {
-            label: "8+ Caracteres",
-            valid: password.length >= 8,
-          },
-          {
-            label: "Símbolo",
-            valid: /[@$!%*?&]/.test(password),
-          },
-          {
-            label: "Maiúscula",
-            valid: /[A-Z]/.test(password),
-          },
-          {
-            label: "Número",
-            valid: /[0-9]/.test(password),
-          },
-        ],
+        checklist: buildPasswordChecklist(password),
       }}
+      extraActions={
+        <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
+          <Text className="text-[#fff]/40 text-sm font-inter leading-5">
+            Aceito os{" "}
+            <Text
+              className="text-[#fff]/80 underline font-semibold"
+              onPress={() => router.push("/screens/shared/terms")}
+            >
+              Termos de Uso
+            </Text>
+          </Text>
+        </Checkbox>
+      }
+      footer={
+        <Text className="text-[#64748B] text-[14px] font-interRegular">
+          Já possui registro?{" "}
+          <Text
+            className="text-white underline font-interBold"
+            onPress={() => router.push("/screens/auth/users/SingIn")}
+          >
+            Fazer Login
+          </Text>
+        </Text>
+      }
     />
   );
 }

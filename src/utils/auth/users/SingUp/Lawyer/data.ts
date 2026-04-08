@@ -1,44 +1,35 @@
-import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
+import { formatCPF } from "@/utils/mask";
+import { formatOABNumber } from "@/utils/oabValidate";
+import { IInputProps } from "@/interfaces/ui/InputUI";
+import { UfSelectProps, CareerSelectProps } from "@/interfaces/interfaces";
+import { FieldsType } from "@/interfaces/template/SignInTemplate";
 
-const specializationOptions = [
-  "Administrativo", "Aduaneiro", "Assessoria Jurídica",
-  "Aeronáutico","Agrário", "Ambiental", "Arbitragem",
-  "Direitos Autorais", "Bancário e Financeiro", "Biotecnologia",
-  "Civil", "Comercial", "Comércio Internacional", "Concorrencial",
-  "Constitucional", "Consumidor", "Contratos Comerciais", "Desportivo",
-  "Direito das Águas", "Terceiro Setor", "Econômico", "Eleitoral",
-  "Penal Empresarial", "Energia", "Falimentar", "Família", "Fusões e Aquisições",
-  "Imobiliário", "Importação e Exportação", "Infraestrutura", "Internacional",
-  "Internet e Comércio Eletrônico", "Marítimo", "Mercado de Capitais",
-  "Minerário", "Operações Financeiras", "Penal",
-  "Óleo e Gás","Previdenciário", "Financiamento de Projetos",
-  "Propriedade Intelectual", "Reestruturação Empresarial", "Regulatório",
-  "Saúde e Sanitário", "Seguros", "Sindical",
-  "Societário", "Telecomunicações", "Trabalhista", "Tributário",
-];
+type RegisterLawyer = {
+  fullName: string;
+  cpf: string;
+  oabNumber: string;
+  uf: string;
+  specialization: string;
+  email: string;
+  password: string;
+};
 
-export const getInitialLawyerData = (
-  name: string,
-  onNameChange: (text: string) => void,
-  cpf: string,
-  onCpfChange: (text: string) => void,
-  oabNumber: string,
-  onOabNumberChange: (text: string) => void,
-  email: string,
-  onEmailChange: (text: string) => void,
-  uf: string,
-  onUfChange: (value: string) => void,
-  specialization: string,
-  onSpecializationChange: (value: string) => void,
-  password: string,
-  onPasswordChange: (text: string) => void,
-  showPassword: boolean,
-  onToggleShowPassword: () => void,
-): ISignInTemplateProps => ({
-  title: "Cadastro de Advogado",
-  description:
-    "Solicite seu acesso profissional para começar a atender cidadãos na plataforma.",
-  fields: [
+type Params = {
+  showPassword: boolean;
+  onToggleShowPassword: () => void;
+  registerAuth: RegisterLawyer;
+  handleRegisterChange: (name: keyof RegisterLawyer, value: string) => void;
+  specializationOptions: { label: string; value: string }[];
+};
+
+export function buildLawyerFields({
+  showPassword,
+  onToggleShowPassword,
+  registerAuth,
+  handleRegisterChange,
+  specializationOptions,
+}: Params): FieldsType[] {
+  return [
     {
       label: "Nome completo",
       placeholder: "Nome completo conforme OAB",
@@ -48,9 +39,9 @@ export const getInitialLawyerData = (
       iconSize: 24,
       iconNameProps: "person",
       type: "name",
-      value: name,
-      onChangeText: onNameChange,
-    },
+      value: registerAuth.fullName,
+      onChangeText: (text) => handleRegisterChange("fullName", text),
+    } as IInputProps,
     {
       label: "CPF",
       placeholder: "000.000.000-00",
@@ -60,9 +51,9 @@ export const getInitialLawyerData = (
       iconSize: 24,
       iconNameProps: "badge",
       type: "cpf",
-      value: cpf,
-      onChangeText: onCpfChange,
-    },
+      value: registerAuth.cpf,
+      onChangeText: (text) => handleRegisterChange("cpf", formatCPF(text)),
+    } as IInputProps,
     {
       label: "Número OAB",
       placeholder: "000.000",
@@ -72,22 +63,22 @@ export const getInitialLawyerData = (
       iconSize: 24,
       iconNameProps: "badge",
       type: "text",
-      value: oabNumber,
-      onChangeText: onOabNumberChange,
-    },
+      value: registerAuth.oabNumber,
+      onChangeText: (text) => handleRegisterChange("oabNumber", formatOABNumber(text)),
+    } as IInputProps,
     {
-      label: "UF da OAB",
-      value: uf,
-      onValueChange: onUfChange,
-    },
+      label: "Estado",
+      value: registerAuth.uf,
+      onValueChange: (value) => handleRegisterChange("uf", value),
+    } as UfSelectProps,
     {
       label: "Especialização Principal",
-      value: specialization,
-      options: specializationOptions,
-      onValueChange: onSpecializationChange,
-    },
+      value: registerAuth.specialization,
+      options: specializationOptions.map(({ label }) => label),
+      onValueChange: (value) => handleRegisterChange("specialization", value),
+    } as CareerSelectProps,
     {
-      label: "E-mail profissional",
+      label: "E-mail Profissional",
       placeholder: "email@exemplo.com.br",
       keyboardType: "email-address",
       leftIcon: true,
@@ -95,11 +86,11 @@ export const getInitialLawyerData = (
       iconSize: 24,
       iconNameProps: "email",
       type: "email",
-      value: email,
-      onChangeText: onEmailChange,
-    },
+      value: registerAuth.email,
+      onChangeText: (text) => handleRegisterChange("email", text),
+    } as IInputProps,
     {
-      label: "Senha",
+      label: "Senha de acesso",
       placeholder: "••••••••",
       secureTextEntry: !showPassword,
       leftIcon: true,
@@ -108,9 +99,9 @@ export const getInitialLawyerData = (
       iconSize: 24,
       iconNameProps: "lock-outline",
       type: "password",
-      value: password,
-      onChangeText: onPasswordChange,
+      value: registerAuth.password,
+      onChangeText: (text) => handleRegisterChange("password", text),
       onRightIconPress: onToggleShowPassword,
-    },
-  ],
-});
+    } as IInputProps,
+  ];
+}

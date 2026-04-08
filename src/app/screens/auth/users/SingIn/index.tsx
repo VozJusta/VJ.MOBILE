@@ -1,17 +1,24 @@
 import SignInTemplate from "@/template/auth/SingInTemplate";
+import { buildLoginFields } from "@/utils/auth/users/SingIn/data";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const { handleLogin, loading, loginAuth, handleLoginChange } = useLogin();
+
+  const loading = false
 
   return (
     <SignInTemplate
       title="Entrar no VozJusta"
       description="Acesse sua conta para continuar"
-      fields={buildLoginFields({ showPassword, onToggleShowPassword: () => setShowPassword(p => !p), loginAuth, handleLoginChange })}
-      onSubmit={() => handleLogin(loginAuth)}
+      fields={buildLoginFields({
+        showPassword,
+        onToggleShowPassword: () => setShowPassword((p) => !p),
+      })}
+      onSubmit={() => {}}
       submitLabel={loading ? "Carregando..." : "Entrar"}
       disableSubmit={loading}
       extraActions={
