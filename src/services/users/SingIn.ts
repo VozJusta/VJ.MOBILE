@@ -16,7 +16,6 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         fields: validate.fields,
       };
     }
-    console.log(validate);
 
     const response = await fetch(`${BASE_URL}/auth/authenticate`, {
       method: "POST",
@@ -47,8 +46,6 @@ export async function SingInCitizen(data: ZodLoginTypes) {
       data: json,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

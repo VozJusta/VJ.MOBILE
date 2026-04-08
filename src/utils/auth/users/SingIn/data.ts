@@ -20,7 +20,6 @@ export function getInitialSignInData(
   const role = useRolesStorage((state) => state.role);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
-  console.log(loginAuth);
 
   async function handleLogin(data: ZodLoginTypes) {
     setLoading(true);
@@ -36,7 +35,6 @@ export function getInitialSignInData(
         }
 
         const validateEmail2FA = await Email2FA(data.email);
-        console.log("Resposta do Email2FA:", validateEmail2FA);
         if (
           !validateEmail2FA.success &&
           validateEmail2FA.fields &&

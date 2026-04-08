@@ -29,8 +29,6 @@ export async function ValidateCode(email: string, code: string) {
       data: json,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

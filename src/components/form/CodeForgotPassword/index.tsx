@@ -36,7 +36,7 @@ export function CodeForgotPassword({
     if (!response.success) {
       Toast.show({
         type: "error",
-        text1: response.fields && response.fields[0],
+        text1: String(response.fields) || "Erro desconhecido",
       });
       setLoading(false);
       return;

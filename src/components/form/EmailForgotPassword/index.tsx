@@ -17,7 +17,7 @@ export function EmailForgotPassword() {
   const handleCodeSending = async (email: string) => {
     setLoading(true);
     setEmailStorage(email);
-    console.log("Iniciando envio de código com o seguinte email:", email);
+
     const response = await CodeSeding(email);
     if (
       !response.success &&

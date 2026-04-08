@@ -51,9 +51,6 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
 
     return { success: true, data: json || "" };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-    console.log("ERRO NA REQUISIÇÃO - MENSAGEM:", err.message);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

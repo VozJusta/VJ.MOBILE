@@ -33,7 +33,6 @@ export async function CodeSeding(email: string) {
     return { success: true, data: json || "" };
 
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err.name, err.message);
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],
