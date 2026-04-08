@@ -4,6 +4,6 @@ import { usePathname } from "expo-router";
 
 export default function ForgotPasswordEmail() {
   const pathName = usePathname();
-  console.log("PATHNAME:", pathName);
+
   return <ForgotPasswordTemplate email="" screen={ScreensForgotPassword.Email} />;
 }

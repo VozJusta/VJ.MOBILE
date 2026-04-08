@@ -14,9 +14,9 @@ export const NavbarItemsLawyer: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
-    path: "/screens/lawyer/profile",
+    path: "/screens/shared/profile",
   },
-]
+];
 
 export const NavbarItemsCitizen: INavbar[] = [
   {
@@ -37,6 +37,6 @@ export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
-    path: "/screens/citizen/profile",
+    path: "/screens/shared/profile",
   },
 ];

@@ -1,14 +1,19 @@
-import { ISettingsSection, } from "@/interfaces/template/configTemplate";
+import { ISettingsSection } from "@/interfaces/template/configTemplate";
 import { router } from "expo-router";
 import SettingsTemplate from "@/template/settingsTemplate/index";
 import { useMemo, useState } from "react";
+import { useAccessTokenStorage } from "@/store/token.store";
+import { jwtDecode } from "jwt-decode";
+import { ITokenService } from "@/interfaces/services/token/token";
 
 export default function MainSettings() {
   const [isPushEnabled, setIsPushEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(true);
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
 
-  const sections = useMemo<ISettingsSection[]>(() => [
+
+  const sections = useMemo<ISettingsSection[]>(
+    () => [
       {
         id: "app-preferences",
         title: "Preferências do app",
@@ -72,7 +77,7 @@ export default function MainSettings() {
             icon: "support-agent",
             label: "Central de Ajuda",
             onPress: () => {
-              router.push("/screens/citizen/help");
+              router.push("/screens/shared/profile/help");
             },
           },
           {
@@ -88,7 +93,7 @@ export default function MainSettings() {
             icon: "policy",
             label: "Privacidade",
             onPress: () => {
-              router.push("/screens/citizen/privacity");
+              router.push("/screens/shared/profile/privacity");
             },
           },
         ],

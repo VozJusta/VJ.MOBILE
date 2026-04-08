@@ -12,7 +12,6 @@ export async function Email2FA(email: string) {
     });
 
     const text = await response.text();
-    console.log("RAW 2FA:", text);
 
     let json;
     try {

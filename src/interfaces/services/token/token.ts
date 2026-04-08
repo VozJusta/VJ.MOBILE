@@ -13,7 +13,8 @@ export interface IRefreshTokenStore {
 export interface ITokenService {
   access_token: string | null;
   refresh_token: string | null;
-  message?: [string] | string;
+  message: [string] | string;
+  fields: [string] | string;
 }
 
 export interface IDecodedToken {

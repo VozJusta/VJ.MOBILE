@@ -34,10 +34,11 @@ export async function ValidateEmail(
     const jsonResponse: ITokenService = JSON.parse(text);
     setAccessToken(jsonResponse.access_token || "");
     setRefreshToken(jsonResponse.refresh_token || "");
+    
     if (!response.ok) {
       return {
         success: false,
-        fields: jsonResponse.message || ["Erro desconhecido"],
+        fields: jsonResponse.message || "Erro desconhecido",
       };
     }
 
@@ -46,13 +47,9 @@ export async function ValidateEmail(
       data: "",
     };
   } catch (err: any) {
-    console.log("ERRO MENSAGEM:", err.message);
-    console.log("ERRO COMPLETO:", JSON.stringify(err));
-    console.log("ERRO STACK:", err.stack);
-
     return {
       success: false,
-      fields: ["Erro de conexão com o servidor"],
+      fields: "Erro de conexão com o servidor",
     };
   }
 }
