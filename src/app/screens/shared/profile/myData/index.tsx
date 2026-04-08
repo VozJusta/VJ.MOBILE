@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAccessTokenStorage } from "@/store/token.store";
 import { jwtDecode } from "jwt-decode";
 import { IToken } from "@/interfaces/services/citizen/SingUp";
+import { de } from "zod/v4/locales";
 
 type EditableFieldProps = {
   label: string;
@@ -65,12 +66,27 @@ function ReadonlyField({ label, value }: ReadonlyFieldProps) {
 }
 
 export default function MyDataScreen() {
-  const [fullName, setFullName] = useState("Ricardo Oliveira Silva");
+  
   const [phone, setPhone] = useState("(11) 98765-4321");
   const token = useAccessTokenStorage((state) => state.accessToken);
-  console.log("Access Token:", token);
-  //   const firstName = decodedToken.full_name.trim().split(" ")[0];
-  //   const lastName = decodedToken.full_name.trim().split(" ").pop();
+  if (!token) return;
+  const decodedToken = jwtDecode<IToken>(token);
+  Alert.alert("Token decodificado", JSON.stringify(decodedToken));
+  const fullName = decodedToken.fullName || "";
+  Alert.alert(fullName);
+  const firstName = fullName.trim().split(" ")[0];
+  const [isFullName, setFullName] = useState(decodedToken.fullName || "");
+
+  const getLastName = (name?: string) => {
+    if (!name) return "";
+    const parts = name.trim().split(" ");
+
+    if (parts.length === 1) {
+      return ""
+    }
+    return parts.pop() || "";
+  };
+
   const fixedData = useMemo(
     () => ({
       cpf: "123.456.789-00",
@@ -79,20 +95,7 @@ export default function MyDataScreen() {
     [],
   );
 
-  useEffect(() => {
-    if (!token) return;
-
-    console.log("Access Token:", token);
-
-    try {
-      const decoded = jwtDecode(token);
-      console.log("Decoded Token:", decoded);
-
-      Alert.alert("Token decodificado", JSON.stringify(decoded));
-    } catch (error) {
-      console.log("Erro ao decodificar:", error);
-    }
-  }, [token]);
+  const lastName = getLastName(fullName);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
@@ -126,7 +129,7 @@ export default function MyDataScreen() {
           </Pressable>
 
           <Text className="mt-[12px] text-[#EAF2FF] text-[34px] font-interBold">
-            {/* {firstName} {lastName} */}
+            {firstName} {lastName}
           </Text>
 
           <View className="mt-[8px] px-[12px] py-[3px] rounded-full border border-[#2D74D7]/50 bg-[rgba(23,90,187,0.3)]">
@@ -138,14 +141,14 @@ export default function MyDataScreen() {
 
         <View className="gap-[16px] pb-[18px]">
           <EditableField
-            label={/*decodedToken?.full_name*/ ""}
+            label="Nome Completo"
             value={fullName}
             onChangeText={setFullName}
           />
 
           <ReadonlyField label="CPF" value={fixedData.cpf} />
 
-          <ReadonlyField label="E-mail" value={fixedData.email} />
+          <ReadonlyField label="E-mail" value={decodedToken.email} />
 
           <EditableField
             label="Telefone"
