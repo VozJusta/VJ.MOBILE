@@ -16,19 +16,19 @@ export interface TermsUsageProps {
 export const termsTitles: TermsTitleProps[] = [
   {
     number: 1,
-    title: "Contrato",
+    title: "CONTRATO",
   },
   {
     number: 2,
-    title: "Privacidade",
+    title: "PRIVACIDADE",
   },
   {
     number: 3,
-    title: "Cookies",
+    title: "COOKIES",
   },
   {
     number: 4,
-    title: "Licença de uso",
+    title: "LICENÇA",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function TermsUsage() {
         <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-12">
           <Header isFirstPage={false} title="TERMOS DE USO" isCitizen={false} />
 
-          <View className="mt-[32px] gap-3">
+          <View className=" gap-3">
             <Text className="font-interBold text-[30px] text-white">
               Termos de uso
             </Text>

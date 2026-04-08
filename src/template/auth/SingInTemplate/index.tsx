@@ -25,6 +25,7 @@ import {
   ISignInTemplateProps,
 } from "@/interfaces/template/SignInTemplate";
 import CheckListFunction from "@/ui/CheckListFunctionUI";
+import Header from "@/components/Header";
 
 
 
@@ -41,7 +42,6 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const isLoginLayout = props.layout === "login";
-  const sharedContainerWidth = isLoginLayout ? "w-[94%]" : "w-[90%]";
   const showHeader = props.showHeader ?? true;
   const showTerms = props.showTerms ?? true;
   const footerPrefixText = props.footerPrefixText ?? "Já possui registro?";
@@ -79,31 +79,19 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
               isLoginLayout
                 ? {
                   paddingBottom: 40,
-                  paddingTop: 24,
+                  paddingTop: 32,
                   flexGrow: 1,
                   justifyContent: "center",
                 }
-                : { paddingBottom: 40 }
+                : { paddingBottom: 40, paddingTop: 32, paddingHorizontal: 16 }
             }
           >
-            {showHeader && (
-              <View
-                className={`self-center ${sharedContainerWidth} flex-row justify-between items-center mb-8`}
-              >
-                <ButtonUI
-                  goBack
-                  size="h-[40px] w-[40px]"
-                  onPress={() => router.replace("/screens/Onboarding/roles")}
-                  gradient={false}
-                  hover={false} iconLeft={false} paddingButtonStatus={""} />
-                <Logo width={40} height={29} />
-              </View>
-            )}
+            <Header isFirstPage={false} title="CADASTRO DE USUÁRIO" />
 
             <View
               className={`${isLoginLayout
-                ? `self-center ${sharedContainerWidth} flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
-                : `self-center ${sharedContainerWidth} mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] pt-8 pb-12`
+                ? `self-center w-full flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
+                : `self-center w-full mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] pt-8 pb-12`
                 }`}
             >
               <View className="flex-col gap-2">
@@ -204,17 +192,10 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                       Aceito os{" "}
                       <Text
                         className="text-[#fff]/80 underline font-semibold"
-                        onPress={() => router.push("/terms")}
+                        onPress={() => router.push("/screens/shared/terms")}
                       >
                         Termos de Uso
                       </Text>{" "}
-                      e a{" "}
-                      <Text
-                        className="text-[#fff]/80 underline font-semibold"
-                        onPress={() => router.push("/privacy")}
-                      >
-                        Política de Privacidade
-                      </Text>
                     </Text>
                   </Checkbox>
                 )}
