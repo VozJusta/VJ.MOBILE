@@ -2,12 +2,9 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "@/components/Header";
-import { TermsTitleProps } from "@/interfaces/components/terms/TermsTitle";
-import TermsContent, {
-  TermsContentProps,
-} from "@/components/terms/TermsContent";
 import TermsTitle from "@/components/terms/TermsTitle";
 import { termsContents, termsTitles } from "./data";
+import TermsContent from "@/components/terms/TermsContent";
 
 export default function TermsUsage() {
   return (

@@ -82,15 +82,16 @@ export default function SignInTemplate({ ...props }: ISignInTemplateProps) {
                   paddingTop: 32,
                   flexGrow: 1,
                   justifyContent: "center",
+                  paddingHorizontal: 16
                 }
                 : { paddingBottom: 40, paddingTop: 32, paddingHorizontal: 16 }
             }
           >
-            <Header isFirstPage={false} title="CADASTRO DE USUÁRIO" />
+            <Header isFirstPage={false} title={isLoginLayout ? "LOGIN" : "CADASTRO DE USUÁRIO"} />
 
             <View
               className={`${isLoginLayout
-                ? `self-center w-full flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
+                ? `self-center w-full mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12`
                 : `self-center w-full mt-8 flex-col px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] pt-8 pb-12`
                 }`}
             >
