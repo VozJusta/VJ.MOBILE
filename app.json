@@ -5,6 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "meuapp",
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    },
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
@@ -18,8 +26,17 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.vjmobile"
     },
-    "plugins": ["expo-router", "expo-font"]
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "root": "src/app"
+        }
+      ],
+      "expo-font"
+    ]
   }
 }
