@@ -6,6 +6,7 @@ import passwordValidate from "@/utils/passwordValidate";
 import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
+import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 
 
 
@@ -22,46 +23,6 @@ export default function Lawyer() {
 
   const strength = useMemo(() => passwordValidate(password), [password]);
 
-  function buildPasswordChecklist(
-    password: string
-  ): import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem[] {
-    type PasswordChecklistItem =
-      import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem;
-
-    const rules = [
-      {
-        label: "+8 caracteres",
-        test: (value: string) => value.length >= 8,
-      },
-      {
-        label: "Maiúscula",
-        test: (value: string) => /[A-Z]/.test(value),
-      },
-      {
-        label: "Minúscula",
-        test: (value: string) => /[a-z]/.test(value),
-      },
-      {
-        label: "Número",
-        test: (value: string) => /\d/.test(value),
-      },
-      {
-        label: "Símbolo",
-        test: (value: string) => /[^A-Za-z0-9]/.test(value),
-      },
-    ];
-
-    return rules.map(({ label, test }) => {
-      const passed = test(password);
-
-      return {
-        label,
-        isValid: passed,
-        valid: passed,
-        checked: passed,
-      } as PasswordChecklistItem;
-    });
-  }
   return (
     <SignInTemplate
       title="Cadastro de Advogado"
