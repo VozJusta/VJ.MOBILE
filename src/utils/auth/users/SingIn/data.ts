@@ -24,7 +24,7 @@ export function buildLoginFields({
       iconSize: 24,
       iconNameProps: "email",
       type: "email",
-      value: loginAuth.email,
+      value: loginAuth?.email,
       onChangeText: (text) => handleLoginChange("email", text),
     },
     {
@@ -37,7 +37,7 @@ export function buildLoginFields({
       iconSize: 24,
       iconNameProps: "lock-outline",
       type: "password",
-      value: loginAuth.password,
+      value: loginAuth?.password,
       onChangeText: (text) => handleLoginChange("password", text),
       onRightIconPress: onToggleShowPassword,
     },

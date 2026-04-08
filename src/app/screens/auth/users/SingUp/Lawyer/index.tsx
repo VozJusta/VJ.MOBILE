@@ -25,51 +25,42 @@ export default function Lawyer() {
   function buildPasswordChecklist(
     password: string
   ): import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem[] {
-    const hasMinLength = password.length >= 8;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+    type PasswordChecklistItem =
+      import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem;
 
-    const checklist = [
+    const rules = [
       {
-        label: "Pelo menos 8 caracteres",
-        checked: hasMinLength,
-        isValid: hasMinLength,
-        valid: hasMinLength,
-        met: hasMinLength,
+        label: "+8 caracteres",
+        test: (value: string) => value.length >= 8,
       },
       {
-        label: "Uma letra maiúscula",
-        checked: hasUppercase,
-        isValid: hasUppercase,
-        valid: hasUppercase,
-        met: hasUppercase,
+        label: "Maiúscula",
+        test: (value: string) => /[A-Z]/.test(value),
       },
       {
-        label: "Uma letra minúscula",
-        checked: hasLowercase,
-        isValid: hasLowercase,
-        valid: hasLowercase,
-        met: hasLowercase,
+        label: "Minúscula",
+        test: (value: string) => /[a-z]/.test(value),
       },
       {
-        label: "Um número",
-        checked: hasNumber,
-        isValid: hasNumber,
-        valid: hasNumber,
-        met: hasNumber,
+        label: "Número",
+        test: (value: string) => /\d/.test(value),
       },
       {
-        label: "Um caractere especial",
-        checked: hasSpecialChar,
-        isValid: hasSpecialChar,
-        valid: hasSpecialChar,
-        met: hasSpecialChar,
+        label: "Símbolo",
+        test: (value: string) => /[^A-Za-z0-9]/.test(value),
       },
     ];
 
-    return checklist as unknown as import("../../../../../../interfaces/components/PasswordStrengh").PasswordChecklistItem[];
+    return rules.map(({ label, test }) => {
+      const passed = test(password);
+
+      return {
+        label,
+        isValid: passed,
+        valid: passed,
+        checked: passed,
+      } as PasswordChecklistItem;
+    });
   }
   return (
     <SignInTemplate
