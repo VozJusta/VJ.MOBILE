@@ -31,7 +31,7 @@ export default function UpdatePassword() {
   const strength = passwordValidate(response);
   const router = useRouter();
 
-  const handleUpdatePassword = async (confirmPassword: string, newPassword: string) => {
+  const handleUpdatePassword = async (email: string, confirmPassword: string, newPassword: string) => {
     setLoading(true);
     Alert.alert("Iniciando envio de código", `Email: ${email}`);
     const response = await UpdatePasswordService({
@@ -68,7 +68,7 @@ export default function UpdatePassword() {
       setConfirmPassword={setConfirmPassword}
       setNewPassword={setNewPassword}
       screen={ScreensForgotPassword.Update}
-      onSubmit={() => handleUpdatePassword(confirmPassword, newPassword)}
+      onSubmit={() => handleUpdatePassword(email, confirmPassword, newPassword)}
       labelButton={loading ? "Atualizando..." : "Redefinir senha"}
       passwordStrength={{
         score: strength.score,
