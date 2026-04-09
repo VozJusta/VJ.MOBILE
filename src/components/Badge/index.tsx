@@ -5,7 +5,7 @@ export default function Badge({ ...props }: BadgeProps) {
   return (
     <View
       className="flex text-center items-center py-0.5 px-2 rounded"
-      style={{ backgroundColor: props.badgeColor + "33" }} // Esse "33" é para adicionar 20% de opacidade
+      style={{ backgroundColor: props.badgeColor + "33" }}
     >
       <Text
         className="font-interBold text-[10px]"

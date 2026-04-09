@@ -7,14 +7,12 @@ import { casesData } from "@/utils/home/cases/data";
 import Header from "@/components/Header";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { MaterialIcons } from "@expo/vector-icons";
+import CaseCard from "@/components/CaseCard";
 
 export default function ListCases() {
   const router = useRouter();
   return (
-    <SafeAreaView
-      style={{ flex: 1 }}
-      className="gap-[32px]"
-    >
+    <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
       <Header title="MEUS CASOS" isFirstPage={false} isCitizen={true} />
       <InputUI
         placeholder={"Buscar por título ou status..."}
@@ -60,22 +58,11 @@ export default function ListCases() {
         data={casesData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ButtonUI
-            key={item.title}
-            onPress={() =>
-              router.push(
-                `/screens/citizen/home/listCases/caseSelected/${item.id}`,
-              )
-            }
-            gradient={true}
-            hover={false}
-            iconLeft
+          <CaseCard 
             iconName={item.icon}
+            title={item.title}
             status={item.status}
-            statusBorder
-            colorsStatus={item.color}
-            children={<Text>{item.title}</Text>}
-            paddingButtonStatus={"p-[20px]"}
+            onPress={() => router.push(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
           />
         )}
       />
