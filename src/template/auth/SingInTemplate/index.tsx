@@ -1,7 +1,12 @@
 import {
-  ScrollView, Text, View,
-  Keyboard, TouchableWithoutFeedback,
-  Platform, KeyboardAvoidingView, Animated,
+  ScrollView,
+  Text,
+  View,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Platform,
+  KeyboardAvoidingView,
+  Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useEffect } from "react";
@@ -66,7 +71,6 @@ export default function SignInTemplate({
             <Header isFirstPage={false} title={title.toUpperCase()} />
 
             <View className="self-center w-full mt-8 px-4 bg-[#1E293B]/40 border border-[rgba(255,255,255,0.12)] rounded-[24px] gap-[24px] py-12">
-
               <View className="flex-col gap-2">
                 <Text className="text-white text-[24px] font-interBold">
                   {title}
@@ -78,8 +82,10 @@ export default function SignInTemplate({
 
               <View style={{ gap: 24, flexDirection: "column" }}>
                 {fields.map((field, index) => {
-                  if (isUfField(field)) return <UfSelect key={index} {...field} />;
-                  if (isCareerField(field)) return <CareerSelect key={index} {...field} />;
+                  if (isUfField(field))
+                    return <UfSelect key={index} {...field} />;
+                  if (isCareerField(field))
+                    return <CareerSelect key={index} {...field} />;
                   return <Input key={index} {...field} />;
                 })}
               </View>
@@ -117,24 +123,48 @@ export default function SignInTemplate({
               )}
 
               <View className="flex-col gap-[24px]">
-                {extraActions}
-
-                <ButtonUI
-                  onPress={onSubmit}
-                  gradient
-                  bg="bg-[#135BEC]"
-                  disabled={disableSubmit}
-                  hover={false}
-                  size="w-full h-[56px]"
-                  iconLeft={false}
-                  paddingButtonStatus=""
-                >
-                  <View className="flex-1 justify-center items-center">
-                    <Text className="text-[16px] font-interBold text-white text-center">
-                      {submitLabel}
-                    </Text>
-                  </View>
-                </ButtonUI>
+                {title.includes("Cadastro") ? (
+                  <>
+                    {extraActions}
+                    <ButtonUI
+                      onPress={onSubmit}
+                      gradient
+                      bg="bg-[#135BEC]"
+                      disabled={disableSubmit}
+                      hover={false}
+                      size="w-full h-[56px]"
+                      iconLeft={false}
+                      paddingButtonStatus=""
+                    >
+                      <View className="flex-1 justify-center items-center">
+                        <Text className="text-[16px] font-interBold text-white text-center">
+                          {submitLabel}
+                        </Text>
+                      </View>
+                    </ButtonUI>
+                  </>
+                ) : (
+                  <>
+                    <ButtonUI
+                      onPress={onSubmit}
+                      gradient
+                      bg="bg-[#135BEC]"
+                      disabled={disableSubmit}
+                      hover={false}
+                      size="w-full h-[56px]"
+                      iconLeft={false}
+                      paddingButtonStatus=""
+                    >
+                      <View className="flex-1 justify-center items-center">
+                        <Text className="text-[16px] font-interBold text-white text-center">
+                          {submitLabel}
+                        </Text>
+                      </View>
+                    </ButtonUI>
+                    {extraActions}
+                  </>
+                )}
+                
               </View>
             </View>
 
