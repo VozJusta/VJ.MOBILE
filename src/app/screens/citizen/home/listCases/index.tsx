@@ -1,30 +1,21 @@
 import ButtonUI from "@/ui/ButtonUI";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text } from "react-native";
+import { useRouter } from "expo-router";
+import { Text, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Logo from "@/assets/svg/icons/logo.svg";
 import InputUI from "@/ui/InputUI";
 import { casesData } from "@/utils/home/cases/data";
+import Header from "@/components/Header";
+import EmptyCases from "@/assets/svg/empty-cases.svg";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function ListCases() {
   const router = useRouter();
   return (
-    <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">
-      <View className="w-full items-center flex-row justify-between ">
-        <ButtonUI
-          goBack
-          size="h-[40px] w-[40px]"
-          onPress={() => router.push("/screens/citizen/home")}
-          gradient={false}
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-        />
-        <Text className="text-[#F1F5F9] uppercase text-[14px] font-inter">
-          todos os casos
-        </Text>
-        <Logo width={40} height={29} />
-      </View>
+    <SafeAreaView
+      style={{ flex: 1 }}
+      className="gap-[32px]"
+    >
+      <Header title="MEUS CASOS" isFirstPage={false} isCitizen={true} />
       <InputUI
         placeholder={"Buscar por título ou status..."}
         iconSize={24}
@@ -33,12 +24,50 @@ export default function ListCases() {
         leftIcon
         type={"text"}
       />
-      <View className="flex-col justify-center w-full gap-[16px]">
-        {casesData.map((item) => (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <>
+            <EmptyCases />
+
+            <Text className="text-[24px] font-interBold text-white text-center">
+              Nenhum caso por aqui
+            </Text>
+            <Text className="text-[14px] font-interRegular text-[#94A3B8] text-center">
+              Você ainda não iniciou nenhum relato jurídico. Clique no botão
+              abaixo para começar a garantir seus direitos.
+            </Text>
+
+            <ButtonUI
+              onPress={() => router.push(`/screens/citizen/home/newRequest`)}
+              gradient
+              bg="bg-[#135BEC]"
+              hover={false}
+              size="w-full h-[56px]"
+              iconLeft={false}
+              paddingButtonStatus=""
+            >
+              <View className="flex-1 flex-row justify-center gap-3 items-center">
+                <MaterialIcons name="add" size={24} color="white" />
+                <Text className="text-[16px] font-interBold text-white text-center">
+                  Relatar novo caso
+                </Text>
+              </View>
+            </ButtonUI>
+          </>
+        }
+        contentContainerClassName="flex flex-col gap-6 items-center"
+        data={casesData}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
           <ButtonUI
             key={item.title}
-            onPress={() => router.push(`/screens/citizen/home/caseSelected/${item.id}`)}
-            gradient={false}
+            onPress={() =>
+              router.push(
+                `/screens/citizen/home/listCases/caseSelected/${item.id}`,
+              )
+            }
+            gradient={true}
             hover={false}
             iconLeft
             iconName={item.icon}
@@ -48,8 +77,8 @@ export default function ListCases() {
             children={<Text>{item.title}</Text>}
             paddingButtonStatus={"p-[20px]"}
           />
-        ))}
-      </View>
+        )}
+      />
     </SafeAreaView>
   );
 }

@@ -17,7 +17,7 @@ export default function CaseSelected() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView
-        style={{ flex: 1, paddingTop: 20, paddingHorizontal: 24, gap: 24 }}
+        style={{ flex: 1, paddingTop: 20, gap: 24 }}
       >
         <View className="flex-row items-center gap-[16px]">
           <ButtonUI

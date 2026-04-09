@@ -54,7 +54,7 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <Text className="font-inter text-[14px] text-[#2563EB]">
+            <Text className="font-inter text-[14px] text-[#2563EB]" onPress={() => router.push("/screens/citizen/home/listCases")}>
               Ver todos
             </Text>
           </View>
