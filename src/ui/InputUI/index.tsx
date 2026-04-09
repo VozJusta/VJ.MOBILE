@@ -30,11 +30,6 @@ export default function InputUI({
   return inputOTP ? (
     <OtpInput
       autoFocus={false}
-<<<<<<< HEAD
-      onTextChange={onChangeText}
-      onFilled={onFilledOTP}
-=======
->>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
       numberOfDigits={6}
       theme={{
         containerStyle: {

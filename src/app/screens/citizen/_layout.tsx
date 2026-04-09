@@ -11,11 +11,7 @@ export default function CitizenLayout() {
       colors={["#000000", "#052F5F"]}
     >
       <Slot />
-<<<<<<< HEAD
       <Navbar isLawyer={false} profile={false} />
-=======
-      <Navbar isLawyer={false} />
->>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
     </LinearGradient>
   );
 }

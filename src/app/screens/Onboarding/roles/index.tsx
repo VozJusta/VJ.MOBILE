@@ -14,10 +14,7 @@ export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
   const setRole = useRolesStorage((state) => state.setRole)
-<<<<<<< HEAD
-=======
   const role = useRolesStorage((state) => state.role)
->>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
 
   const handleSelectedRole = () => {
     if (activeCitizen) {
