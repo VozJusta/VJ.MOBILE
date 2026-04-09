@@ -16,17 +16,17 @@ config.resolver.assetExts = config.resolver.assetExts.filter(
 config.resolver.sourceExts.push("svg");
 config.resolver.sourceExts.push("cjs");
 
-const pnpmDlxCache = path.resolve(
-  process.env.LOCALAPPDATA || "",
-  "pnpm-cache",
-  "dlx",
-);
+const watchFolders = [path.resolve(__dirname)];
 
-config.watchFolders = [
-  path.resolve(__dirname),
-  pnpmDlxCache,
-];
+const pnpmDlxCache = process.env.LOCALAPPDATA
+  ? path.resolve(process.env.LOCALAPPDATA, "pnpm-cache", "dlx")
+  : null;
 
+if (pnpmDlxCache && require("fs").existsSync(pnpmDlxCache)) {
+  watchFolders.push(pnpmDlxCache);
+}
+
+config.watchFolders = watchFolders;
 config.projectRoot = __dirname;
 
 delete config.resolver.blockList;
