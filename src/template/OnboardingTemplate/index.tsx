@@ -1,9 +1,24 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/template/OnboardingTemplate/index.tsx
+=======
+import { LinearGradient } from "expo-linear-gradient";
+>>>>>>> ef25b610ccee54b7306e494e2d7d91d10ce81d07:template/OnboardingTemplate/index.tsx
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
 import { Text, View } from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
 import React, { useRef, useState } from "react";
 import { useRouter } from "expo-router";
+<<<<<<< HEAD
 import ButtonUI from "@/ui/ButtonUI";
+=======
+<<<<<<< HEAD:src/template/OnboardingTemplate/index.tsx
+import ButtonUI from "@/ui/ButtonUI";
+=======
+import ButtonUI from "../../ui/ButtonUI";
+>>>>>>> ef25b610ccee54b7306e494e2d7d91d10ce81d07:template/OnboardingTemplate/index.tsx
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OnboardingTemplate() {
@@ -29,9 +44,27 @@ export default function OnboardingTemplate() {
   };
 
   return (
+<<<<<<< HEAD
     <SafeAreaView style={{ flex: 1 }}>
       <View className=" flex min-w-full items-end  mb-16">
         {index < onboardingData.length - 1 ? (
+=======
+<<<<<<< HEAD:src/template/OnboardingTemplate/index.tsx
+    <SafeAreaView style={{ flex: 1 }}>
+      <View className=" flex min-w-full items-end  mb-16">
+        {index < onboardingData.length - 1 ? (
+=======
+    <LinearGradient
+      style={{ flex: 1 }}
+      className="flex-1 pt-[58px]"
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.8, y: 1 }}
+      colors={["#000000", "#052F5F"]}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <View className=" flex min-w-full items-end  mb-16">
+>>>>>>> ef25b610ccee54b7306e494e2d7d91d10ce81d07:template/OnboardingTemplate/index.tsx
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
           <ButtonUI
             onPress={() => router.replace("/screens/Onboarding/roles")}
             gradient={false}
@@ -41,6 +74,10 @@ export default function OnboardingTemplate() {
               </Text>
             }
             hover={false}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/template/OnboardingTemplate/index.tsx
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
             iconLeft={false}
             paddingButtonStatus={""}
           />
@@ -108,5 +145,57 @@ export default function OnboardingTemplate() {
         />
       </View>
     </SafeAreaView>
+<<<<<<< HEAD
   );
 }
+=======
+=======
+          />
+        </View>
+        <View className="flex-1">
+          <Onboarding
+            ref={ref}
+            showSkip={false}
+            containerStyles={{
+              paddingTop: 0,
+              justifyContent: "flex-start",
+              alignItems: "center",
+              backgroundColor: "transparent",
+              paddingHorizontal: 16,
+            }}
+            imageContainerStyles={{
+              marginBottom: 0,
+            }}
+            bottomBarColor="transparent"
+            showDone
+            bottomBarHighlight={false}
+            bottomBarHeight={100}
+            controlStatusBar={false}
+            DoneButtonComponent={() => (
+              <ButtonUI
+                gradient={false}
+                goNext
+                onPress={() => router.replace("/screens/Onboarding/roles")}
+                hover={false}
+                size="w-[56px] h-[56px]"
+              />
+            )}
+            NextButtonComponent={() => (
+              <ButtonUI
+                gradient={false}
+                goNext
+                onPress={() => ref.current?.goNext()}
+                hover={false}
+                size="w-[56px] h-[56px]"
+              />
+            )}
+            DotComponent={Dot}
+            pages={onboardingData}
+          />
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
+>>>>>>> ef25b610ccee54b7306e494e2d7d91d10ce81d07:template/OnboardingTemplate/index.tsx
+  );
+}
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308

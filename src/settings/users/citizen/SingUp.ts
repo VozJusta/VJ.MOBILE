@@ -1,12 +1,17 @@
-export function SingInCitizen() { }
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodSingUpSchema } from "@/validation/schema.zod";
-import { Alert } from "react-native";
 
 export async function SingUpCitizen(data: ZodSingUpTypes) {
   try {
+    if (!BASE_URL) {
+      return {
+        success: false,
+        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
+      };
+    }
+
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 

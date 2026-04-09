@@ -1,27 +1,22 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, ScrollView } from "react-native";
-import Logo from "@/assets/svg/icons/logo.svg";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
-import { casesData } from "@/utils/home/cases/data";
+import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
   return (
     <ScrollView>
-      <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-[32px]">
-        <View className="w-full justify-between flex-row items-center">
-          <Logo width={40} height={29} />
-          <Text className="font-interBold text-[10px] text-[#94A3B8]">
-            CIDADÃO
-          </Text>
-          <View className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]">
-            <MaterialIcons name="notifications" size={20} color="#2563EB" />
-          </View>
-        </View>
+      <SafeAreaView
+        style={{ flex: 1 }}
+        className=" gap-[32px]"
+      >
+        <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
+
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
             Olá, Ricardo!
@@ -59,42 +54,56 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <ButtonUI
-              onPress={() => router.replace("/screens/citizen/home/listCases")}
-              children={
-                <Text className="font-inter text-[14px] text-[#2563EB]">
-                  Ver todos
-                </Text>
-              }
-              gradient={false}
-              hover={false}
-              iconLeft={false}
-              paddingButtonStatus={""}
-            />
+            <Text className="font-inter text-[14px] text-[#2563EB]">
+              Ver todos
+            </Text>
           </View>
-          {casesData.slice(0, 2).map((item) => (
-            <ButtonUI
-              key={item.id}
-              onPress={() => router.replace(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
-              gradient={false}
-              hover={false}
-              iconLeft
-              iconName={item.icon}
-              status={item.status}
-              colorsStatus={item.color}
-              children={<Text>{item.title}</Text>}
-              paddingButtonStatus={"p-[16px]"}
-            />
-          ))}
+          <ButtonUI
+            children={
+              <Text className="text-white text-[14px] font-inter">
+                Ação Trabalhista - XPTO
+              </Text>
+            }
+            onPress={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            gradient={false}
+            hover={false}
+            iconLeft={true}
+            statusBorder={false}
+            status="Em Análise"
+            iconName="article"
+            paddingButtonStatus={"p-[16px]"}
+          />
+          <ButtonUI
+            children={
+              <Text className="text-white text-[14px] font-inter">
+                Indenização Danos Morais
+              </Text>
+            }
+            onPress={() => {}}
+            gradient={false}
+            hover={false}
+            iconLeft={true}
+            statusBorder={false}
+            status="Concluído"
+            iconName="verified"
+            paddingButtonStatus={"p-[16px]"}
+          />
         </View>
-        <View
-        style={{
+        <LinearGradient
+          style={{
             borderRadius: 24,
             backgroundColor: "rgba(255,255,255,0.03)",
-            paddingVertical: 24,
+            height: 225,
+            paddingTop: 24,
             paddingHorizontal: 24,
-            marginBottom: 128,
-          }}>
+            paddingBottom: 56,
+          }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0.8, y: 1 }}
+          colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
+        >
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -124,7 +133,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-        </View>
+        </LinearGradient>
       </SafeAreaView>
     </ScrollView>
   );

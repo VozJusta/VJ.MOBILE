@@ -1,4 +1,4 @@
-import OnboardingTemplate from "../../../src/template/OnboardingTemplate/index";
+import OnboardingTemplate from "@/template/OnboardingTemplate/index";
 
 export default function Onboarding() {
   return <OnboardingTemplate />;

@@ -1,14 +1,21 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodSingUpSchema } from "@/validation/schema.zod";
+import { ZodLoginSchema } from "@/validation/schema.zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
   try {
+    if (!BASE_URL) {
+      return {
+        success: false,
+        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
+      };
+    }
+
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 
-    const validate = ZodValidate(ZodSingUpSchema, data);
+    const validate = ZodValidate(ZodLoginSchema, data);
 
     if (!validate.success) {
       return {
@@ -34,7 +41,7 @@ export async function SingInCitizen(data: ZodLoginTypes) {
     if (!response.ok) {
       return {
         success: false,
-        fields: json?.errors || [json?.message || "Erro ao cadastrar"],
+        fields: json?.errors || [json?.message || "Erro ao autenticar"],
       };
     }
     console.log("message:", response.statusText);

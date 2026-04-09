@@ -1,55 +1,45 @@
-import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
+import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
+import { IInputProps } from "@/interfaces/ui/InputUI";
 
-export function getInitialSignInData(email: string,
-  onEmailChange: (text: string) => void,
-  password: string,
-  onPasswordChange: (text: string) => void,
-  showPassword: boolean,
-  onToggleShowPassword: () => void,
-): ISignInTemplateProps {
-
-  return {
-    layout: "login",
-    showHeader: false,
-    title: "Entrar no VozJusta",
-    description: "Acesse sua conta para continuar",
-    descriptionToFieldsSpacing: 32,
-    submitLabel: "Entrar",
-    showTerms: false,
-    showForgotPassword: true,
-    forgotPasswordRoute: "/screens/auth/ForgotPassword/Email",
-    showSocialGoogle: true,
-    footerPrefixText: "Ainda não tem conta?",
-    footerActionText: "Cadastre-se",
-    footerActionRoute: "/screens/Onboarding/roles",
-    footerActionTextClassName: "text-[#fff]/80 underline font-semibold",
-    fields: [
-      {
-        label: "E-mail",
-        placeholder: "seu@email.com",
-        keyboardType: "email-address",
-        leftIcon: true,
-        rightIcon: false,
-        iconSize: 24,
-        iconNameProps: "email",
-        type: "email",
-        value: email,
-        onChangeText: onEmailChange,
-      },
-      {
-        label: "Senha",
-        placeholder: "••••••••",
-        secureTextEntry: !showPassword,
-        leftIcon: true,
-        rightIcon: true,
-        rightIconName: showPassword ? "visibility-off" : "visibility",
-        iconSize: 24,
-        iconNameProps: "lock-outline",
-        type: "password",
-        value: password,
-        onChangeText: onPasswordChange,
-        onRightIconPress: onToggleShowPassword,
-      },
-    ],
-  }
+type Params = {
+  showPassword: boolean;
+  onToggleShowPassword: () => void;
+  loginAuth?: ZodLoginTypes;
+  handleLoginChange?: (name: keyof ZodLoginTypes, value: string) => void;
 };
+
+export function buildLoginFields({
+  showPassword,
+  onToggleShowPassword,
+  loginAuth,
+  handleLoginChange,
+}: Params): IInputProps[] {
+  return [
+    {
+      label: "E-mail",
+      placeholder: "seu@email.com",
+      keyboardType: "email-address",
+      leftIcon: true,
+      rightIcon: false,
+      iconSize: 24,
+      iconNameProps: "email",
+      type: "email",
+      value: loginAuth?.email,
+      onChangeText: (text) => handleLoginChange?.("email", text),
+    },
+    {
+      label: "Senha",
+      placeholder: "••••••••",
+      secureTextEntry: !showPassword,
+      leftIcon: true,
+      rightIcon: true,
+      rightIconName: showPassword ? "visibility-off" : "visibility",
+      iconSize: 24,
+      iconNameProps: "lock-outline",
+      type: "password",
+      value: loginAuth?.password,
+      onChangeText: (text) => handleLoginChange?.("password", text),
+      onRightIconPress: onToggleShowPassword,
+    },
+  ];
+}
