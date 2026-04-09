@@ -14,7 +14,7 @@ export default function ListCases() {
         <ButtonUI
           goBack
           size="h-[40px] w-[40px]"
-          onPress={() => router.replace("/screens/citizen/home")}
+          onPress={() => router.push("/screens/citizen/home")}
           gradient={false}
           hover={false}
           iconLeft={false}
@@ -37,7 +37,7 @@ export default function ListCases() {
         {casesData.map((item) => (
           <ButtonUI
             key={item.title}
-            onPress={() => router.replace(`/screens/citizen/home/caseSelected/${item.id}`)}
+            onPress={() => router.push(`/screens/citizen/home/caseSelected/${item.id}`)}
             gradient={false}
             hover={false}
             iconLeft

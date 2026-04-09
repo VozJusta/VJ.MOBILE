@@ -96,7 +96,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   />
 
                   <ButtonUI
-                    onPress={() => router.replace("/screens/auth/ForgotPassword/Code")}
+                    onPress={() => router.push("/screens/auth/ForgotPassword/Code")}
                     gradient={false}
                     bg="bg-[#135BEC]"
                     hover={false}
@@ -110,7 +110,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                     bg="bg-transparent"
                     gradient={false}
                     hover={false}
-                    onPress={() => router.replace("/screens/auth/users/SingIn")}
+                    onPress={() => router.push("/screens/auth/users/SingIn")}
                     children={<View
                       style={{ gap: 8 }}
                       className="flex-row items-center gap-2"
@@ -158,7 +158,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                           return;
                         }
 
-                        router.replace("/screens/auth/ForgotPassword/Update");
+                        router.push("/screens/auth/ForgotPassword/Update");
                       }}
                       gradient={false}
                       bg="bg-[#135BEC]"
@@ -221,7 +221,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   />
                   {props.screen === ScreensForgotPassword.Update && props.passwordStrength && <PasswordStrength score={props.passwordStrength.score} color={props.passwordStrength.color} checklist={props.passwordStrength.checklist} />}
                   <ButtonUI
-                    onPress={() => router.replace("/screens/auth/users/SingIn")}
+                    onPress={() => router.push("/screens/auth/users/SingIn")}
                     gradient={true}
                     hover={false}
                     children={<View className="flex-1 justify-center items-center">

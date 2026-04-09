@@ -21,7 +21,7 @@ export default function CaseSelected() {
       >
         <View className="flex-row items-center gap-[16px]">
           <ButtonUI
-            onPress={() => router.replace("/screens/citizen/home")}
+            onPress={() => router.push("/screens/citizen/home")}
             gradient={false}
             hover={false}
             size="h-[40px] w-[40px]"

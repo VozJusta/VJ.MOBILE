@@ -33,7 +33,7 @@ export default function OnboardingTemplate() {
       <View className=" flex min-w-full items-end  mb-16">
         {index < onboardingData.length - 1 ? (
           <ButtonUI
-            onPress={() => router.replace("/screens/Onboarding/roles")}
+            onPress={() => router.push("/screens/Onboarding/roles")}
             gradient={false}
             children={
               <Text className="text-white text-[16px] font-inter pr-[16px]">
@@ -85,7 +85,7 @@ export default function OnboardingTemplate() {
             <ButtonUI
               gradient={false}
               goNext
-              onPress={() => router.replace("/screens/Onboarding/roles")}
+              onPress={() => router.push("/screens/Onboarding/roles")}
               hover={false}
               size="w-[56px] h-[56px]"
               paddingButtonStatus={""}
