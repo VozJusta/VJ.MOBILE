@@ -6,15 +6,13 @@ import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
+import CaseCard from "@/components/CaseCard";
 
 export default function Home() {
   const router = useRouter();
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={{ flex: 1 }}
-        className=" gap-[32px]"
-      >
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={{ flex: 1 }} className=" gap-[32px]">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
@@ -54,41 +52,24 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <Text className="font-inter text-[14px] text-[#2563EB]" onPress={() => router.push("/screens/citizen/home/listCases")}>
+            <Text
+              className="font-inter text-[14px] text-[#2563EB]"
+              onPress={() => router.push("/screens/citizen/home/listCases")}
+            >
               Ver todos
             </Text>
           </View>
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Ação Trabalhista - XPTO
-              </Text>
-            }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Em Análise"
+          <CaseCard
             iconName="article"
-            paddingButtonStatus={"p-[16px]"}
-          />
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Indenização Danos Morais
-              </Text>
-            }
             onPress={() => {}}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Concluído"
+            status="Em Análise"
+            title="Ação trabalhista - XPTO"
+          />
+          <CaseCard
             iconName="verified"
-            paddingButtonStatus={"p-[16px]"}
+            onPress={() => {}}
+            status="Concluído"
+            title="Reclamação contra vizinho barulhento"
           />
         </View>
         <LinearGradient
