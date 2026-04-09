@@ -1,15 +1,14 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
-import { ICaseSelectProps } from "@/interfaces/interfaces";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { IButtonCases } from "@/interfaces/utils/cases/interface";
 import { casesData } from "@/utils/home/cases/data";
 import { MaterialIcons } from "@expo/vector-icons";
-import Report from "@/assets/svg/reportIcon.svg"
+import Report from "@/assets/svg/reportIcon.svg";
 
 export default function CaseSelected() {
-    const router = useRouter()
+  const router = useRouter();
   const local = useLocalSearchParams();
   console.log(local.id);
   const caseSelected: IButtonCases[] = local.id
@@ -167,12 +166,12 @@ export default function CaseSelected() {
                   throw new Error("Function not implemented.");
                 }}
                 children={
-                    <View className="flex-1 justify-center items-center gap-[8px] flex-row">
-                        <Report width={24} height={24}/>
-                        <Text className="font-interSemiBold text-[16px] text-white">
-                            Baixar Relatório
-                        </Text>
-                    </View>
+                  <View className="flex-1 justify-center items-center gap-[8px] flex-row">
+                    <Report width={24} height={24} />
+                    <Text className="font-interSemiBold text-[16px] text-white">
+                      Baixar Relatório
+                    </Text>
+                  </View>
                 }
                 gradient={true}
                 hover={false}

@@ -16,14 +16,20 @@ config.resolver.assetExts = config.resolver.assetExts.filter(
 config.resolver.sourceExts.push("svg");
 config.resolver.sourceExts.push("cjs");
 
-config.resolver.blockList = [
-  /.*[\\\/]\.pnpm-cache[\\\/].*/,
-  /.*[\\\/]AppData[\\\/]Local[\\\/]pnpm-cache[\\\/].*/,
-  /.*[\\\/]pnpm-cache[\\\/]dlx[\\\/].*/,
+const pnpmDlxCache = path.resolve(
+  process.env.LOCALAPPDATA || "",
+  "pnpm-cache",
+  "dlx",
+);
+
+config.watchFolders = [
+  path.resolve(__dirname),
+  pnpmDlxCache,
 ];
 
-config.watchFolders = [path.resolve(__dirname)];
 config.projectRoot = __dirname;
+
+delete config.resolver.blockList;
 
 config = withNativeWind(config, { input: "./src/styles/global.css" });
 

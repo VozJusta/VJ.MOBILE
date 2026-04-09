@@ -38,6 +38,7 @@
     "react-native-css-interop": "^0.2.2",
     "react-native-dotenv": "^3.4.11",
     "react-native-dropdown-picker": "^5.4.6",
+    "react-native-gifted-charts": "^1.4.76",
     "react-native-onboarding-swiper": "^1.4.0",
     "react-native-otp-entry": "^1.8.5",
     "react-native-reanimated": "~4.1.1",
