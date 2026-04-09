@@ -27,7 +27,7 @@ export default function DocumentsCitizen() {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="gap-[32px] px-[16px]">
+      <View className="gap-[32px]">
         <Header isFirstPage={true} title="DOCUMENTOS" isCitizen={true} />
         <View className="w-full justify-center items-center py-[32px] bg-[rgba(255,255,255,0.03)] border border-solid border-[rgba(19,91,236,0.3)] rounded-[48px]">
           {checkedFile === null ? (
