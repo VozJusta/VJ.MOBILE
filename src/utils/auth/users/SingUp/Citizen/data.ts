@@ -1,27 +1,29 @@
-import { useAuth } from "@/hooks/useAuth";
-import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
-import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { Email2FA } from "@/services/users/security/email2FA";
-import { SingUpCitizen } from "@/services/users/citizen/SingUp";
-import { useRolesStorage } from "@/store/roles.store";
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
+import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
+import { IInputProps } from "@/interfaces/ui/InputUI";
+import { useRolesStorage } from "@/store/roles.store";
+import { useAuth } from "@/hooks/useAuth";
+import { SingUpCitizen } from "@/services/users/citizen/SingUp";
+import { Email2FA } from "@/services/users/security/email2FA";
+import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
+import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
 
-export function getInitialCitizenData(
-  showPassword: boolean,
-  onToggleShowPassword: () => void,
-  registerAuth: {
-    fullName: string;
-    email: string;
-    password: string;
-    phone: string;
-    cpf: string;
-  },
-  handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void,
-): ISignInTemplateProps {
+type Params = {
+  showPassword: boolean;
+  onToggleShowPassword: () => void;
+  registerAuth: ZodSingUpTypes;
+  handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void;
+};
+
+export function buildCitizenFields({
+  showPassword,
+  onToggleShowPassword,
+  registerAuth,
+  handleRegisterChange,
+}: Params): IBuildRegisterFields {
   const setRole = useRolesStorage((state) => state.setRole);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
@@ -85,8 +87,6 @@ export function getInitialCitizenData(
     }
   }
   return {
-    title: "Cadastro de Cidadão",
-    description: "Faça seu cadastro para transformar sua indignação em mudança",
     fields: [
       {
         label: "Nome completo",
@@ -97,10 +97,8 @@ export function getInitialCitizenData(
         iconSize: 24,
         iconNameProps: "person",
         type: "name",
-        value: registerAuth.fullName,
-        onChangeText: (text) => {
-          handleRegisterChange("fullName", text);
-        },
+        value: registerAuth.fullName ?? "",
+        onChangeText: (text) => handleRegisterChange("fullName", text),
       },
       {
         label: "CPF",
@@ -111,11 +109,8 @@ export function getInitialCitizenData(
         iconSize: 24,
         iconNameProps: "badge",
         type: "cpf",
-        value: registerAuth.cpf,
-        onChangeText: (text) => {
-          const formatted = formatCPF(text);
-          handleRegisterChange("cpf", formatted);
-        },
+        value: registerAuth.cpf ?? "",
+        onChangeText: (text) => handleRegisterChange("cpf", formatCPF(text)),
       },
       {
         label: "Telefone",
@@ -126,11 +121,9 @@ export function getInitialCitizenData(
         iconSize: 24,
         iconNameProps: "phone",
         type: "phone",
-        value: registerAuth.phone,
-        onChangeText: (text) => {
-          const formatted = formatPhone(text);
-          handleRegisterChange("phone", formatted);
-        },
+        value: registerAuth.phone ?? "",
+        onChangeText: (text) =>
+          handleRegisterChange("phone", formatPhone(text)),
       },
       {
         label: "E-mail",
@@ -141,10 +134,8 @@ export function getInitialCitizenData(
         iconSize: 24,
         iconNameProps: "email",
         type: "email",
-        value: registerAuth.email,
-        onChangeText: (text) => {
-          handleRegisterChange("email", text);
-        },
+        value: registerAuth.email ?? "",
+        onChangeText: (text) => handleRegisterChange("email", text),
       },
       {
         label: "Senha de acesso",
@@ -156,10 +147,8 @@ export function getInitialCitizenData(
         iconSize: 24,
         iconNameProps: "lock-outline",
         type: "password",
-        value: registerAuth.password,
-        onChangeText: (text) => {
-          handleRegisterChange("password", text);
-        },
+        value: registerAuth.password ?? "",
+        onChangeText: (text) => handleRegisterChange("password", text),
         onRightIconPress: onToggleShowPassword,
       },
     ],

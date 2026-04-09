@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
@@ -20,93 +21,86 @@ export default function OnboardingTemplate() {
           borderRadius: 3,
           marginHorizontal: 4,
           backgroundColor: selected ? "#135BEC" : "#555",
-          boxShadow: selected
-            ? "0px 0px 10px 0px rgba(19, 91, 236, 0.5)"
-            : "none",
         }}
       />
     );
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View className=" flex min-w-full items-end  mb-16">
-        {index < onboardingData.length - 1 ? (
-          <ButtonUI
-            onPress={() => router.replace("/screens/Onboarding/roles")}
-            gradient={false}
-            children={
+    <LinearGradient
+      style={{ flex: 1 }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0.8, y: 1 }}
+      colors={["#000000", "#052F5F"]}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <View className="flex min-w-full items-end mb-16">
+          {index < onboardingData.length - 1 ? (
+            <ButtonUI
+              onPress={() => router.replace("/screens/Onboarding/roles")}
+              gradient={false}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus=""
+            >
               <Text className="text-white text-[16px] font-inter pr-[16px]">
                 Pular
               </Text>
-            }
-            hover={false}
-            iconLeft={false}
-            paddingButtonStatus={""}
-          />
-        )
-      :
-      <ButtonUI
-            onPress={() => {} }
-            gradient={false}
-            children={
-              <Text className="text-transparent text-[16px] font-inter pr-[16px]">
-                Pular
-              </Text>
-            }
-            hover={false}
-            iconLeft={false}
-            paddingButtonStatus={""}
-          />
-        
-      }
-      </View>
-      <View className="flex-1">
-        <Onboarding
-          ref={ref}
-          pageIndexCallback={(pageIndex) => setIndex(pageIndex)}
-          showSkip={false}
-          containerStyles={{
-            paddingTop: 0,
-            justifyContent: "flex-start",
-            alignItems: "center",
-            backgroundColor: "transparent",
-            paddingHorizontal: 16,
-          }}
-          imageContainerStyles={{
-            marginBottom: 0,
-          }}
-          bottomBarColor="transparent"
-          showDone
-          bottomBarHighlight={false}
-          bottomBarHeight={100}
-          controlStatusBar={false}
-          DoneButtonComponent={() => (
-            <ButtonUI
-              gradient={false}
-              goNext
-              onPress={() => router.replace("/screens/Onboarding/roles")}
-              hover={false}
-              size="w-[56px] h-[56px]"
-              paddingButtonStatus={""}
-              iconLeft={false}
-            />
+            </ButtonUI>
+          ) : (
+            <View style={{ height: 40 }} />
           )}
-          NextButtonComponent={() => (
-            <ButtonUI
-              gradient={false}
-              goNext
-              onPress={() => ref.current?.goNext()}
-              hover={false}
-              size="w-[56px] h-[56px]"
-              iconLeft={false}
-              paddingButtonStatus={""}
-            />
-          )}
-          DotComponent={Dot}
-          pages={onboardingData}
-        />
-      </View>
-    </SafeAreaView>
+        </View>
+
+        <View className="flex-1">
+          <Onboarding
+            ref={ref}
+            pageIndexCallback={(pageIndex) => setIndex(pageIndex)}
+            showSkip={false}
+            containerStyles={{
+              paddingTop: 0,
+              justifyContent: "flex-start",
+              alignItems: "center",
+              backgroundColor: "transparent",
+              paddingHorizontal: 16,
+            }}
+            imageContainerStyles={{
+              marginBottom: 0,
+            }}
+            bottomBarColor="transparent"
+            showDone
+            bottomBarHighlight={false}
+            bottomBarHeight={100}
+            controlStatusBar={false}
+            DoneButtonComponent={() => (
+              <ButtonUI
+                gradient={false}
+                goNext
+                onPress={() =>
+                  router.replace("/screens/Onboarding/roles")
+                }
+                hover={false}
+                size="w-[56px] h-[56px]"
+                iconLeft={false}
+                paddingButtonStatus=""
+              />
+            )}
+            NextButtonComponent={() => (
+              <ButtonUI
+                gradient={false}
+                goNext
+                onPress={() => ref.current?.goNext()}
+                hover={false}
+                size="w-[56px] h-[56px]"
+                iconLeft={false}
+                paddingButtonStatus=""
+              />
+            )}
+            DotComponent={Dot}
+            pages={onboardingData}
+          />
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

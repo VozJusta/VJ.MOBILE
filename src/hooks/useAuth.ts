@@ -16,6 +16,7 @@ export const useAuth = () => {
   });
 
   const [password,setPassword] = useState<ZodUpdatePasswordTypes>({
+    email: "",
     password: "",
     confirmPassword: "",
   });
@@ -29,13 +30,11 @@ export const useAuth = () => {
     setRegisterAuth((prev) => ({ ...prev, [name]: value }));
   }
 
-
   return {
     loginAuth,
     registerAuth,
     handleLoginChange,
     handleRegisterChange,
-
     loading,
     setLoading,
   };

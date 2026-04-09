@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Text } from "react-native";
 import { router } from "expo-router";
-import { formatCPF } from "@/utils/mask";
-import SignInTemplate from "@/template/auth/SingInTemplate/index";
-import { getInitialLawyerData } from "@/utils/auth/users/SingUp/Lawyer/data";
+import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
-import { formatOABNumber } from "@/utils/oabValidate";
-import Toast from "react-native-toast-message";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
-import { useRolesStorage } from "@/store/roles.store";
-import { Email2FA } from "@/services/users/security/email2FA";
+import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
+import SignInTemplate from "@/template/auth/SingInTemplate";
+import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
+import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
+
+
 
 export default function Lawyer() {
-  const setRole = useRolesStorage((state) => state.setRole);
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [cpf, setCpf] = useState("");
   const [oabNumber, setOabNumber] = useState("");
   const [uf, setUf] = useState("");
@@ -20,98 +19,80 @@ export default function Lawyer() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const strength = passwordValidate(password);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const lawyerData = getInitialLawyerData(
-    name,
-    setName,
-    cpf,
-    (text) => setCpf(formatCPF(text)),
-    oabNumber,
-    (text) => setOabNumber(formatOABNumber(text)),
-
-    email,
-    setEmail,
-    uf,
-    setUf,
-    specialization,
-    setSpecialization,
-    password,
-    setPassword,
-    showPassword,
-    () => setShowPassword((prev) => !prev),
-  );
-
-  async function handleSubmit() {
-    setLoading(true);
-    try {
-      const response = await SingUpLawyer({
-        fullName: name,
-        cpf,
-        oabNumber,
-        uf,
-        specialization,
-        email,
-        password,
-      });
-
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields?.[0] ?? "Erro ao cadastrar advogado",
-        });
-        return;
-      }
-
-      const resolvedRole = resolveRoleFromApi(response.data, "lawyer");
-      setRole(resolvedRole);
-
-      const validateEmail2FA = await Email2FA(email);
-      if (!validateEmail2FA.success) {
-        Toast.show({
-          type: "error",
-          text1: validateEmail2FA.fields?.[0] ?? "Falha ao enviar codigo",
-        });
-        return;
-      }
-
-      router.push(
-        `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(email)}`,
-      );
-    } finally {
-      setLoading(false);
-    }
-  }
+  const strength = useMemo(() => passwordValidate(password), [password]);
 
   return (
     <SignInTemplate
-      {...lawyerData}
-      onSubmit={handleSubmit}
-      submitLabel={loading ? "carregando..." : "continuar"}
-      disableSubmit={loading}
+      title="Cadastro de Advogado"
+      description="Solicite seu acesso profissional para começar a atender cidadãos na plataforma."
+      fields={buildLawyerFields({
+        showPassword,
+        onToggleShowPassword: () => setShowPassword((prev) => !prev),
+        registerAuth: { fullName, cpf, oabNumber, uf, specialization, email, password },
+        handleRegisterChange: (name, value) => {
+          switch (name) {
+            case "fullName":
+              setFullName(value);
+              break;
+            case "cpf":
+              setCpf(value);
+              break;
+            case "oabNumber":
+              setOabNumber(value);
+              break;
+            case "uf":
+              setUf(value);
+              break;
+            case "specialization":
+              setSpecialization(value);
+              break;
+            case "email":
+              setEmail(value);
+              break;
+            case "password":
+              setPassword(value);
+              break;
+          }
+        },
+        specializationOptions: specializationOptions.map((spec) => ({
+          label: spec,
+          value: spec,
+        })),
+      })}
+      onSubmit={() => {}}
+      submitLabel="Cadastrar"
+      disableSubmit={!acceptedTerms}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: [
-          {
-            label: "8+ Caracteres",
-            valid: password.length >= 8,
-          },
-          {
-            label: "Símbolo",
-            valid: /[@$!%*?&]/.test(password),
-          },
-          {
-            label: "Maiúscula",
-            valid: /[A-Z]/.test(password),
-          },
-          {
-            label: "Número",
-            valid: /[0-9]/.test(password),
-          },
-        ],
+        checklist: buildPasswordChecklist(password),
       }}
+      extraActions={
+        <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
+          <Text className="text-[#fff]/40 text-sm font-inter leading-5">
+            Aceito os{" "}
+            <Text
+              className="text-[#fff]/80 underline font-semibold"
+              onPress={() => router.push("/screens/shared/terms")}
+            >
+              Termos de Uso
+            </Text>
+          </Text>
+        </Checkbox>
+      }
+      footer={
+        <Text className="text-[#64748B] text-[14px] font-interRegular">
+          Já possui registro?{" "}
+          <Text
+            className="text-white underline font-interBold"
+            onPress={() => router.push("/screens/auth/users/SingIn")}
+          >
+            Fazer Login
+          </Text>
+        </Text>
+      }
     />
   );
 }

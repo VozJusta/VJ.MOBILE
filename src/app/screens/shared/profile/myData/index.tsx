@@ -16,7 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAccessTokenStorage } from "@/store/token.store";
 import { jwtDecode } from "jwt-decode";
 import { IToken } from "@/interfaces/services/citizen/SingUp";
-import { de } from "zod/v4/locales";
+
 
 type EditableFieldProps = {
   label: string;

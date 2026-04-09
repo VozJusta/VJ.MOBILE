@@ -14,9 +14,15 @@ export const NavbarItemsLawyer: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
+<<<<<<< HEAD
     path: "/screens/shared/profile",
   },
 ];
+=======
+    path: "/screens/lawyer/profile",
+  },
+]
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
 
 export const NavbarItemsCitizen: INavbar[] = [
   {
@@ -37,6 +43,10 @@ export const NavbarItemsCitizen: INavbar[] = [
   {
     iconName: "person",
     name: "Perfil",
+<<<<<<< HEAD
     path: "/screens/shared/profile",
+=======
+    path: "/screens/citizen/profile",
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
   },
 ];

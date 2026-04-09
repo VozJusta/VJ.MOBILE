@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { IXTokenStore } from "@/interfaces/interfaces";
 import {
   IAccessTokenStore,
@@ -36,5 +37,24 @@ export const useRefreshTokenStorage = create<IRefreshTokenStore>()(
       clearTokens: () => set({ refreshToken: null }),
     }),
     { name: "refresh_tokens", storage: createJSONStorage(() => AsyncStorage) },
+=======
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
+
+export const useRolesStorage = create<{
+  role: string | null;
+  setRole: (role: string) => void;
+  clearRole: () => void;
+}>()(
+  persist(
+    (set) => ({
+      role: null,
+      setRole: (role) => set({ role }),
+      clearRole: () => set({ role: null }),
+    }),
+    { name: "role", storage: createJSONStorage(() => AsyncStorage) },
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
   ),
 );

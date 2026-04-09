@@ -1,11 +1,15 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, ScrollView, Alert } from "react-native";
+<<<<<<< HEAD
 import Logo from "@/assets/svg/icons/logo.svg";
+=======
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
+<<<<<<< HEAD
 import { casesData } from "@/utils/home/cases/data";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
@@ -22,17 +26,31 @@ export default function Home() {
   }
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
+=======
+import Header from "@/components/Header";
+
+export default function Home() {
+  const router = useRouter();
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
   return (
     <ScrollView>
       <SafeAreaView
         style={{ flex: 1 }}
+<<<<<<< HEAD
         className="gap-[32px]"
+=======
+        className=" gap-[32px]"
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
       >
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
+<<<<<<< HEAD
             Olá, {decodedToken.fullName}!
+=======
+            Olá, Ricardo!
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
           </Text>
           <Text className="text-[16px] text-[#94A3B8] font-interLight">
             Bem-vindo ao seu painel jurídico.
@@ -67,6 +85,7 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
+<<<<<<< HEAD
             <ButtonUI
               onPress={() => router.replace("/screens/citizen/home/listCases")}
               children={
@@ -97,13 +116,63 @@ export default function Home() {
         </View>
         <View
         style={{
+=======
+            <Text className="font-inter text-[14px] text-[#2563EB]">
+              Ver todos
+            </Text>
+          </View>
+          <ButtonUI
+            children={
+              <Text className="text-white text-[14px] font-inter">
+                Ação Trabalhista - XPTO
+              </Text>
+            }
+            onPress={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            gradient={false}
+            hover={false}
+            iconLeft={true}
+            statusBorder={false}
+            status="Em Análise"
+            iconName="article"
+            paddingButtonStatus={"p-[16px]"}
+          />
+          <ButtonUI
+            children={
+              <Text className="text-white text-[14px] font-inter">
+                Indenização Danos Morais
+              </Text>
+            }
+            onPress={() => {}}
+            gradient={false}
+            hover={false}
+            iconLeft={true}
+            statusBorder={false}
+            status="Concluído"
+            iconName="verified"
+            paddingButtonStatus={"p-[16px]"}
+          />
+        </View>
+        <LinearGradient
+          style={{
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
             borderRadius: 24,
             backgroundColor: "rgba(255,255,255,0.03)",
             height: 225,
             paddingTop: 24,
             paddingHorizontal: 24,
+<<<<<<< HEAD
             marginBottom: 128,
           }}>
+=======
+            paddingBottom: 56,
+          }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0.8, y: 1 }}
+          colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
+        >
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -133,7 +202,11 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
+<<<<<<< HEAD
           </View>
+=======
+        </LinearGradient>
+>>>>>>> dfcf6ac563b0c035a575b4b127b0464da17d9308
       </SafeAreaView>
     </ScrollView>
   );

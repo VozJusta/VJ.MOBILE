@@ -54,12 +54,6 @@ export interface IRoleStore {
   clearRole: () => void;
 }
 
-export interface IEmail2FAStore {
-  email: string;
-  setEmail: (email: string) => void;
-  clearEmail: () => void;
-}
-
 export interface IButtonRequest {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
   colorIcon: string;

@@ -1,22 +1,26 @@
-import { useAuth } from "@/hooks/useAuth";
-import { ISignInTemplateProps } from "@/interfaces/template/SignInTemplate";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
+import { IInputProps } from "@/interfaces/ui/InputUI";
+import { useAuth } from "@/hooks/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { SingInCitizen } from "@/services/users/SingIn";
-import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { useRolesStorage } from "@/store/roles.store";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
+import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
 
-export function getInitialSignInData(
-  loginAuth: {
-    email: string;
-    password: string;
-  },
-  handleLoginChange: (name: keyof ZodLoginTypes, value: string) => void,
-  showPassword: boolean,
-  onToggleShowPassword: () => void,
-): ISignInTemplateProps {
+type Params = {
+  showPassword: boolean;
+  onToggleShowPassword: () => void;
+  loginAuth: ZodLoginTypes;
+  handleLoginChange: (name: keyof ZodLoginTypes, value: string) => void;
+};
+
+export function buildLoginFields({
+  showPassword,
+  onToggleShowPassword,
+  loginAuth,
+  handleLoginChange,
+}: Params): IBuildLoginFields {
   const role = useRolesStorage((state) => state.role);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
@@ -70,22 +74,7 @@ export function getInitialSignInData(
       setLoading(false);
     }
   }
-
   return {
-    layout: "login",
-    showHeader: false,
-    title: "Entrar no VozJusta",
-    description: "Acesse sua conta para continuar",
-    descriptionToFieldsSpacing: 32,
-    submitLabel: loading ? "Entrando..." : "Entrar",
-    showTerms: false,
-    showForgotPassword: true,
-    forgotPasswordRoute: "/screens/auth/ForgotPassword/Email",
-    showSocialGoogle: true,
-    footerPrefixText: "Ainda não tem conta?",
-    footerActionText: "Cadastre-se",
-    footerActionRoute: "/screens/Onboarding/roles",
-    footerActionTextClassName: "text-[#fff]/80 underline font-semibold",
     fields: [
       {
         label: "E-mail",
@@ -96,7 +85,7 @@ export function getInitialSignInData(
         iconSize: 24,
         iconNameProps: "email",
         type: "email",
-        value: loginAuth.email,
+        value: loginAuth.email ?? "",
         onChangeText: (text) => handleLoginChange("email", text),
       },
       {
@@ -109,7 +98,7 @@ export function getInitialSignInData(
         iconSize: 24,
         iconNameProps: "lock-outline",
         type: "password",
-        value: loginAuth.password,
+        value: loginAuth.password ?? "",
         onChangeText: (text) => handleLoginChange("password", text),
         onRightIconPress: onToggleShowPassword,
       },
