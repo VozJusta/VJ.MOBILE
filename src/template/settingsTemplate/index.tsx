@@ -206,7 +206,6 @@ export default function SettingsTemplate({
         contentContainerStyle={{
           paddingBottom: isPrivacy ? 0 : isHelp ? 220 : 28,
           paddingTop: isPrivacy || isHelp ? 4 : 0,
-          paddingHorizontal: 16,
         }}
       >
         <View className="mb-[32px] px-[0]">

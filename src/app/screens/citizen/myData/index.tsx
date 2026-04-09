@@ -21,7 +21,7 @@ type ReadonlyFieldProps = {
 
 function EditableField({ label, value, onChangeText, keyboardType = "default" }: EditableFieldProps) {
 	return (
-		<View className="w-full h-[77px] rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)] p-[16px]">
+		<View className="w-full h-[77px] rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)]">
 			<Text className="text-[10px] font-interBold uppercase tracking-[2px] text-[#7E93B2]">{label}</Text>
 			<TextInput
 				value={value}

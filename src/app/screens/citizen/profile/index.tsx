@@ -17,7 +17,7 @@ export default function ProfileCitizen() {
     <ScrollView style={{ flex: 1 }} >
     <SafeAreaView
       style={{ flex: 1 }}
-      className="+px-[16px] gap-[32px]"
+      className=" gap-[32px]"
     >
       <Header isCitizen={true} title="PERFIL DO CIDADÃO" isFirstPage  />
       <View className="w-full justify-center items-center gap-[16px]">
