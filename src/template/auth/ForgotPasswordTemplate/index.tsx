@@ -13,7 +13,6 @@ import ButtonUI from "@/ui/ButtonUI";
 import Logo from "@/assets/svg/icons/logo.svg";
 import InputUI from "@/ui/InputUI";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-
 import {
   IForgotPasswordProps,
   ScreensForgotPassword,

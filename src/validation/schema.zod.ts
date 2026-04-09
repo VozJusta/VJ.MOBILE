@@ -1,4 +1,4 @@
-import { email, string, z } from "zod";
+import { z } from "zod";
 
 export const ZodSingUpSchema = z.object({
   fullName: z.string(),
