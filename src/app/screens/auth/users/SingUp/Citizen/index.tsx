@@ -49,7 +49,7 @@ export default function Citizen() {
           }
         },
       })}
-      onSubmit={() => {}}
+      onSubmit={() => router.replace("/screens/citizen/home")}
       submitLabel="Cadastrar"
       disableSubmit={!acceptedTerms}
       passwordStrength={{
