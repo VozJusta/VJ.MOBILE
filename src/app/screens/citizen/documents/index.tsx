@@ -151,7 +151,7 @@ export default function DocumentsCitizen() {
       </View>
       <View className="flex-col gap-[25px]">
         <View className="w-full bg-white/5 h-[1px] mt-[32px]"></View>
-        <View className=" w-full px-[24px] pt-6 py-[24px]">
+        <View className=" w-full pt-6 py-[24px]">
           <ButtonUI
             onPress={function (): void {
               throw new Error("Function not implemented.");
