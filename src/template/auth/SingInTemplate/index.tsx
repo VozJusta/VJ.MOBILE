@@ -1,12 +1,7 @@
 import {
-  ScrollView,
-  Text,
-  View,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Platform,
-  KeyboardAvoidingView,
-  Animated,
+  ScrollView, Text, View,
+  Keyboard, TouchableWithoutFeedback,
+  Platform, KeyboardAvoidingView, Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useEffect } from "react";
@@ -82,10 +77,8 @@ export default function SignInTemplate({
 
               <View style={{ gap: 24, flexDirection: "column" }}>
                 {fields.map((field, index) => {
-                  if (isUfField(field))
-                    return <UfSelect key={index} {...field} />;
-                  if (isCareerField(field))
-                    return <CareerSelect key={index} {...field} />;
+                  if (isUfField(field)) return <UfSelect key={index} {...field} />;
+                  if (isCareerField(field)) return <CareerSelect key={index} {...field} />;
                   return <Input key={index} {...field} />;
                 })}
               </View>

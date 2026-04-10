@@ -1,10 +1,11 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
-import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
-import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodLoginSchema } from "@/validation/schema.zod";
+import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
+import { BASE_URL } from "@/services/BASE_URL";
+import { ZodSingUpSchema } from "@/validation/schema.zod";
 
-export async function SingInCitizen(data: ZodLoginTypes) {
+export async function SingUpCitizen(data: ZodSingUpTypes) {
   try {
+<<<<<<< HEAD:src/settings/users/citizen/SingUp.ts
     if (!BASE_URL) {
       return {
         success: false,
@@ -15,7 +16,9 @@ export async function SingInCitizen(data: ZodLoginTypes) {
     console.log("api: ", BASE_URL);
     console.log("dados batendo na api: ", data);
 
-    const validate = ZodValidate(ZodLoginSchema, data);
+=======
+>>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2:src/services/users/citizen/SingUp.ts
+    const validate = ZodValidate(ZodSingUpSchema, data);
 
     if (!validate.success) {
       return {
@@ -23,39 +26,35 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         fields: validate.fields,
       };
     }
-    console.log(validate);
 
-    const response = await fetch(`${BASE_URL}/auth/authenticate`, {
+    const response = await fetch(`${BASE_URL}/citizen`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({
+        fullName: validate.data?.fullName.trim(),
+        cpf: validate.data?.cpf,
+        phone: validate.data?.phone,
         email: validate.data?.email,
         password: validate.data?.password,
       }),
     });
-    console.log(response);
+
     const json = await response.json();
     if (!response.ok) {
       return {
         success: false,
-        fields: json?.errors || [json?.message || "Erro ao autenticar"],
+        fields: json?.errors || [json?.message || "Erro ao cadastrar"],
       };
     }
-    console.log("message:", response.statusText);
-
-    console.log("response:", response);
-    console.log("json:", json);
 
     return {
       success: true,
       data: json,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

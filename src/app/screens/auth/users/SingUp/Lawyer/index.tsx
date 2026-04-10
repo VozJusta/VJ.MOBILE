@@ -6,8 +6,7 @@ import passwordValidate from "@/utils/passwordValidate";
 import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
-
-
+import Toast from "react-native-toast-message";
 
 export default function Lawyer() {
   const [fullName, setFullName] = useState("");
@@ -21,48 +20,65 @@ export default function Lawyer() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const strength = useMemo(() => passwordValidate(password), [password]);
+  const registerAuth = buildLawyerFields({
+    showPassword,
+    onToggleShowPassword: () => setShowPassword((prev) => !prev),
+    registerAuth: {
+      fullName,
+      cpf,
+      oabNumber,
+      uf,
+      specialization,
+      email,
+      password,
+    },
+    handleRegisterChange: (name, value) => {
+      switch (name) {
+        case "fullName":
+          setFullName(value);
+          break;
+        case "cpf":
+          setCpf(value);
+          break;
+        case "oabNumber":
+          setOabNumber(value);
+          break;
+        case "uf":
+          setUf(value);
+          break;
+        case "specialization":
+          setSpecialization(value);
+          break;
+        case "email":
+          setEmail(value);
+          break;
+        case "password":
+          setPassword(value);
+          break;
+      }
+    },
+    specializationOptions: specializationOptions.map((spec) => ({
+      label: spec,
+      value: spec,
+    })),
+  });
 
   return (
     <SignInTemplate
       title="Cadastro de Advogado"
       description="Solicite seu acesso profissional para começar a atender cidadãos na plataforma."
-      fields={buildLawyerFields({
-        showPassword,
-        onToggleShowPassword: () => setShowPassword((prev) => !prev),
-        registerAuth: { fullName, cpf, oabNumber, uf, specialization, email, password },
-        handleRegisterChange: (name, value) => {
-          switch (name) {
-            case "fullName":
-              setFullName(value);
-              break;
-            case "cpf":
-              setCpf(value);
-              break;
-            case "oabNumber":
-              setOabNumber(value);
-              break;
-            case "uf":
-              setUf(value);
-              break;
-            case "specialization":
-              setSpecialization(value);
-              break;
-            case "email":
-              setEmail(value);
-              break;
-            case "password":
-              setPassword(value);
-              break;
-          }
-        },
-        specializationOptions: specializationOptions.map((spec) => ({
-          label: spec,
-          value: spec,
-        })),
-      })}
-      onSubmit={() => {}}
-      submitLabel="Cadastrar"
-      disableSubmit={!acceptedTerms}
+      fields={registerAuth.fields}
+      onSubmit={() => {
+        if (!acceptedTerms) {
+          Toast.show({
+            type: "error",
+            text1: "Aceite os termos para prosseguir com o cadastro",
+          });
+          return;
+        }
+        registerAuth.onSubmit();
+      }}
+      submitLabel={registerAuth.titleButton}
       passwordStrength={{
         score: strength.score,
         color: strength.color,

@@ -24,11 +24,14 @@ export default function InputUI({
   onChangeText,
   onRightIconPress,
   inputOTP,
+  onFilledOTP,
   ...restProps
 }: IInputProps) {
   return inputOTP ? (
     <OtpInput
       autoFocus={false}
+      onTextChange={onChangeText}
+      onFilled={onFilledOTP}
       numberOfDigits={6}
       theme={{
         containerStyle: {

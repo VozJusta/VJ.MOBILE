@@ -5,50 +5,40 @@ import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
 import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
+import { useAuth } from "@/hooks/useAuth";
+import Toast from "react-native-toast-message";
 
 export default function Citizen() {
-  const [fullName, setFullName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { registerAuth, handleRegisterChange } = useAuth();
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const strength = useMemo(() => {
+    return passwordValidate(registerAuth.password);
+  }, [registerAuth.password]);
 
-  const strength = useMemo(() => passwordValidate(password), [password]);
-
-  
+  const citizenData = buildCitizenFields({
+    showPassword,
+    onToggleShowPassword: () => setShowPassword((prev) => !prev),
+    registerAuth,
+    handleRegisterChange,
+  });
   return (
     <SignInTemplate
       title="Cadastro de Cidadão"
       description="Faça seu cadastro para transformar sua indignação em mudança"
-      fields={buildCitizenFields({
-        showPassword,
-        onToggleShowPassword: () => setShowPassword((prev) => !prev),
-        registerAuth: { fullName, cpf, phone, email, password },
-        handleRegisterChange: (name, value) => {
-          switch (name) {
-            case "fullName":
-              setFullName(value);
-              break;
-            case "cpf":
-              setCpf(value);
-              break;
-            case "phone":
-              setPhone(value);
-              break;
-            case "email":
-              setEmail(value);
-              break;
-            case "password":
-              setPassword(value);
-              break;
-          }
-        },
-      })}
-      onSubmit={() => router.replace("/screens/citizen/home")}
-      submitLabel="Cadastrar"
-      disableSubmit={!acceptedTerms}
+      fields={citizenData.fields}
+      onSubmit={() => {
+        if (!acceptedTerms) {
+          Toast.show({
+            type: "error",
+            text1: "Aceite os termos para prosseguir com o cadastro",
+          });
+          return;
+        }
+        citizenData.onSubmit();
+      }}
+      submitLabel={citizenData.titleButton}
+      disableSubmit={citizenData.disableSubmit}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
