@@ -109,12 +109,12 @@ export default function SignInTemplate({
                   </View>
                   <View className="flex-row gap-[90px] mt-[8px]">
                     <View className="flex-col">
-                      {passwordStrength.checklist.slice(0, 2).map((item) => (
+                      {passwordStrength.checklist.slice(0, 3).map((item) => (
                         <CheckListFunction key={item.label} {...item} />
                       ))}
                     </View>
                     <View className="flex-col">
-                      {passwordStrength.checklist.slice(2, 4).map((item) => (
+                      {passwordStrength.checklist.slice(3).map((item) => (
                         <CheckListFunction key={item.label} {...item} />
                       ))}
                     </View>

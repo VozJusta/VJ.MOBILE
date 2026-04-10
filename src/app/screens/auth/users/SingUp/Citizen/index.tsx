@@ -3,11 +3,8 @@ import { Text } from "react-native";
 import { router } from "expo-router";
 import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
-import { formatCPF } from "@/utils/mask";
-import { formatPhone } from "@/utils/phoneValidate";
 import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 
 export default function Citizen() {
   const [fullName, setFullName] = useState("");
@@ -55,7 +52,7 @@ export default function Citizen() {
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: buildPasswordChecklist(password),
+        checklist: strength.checklist,
       }}
       extraActions={
         <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>

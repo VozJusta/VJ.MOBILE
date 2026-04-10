@@ -6,7 +6,6 @@ import passwordValidate from "@/utils/passwordValidate";
 import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
-import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 
 
 
@@ -67,7 +66,7 @@ export default function Lawyer() {
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: buildPasswordChecklist(password),
+        checklist: strength.checklist,
       }}
       extraActions={
         <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
