@@ -6,6 +6,7 @@ import { IButtonCases } from "@/interfaces/utils/cases/interface";
 import { casesData } from "@/utils/home/cases/data";
 import { MaterialIcons } from "@expo/vector-icons";
 import Report from "@/assets/svg/reportIcon.svg";
+import DocCard from "@/components/DocCard";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -16,9 +17,7 @@ export default function CaseSelected() {
     : [];
   return (
     <ScrollView style={{ flex: 1 }}>
-      <SafeAreaView
-        style={{ flex: 1, paddingTop: 20, gap: 24 }}
-      >
+      <SafeAreaView style={{ flex: 1, paddingTop: 20, gap: 24 }}>
         <View className="flex-row items-center gap-[16px]">
           <ButtonUI
             onPress={() => router.push("/screens/citizen/home")}
@@ -123,42 +122,16 @@ export default function CaseSelected() {
               </Text>
             </View>
             <View className="flex-col gap-[8px]">
-              <View className="bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] p-[16px] rounded-[16px] justify-between items-center flex-row">
-                <View className="flex-row gap-[12px] items-center">
-                  <View className="bg-[rgba(249,115,22,0.2)] rounded-[12px] w-[40px] justify-center items-center h-[40px]">
-                    <MaterialIcons
-                      name="description"
-                      color={"#F97316"}
-                      size={24}
-                    />
-                  </View>
-                  <View className="flex-col">
-                    <Text className="text-[14px] text-[#F1F5F9] font-inter">
-                      Contrato_Trabalho.pdf
-                    </Text>
-                    <Text className="text-[12px] text-[#94A3B8] font-interRegular">
-                      PDF • 2.4 MB
-                    </Text>
-                  </View>
-                </View>
-                <MaterialIcons name="download" color={"#64748B"} size={20} />
-              </View>
-              <View className="bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] p-[16px] rounded-[16px] justify-between items-center flex-row">
-                <View className="flex-row gap-[12px] items-center">
-                  <View className="bg-[rgba(59,130,246,0.2)] rounded-[12px] w-[40px] justify-center items-center h-[40px]">
-                    <MaterialIcons name="image" color={"#3B82F6"} size={24} />
-                  </View>
-                  <View className="flex-col">
-                    <Text className="text-[14px] text-[#F1F5F9] font-inter">
-                      Screenshot_Ponto.png
-                    </Text>
-                    <Text className="text-[12px] text-[#94A3B8] font-interRegular">
-                      PNG • 840 KB
-                    </Text>
-                  </View>
-                </View>
-                <MaterialIcons name="visibility" color={"#64748B"} size={20} />
-              </View>
+              <DocCard
+                nameFile="Contrato_aluguel"
+                date="14 Out 2023"
+                size="14MB"
+              />
+              <DocCard
+                nameFile="Screenshot_Ponto"
+                date="14 Out 2023"
+                size="840KB"
+              />
             </View>
             <View className="w-full mt-[9px] mb-[24px]">
               <ButtonUI
