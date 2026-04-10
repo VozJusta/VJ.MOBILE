@@ -18,7 +18,7 @@ export default function ProfileCitizen() {
     const router = useRouter();
       if (token === null) {
         Alert.alert("Token de acesso não encontrado");
-        router.replace("/screens/auth/login");
+        router.push("/screens/auth/login");
         return null;
       }
     const decodedToken = jwtDecode<IDecodedToken>(token);

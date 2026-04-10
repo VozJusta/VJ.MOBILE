@@ -45,7 +45,7 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.replace("/screens/citizen/home");
+    router.push("/screens/citizen/home");
     return;
   };
 
@@ -68,7 +68,7 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.replace("/screens/auth/ForgotPassword/Update");
+    router.push("/screens/auth/ForgotPassword/Update");
     setLoading(false);
   };
 

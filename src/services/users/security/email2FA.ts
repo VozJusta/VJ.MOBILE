@@ -32,8 +32,6 @@ export async function Email2FA(email: string) {
       data: json || text,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

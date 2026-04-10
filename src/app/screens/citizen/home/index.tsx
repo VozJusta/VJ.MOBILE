@@ -17,7 +17,7 @@ export default function Home() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (token === null) {
     Alert.alert("Token de acesso não encontrado");
-    router.replace("/screens/auth/login");
+    router.push("/screens/auth/login");
     return null;
   }
   const decodedToken = jwtDecode<IDecodedToken>(token);
@@ -55,7 +55,7 @@ export default function Home() {
                 <MaterialIcons name="arrow-forward" size={20} color="white" />
               </View>
             }
-            onPress={() => router.replace("/screens/citizen/home/newRequest")}
+            onPress={() => router.push("/screens/citizen/home/newRequest")}
             gradient={true}
             hover={false}
             iconLeft={false}
@@ -68,7 +68,7 @@ export default function Home() {
               Meus Casos
             </Text>
             <ButtonUI
-              onPress={() => router.replace("/screens/citizen/home/listCases")}
+              onPress={() => router.push("/screens/citizen/home/listCases")}
               children={
                 <Text className="font-inter text-[14px] text-[#2563EB]">
                   Ver todos
@@ -83,7 +83,7 @@ export default function Home() {
           {casesData.slice(0, 2).map((item) => (
             <ButtonUI
               key={item.id}
-              onPress={() => router.replace(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
+              onPress={() => router.push(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
               gradient={false}
               hover={false}
               iconLeft

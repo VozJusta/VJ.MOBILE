@@ -7,6 +7,7 @@ import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 import { useAuth } from "@/hooks/useAuth";
+import Toast from "react-native-toast-message";
 
 export default function Citizen() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,9 +28,18 @@ export default function Citizen() {
       title="Cadastro de Cidadão"
       description="Faça seu cadastro para transformar sua indignação em mudança"
       fields={citizenData.fields}
-      onSubmit={citizenData.onSubmit}
-      submitLabel={citizenData.submitLabel}
-      disableSubmit={!acceptedTerms || citizenData.disableSubmit}
+      onSubmit={() => {
+        if (!acceptedTerms) {
+          Toast.show({
+            type: "error",
+            text1: "Aceite os termos para prosseguir com o cadastro",
+          });
+          return;
+        }
+        citizenData.onSubmit();
+      }}
+      titleButton={citizenData.titleButton}
+      disableSubmit={citizenData.disableSubmit}
       passwordStrength={{
         score: strength.score,
         color: strength.color,

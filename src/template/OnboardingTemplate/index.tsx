@@ -27,17 +27,12 @@ export default function OnboardingTemplate() {
   };
 
   return (
-    <LinearGradient
-      style={{ flex: 1 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.8, y: 1 }}
-      colors={["#000000", "#052F5F"]}
-    >
+
       <SafeAreaView style={{ flex: 1 }}>
         <View className="flex min-w-full items-end mb-16">
           {index < onboardingData.length - 1 ? (
             <ButtonUI
-              onPress={() => router.replace("/screens/Onboarding/roles")}
+              onPress={() => router.push("/screens/Onboarding/roles")}
               gradient={false}
               hover={false}
               iconLeft={false}
@@ -77,7 +72,7 @@ export default function OnboardingTemplate() {
                 gradient={false}
                 goNext
                 onPress={() =>
-                  router.replace("/screens/Onboarding/roles")
+                  router.push("/screens/Onboarding/roles")
                 }
                 hover={false}
                 size="w-[56px] h-[56px]"
@@ -101,6 +96,5 @@ export default function OnboardingTemplate() {
           />
         </View>
       </SafeAreaView>
-    </LinearGradient>
   );
 }

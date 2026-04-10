@@ -37,23 +37,6 @@ export function buildCitizenFields({
           type: "error",
           text1: response.fields && response.fields[0],
         });
-
-        const validateEmail2FA = await Email2FA(data.email);
-        if (!validateEmail2FA.success) {
-          Toast.show({
-            type: "error",
-            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
-          });
-          return;
-        }
-        Toast.show({
-          type: "success",
-          text1: validateEmail2FA.data,
-        });
-
-        router.push(
-          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(registerAuth.email)}`,
-        );
         return;
       }
 
@@ -62,7 +45,7 @@ export function buildCitizenFields({
 
       Toast.show({
         type: "success",
-        text1: "Cadastro realizado",
+        text1: "Cidadão criado",
       });
 
       const validateEmail2FA = await Email2FA(data.email);
@@ -73,7 +56,6 @@ export function buildCitizenFields({
         });
         return;
       }
-
       Toast.show({
         type: "success",
         text1: validateEmail2FA.data,
@@ -82,6 +64,7 @@ export function buildCitizenFields({
       router.push(
         `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(registerAuth.email)}`,
       );
+      return;
     } finally {
       setLoading(false);
     }
@@ -153,7 +136,7 @@ export function buildCitizenFields({
       },
     ],
     onSubmit: () => handleRegister(registerAuth),
-    submitLabel: loading ? "carregando..." : "continuar",
     disableSubmit: loading,
+    titleButton: loading ? "Carregando..." : "Continuar",
   };
 }

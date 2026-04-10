@@ -28,7 +28,7 @@ export default function SignInTemplate({
   description,
   fields,
   onSubmit,
-  submitLabel,
+  titleButton,
   disableSubmit,
   passwordStrength,
   extraActions,
@@ -131,7 +131,7 @@ export default function SignInTemplate({
                 >
                   <View className="flex-1 justify-center items-center">
                     <Text className="text-[16px] font-interBold text-white text-center">
-                      {submitLabel}
+                      {titleButton}
                     </Text>
                   </View>
                 </ButtonUI>

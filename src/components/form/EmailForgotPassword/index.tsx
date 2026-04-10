@@ -28,7 +28,7 @@ export function EmailForgotPassword() {
         type: "error",
         text1: response.fields && response.fields[0],
       });
-      router.replace("/screens/auth/ForgotPassword/Code");
+      router.push("/screens/auth/ForgotPassword/Code");
       setLoading(false);
       return;
     }
@@ -45,7 +45,7 @@ export function EmailForgotPassword() {
       type: "success",
       text1: "Código enviado com sucesso!",
     });
-    router.replace("/screens/auth/ForgotPassword/Code");
+    router.push("/screens/auth/ForgotPassword/Code");
   };
   return (
     <>
@@ -90,7 +90,7 @@ export function EmailForgotPassword() {
         bg="bg-transparent"
         gradient={false}
         hover={false}
-        onPress={() => router.replace("/screens/auth/users/SingIn")}
+        onPress={() => router.push("/screens/auth/users/SingIn")}
         children={
           <View style={{ gap: 8 }} className="flex-row items-center gap-2">
             <MaterialIcons

@@ -5,12 +5,14 @@ import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
 import { useAuth } from "@/hooks/useAuth";
-import { useGoogleAuth } from "@/hooks/useGoogleAuth";
+
 
 export default function Login() {
+
   const { loginAuth, handleLoginChange, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const { request, promptAsync, userInfo } = useGoogleAuth();
+
+
   const signInData = buildLoginFields({
     loginAuth,
     handleLoginChange,
@@ -24,7 +26,7 @@ export default function Login() {
       description="Acesse sua conta para continuar"
       fields={signInData.fields}
       onSubmit={signInData.onSubmit}
-      submitLabel={loading ? "Carregando..." : "Entrar"}
+      titleButton={signInData.titleButton}
       disableSubmit={loading || signInData.disableSubmit}
       extraActions={
         <>
@@ -44,8 +46,8 @@ export default function Login() {
           </View>
 
           <TouchableOpacity
-            onPress={() => promptAsync()}
-            disabled={!request}
+            onPress={() => {}}
+            disabled={true}
             className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3"
           >
             <GoogleIcon width={20} height={20} />

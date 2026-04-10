@@ -105,5 +105,7 @@ export function buildLoginFields({
     ],
     onSubmit: () => handleLogin(loginAuth),
     disableSubmit: loading,
+    titleButton: loading ? "Carregando..." : "Entrar",
+  
   };
 }

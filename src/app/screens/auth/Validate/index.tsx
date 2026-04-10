@@ -30,7 +30,7 @@ export default function ValidateEmail() {
           : "Enviamos um código de 6 dígitos para seu email"
       }
       onCodeVerified={() =>
-        router.replace(
+        router.push(
           resolvedSource === "lawyer"
             ? "/screens/lawyer/home"
             : "/screens/citizen/home",
