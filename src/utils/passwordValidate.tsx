@@ -22,8 +22,8 @@ export default function passwordValidate(password: string): PasswordStrength {
     } else if (score === 4) {
         color = "#67f55d";
     } else {
-        color = "#018d06";
-    }
+        color = "#67f55d";
+    } 
 
     return { score, color };
 }

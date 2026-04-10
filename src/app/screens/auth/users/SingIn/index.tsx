@@ -4,23 +4,30 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
+import { useAuth } from "@/hooks/useAuth";
+
 
 export default function Login() {
+
+  const { loginAuth, handleLoginChange, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
-  const loading = false
+
+  const signInData = buildLoginFields({
+    loginAuth,
+    handleLoginChange,
+    showPassword,
+    onToggleShowPassword: () => setShowPassword((prev) => !prev),
+  });
 
   return (
     <SignInTemplate
       title="Entrar no VozJusta"
       description="Acesse sua conta para continuar"
-      fields={buildLoginFields({
-        showPassword,
-        onToggleShowPassword: () => setShowPassword((p) => !p),
-      })}
-      onSubmit={() => {}}
-      submitLabel={loading ? "Carregando..." : "Entrar"}
-      disableSubmit={loading}
+      fields={signInData.fields}
+      onSubmit={signInData.onSubmit}
+      titleButton={signInData.titleButton}
+      disableSubmit={loading || signInData.disableSubmit}
       extraActions={
         <>
           <Text
@@ -38,7 +45,11 @@ export default function Login() {
             <View className="flex-1 h-[1px] bg-white/10" />
           </View>
 
-          <TouchableOpacity className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3">
+          <TouchableOpacity
+            onPress={() => {}}
+            disabled={true}
+            className="w-full h-[56px] rounded-[16px] border border-white/10 bg-[rgba(255,255,255,0.03)] flex-row items-center justify-center gap-3"
+          >
             <GoogleIcon width={20} height={20} />
             <Text className="text-white text-[14px] font-inter">Google</Text>
           </TouchableOpacity>

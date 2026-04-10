@@ -1,4 +1,3 @@
-import { ISignInTemplateProps } from "../../../../interfaces/template/SignInTemplate";
 
 export const specializationOptions = [
     "Administrativo",

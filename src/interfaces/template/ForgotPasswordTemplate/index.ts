@@ -16,9 +16,13 @@ type CodeScreenOptions = {
 
 export type IForgotPasswordProps =
   | ({
+      email: string;
       screen: ScreensForgotPassword.Email | ScreensForgotPassword.Code;
     } & CodeScreenOptions)
   | ({
+      email: string;
+      labelButton?: string;
+      onSubmit?: () => void;
       screen: ScreensForgotPassword.Update;
       passwordStrength: PasswordStrengthSection;
       newPassword: string;

@@ -1,40 +1,37 @@
-import { BASE_URL } from "@/settings/BASE_URL";
+import { BASE_URL } from "@/services/BASE_URL";
 
 export async function Email2FA(email: string) {
   try {
-    if (!BASE_URL) {
-      return {
-        success: false,
-        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
-      };
-    }
-
     const response = await fetch(`${BASE_URL}/auth/send/email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify({
-        email: email,
-      }),
+      body: JSON.stringify({ email }),
     });
 
+    const text = await response.text();
+
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch {
+      json = null;
+    }
 
     if (!response.ok) {
       return {
         success: false,
-        fields: ["Erro na validação de 2 Fatores"],
+        fields: json?.fields || [json?.message || text],
       };
     }
-    const message = await response.text();
 
     return {
       success: true,
-      data: message,
+      data: json || text,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

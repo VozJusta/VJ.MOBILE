@@ -1,6 +1,9 @@
 import { ScreensForgotPassword } from "@/interfaces/template/ForgotPasswordTemplate";
 import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
+import { usePathname } from "expo-router";
 
 export default function ForgotPasswordEmail() {
-  return <ForgotPasswordTemplate screen={ScreensForgotPassword.Email} />;
+  const pathName = usePathname();
+
+  return <ForgotPasswordTemplate email="" screen={ScreensForgotPassword.Email} />;
 }

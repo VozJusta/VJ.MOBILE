@@ -8,6 +8,7 @@ import Document from "@/assets/svg/icons/document.svg";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import Toast from "react-native-toast-message";
 
 export default function DocumentsCitizen() {
   const [checkedFile, setCheckedFile] = useState<DocumentPicker.DocumentPickerAsset[] | null>(
@@ -22,7 +23,7 @@ export default function DocumentsCitizen() {
     setCheckedFile(result.assets);
 
     if (result.canceled === false) {
-      console.log("Arquivo selecionado:", result.assets[0]);
+      return null
     }
   };
   return (

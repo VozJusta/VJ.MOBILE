@@ -1,25 +1,38 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text, ScrollView, Alert } from "react-native";
+import Logo from "@/assets/svg/icons/logo.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
+import { casesData } from "@/utils/home/cases/data";
+import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
+import { useAccessTokenStorage } from "@/store/token.store";
+import { jwtDecode } from "jwt-decode";
 
 export default function Home() {
   const router = useRouter();
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  if (token === null) {
+    Alert.alert("Token de acesso não encontrado");
+    router.push("/screens/auth/login");
+    return null;
+  }
+  const decodedToken = jwtDecode<IDecodedToken>(token);
+
   return (
     <ScrollView>
       <SafeAreaView
         style={{ flex: 1 }}
-        className=" gap-[32px]"
+        className="gap-[32px]"
       >
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
-            Olá, Ricardo!
+            Olá, {decodedToken.fullName}!
           </Text>
           <Text className="text-[16px] text-[#94A3B8] font-interLight">
             Bem-vindo ao seu painel jurídico.
@@ -42,7 +55,7 @@ export default function Home() {
                 <MaterialIcons name="arrow-forward" size={20} color="white" />
               </View>
             }
-            onPress={() => router.replace("/screens/citizen/home/newRequest")}
+            onPress={() => router.push("/screens/citizen/home/newRequest")}
             gradient={true}
             hover={false}
             iconLeft={false}
@@ -54,56 +67,43 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <Text className="font-inter text-[14px] text-[#2563EB]">
-              Ver todos
-            </Text>
+            <ButtonUI
+              onPress={() => router.push("/screens/citizen/home/listCases")}
+              children={
+                <Text className="font-inter text-[14px] text-[#2563EB]">
+                  Ver todos
+                </Text>
+              }
+              gradient={false}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+            />
           </View>
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Ação Trabalhista - XPTO
-              </Text>
-            }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Em Análise"
-            iconName="article"
-            paddingButtonStatus={"p-[16px]"}
-          />
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Indenização Danos Morais
-              </Text>
-            }
-            onPress={() => {}}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Concluído"
-            iconName="verified"
-            paddingButtonStatus={"p-[16px]"}
-          />
+          {casesData.slice(0, 2).map((item) => (
+            <ButtonUI
+              key={item.id}
+              onPress={() => router.push(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
+              gradient={false}
+              hover={false}
+              iconLeft
+              iconName={item.icon}
+              status={item.status}
+              colorsStatus={item.color}
+              children={<Text>{item.title}</Text>}
+              paddingButtonStatus={"p-[16px]"}
+            />
+          ))}
         </View>
-        <LinearGradient
-          style={{
+        <View
+        style={{
             borderRadius: 24,
             backgroundColor: "rgba(255,255,255,0.03)",
             height: 225,
             paddingTop: 24,
             paddingHorizontal: 24,
-            paddingBottom: 56,
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0.8, y: 1 }}
-          colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
-        >
+            marginBottom: 128,
+          }}>
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -133,7 +133,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-        </LinearGradient>
+          </View>
       </SafeAreaView>
     </ScrollView>
   );

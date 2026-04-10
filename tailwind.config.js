@@ -23,9 +23,9 @@ module.exports = {
           custom: "0px 4px 10px rgba(0,0,0,0.2)",
         },
       },
-       boxShadow: {
+      boxShadow: {
         Button: {
-           custom: "0px 4px 10px rgba(0,0,0,0.2)"
+          custom: "0px 4px 10px rgba(0,0,0,0.2)",
         },
       },
       fontFamily: {

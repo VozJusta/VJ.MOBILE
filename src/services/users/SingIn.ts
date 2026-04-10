@@ -1,20 +1,13 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
-import { BASE_URL } from "@/settings/BASE_URL";
+import { BASE_URL } from "@/services/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
+import { useXTokenStorage } from "@/store/token.store";
+import { set } from "zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
+  const setToken = useXTokenStorage.getState().setToken;
   try {
-    if (!BASE_URL) {
-      return {
-        success: false,
-        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
-      };
-    }
-
-    console.log("api: ", BASE_URL);
-    console.log("dados batendo na api: ", data);
-
     const validate = ZodValidate(ZodLoginSchema, data);
 
     if (!validate.success) {
@@ -23,7 +16,6 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         fields: validate.fields,
       };
     }
-    console.log(validate);
 
     const response = await fetch(`${BASE_URL}/auth/authenticate`, {
       method: "POST",
@@ -36,7 +28,12 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         password: validate.data?.password,
       }),
     });
-    console.log(response);
+
+    const token = response.headers.get("x-security-token");
+    if (token) {
+      setToken(token);
+    }
+
     const json = await response.json();
     if (!response.ok) {
       return {
@@ -44,18 +41,11 @@ export async function SingInCitizen(data: ZodLoginTypes) {
         fields: json?.errors || [json?.message || "Erro ao autenticar"],
       };
     }
-    console.log("message:", response.statusText);
-
-    console.log("response:", response);
-    console.log("json:", json);
-
     return {
       success: true,
       data: json,
     };
   } catch (err: any) {
-    console.log("ERRO NA REQUISIÇÃO:", err);
-
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

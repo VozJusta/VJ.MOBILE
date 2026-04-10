@@ -1,3 +1,5 @@
+import { IButtonProfile } from "@/interfaces/interfaces";
+
 export const ButtonsProfile:IButtonProfile[] = [
     {
         bgIcon: "rgba(59,130,246,0.1)",
