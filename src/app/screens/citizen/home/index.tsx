@@ -85,15 +85,7 @@ export default function Home() {
             title="Reclamação contra vizinho barulhento"
           />
         </View>
-        <View
-        style={{
-            borderRadius: 24,
-            backgroundColor: "rgba(255,255,255,0.03)",
-            height: 225,
-            paddingTop: 24,
-            paddingHorizontal: 24,
-            marginBottom: 128,
-          }}>
+        <View className="rounded-3xl background-[rgba(255,255,255,0.03)] h-fit p-6 w-full gap-[24px]">
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -123,7 +115,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-          </View>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
