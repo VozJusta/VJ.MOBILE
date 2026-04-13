@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 
 export default function CategoryCard(request: ICategoryCard) {
   return (
-    <View className="w-full flex-row p-[20px] justify-between items-center bg-[#091421] rounded-xl border border-[#1D2026]">
+    <View className="w-full flex-row p-[20px] justify-between items-center bg-[rgb(255,255,255,0.03)] rounded-xl border border-solid border-[rgba(255,255,255,0.1)]">
       <View className="flex-row gap-[16px] items-center">
         <View
           style={{ backgroundColor: request.bgIcon }}
