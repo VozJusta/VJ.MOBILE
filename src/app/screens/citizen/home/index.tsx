@@ -18,7 +18,7 @@ export default function Home() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (token === null) {
     Alert.alert("Token de acesso não encontrado");
-    router.push("/screens/auth/login");
+    router.push("/screens/auth/users/SignIn");
     return null;
   }
   const decodedToken = jwtDecode<IDecodedToken>(token);
