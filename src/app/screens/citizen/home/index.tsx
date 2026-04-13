@@ -93,7 +93,9 @@ export default function Home() {
             paddingTop: 24,
             paddingHorizontal: 24,
             marginBottom: 128,
-          }}>
+          }}
+          className="rounded-3xl bg-[rgba(255,255,255,0.03)] h-fit p-6 gap-6 w-full"
+          >
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
