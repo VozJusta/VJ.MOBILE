@@ -10,7 +10,11 @@
     },
     "extra": {
       "router": {
-        "origin": false
+        "origin": false,
+        "root": "src/app"
+      },
+      "eas": {
+        "projectId": "c1d828af-bf48-4a38-9fb5-0e9014f1aa3b"
       }
     },
     "userInterfaceStyle": "light",
