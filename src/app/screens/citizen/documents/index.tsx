@@ -8,13 +8,8 @@ import Document from "@/assets/svg/icons/document.svg";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-<<<<<<< HEAD
 import { router } from "expo-router";
-import EvidencesCard from "@/components/EnvidencesCard";
 import DocCard from "@/components/DocCard";
-=======
-import Toast from "react-native-toast-message";
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2
 
 export default function DocumentsCitizen() {
   const [checkedFile, setCheckedFile] = useState<DocumentPicker.DocumentPickerAsset[] | null>(

@@ -102,7 +102,7 @@ export default function Lawyer() {
           Já possui registro?{" "}
           <Text
             className="text-white underline font-interBold"
-            onPress={() => router.push("/screens/auth/users/SingIn")}
+            onPress={() => router.push("/screens/auth/users/SingIn/")}
           >
             Fazer Login
           </Text>

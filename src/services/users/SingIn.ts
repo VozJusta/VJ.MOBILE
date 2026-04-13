@@ -1,10 +1,6 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
-<<<<<<< HEAD:src/settings/users/citizen/SingIn.ts
 import { BASE_URL } from "@/settings/BASE_URL";
-=======
-import { BASE_URL } from "@/services/BASE_URL";
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2:src/services/users/SingIn.ts
 import { ZodLoginSchema } from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/token.store";
 import { set } from "zod";

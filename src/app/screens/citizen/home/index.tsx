@@ -9,12 +9,9 @@ import { useRouter } from "expo-router";
 import { casesData } from "@/utils/home/cases/data";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
-<<<<<<< HEAD
-import CaseCard from "@/components/CaseCard";
-=======
 import { useAccessTokenStorage } from "@/store/token.store";
 import { jwtDecode } from "jwt-decode";
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2
+import CaseCard from "@/components/CaseCard";
 
 export default function Home() {
   const router = useRouter();
@@ -27,16 +24,8 @@ export default function Home() {
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
-<<<<<<< HEAD
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }} className=" gap-[32px]">
-=======
-    <ScrollView>
-      <SafeAreaView
-        style={{ flex: 1 }}
-        className="gap-[32px]"
-      >
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
@@ -76,7 +65,6 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-<<<<<<< HEAD
             <Text
               className="font-inter text-[14px] text-[#2563EB]"
               onPress={() => router.push("/screens/citizen/home/listCases")}
@@ -96,35 +84,6 @@ export default function Home() {
             status="Concluído"
             title="Reclamação contra vizinho barulhento"
           />
-=======
-            <ButtonUI
-              onPress={() => router.push("/screens/citizen/home/listCases")}
-              children={
-                <Text className="font-inter text-[14px] text-[#2563EB]">
-                  Ver todos
-                </Text>
-              }
-              gradient={false}
-              hover={false}
-              iconLeft={false}
-              paddingButtonStatus={""}
-            />
-          </View>
-          {casesData.slice(0, 2).map((item) => (
-            <ButtonUI
-              key={item.id}
-              onPress={() => router.push(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
-              gradient={false}
-              hover={false}
-              iconLeft
-              iconName={item.icon}
-              status={item.status}
-              colorsStatus={item.color}
-              children={<Text>{item.title}</Text>}
-              paddingButtonStatus={"p-[16px]"}
-            />
-          ))}
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2
         </View>
         <View
         style={{

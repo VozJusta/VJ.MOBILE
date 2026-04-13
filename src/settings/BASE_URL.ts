@@ -1,4 +1,4 @@
-const rawBaseUrl =
+const rawBaseUrl: string =
 	process.env.EXPO_PUBLIC_API_URL
 
 export const BASE_URL = rawBaseUrl.replace(/\/$/, "");

@@ -1,10 +1,6 @@
 import { IButtonProfile } from "@/interfaces/interfaces";
 
-<<<<<<< HEAD
 export const ButtonsProfile: IButtonProfile[] = [
-=======
-export const ButtonsProfile:IButtonProfile[] = [
->>>>>>> eb590d05b6ffb480efbb1da22e4640e1367c4ca2
     {
         bgIcon: "rgba(59,130,246,0.1)",
         colorIcon: "#3C77E8",
