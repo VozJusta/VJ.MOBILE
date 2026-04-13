@@ -85,7 +85,7 @@ export default function Home() {
             title="Reclamação contra vizinho barulhento"
           />
         </View>
-        <View className="rounded-3xl background-[rgba(255,255,255,0.03)] h-fit p-6 w-full gap-[24px]">
+        <View className="rounded-3xl bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] h-fit p-6 w-full gap-[24px]">
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
