@@ -1,0 +1,14 @@
+import { TextInput, TextInputProps } from "react-native";
+
+export default function TextArea(props: TextInputProps) {
+  return (
+    <TextInput
+      {...props}
+      textAlignVertical="top"
+      className=" text-white w-full min-h-[200px] p-5 border border-solid border-white/10 bg-[rgba(255,255,255,0.03)] rounded-[16px] "
+      placeholderTextColor={"#64748B"}
+      placeholderClassName="text-[16px] font-interRegular"
+      multiline={true}
+    />
+  );
+}
