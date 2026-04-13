@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.2",
     "@expo-google-fonts/montserrat": "^0.4.2",
+    "@expo/metro": "^55.0.0",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-masked-view/masked-view": "0.3.2",
@@ -35,6 +36,7 @@
     "nativewind": "^4.2.2",
     "pnpm": "^10.32.1",
     "prettier-plugin-tailwindcss": "^0.5.14",
+    "pretty-format": "^30.3.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
@@ -57,6 +59,7 @@
   },
   "devDependencies": {
     "@expo/ngrok": "github:expo/ngrok",
+    "@types/node": "^25.6.0",
     "@types/react": "~19.1.0",
     "expo-module-scripts": "5.0.8",
     "madge": "^8.0.0",
