@@ -1,9 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
-export interface OnboardingRef {
-  goNext: () => void;
-  goToPage: (pageIndex: number, animated?: boolean) => void;
-}
+
 
 export interface UfSelectProps {
   label: string;
