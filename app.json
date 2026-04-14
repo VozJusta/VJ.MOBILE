@@ -38,9 +38,7 @@
     "plugins": [
       [
         "expo-router",
-        {
-          "root": "src/app"
-        }
+        { "root": "src/app" }
       ],
       "expo-font",
       "expo-web-browser"

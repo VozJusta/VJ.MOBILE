@@ -1,36 +1,22 @@
 import "@/styles/global.css";
-import { Stack, useRootNavigationState, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import { useAppFonts } from "@/assets/fonts/font";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useAccessTokenStorage } from "@/store/token.store";
-import { useEffect } from "react";
+import { InitialRedirect } from "@/template/InitialRedirect";
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
-  const accessToken = useAccessTokenStorage((state) => state.accessToken);
-  const router = useRouter();
-  const navigationState = useRootNavigationState();
-
-  useEffect(() => {
-    if (!navigationState?.key) return;
-    const timeout = setTimeout(() => {
-    if (accessToken) {
-      router.replace("/screens/citizen/home");
-    }
-
-  }, 300);
-  return () => clearTimeout(timeout);
-  }, [accessToken, navigationState?.key]);
 
   if (!fontsLoaded) return null;
   return (
     <>
       <StatusBar hidden />
       <Stack screenOptions={{ headerShown: false }} />
+      <InitialRedirect />
       <Toast
         config={{
           success: ({ text1, text2 }) => (
