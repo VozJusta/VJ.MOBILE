@@ -2,22 +2,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 
 
-export interface UfSelectProps {
-  label: string;
-  value: string;
-  style?: Object;
-  open?: boolean;
-  onValueChange: (value: string) => void;
-  onOpenChange?: (open: boolean) => void;
-  onInteractionChange?: (interacting: boolean) => void;
-}
 
-export interface CareerSelectProps {
-  label: string;
-  value: string;
-  options: string[];
-  onValueChange: (value: string) => void;
-}
+
 
 export interface ICaseSelectProps {
   title: string;
