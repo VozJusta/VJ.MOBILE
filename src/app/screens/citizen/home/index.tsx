@@ -46,7 +46,7 @@ export default function Home() {
           </Text>
           <ButtonUI
             children={
-              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
+              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px] h-full">
                 <Text className="text-white font-interSemiBold text-[14px]">
                   Relatar Novo Caso
                 </Text>
