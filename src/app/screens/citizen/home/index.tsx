@@ -53,7 +53,7 @@ export default function Home() {
                 <MaterialIcons name="arrow-forward" size={20} color="white" />
               </View>
             }
-            onPress={() => router.push("/screens/citizen/home/newRequest")}
+            onPress={() => router.push("/screens/citizen/chat")}
             gradient={true}
             hover={false}
             iconLeft={false}

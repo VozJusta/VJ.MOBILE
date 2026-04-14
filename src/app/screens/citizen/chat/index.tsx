@@ -1,20 +1,61 @@
+import CategoryCard from "@/components/CategoryCard";
 import Header from "@/components/Header";
-import { Text, View } from "react-native";
+import ButtonUI from "@/ui/ButtonUI";
+import TextArea from "@/ui/TextareaUI";
+import { newRequestData } from "@/utils/home/newRequest/data";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
-export default function ChatCitizenScreen() {
+export default function Chat() {
+  const router = useRouter();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Header title="CHAT" isFirstPage={true} isCitizen={true} />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        <SafeAreaView style={{ flex: 1, gap: 32 }}>
+          <Header title="CHAT" isFirstPage={true} isCitizen={true} />
+          <View className="flex-col mt-[24px] gap-[16px] w-full">
+            <Text className="text-[14px] text-[#94A3B8] font-inter uppercase">
+              Selecione uma categoria
+            </Text>
 
-      <View className="mt-[40px] rounded-[24px] border border-white/10 bg-[rgba(255,255,255,0.03)] p-[20px]">
-        <Text className="text-[20px] text-white font-interSemiBold">
-          Chat em breve
-        </Text>
-        <Text className="mt-[8px] text-[14px] text-[#94A3B8] font-interRegular">
-          Esta area sera liberada em uma proxima atualizacao.
-        </Text>
-      </View>
-    </SafeAreaView>
+            {newRequestData.map((request, index) => (
+              <CategoryCard {...request} key={index} />
+            ))}
+          </View>
+          {/* <View className="mt-[32px] gap-[16px]">
+          <ButtonAudio />
+        </View> */}
+          <TextArea
+            placeholder="Descreva o que aconteceu com suas 
+próprias palavras..."
+          />
+        </SafeAreaView>
+
+        <ButtonUI
+          children={
+            <View className="justify-center items-center flex-1">
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Iniciar análise por IA
+              </Text>
+            </View>
+          }
+          onPress={() => router.push("/screens/citizen/home/conversation")}
+          gradient={true}
+          hover={false}
+          iconLeft={false}
+          paddingButtonStatus={""}
+        />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
