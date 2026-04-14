@@ -22,8 +22,8 @@ export default function RootLayout() {
       router.replace("/screens/citizen/home");
     }
 
-    return () => clearTimeout(timeout);
   }, 300);
+  return () => clearTimeout(timeout);
   }, [accessToken, navigationState?.key]);
 
   if (!fontsLoaded) return null;
