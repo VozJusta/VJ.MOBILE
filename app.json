@@ -4,6 +4,7 @@
     "slug": "vj-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./src/assets/svg/icons/icon.png",
     "scheme": "meuapp",
     "experiments": {
       "tsconfigPaths": true
