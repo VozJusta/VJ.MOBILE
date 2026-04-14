@@ -18,12 +18,6 @@ export interface IButtonProfile {
   NextButton: boolean;
 }
 
-export type Role = "citizen" | "lawyer";
-export interface IRoleStore {
-  role: Role | null;
-  setRole: (role: Role) => void;
-  clearRole: () => void;
-}
 
 export interface IButtonRequest {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
