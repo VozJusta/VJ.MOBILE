@@ -32,8 +32,6 @@ export async function ValidateEmail(
     const text = await response.text();
 
     const jsonResponse: ITokenService = JSON.parse(text);
-    setAccessToken(jsonResponse.access_token || "");
-    setRefreshToken(jsonResponse.refresh_token || "");
     
     if (!response.ok) {
       return {
@@ -41,7 +39,10 @@ export async function ValidateEmail(
         fields: jsonResponse.message || "Erro desconhecido",
       };
     }
-
+    
+    setAccessToken(jsonResponse.access_token || "");
+    setRefreshToken(jsonResponse.refresh_token || "");
+    
     return {
       success: true,
       data: "",

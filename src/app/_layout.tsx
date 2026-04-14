@@ -1,16 +1,32 @@
 import "@/styles/global.css";
-import { Stack } from "expo-router";
+import { Stack, useRootNavigationState, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 import { View, Text, ScrollView } from "react-native";
 import { useAppFonts } from "@/assets/fonts/font";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAccessTokenStorage } from "@/store/token.store";
+import { useEffect } from "react";
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
-  if (!fontsLoaded) return null;
+  const accessToken = useAccessTokenStorage((state) => state.accessToken);
+  const router = useRouter();
+  const navigationState = useRootNavigationState();
 
+  useEffect(() => {
+    if (!navigationState?.key) return;
+    const timeout = setTimeout(() => {
+    if (accessToken) {
+      router.replace("/screens/citizen/home");
+    }
+
+    return () => clearTimeout(timeout);
+  }, 300);
+  }, [accessToken, navigationState?.key]);
+
+  if (!fontsLoaded) return null;
   return (
     <>
       <StatusBar hidden />
