@@ -1,21 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
-
-
-
-
-
-export interface ICaseSelectProps {
-  title: string;
-}
-
-
-
-export interface IButtonRequest {
+export interface IButtonProfile {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
   colorIcon: string;
   bgIcon: string;
-  title: string;
+  namebutton: string;
   path: string;
-  description: string;
+  NextButton: boolean;
 }
