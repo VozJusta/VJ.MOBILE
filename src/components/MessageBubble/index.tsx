@@ -7,26 +7,26 @@ export interface MessageBubbleProps {
   userName?: string;
 }
 
-export default function (props: MessageBubbleProps) {
+export default function MessageBubble(props: MessageBubbleProps) {
   return (
     <View
-      className="flex flex-col gap-2 items-start w-full h-fit"
-      style={{ alignSelf: props.isUser ? "flex-end" : "flex-start" }}
+      className="flex flex-col gap-2 w-full h-fit"
+      style={{ alignItems: props.isUser ? "flex-end" : "flex-start" }}
     >
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
-        {props.isUser ? props.userName : "VozJusta AI"}
+        {props.userName ? props.userName : "VozJusta AI"}
       </Text>
 
       <View
-        className="w-[90%] flex-1 flex text-left p-5 rounded-[16px] bg-[rgba(255,255,255,0.03)]"
+        className="w-[90%] p-5"
         style={{
           backgroundColor: props.isUser
-            ? "rgba(255, 255, 255, 0.03)"
-            : "#135BEC",
-          alignSelf: props.isUser ? "flex-end" : "flex-start",
-          borderRadius: props.isUser
-            ? "16px 0px 16px 16px"
-            : "0px 16px 16px 16px",
+            ? "#135BEC"
+            : "rgba(255, 255, 255, 0.1)",
+          borderTopLeftRadius: props.isUser ? 16 : 0,
+          borderTopRightRadius: props.isUser ? 0 : 16,
+          borderBottomLeftRadius: 16,
+          borderBottomRightRadius: 16,
         }}
       >
         <Text className="font-inter text-[14px] text-white">

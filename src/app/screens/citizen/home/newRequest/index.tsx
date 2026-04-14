@@ -11,8 +11,10 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 export default function NewRequest() {
+  const router = useRouter();
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -47,9 +49,7 @@ próprias palavras..."
               </Text>
             </View>
           }
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          onPress={() => router.push("/screens/citizen/home/conversation")}
           gradient={true}
           hover={false}
           iconLeft={false}
