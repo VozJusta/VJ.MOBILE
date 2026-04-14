@@ -99,15 +99,8 @@ export default function MyDataScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingTop: 6,
-          paddingBottom: 24,
-          paddingHorizontal: 16,
-        }}
       >
-        <View className="mb-[32px]">
           <Header isCitizen={true} title="MEUS DADOS" isFirstPage={false} />
-        </View>
 
         <View className="items-center pb-[22px]">
           <View
