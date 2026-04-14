@@ -20,79 +20,75 @@ export default function RootLayout() {
           success: ({ text1, text2 }) => (
             <LinearGradient
               style={{
-                width: "98%",
+                width: "95%",
                 padding: 15,
-                backgroundColor: "#2B2B2B",
                 borderRadius: 12,
-                borderLeftWidth: 6,
-                borderLeftColor: "#4CAF50",
                 position: "absolute",
                 top: 20,
                 gap: 8,
-                alignItems: "center",
                 flexDirection: "row",
+                alignItems: "center",
               }}
-              colors={["#1A3530", "#1A2E28"]}
+              colors={["#13332B", "#151E2C"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
+              locations={[0, 0.4]}
             >
-              <MaterialIcons name="check-circle" color={"#4CAF50"} size={24} className="border-[6px] rounded-full border-[#303746]" />
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  marginBottom: 3,
-                }}
-              >
-                {text1}
-              </Text>
+              <MaterialIcons name="check-circle" color={"#4CAF50"} size={24} />
+              <View className="flex-1">
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    color: "#fff",
+                    marginBottom: 3,
+                  }}
+                >
+                  {text1}
+                </Text>
 
-              {text2 ? (
-                <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
-              ) : null}
+                {text2 ? (
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                ) : null}
+              </View>
             </LinearGradient>
           ),
 
           error: ({ text1, text2 }) => (
             <LinearGradient
               style={{
-                width: "98%",
+                width: "95%",
                 padding: 15,
-                backgroundColor: "#2B2B2B",
                 borderRadius: 12,
-                borderLeftWidth: 6,
-                borderLeftColor: "#FF5252",
                 position: "absolute",
-                flexDirection: "row",
                 gap: 8,
-                alignItems: "center",
                 top: 20,
+                flexDirection: "row",
+                alignItems: "center",
               }}
-              colors={["#3A1A1A", "#2E1A1A"]}
+              colors={["#2F1C29", "#151E2C"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
+              locations={[0, 0.4]}
             >
-              <MaterialIcons
-                name="error"
-                size={24}
-                color={"#FF5252"}
-                className="border-[6px] rounded-full border-[#303746]"
-              />
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  marginBottom: 3,
-                }}
-              >
-                {text1}
-              </Text>
+              <MaterialIcons name="error" size={24} color={"#FF5252"} />
 
-              {text2 ? (
-                <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
-              ) : null}
+              <View className="flex-1">
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    color: "#fff",
+                    marginBottom: 3,
+                  }}
+                >
+                  {text1}
+                </Text>
+
+                {text2 ? (
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                ) : null}
+              </View>
             </LinearGradient>
           ),
         }}
