@@ -11,6 +11,8 @@ export function InitialRedirect() {
     if (!navigationState?.key) return;
     if (accessToken) {
       router.replace("/screens/citizen/home");
+    } else {
+      router.replace("/screens/auth/users/signIn");
     }
   }, [accessToken, navigationState?.key]);
 
