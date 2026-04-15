@@ -1,4 +1,4 @@
-# 📱 VozJusta - Mobile App
+#  VozJusta - Mobile App
 
 <div align="center">
 
@@ -10,7 +10,7 @@ Aplicativo mobile desenvolvido para permitir que cidadãos iniciem casos jurídi
 
 ---
 
-# 📋 Sobre o Aplicativo
+#  Sobre o Aplicativo
 
 O **VozJusta Mobile** é a interface principal utilizada pelos cidadãos para interagir com a plataforma.  
 
@@ -26,7 +26,7 @@ O aplicativo se conecta à **API VozJusta**, que processa dados, executa o pipel
 
 ---
 
-# 🏗️ Arquitetura Mobile
+#  Arquitetura Mobile
 
 O aplicativo foi desenvolvido utilizando **React Native**, garantindo uma experiência nativa tanto para **Android** quanto para **iOS**.
 
@@ -40,7 +40,7 @@ Isso permite que a aplicação seja **rápida, escalável e fácil de manter**.
 
 ---
 
-# 🛠️ Stack Tecnológica
+#  Stack Tecnológica
 
 ## Core Mobile
 
@@ -74,7 +74,7 @@ Isso permite que a aplicação seja **rápida, escalável e fácil de manter**.
 
 ---
 
-# 🚀 Como Iniciar
+#  Como Iniciar
 
 ## Pré-requisitos
 
@@ -85,7 +85,7 @@ Isso permite que a aplicação seja **rápida, escalável e fácil de manter**.
 
 ---
 
-# 1️⃣ Instalação
+#  Instalação
 
 ```bash
 git clone https://github.com/xsalles/vozjusta-mobile.git
@@ -95,7 +95,7 @@ pnpm install
 
 ---
 
-# 2️⃣ Configuração do Ambiente
+#  Configuração do Ambiente
 
 Crie um arquivo `.env`:
 
@@ -106,7 +106,7 @@ WEBSOCKET_URL=ws://localhost:3000
 
 ---
 
-# 3️⃣ Executar Aplicação
+#  Executar Aplicação
 
 ### Android
 
@@ -128,7 +128,7 @@ pnpm start
 
 ---
 
-# 📱 Funcionalidades Principais
+# Funcionalidades Principais
 
 ### Cadastro e Autenticação
 
@@ -183,7 +183,7 @@ O sistema envia alertas para:
 
 ---
 
-# 📁 Estrutura do Projeto
+# Estrutura do Projeto
 
 ```
 src/
@@ -198,7 +198,7 @@ src/
 
 ---
 
-# ⚡ Características Técnicas
+# Características Técnicas
 
 ## Experiência Nativa
 
@@ -232,7 +232,7 @@ Isso garante **consistência entre Web e Mobile**.
 
 ---
 
-# 🔗 Integração com o Ecossistema VozJusta
+# Integração com o Ecossistema VozJusta
 
 O aplicativo mobile funciona integrado com:
 
@@ -243,7 +243,7 @@ O aplicativo mobile funciona integrado com:
 
 ---
 
-# 🔒 Segurança
+# Segurança
 
 - Comunicação segura via **HTTPS**
 - Tokens **JWT** para autenticação
@@ -252,7 +252,7 @@ O aplicativo mobile funciona integrado com:
 
 ---
 
-# 📝 Roadmap Mobile
+# Roadmap Mobile
 
 - [x] Estrutura inicial React Native
 - [x] Integração com API VozJusta
@@ -263,7 +263,7 @@ O aplicativo mobile funciona integrado com:
 
 ---
 
-# 🤝 Equipe e Orientação
+# Equipe e Orientação
 
 **Desenvolvedor:** Felipe Vieira e Thiago Menezes 
 **Orientação:** Prof. Lucas Correa  
@@ -273,7 +273,7 @@ O aplicativo mobile funciona integrado com:
 
 <div align="center">
 
-### 📄 Projeto VozJusta
+### Projeto VozJusta
 
 API • Web • Mobile
 
