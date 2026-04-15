@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vj-mobile",
-    "slug": "vj-mobile",
+    "name": "VozJusta",
+    "slug": "VozJusta",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/svg/icons/icon.png",

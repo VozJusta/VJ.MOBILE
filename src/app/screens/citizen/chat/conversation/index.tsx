@@ -10,8 +10,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
+import { useRouter } from "expo-router";
 
 export default function ConversationAI() {
+  const router = useRouter();
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -40,6 +43,9 @@ export default function ConversationAI() {
           iconColor="white"
           iconNameProps="send"
           type="text"
+          onRightIconPress={() =>
+            router.push("/screens/citizen/chat/analysysConcluded")
+          }
         />
       </SafeAreaView>
     </KeyboardAvoidingView>

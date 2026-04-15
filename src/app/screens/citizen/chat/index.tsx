@@ -49,7 +49,7 @@ próprias palavras..."
               </Text>
             </View>
           }
-          onPress={() => router.push("/screens/citizen/home/conversation")}
+          onPress={() => router.push("/screens/citizen/chat/conversation")}
           gradient={true}
           hover={false}
           iconLeft={false}
