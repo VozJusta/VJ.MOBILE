@@ -8,14 +8,9 @@ import TermsContent from "@/components/terms/TermsContent";
 
 export default function TermsUsage() {
   return (
-    <LinearGradient
-      style={{ flex: 1, paddingBottom: 84, paddingTop: 32 }}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.8, y: 1 }}
-      colors={["#000000", "#052F5F"]}
-    >
+    
       <ScrollView style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }} className="px-[16px] gap-12">
+        <SafeAreaView style={{ flex: 1 }} className=" gap-12">
           <Header isFirstPage={false} title="TERMOS DE USO" isCitizen={false} />
 
           <View className=" gap-3">
@@ -41,6 +36,5 @@ export default function TermsUsage() {
           ))}
         </SafeAreaView>
       </ScrollView>
-    </LinearGradient>
   );
 }
