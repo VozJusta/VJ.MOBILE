@@ -22,22 +22,40 @@ WhatsApp."
         description: "Dr. Ricardo Silveira",
       }}
       extraActions={
-        <ButtonUI
-          children={
-            <View className="justify-center items-center flex-1 flex-row gap-2">
-              <MaterialIcons name="home" size={24} color="#ffffff" />
+        <View className="flex flex-col gap-8 w-full mt-6">
+          <ButtonUI
+            children={
+              <View className="justify-center items-center flex-1 flex-row gap-2">
+                <MaterialIcons name="home" size={24} color="#ffffff" />
 
-              <Text className="text-white font-interSemiBold text-[16px]">
-                Ir para a página inicial
-              </Text>
-            </View>
-          }
-          onPress={() => router.push("/screens/citizen/home/")}
-          gradient={true}
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-        />
+                <Text className="text-white font-interSemiBold text-[16px]">
+                  Ir para a página inicial
+                </Text>
+              </View>
+            }
+            onPress={() => router.push("/screens/citizen/home/")}
+            gradient={true}
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+          />
+
+          <ButtonUI
+            children={
+              <View className="justify-center items-center flex-1 flex-row gap-2">
+                <MaterialIcons name="analytics" size={24} color="#ffffff" />
+                <Text className="text-white font-interSemiBold text-[16px]">
+                  Baixar relatório
+                </Text>
+              </View>
+            }
+            onPress={() => router.push("/screens/citizen/home/conversation")}
+            gradient={true}
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+          />
+        </View>
       }
     />
   );
