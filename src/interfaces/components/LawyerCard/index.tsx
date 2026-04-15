@@ -4,4 +4,5 @@ export interface LawyerCardProps {
   name: string;
   badges: BadgeProps[];
   rating?: number;
+  onPress?: () => void;
 }

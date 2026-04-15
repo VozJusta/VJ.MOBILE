@@ -1,4 +1,5 @@
 import { LawyerCardProps } from "@/interfaces/components/LawyerCard";
+import { router } from "expo-router";
 
 export const lawyers: LawyerCardProps[] = [
   {
@@ -8,6 +9,9 @@ export const lawyers: LawyerCardProps[] = [
       { textBadge: "DIREITO CIVIL", badgeColor: "#F2545B" },
     ],
     rating: 4.5,
+    onPress: () => {
+      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+    }
   },
   {
     name: "Dra. Maria Oliveira",
@@ -16,6 +20,9 @@ export const lawyers: LawyerCardProps[] = [
       { textBadge: "DIREITO PENAL", badgeColor: "#F2545B" },
     ],
     rating: 4.8,
+    onPress: () => {
+      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+    }
   },
   {
     name: "Dr. Carlos Pereira",
@@ -24,5 +31,8 @@ export const lawyers: LawyerCardProps[] = [
       { textBadge: "DIREITO TRABALHISTA", badgeColor: "#F2545B" },
     ],
     rating: 4.2,
+    onPress: () => {
+      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+    }
   },
 ];

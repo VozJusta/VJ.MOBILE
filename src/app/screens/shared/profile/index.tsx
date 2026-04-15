@@ -14,14 +14,14 @@ import Header from "@/components/Header";
 
 export default function ProfileCitizen() {
   const sections = [[0, 1], [2, 3], [4]];
-    const token = useAccessTokenStorage((state) => state.accessToken);
-    const router = useRouter();
-      if (token === null) {
-        Alert.alert("Token de acesso não encontrado");
-        router.push("/screens/auth/login");
-        return null;
-      }
-    const decodedToken = jwtDecode<IDecodedToken>(token);
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  const router = useRouter();
+  if (token === null) {
+    Alert.alert("Token de acesso não encontrado");
+    router.push("/screens/auth/login");
+    return null;
+  }
+  const decodedToken = jwtDecode<IDecodedToken>(token);
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
@@ -73,7 +73,6 @@ export default function ProfileCitizen() {
                       namebutton={item.namebutton}
                       NextButton={item.NextButton}
                       path={item.path}
-
                     />
 
                     {i < group.length - 1 && (

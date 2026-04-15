@@ -55,7 +55,7 @@ export default function LawyerList() {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View className="flex flex-col gap-4">
-              <LawyerCard {...item} />
+              <LawyerCard {...item}/>
             </View>
           )}
           ListEmptyComponent={
