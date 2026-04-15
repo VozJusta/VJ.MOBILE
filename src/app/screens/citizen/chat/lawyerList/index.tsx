@@ -11,10 +11,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import ButtonUI from "@/ui/ButtonUI";
-import { router } from "expo-router/build/exports";
 import { MaterialIcons } from "@expo/vector-icons";
 import { lawyers } from "./data";
 import InputUI from "@/ui/InputUI";
+import { router } from "expo-router";
 
 export default function LawyerList() {
   return (
