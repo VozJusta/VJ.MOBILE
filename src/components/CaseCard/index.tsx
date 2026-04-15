@@ -36,7 +36,7 @@ export default function CaseCard({
                 className={`min-w-[6px] min-h-[6px] rounded-full ${styles.dot}`}
               />
               <Text
-                className={`font-interBold text-[9px] uppercase ${styles.label}`}
+                className={`font-interBold text-[10px] uppercase ${styles.label}`}
               >
                 {status}
               </Text>
