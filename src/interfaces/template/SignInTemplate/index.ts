@@ -10,7 +10,7 @@ export interface ISignInTemplateProps {
   description: string;
   fields: FieldsType[];
   onSubmit: () => Promise<void> | void;
-  titleButton: string;
+  submitLabel: string;
   disableSubmit?: boolean;
   passwordStrength?: PasswordStrengthSection;
   extraActions?: ReactNode;

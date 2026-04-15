@@ -1,29 +1,44 @@
+export type ChecklistItem = {
+  label: string;
+  valid: boolean;
+};
+
 export type PasswordStrength = {
-    score: number;
-    color: string;
+  score: number;
+  color: string;
+  checklist: ChecklistItem[];
 };
 
 export default function passwordValidate(password: string): PasswordStrength {
-    let score = 0;
-    if (/\s/.test(password)) { return { score: 1, color: "#EF4444" };}
-    if (password.length >= 8) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/\d/.test(password)) score++;
-    if (/[@$!%*?&]/.test(password)) score++;
-    let color: string;
+  const rules = [
+    { label: "+8 caracteres", test: (v: string) => v.length >= 8 },
+    { label: "Maiúscula",     test: (v: string) => /[A-Z]/.test(v) },
+    { label: "Minúscula",     test: (v: string) => /[a-z]/.test(v) },
+    { label: "Número",        test: (v: string) => /[0-9]/.test(v) },
+    { label: "Símbolo",       test: (v: string) => /[@$!%*?&]/.test(v) },
+  ];
 
-    if (score === 1) {
-        color = "#EF4444";
-    } else if (score === 2) {
-        color = "#F97316";
-    } else if (score === 3) {
-        color = "#EAB308";
-    } else if (score === 4) {
-        color = "#67f55d";
-    } else {
-        color = "#67f55d";
-    } 
+  if (/\s/.test(password)) {
+    return {
+      score: 0,
+      color: "#EF4444",
+      checklist: rules.map(({ label }) => ({ label, valid: false })),
+    };
+  }
 
-    return { score, color };
+  const checklist = rules.map(({ label, test }) => ({
+    label,
+    valid: test(password),
+  }));
+
+  const score = checklist.filter((item) => item.valid).length;
+
+  const color =
+    score <= 1 ? "#EF4444" :
+    score === 2 ? "#F97316" :
+    score === 3 ? "#EAB308" :
+    score === 4 ? "#67f55d" :
+                  "#018d06";
+
+  return { score, color, checklist };
 }

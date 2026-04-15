@@ -53,7 +53,7 @@ export default function InputUI({
   ) : (
     <View className="w-full ">
       {!!label && (
-        <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+        <Text className="text-[#fff] text-[12px] font-interBold uppercase mb-[6px]">
           {label}
         </Text>
       )}

@@ -6,7 +6,6 @@ import passwordValidate from "@/utils/passwordValidate";
 import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
-import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 import Toast from "react-native-toast-message";
 
 export default function Lawyer() {
@@ -79,11 +78,11 @@ export default function Lawyer() {
         }
         registerAuth.onSubmit();
       }}
-      titleButton={registerAuth.titleButton}
+      submitLabel={registerAuth.titleButton}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: buildPasswordChecklist(password),
+        checklist: strength.checklist,
       }}
       extraActions={
         <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>
@@ -103,7 +102,7 @@ export default function Lawyer() {
           Já possui registro?{" "}
           <Text
             className="text-white underline font-interBold"
-            onPress={() => router.push("/screens/auth/users/SingIn")}
+            onPress={() => router.push("/screens/auth/users/SingIn/")}
           >
             Fazer Login
           </Text>

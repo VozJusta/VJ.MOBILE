@@ -1,5 +1,5 @@
 import { ITokenService } from "@/interfaces/services/token/token";
-import { BASE_URL } from "@/services/BASE_URL";
+import { BASE_URL } from "@/settings/BASE_URL";
 import { Alert } from "react-native";
 
 export async function ValidateCode(email: string, code: string) {

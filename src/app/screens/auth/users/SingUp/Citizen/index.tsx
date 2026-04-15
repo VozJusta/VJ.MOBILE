@@ -5,7 +5,6 @@ import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
 import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { buildPasswordChecklist } from "@/utils/auth/users/PasswordChecklist";
 import { useAuth } from "@/hooks/useAuth";
 import Toast from "react-native-toast-message";
 
@@ -38,12 +37,12 @@ export default function Citizen() {
         }
         citizenData.onSubmit();
       }}
-      titleButton={citizenData.titleButton}
+      submitLabel={citizenData.titleButton}
       disableSubmit={citizenData.disableSubmit}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: buildPasswordChecklist(registerAuth.password),
+        checklist: strength.checklist,
       }}
       extraActions={
         <Checkbox value={acceptedTerms} onChange={setAcceptedTerms}>

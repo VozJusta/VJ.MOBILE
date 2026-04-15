@@ -1,5 +1,4 @@
-import { BASE_URL } from "@/services/BASE_URL";
-import { Alert } from "react-native";
+import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function CodeSeding(email: string) {
   try {

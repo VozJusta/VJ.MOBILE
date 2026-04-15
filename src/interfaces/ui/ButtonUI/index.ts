@@ -1,21 +1,19 @@
-import { ReactNode } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { ReactNode } from "react";
+
 export interface IButtonProps {
   children?: ReactNode;
+  onPress: () => void;
   goNext?: boolean;
   goBack?: boolean;
-  bg?: string;
+  gradient?: boolean;
+  hover?: boolean;
   active?: boolean;
-  onPress: () => void;
-  gradient: boolean;
-  size?: string;
-  hover: boolean;
-  border?: string;
-  iconLeft: boolean;
-  colorsStatus?: "orange" | "green" | "blue";
-  paddingButtonStatus: string;
-  status?: "Em Análise" | "Concluído" | "Aguardando Advogado";
-  statusBorder?: boolean;
   disabled?: boolean;
+  size?: string;
+  bg?: string;
+  border?: string;
+  iconLeft?: boolean;
   iconName?: React.ComponentProps<typeof MaterialIcons>["name"];
+  paddingButtonStatus?: string;
 }

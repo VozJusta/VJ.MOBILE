@@ -1,16 +1,21 @@
 {
   "expo": {
-    "name": "vj-mobile",
-    "slug": "vj-mobile",
+    "name": "VozJusta",
+    "slug": "VozJusta",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./src/assets/svg/icons/icon.png",
     "scheme": "meuapp",
     "experiments": {
       "tsconfigPaths": true
     },
     "extra": {
       "router": {
-        "origin": false
+        "origin": false,
+        "root": "src/app"
+      },
+      "eas": {
+        "projectId": "c1d828af-bf48-4a38-9fb5-0e9014f1aa3b"
       }
     },
     "userInterfaceStyle": "light",
@@ -33,9 +38,7 @@
     "plugins": [
       [
         "expo-router",
-        {
-          "root": "src/app"
-        }
+        { "root": "src/app" }
       ],
       "expo-font",
       "expo-web-browser"

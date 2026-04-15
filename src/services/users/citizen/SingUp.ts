@@ -1,6 +1,6 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { BASE_URL } from "@/services/BASE_URL";
+import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodSingUpSchema } from "@/validation/schema.zod";
 
 export async function SingUpCitizen(data: ZodSingUpTypes) {

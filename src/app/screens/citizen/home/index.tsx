@@ -11,23 +11,21 @@ import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/token.store";
 import { jwtDecode } from "jwt-decode";
+import CaseCard from "@/components/CaseCard";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (token === null) {
     Alert.alert("Token de acesso não encontrado");
-    router.push("/screens/auth/login");
+    router.push("/screens/auth/users/SignIn");
     return null;
   }
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={{ flex: 1 }}
-        className="gap-[32px]"
-      >
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={{ flex: 1 }} className=" gap-[32px]">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
@@ -48,14 +46,14 @@ export default function Home() {
           </Text>
           <ButtonUI
             children={
-              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
+              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px] h-full">
                 <Text className="text-white font-interSemiBold text-[14px]">
                   Relatar Novo Caso
                 </Text>
                 <MaterialIcons name="arrow-forward" size={20} color="white" />
               </View>
             }
-            onPress={() => router.push("/screens/citizen/home/newRequest")}
+            onPress={() => router.push("/screens/citizen/chat")}
             gradient={true}
             hover={false}
             iconLeft={false}
@@ -67,43 +65,27 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <ButtonUI
+            <Text
+              className="font-inter text-[14px] text-[#2563EB]"
               onPress={() => router.push("/screens/citizen/home/listCases")}
-              children={
-                <Text className="font-inter text-[14px] text-[#2563EB]">
-                  Ver todos
-                </Text>
-              }
-              gradient={false}
-              hover={false}
-              iconLeft={false}
-              paddingButtonStatus={""}
-            />
+            >
+              Ver todos
+            </Text>
           </View>
-          {casesData.slice(0, 2).map((item) => (
-            <ButtonUI
-              key={item.id}
-              onPress={() => router.push(`/screens/citizen/home/listCases/caseSelected/${item.id}`)}
-              gradient={false}
-              hover={false}
-              iconLeft
-              iconName={item.icon}
-              status={item.status}
-              colorsStatus={item.color}
-              children={<Text>{item.title}</Text>}
-              paddingButtonStatus={"p-[16px]"}
-            />
-          ))}
+          <CaseCard
+            iconName="article"
+            onPress={() => {}}
+            status="Em Análise"
+            title="Ação trabalhista - XPTO"
+          />
+          <CaseCard
+            iconName="verified"
+            onPress={() => {}}
+            status="Concluído"
+            title="Reclamação contra vizinho barulhento"
+          />
         </View>
-        <View
-        style={{
-            borderRadius: 24,
-            backgroundColor: "rgba(255,255,255,0.03)",
-            height: 225,
-            paddingTop: 24,
-            paddingHorizontal: 24,
-            marginBottom: 128,
-          }}>
+        <View className="rounded-3xl bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] h-fit p-6 w-full gap-[24px]">
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -133,7 +115,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-          </View>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

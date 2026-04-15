@@ -1,12 +1,12 @@
 import { IButtonProfile } from "@/interfaces/interfaces";
 
-export const ButtonsProfile:IButtonProfile[] = [
+export const ButtonsProfile: IButtonProfile[] = [
     {
         bgIcon: "rgba(59,130,246,0.1)",
         colorIcon: "#3C77E8",
         icon: "account-circle",
         namebutton: "Meus Dados",
-        path: "/screens/citizen/myData",
+        path: "/screens/shared/profile/myData",
         NextButton:true
     },
     {
@@ -14,7 +14,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#CB30E0",
         icon: "settings",
         namebutton: "Configurações",
-        path: "/screens/citizen/settings",
+        path: "/screens/shared/profile/settings",
         NextButton:true
     },
     {
@@ -22,7 +22,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#75FB4C",
         icon: "verified-user",
         namebutton: "Privacidade",
-        path: "/screens/citizen/privacity",
+        path: "/screens/shared/profile/privacity",
         NextButton:true
     },
     {
@@ -30,7 +30,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#FFFF55",
         icon: "help",
         namebutton: "Central de Ajuda",
-        path: "/screens/citizen/help",
+        path: "/screens/shared/profile/help",
         NextButton:true
     },
     {

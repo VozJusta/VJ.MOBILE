@@ -14,14 +14,9 @@ module.exports = {
         EconGreen900: "#59B666",
         DarkTeal: "#052F5F",
         White: "#FFFFFF",
-        Placeholder: "475569",
+        Placeholder: "#475569",
         BlueRoyal: "#02A6FF",
         BlueAzure: "#135BEC",
-      },
-      boxShadow: {
-        Button: {
-          custom: "0px 4px 10px rgba(0,0,0,0.2)",
-        },
       },
       boxShadow: {
         Button: {

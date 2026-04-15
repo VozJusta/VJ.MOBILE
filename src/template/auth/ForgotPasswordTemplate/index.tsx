@@ -19,7 +19,6 @@ import {
 } from "@/interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "expo-router";
-
 import { useXTokenStorage } from "@/store/token.store";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";

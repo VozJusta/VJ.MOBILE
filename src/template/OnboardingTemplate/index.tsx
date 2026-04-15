@@ -29,7 +29,7 @@ export default function OnboardingTemplate() {
   return (
 
       <SafeAreaView style={{ flex: 1 }}>
-        <View className="flex min-w-full items-end mb-16">
+        <View className="flex min-w-full items-end mb-16 h-6">
           {index < onboardingData.length - 1 ? (
             <ButtonUI
               onPress={() => router.push("/screens/Onboarding/roles")}
@@ -43,7 +43,7 @@ export default function OnboardingTemplate() {
               </Text>
             </ButtonUI>
           ) : (
-            <View style={{ height: 40 }} />
+            <View style={{ height: 24 }} />
           )}
         </View>
 

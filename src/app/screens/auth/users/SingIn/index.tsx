@@ -26,7 +26,7 @@ export default function Login() {
       description="Acesse sua conta para continuar"
       fields={signInData.fields}
       onSubmit={signInData.onSubmit}
-      titleButton={signInData.titleButton}
+      submitLabel={signInData.titleButton}
       disableSubmit={loading || signInData.disableSubmit}
       extraActions={
         <>
