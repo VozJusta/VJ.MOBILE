@@ -64,7 +64,7 @@ export default function LawyerSelected() {
             </Text>
           </View>
         }
-        onPress={() => router.push("/screens/citizen/chat/")}
+        onPress={() => router.push("/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded")}
         gradient={true}
         hover={false}
         iconLeft={false}
