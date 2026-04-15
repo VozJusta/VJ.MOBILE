@@ -10,7 +10,7 @@ export const lawyers: LawyerCardProps[] = [
     ],
     rating: 4.5,
     onPress: () => {
-      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+      router.push("/screens/citizen/chat/lawyerList/lawyerSelected")
     }
   },
   {
@@ -21,7 +21,7 @@ export const lawyers: LawyerCardProps[] = [
     ],
     rating: 4.8,
     onPress: () => {
-      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+      router.push("/screens/citizen/chat/lawyerList/lawyerSelected")
     }
   },
   {
@@ -32,7 +32,7 @@ export const lawyers: LawyerCardProps[] = [
     ],
     rating: 4.2,
     onPress: () => {
-      router.push("/screens/citizen/chat/lawyerList/LawyerSelected")
+      router.push("/screens/citizen/chat/lawyerList/lawyerSelected")
     }
   },
 ];
