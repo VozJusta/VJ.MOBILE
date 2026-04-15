@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,40 +11,51 @@ import { IDecodedToken } from "@/interfaces/services/token/token";
 import { isTokenExpired } from "@/helpers/store";
 
 export default function App() {
-  const accessToken = useAccessTokenStorage((state) => state.accessToken);
+  const accessToken: string = useAccessTokenStorage(
+    (state) => state.accessToken,
+  );
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
 
-  const decodedToken = jwtDecode<IDecodedToken>(accessToken);
+  const decodedToken = useMemo(() => {
+    if (!accessToken) {
+      return null;
+    }
+    try {
+      return jwtDecode<IDecodedToken>(accessToken);
+    } catch (error) {
+      return null;
+    }
+  }, [accessToken]);
 
   useEffect(() => {
-  const anim = Animated.sequence([
-    Animated.timing(scale, {
-      toValue: 0.7,
-      duration: 400,
-      easing: Easing.out(Easing.cubic),
-      useNativeDriver: true,
-    }),
-    Animated.delay(800),
-    Animated.timing(scale, {
-      toValue: 2.7,
-      duration: 200,
-      easing: Easing.in(Easing.quad),
-      useNativeDriver: true,
-    }),
-    Animated.delay(1500),
-  ]);
+    const anim = Animated.sequence([
+      Animated.timing(scale, {
+        toValue: 0.7,
+        duration: 400,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }),
+      Animated.delay(800),
+      Animated.timing(scale, {
+        toValue: 2.7,
+        duration: 200,
+        easing: Easing.in(Easing.quad),
+        useNativeDriver: true,
+      }),
+      Animated.delay(1500),
+    ]);
 
-  anim.start(() => {
-    if (accessToken && !isTokenExpired(decodedToken)) {
-      router.replace("/screens/citizen/home");
-    } else {
-      router.replace("/screens/Onboarding");
-    }
-  });
+    anim.start(() => {
+      if (accessToken && !isTokenExpired(decodedToken)) {
+        router.replace("/screens/citizen/home");
+      } else {
+        router.replace("/screens/Onboarding");
+      }
+    });
 
-  return () => anim.stop();
-}, []);
+    return () => anim.stop();
+  }, [accessToken, decodedToken]);
 
   return (
     <>
