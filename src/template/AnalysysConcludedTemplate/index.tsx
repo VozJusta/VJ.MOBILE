@@ -1,0 +1,57 @@
+import { View, Text, ScrollView } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "@/components/Header";
+import { IAnalysysConcludedTemplateProps } from "@/interfaces/template/analysysConcludedTemplate";
+
+export default function AnalysysConcludedTemplate(
+  props: IAnalysysConcludedTemplateProps,
+) {
+  return (
+    <ScrollView className="flex-1">
+      <SafeAreaView className="flex-1 items-center justify-center gap-6">
+        <Header
+          isFirstPage={false}
+          isCitizen={true}
+          title="Análise Concluída"
+        />
+        <View className="flex w-full flex-col items-center gap-6 bg-[#1152D4]/5 border border-[#1152D4]/20 rounded-3xl p-8 h-fit">
+          <View className="flex items-center justify-center w-fit h-fit bg-[#1152D4] rounded-3xl p-6">
+            <MaterialIcons color={"#ffffff"} size={48} name="verified" />
+          </View>
+          <View className="flex flex-col gap-3 text-center">
+            <Text className="font-interBold text-3xl text-white">
+              {props.title}
+            </Text>
+            <Text className="font-interRegular text-base text-[#94A3B8]">
+              {props.description}
+            </Text>
+          </View>
+        </View>
+        <View className="flex flex-row w-full items-center justify-center gap-4">
+          <View className="flex flex-col w-full justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl">
+            <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#1152D4]/20 ">
+              <MaterialIcons name="gavel" color={"#1152D4"} />
+            </View>
+            <Text className="font-inter text-xs text-[#94A3B8]">CATEGORIA</Text>
+            <Text className="font-inter text-sm text-white">
+              {props.category}
+            </Text>
+          </View>
+          <View className="flex flex-col w-full justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl">
+            <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#10B981]/20 ">
+              <MaterialIcons name="show-chart" color={"#10B981"} />
+            </View>
+            <Text className="font-inter text-xs text-[#94A3B8]">
+              VIABILIDADE
+            </Text>
+            <Text className="font-inter text-sm text-white">
+              {props.probability} Probabilidade
+            </Text>
+          </View>
+        </View>
+        {props.extraActions}
+      </SafeAreaView>
+    </ScrollView>
+  );
+}
