@@ -3,7 +3,7 @@ import { IInputProps } from "@/interfaces/ui/InputUI";
 import { useAuth } from "@/hooks/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { SingInCitizen } from "@/services/users/SingIn";
-import { useRolesStorage } from "@/store/roles.store";
+import { useRolesStorage } from "@/store/auth/roles.store";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";

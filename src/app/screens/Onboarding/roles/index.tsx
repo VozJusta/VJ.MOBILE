@@ -8,7 +8,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "@/assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
 import { router } from "expo-router";
-import {useRolesStorage} from "@/store/roles.store"
+import {useRolesStorage} from "@/store/auth/roles.store"
 
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);

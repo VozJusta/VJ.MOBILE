@@ -2,7 +2,7 @@ import { ISettingsSection } from "@/interfaces/template/configTemplate";
 import { router } from "expo-router";
 import SettingsTemplate from "@/template/settingsTemplate/index";
 import { useMemo, useState } from "react";
-import { useAccessTokenStorage } from "@/store/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import { ITokenService } from "@/interfaces/services/token/token";
 

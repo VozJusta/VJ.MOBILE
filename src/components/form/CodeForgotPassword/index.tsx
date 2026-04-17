@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
 import { ValidateEmail } from "@/services/users/security/validateEmail";
-import { useEmailStorage } from "@/store/email.store";
+import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { router, usePathname } from "expo-router";
@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import Shield from "@/assets/svg/icons/shield.svg";
 import Toast from "react-native-toast-message";
-import { useXTokenStorage } from "@/store/token.store";
+import { useXTokenStorage } from "@/store/auth/token.store";
 import { ICodeForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
 
 export function CodeForgotPassword({

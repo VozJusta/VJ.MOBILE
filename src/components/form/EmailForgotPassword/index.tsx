@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
-import { useEmailStorage } from "@/store/email.store";
+import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { MaterialIcons } from "@expo/vector-icons";

@@ -3,7 +3,7 @@ import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import passwordValidate from "@/utils/passwordValidate";
 import Toast from "react-native-toast-message";
-import { useEmailStorage } from "@/store/email.store";
+import { useEmailStorage } from "@/store/auth/email.store";
 import { useAuth } from "@/hooks/useAuth";
 import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
 import { Alert } from "react-native";

@@ -5,7 +5,7 @@ import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAccessTokenStorage } from "@/store/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import { isTokenExpired } from "@/helpers/store";

@@ -2,7 +2,7 @@ import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
 import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
 import { IInputProps } from "@/interfaces/ui/InputUI";
-import { useRolesStorage } from "@/store/roles.store";
+import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/useAuth";
 import { SingUpCitizen } from "@/services/users/citizen/SingUp";
 import { Email2FA } from "@/services/users/security/email2FA";

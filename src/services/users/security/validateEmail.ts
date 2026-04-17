@@ -3,7 +3,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
-} from "@/store/token.store";
+} from "@/store/auth/token.store";
 import { fetch } from "expo/fetch"
 import { Alert } from "react-native";
 

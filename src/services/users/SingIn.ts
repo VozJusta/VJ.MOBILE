@@ -2,7 +2,7 @@ import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
-import { useXTokenStorage } from "@/store/token.store";
+import { useXTokenStorage } from "@/store/auth/token.store";
 import { set } from "zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {

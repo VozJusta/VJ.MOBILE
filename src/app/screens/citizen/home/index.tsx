@@ -9,7 +9,7 @@ import { useRouter } from "expo-router";
 import { casesData } from "@/utils/home/cases/data";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
-import { useAccessTokenStorage } from "@/store/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import CaseCard from "@/components/CaseCard";
 
