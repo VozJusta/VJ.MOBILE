@@ -1,3 +1,5 @@
+import { IMessageResponse } from "@/interfaces/services/chat/historyConversation";
+
 export interface IChatStore {
     conversationId: string;
     setConversationId: (conversationId: string) => void;
@@ -10,4 +12,10 @@ export interface IChatStore {
     finished: boolean;
     setFinished: (finished: boolean) => void;
     clearFinished: () => void;
+
+    messages: IMessageResponse[];
+    addMessage: (messages: IMessageResponse[]) => void;
+    setMessages: (messages: IMessageResponse[]) => void;
+
+    clearChat: () => void;
 }
