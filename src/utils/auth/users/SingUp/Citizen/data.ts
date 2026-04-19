@@ -1,7 +1,7 @@
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
 import { useRolesStorage } from "@/store/auth/roles.store";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";

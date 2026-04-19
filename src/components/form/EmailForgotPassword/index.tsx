@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
 import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
@@ -40,7 +40,7 @@ export function EmailForgotPassword() {
       setLoading(false);
       return;
     }
-    
+
     Toast.show({
       type: "success",
       text1: "Código enviado com sucesso!",

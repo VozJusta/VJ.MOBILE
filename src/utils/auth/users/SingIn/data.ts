@@ -1,6 +1,6 @@
 import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { IInputProps } from "@/interfaces/ui/InputUI";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { SingInCitizen } from "@/services/users/SingIn";
 import { useRolesStorage } from "@/store/auth/roles.store";
@@ -106,6 +106,5 @@ export function buildLoginFields({
     onSubmit: () => handleLogin(loginAuth),
     disableSubmit: loading,
     titleButton: loading ? "Carregando..." : "Entrar",
-  
   };
 }

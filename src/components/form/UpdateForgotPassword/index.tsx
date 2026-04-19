@@ -1,5 +1,5 @@
 import PasswordStrength from "@/components/PasswordStrengh";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
 import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
 import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
@@ -60,7 +60,7 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
         />
       )}
       <ButtonUI
-        onPress={() =>  props.onSubmit()}
+        onPress={() => props.onSubmit()}
         gradient={true}
         hover={false}
         children={

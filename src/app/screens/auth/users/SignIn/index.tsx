@@ -4,14 +4,11 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
-import { useAuth } from "@/hooks/useAuth";
-
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function Login() {
-
   const { loginAuth, handleLoginChange, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-
 
   const signInData = buildLoginFields({
     loginAuth,

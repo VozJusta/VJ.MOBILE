@@ -7,7 +7,7 @@ import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 import Toast from "react-native-toast-message";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function Lawyer() {
   const { registerAuthLawyer, handleRegisterChangeLawyer } = useAuth();

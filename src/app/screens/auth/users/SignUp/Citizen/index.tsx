@@ -5,7 +5,7 @@ import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
 import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import Toast from "react-native-toast-message";
 
 export default function Citizen() {

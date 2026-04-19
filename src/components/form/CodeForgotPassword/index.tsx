@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
 import { ValidateEmail } from "@/services/users/security/validateEmail";
 import { useEmailStorage } from "@/store/auth/email.store";
@@ -18,7 +18,7 @@ export function CodeForgotPassword({
   resolvedCodeTitle,
   resolvedVerifyButtonLabel,
   timerLabel,
-  onCodeVerified
+  onCodeVerified,
 }: ICodeForgotPasswordProps) {
   const { loading, setLoading } = useAuth();
   const emailStorage = useEmailStorage((state) => state.email);
@@ -47,8 +47,8 @@ export function CodeForgotPassword({
       text1: "Email validado com sucesso!",
     });
     if (onCodeVerified) {
-    onCodeVerified();
-  }
+      onCodeVerified();
+    }
     setLoading(false);
     return;
   };
@@ -73,8 +73,8 @@ export function CodeForgotPassword({
       text1: "Email validado com sucesso!",
     });
     if (onCodeVerified) {
-    onCodeVerified();
-  }
+      onCodeVerified();
+    }
     setLoading(false);
   };
 

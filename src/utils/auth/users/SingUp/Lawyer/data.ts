@@ -11,7 +11,7 @@ import Toast from "react-native-toast-message";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { email } from "zod";
 import { useRolesStorage } from "@/store/auth/roles.store";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { formatPhone } from "@/utils/phoneValidate";
 
@@ -61,7 +61,9 @@ export function buildLawyerFields({
 
       if (!email2FAResponse.success) {
         const errorMessage = email2FAResponse.fields[0];
-        const isCodeAlreadySent = errorMessage === "Código já enviado" || errorMessage === "Código enviado";
+        const isCodeAlreadySent =
+          errorMessage === "Código já enviado" ||
+          errorMessage === "Código enviado";
 
         if (!isCodeAlreadySent) {
           Toast.show({
