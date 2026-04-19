@@ -13,11 +13,79 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { useChatStorage } from "@/store/chat/chat.store";
+import Toast from "react-native-toast-message";
+import { set } from "zod";
+import { startConversation } from "@/services/ai/conversation/startConversation";
 
 export default function Chat() {
   const router = useRouter();
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [description, setDescription] = useState("");
+
+  const { clearChat, setConversationId, setCaseId, addMessage } =
+    useChatStorage();
+
+  const handleStartAnalysis = async () => {
+    if (!selectedCategory) {
+      Toast.show({
+        type: "error",
+        text1: "Selecione uma categoria para iniciar a análise",
+      });
+      return;
+    }
+
+    if (!description.trim()) {
+      Toast.show({
+        type: "error",
+        text1: "Descreva o ocorrido para iniciar a análise",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      clearChat();
+
+      const firstMessageText = `Categoria: ${selectedCategory}\n\nRelato: ${description}`;
+
+      addMessage({
+        id: Date.now().toString() + "-user",
+        content: firstMessageText,
+        role: "User",
+        created_at: String(Date.now()),
+      })
+
+      const response = await startConversation({
+        message: firstMessageText,
+      })
+
+      if (!response.success || !response.data) {
+        Toast.show({
+          type: "error",
+          text1: response.fields ? response.fields[0] : "Erro ao iniciar análise",
+        });
+        return;
+      }
+
+      setConversationId(response.data.conversationId);
+      setCaseId(response.data.caseId);
+
+      addMessage({
+        id: Date.now().toString() + "-assistant",
+        content: response.data.question,
+        role: "Assistant",
+        created_at: String(Date.now()),
+      })
+
+      router.push("/screens/citizen/chat/conversation");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -58,7 +126,7 @@ próprias palavras..."
               </Text>
             </View>
           }
-          onPress={() => router.push("/screens/citizen/chat/conversation")}
+          onPress={handleStartAnalysis}
           gradient={true}
           hover={false}
           iconLeft={false}
