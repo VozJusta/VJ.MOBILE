@@ -32,6 +32,11 @@ export function buildLawyerFields({
   specializationOptions,
 }: Params): IBuildRegisterLawyerFields {
   const router = useRouter();
+
+  const handleRegister = async (data: ) => {
+    if (!acce)
+  }
+
   return {
     fields: [
       {
