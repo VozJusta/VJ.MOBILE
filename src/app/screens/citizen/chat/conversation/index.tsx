@@ -5,112 +5,27 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
 import { useRouter } from "expo-router";
-import { useChatStorage } from "@/store/chat/chat.store";
-import { historyConversation } from "@/services/ai/conversation/historyConversation";
-import { continueConversation } from "@/services/ai/conversation/continueConversation";
-import Toast from "react-native-toast-message";
 import ButtonUI from "@/ui/ButtonUI";
+import { useChat } from "@/hooks/chat/useChat";
+import { useRef } from "react";
 
 export default function ConversationAI() {
   const router = useRouter();
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [fetchingHistory, setFetchingHistory] = useState(false);
-
   const {
     messages,
-    addMessage,
-    setMessages,
-    conversationId,
+    loading,
     finished,
-    setFinished,
-    removeMessage,
-  } = useChatStorage();
-
-  useEffect(() => {
-    if (conversationId && message.length === 0) {
-      loadHistory();
-    }
-  }, [conversationId, message.length]);
-
-  const loadHistory = async () => {
-    setFetchingHistory(true);
-
-    try {
-      const response = await historyConversation(conversationId);
-
-      if (response.success && response.data) {
-        setMessages(response.data.messages);
-      }
-    } finally {
-      setFetchingHistory(false);
-    }
-  };
-
-  const handleSendMessage = async () => {
-    if (!message.trim() || loading || finished) return;
-
-    const userMessage = message;
-    const tempId = Date.now().toString() + "-user";
-
-    setMessage("");
-    setLoading(true);
-
-    addMessage({
-      id: tempId,
-      content: userMessage,
-      role: "User",
-      created_at: String(Date.now()),
-    });
-
-    try {
-      const response = await continueConversation({
-        conversationId: conversationId,
-        message: userMessage,
-      });
-
-      if (!response.success && !response.data) {
-        removeMessage(tempId);
-        setMessage(userMessage);
-        Toast.show({
-          type: "error",
-          text1: response.fields
-            ? response.fields[0]
-            : "Erro ao enviar mensagem",
-        });
-        return;
-      }
-
-      if (response.data?.question) {
-        addMessage({
-          id: Date.now().toString() + "-assistant",
-          content: response.data.question,
-          role: "Assistant",
-          created_at: String(Date.now()),
-        });
-      }
-
-      if (response.data?.finished) {
-        setFinished(true);
-      }
-    } catch (err) {
-      removeMessage(tempId);
-      Toast.show({
-        type: "error",
-        text1: "Erro de conexão com o servidor",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    message,
+    handleSendMessage,
+    setMessage,
+  } = useChat();
 
   return (
     <KeyboardAvoidingView
