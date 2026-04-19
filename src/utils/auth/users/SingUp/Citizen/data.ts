@@ -1,21 +1,20 @@
 import { formatCPF } from "@/utils/mask";
 import { formatPhone } from "@/utils/phoneValidate";
-import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
-import { IInputProps } from "@/interfaces/ui/InputUI";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/useAuth";
-import { SingUpCitizen } from "@/services/users/citizen/SignUp";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
+import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
+import { SignUpCitizen } from "@/services/users/citizen/SignUp";
 
 type Params = {
   showPassword: boolean;
   onToggleShowPassword: () => void;
-  registerAuth: ZodSingUpTypes;
-  handleRegisterChange: (name: keyof ZodSingUpTypes, value: string) => void;
+  registerAuth: ZodSignUpTypes;
+  handleRegisterChange: (name: keyof ZodSignUpTypes, value: string) => void;
 };
 
 export function buildCitizenFields({
@@ -28,10 +27,10 @@ export function buildCitizenFields({
   const { loading, setLoading } = useAuth();
   const router = useRouter();
 
-  async function handleRegister(data: ZodSingUpTypes) {
+  async function handleRegister(data: ZodSignUpTypes) {
     setLoading(true);
     try {
-      const response = await SingUpCitizen(data);
+      const response = await SignUpCitizen(data);
       if (!response.success) {
         Toast.show({
           type: "error",

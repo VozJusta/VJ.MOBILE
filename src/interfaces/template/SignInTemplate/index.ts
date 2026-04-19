@@ -1,7 +1,8 @@
+import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
 import { PasswordStrengthSection } from "../../components/PasswordStrengh";
-import { CareerSelectProps, UfSelectProps } from "../../interfaces";
 import { IInputProps } from "../../ui/InputUI";
 import { ReactNode } from "react";
+import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 export type FieldsType = IInputProps | UfSelectProps | CareerSelectProps;
 

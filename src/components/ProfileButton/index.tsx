@@ -1,4 +1,4 @@
-import { IButtonProfile } from "@/interfaces/interfaces";
+import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";

@@ -1,10 +1,10 @@
 import { formatCPF } from "@/utils/mask";
 import { formatOABNumber } from "@/utils/oabValidate";
 import { IInputProps } from "@/interfaces/ui/InputUI";
-import { UfSelectProps, CareerSelectProps } from "@/interfaces/interfaces";
-import { FieldsType } from "@/interfaces/template/SignInTemplate";
-import { IBuildRegisterFields, IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegisterFields";
+import { IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegisterFields";
 import { useRouter } from "expo-router";
+import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
+import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 type RegisterLawyer = {
   fullName: string;

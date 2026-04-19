@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, View, Text, ScrollView } from "react-native";
-import { CareerSelectProps } from "@/interfaces/interfaces";
 import { useMemo, useState } from "react";
+import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 export default function CareerSelectUI({
   label,

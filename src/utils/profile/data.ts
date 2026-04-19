@@ -1,4 +1,4 @@
-import { IButtonProfile } from "@/interfaces/interfaces";
+import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 
 export const ButtonsProfile: IButtonProfile[] = [
     {
