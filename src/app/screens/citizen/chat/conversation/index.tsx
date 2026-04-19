@@ -114,6 +114,8 @@ export default function ConversationAI() {
             <MessageBubble
               key={msg.id}
               message={msg.content}
+              createdAt={msg.created_at}
+              userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
             />
           ))}

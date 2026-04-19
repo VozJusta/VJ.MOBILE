@@ -9,6 +9,20 @@ export interface MessageBubbleProps {
 }
 
 export default function MessageBubble(props: MessageBubbleProps) {
+
+  const formatTime = (dateStr: string) => {
+    try {
+      const isNumeric = /^\d+$/.test(dateStr);
+      const dateObj = isNumeric ? new Date(Number(dateStr)) : new Date(dateStr);
+      
+      return dateObj.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return "";
+    }
+  };
   return (
     <View
       className="flex flex-col gap-2 w-full h-fit"
@@ -36,10 +50,7 @@ export default function MessageBubble(props: MessageBubbleProps) {
       </View>
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
         {props.createdAt
-          ? new Date(Number(props.createdAt)).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
+          ? formatTime(props.createdAt)
           : ""}
       </Text>
     </View>
