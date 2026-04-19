@@ -20,6 +20,7 @@ export const useChatStorage = create<IChatStore>()(
 
             messages: [],
             addMessage: (messages) => set((state) => ({ messages: [...state.messages, messages] })),
+            removeMessage: (id) => set((state) => ({ messages: state.messages.filter(m => m.id !== id) })),
             setMessages: (messages) => set({ messages }),
 
             clearChat: () => set({

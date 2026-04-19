@@ -32,6 +32,7 @@ export default function ConversationAI() {
     conversationId,
     finished,
     setFinished,
+    removeMessage,
   } = useChatStorage();
 
   useEffect(() => {
@@ -58,12 +59,13 @@ export default function ConversationAI() {
     if (!message.trim() || loading || finished) return;
 
     const userMessage = message;
+    const tempId = Date.now().toString() + "-user";
 
     setMessage("");
     setLoading(true);
 
     addMessage({
-      id: Date.now().toString() + "-user",
+      id: tempId,
       content: userMessage,
       role: "User",
       created_at: String(Date.now()),
@@ -76,6 +78,8 @@ export default function ConversationAI() {
       });
 
       if (!response.success && !response.data) {
+        removeMessage(tempId);
+        setMessage(userMessage);
         Toast.show({
           type: "error",
           text1: response.fields
@@ -97,6 +101,12 @@ export default function ConversationAI() {
       if (response.data?.finished) {
         setFinished(true);
       }
+    } catch (err) {
+      removeMessage(tempId);
+      Toast.show({
+        type: "error",
+        text1: "Erro de conexão com o servidor",
+      });
     } finally {
       setLoading(false);
     }

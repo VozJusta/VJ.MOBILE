@@ -16,6 +16,7 @@ export interface IChatStore {
     messages: IMessageResponse[];
     addMessage: (messages: IMessageResponse) => void;
     setMessages: (messages: IMessageResponse[]) => void;
+    removeMessage: (id: string) => void;
 
     clearChat: () => void;
 }
