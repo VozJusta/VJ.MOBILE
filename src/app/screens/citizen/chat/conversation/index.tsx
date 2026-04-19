@@ -15,6 +15,7 @@ import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import Toast from "react-native-toast-message";
+import ButtonUI from "@/ui/ButtonUI";
 
 export default function ConversationAI() {
   const router = useRouter();
@@ -116,21 +117,52 @@ export default function ConversationAI() {
               isUser={msg.role === "User"}
             />
           ))}
+
+          {loading && (
+            <View className="ml-4 mt-2 mb-2">
+              <Text className="text-[#94A3B8] font-inter text-[12px]">
+                A inteligência artificial está analisando...
+              </Text>
+            </View>
+          )}
         </ScrollView>
 
-        <InputUI
-          placeholder="Digite sua mensagem..."
-          rightIcon
-          rightIconName="send"
-          iconSize={24}
-          iconColor={message.trim() ? "#135BEC" : "gray"}
-          iconNameProps="send"
-          type="text"
-          value={message}
-          onChangeText={setMessage}
-          onSubmitEditing={handleSendMessage}
-          onRightIconPress={() => handleSendMessage()}
-        />
+        {!finished ? (
+          <View style={{ marginTop: 16 }}>
+            <InputUI
+              placeholder="Digite sua mensagem..."
+              rightIcon
+              rightIconName="send"
+              iconSize={24}
+              iconColor={message.trim() ? "#135BEC" : "gray"}
+              iconNameProps="send"
+              type="text"
+              value={message}
+              onChangeText={setMessage}
+              onRightIconPress={handleSendMessage}
+              onSubmitEditing={handleSendMessage}
+            />
+          </View>
+        ) : (
+          <View style={{ marginTop: 16 }}>
+            <ButtonUI
+              onPress={() =>
+                router.push("/screens/citizen/chat/analysysConcluded")
+              }
+              gradient={true}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+              children={
+                <View className="justify-center items-center flex-1">
+                  <Text className="text-white font-interSemiBold text-[16px]">
+                    Ver Relatório do Caso
+                  </Text>
+                </View>
+              }
+            />
+          </View>
+        )}
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
