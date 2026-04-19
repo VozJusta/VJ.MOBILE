@@ -13,6 +13,7 @@ import { email } from "zod";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/useAuth";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
+import { formatPhone } from "@/utils/phoneValidate";
 
 type Params = {
   showPassword: boolean;
@@ -47,6 +48,8 @@ export function buildLawyerFields({
           text1: "Erro no cadastro",
           text2: response.fields[0],
         });
+
+        console.log("Erro no cadastro:", response.fields);
 
         return;
       }
@@ -138,7 +141,8 @@ export function buildLawyerFields({
         iconNameProps: "phone",
         type: "phone",
         value: registerAuth.phone,
-        onChangeText: (text) => handleRegisterChange("phone", text),
+        onChangeText: (text) =>
+          handleRegisterChange("phone", formatPhone(text)),
       } as IInputProps,
       {
         label: "Especialização Principal",
@@ -173,17 +177,25 @@ export function buildLawyerFields({
         onRightIconPress: onToggleShowPassword,
       } as IInputProps,
     ],
-    onSubmit: () =>
-      handleRegister({
+    onSubmit: () => {
+      const specializationValue =
+        specializationOptions.find(
+          (opt) =>
+            opt.label === registerAuth.specialization ||
+            opt.value === registerAuth.specialization,
+        )?.value || registerAuth.specialization;
+
+      return handleRegister({
         fullName: registerAuth.fullName,
         email: registerAuth.email,
         password: registerAuth.password,
         oabState: registerAuth.oabState,
         phone: registerAuth.phone,
-        specialization: registerAuth.specialization,
+        specialization: specializationValue,
         cpf: registerAuth.cpf,
         oabNumber: registerAuth.oabNumber,
-      }),
+      });
+    },
     titleButton: loading ? "Carregando..." : "Cadastrar",
     disableSubmit: loading,
   };

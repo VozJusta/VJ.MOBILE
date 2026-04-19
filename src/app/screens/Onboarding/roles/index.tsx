@@ -18,10 +18,10 @@ export default function SelectionUserRole() {
   const handleSelectedRole = () => {
     if (activeCitizen) {
       setRole("citizen")
-      router.push("/screens/auth/users/SingUp/Citizen");
+      router.push("/screens/auth/users/SignUp/Citizen");
     } else if (activeLawyer) {
       setRole("lawyer");
-      router.push("/screens/auth/users/SingUp/Lawyer");
+      router.push("/screens/auth/users/SignUp/Lawyer");
     }
   };
 

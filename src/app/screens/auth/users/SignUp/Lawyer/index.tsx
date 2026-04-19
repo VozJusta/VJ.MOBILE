@@ -24,8 +24,8 @@ export default function Lawyer() {
     registerAuth: registerAuthLawyer,
     handleRegisterChange: handleRegisterChangeLawyer,
     specializationOptions: specializationOptions.map((spec) => ({
-      label: spec,
-      value: spec,
+      label: spec.label,
+      value: spec.value,
     })),
   });
 
