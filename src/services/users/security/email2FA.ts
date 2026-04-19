@@ -11,25 +11,18 @@ export async function Email2FA(email: string) {
       body: JSON.stringify({ email }),
     });
 
-    const text = await response.text();
-
-    let json;
-    try {
-      json = JSON.parse(text);
-    } catch {
-      json = null;
-    }
+    const json = await response.json().catch(() => ({}));
 
     if (!response.ok) {
       return {
         success: false,
-        fields: json?.fields || [json?.message || text],
+        fields: json?.fields || [json?.message || "Erro ao enviar o código de verificação"],
       };
     }
 
     return {
       success: true,
-      data: json || text,
+      data: json,
     };
   } catch (err: any) {
     return {
