@@ -3,7 +3,6 @@ import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/auth/token.store";
-import { set } from "zod";
 
 export async function SingInCitizen(data: ZodLoginTypes) {
   const setToken = useXTokenStorage.getState().setToken;
@@ -34,7 +33,7 @@ export async function SingInCitizen(data: ZodLoginTypes) {
       setToken(token);
     }
 
-    const json = await response.json();
+    const json = await response.json().catch(() => ({}));
     if (!response.ok) {
       return {
         success: false,
