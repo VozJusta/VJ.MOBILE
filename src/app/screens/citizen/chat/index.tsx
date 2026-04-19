@@ -27,7 +27,7 @@ export default function Chat() {
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
 
-  const { clearChat, setConversationId, setCaseId, addMessage } =
+  const { clearChat, setConversationId, setCaseId, addMessage, setFinished } =
     useChatStorage();
 
   const handleStartAnalysis = async () => {
@@ -59,16 +59,18 @@ export default function Chat() {
         content: firstMessageText,
         role: "User",
         created_at: String(Date.now()),
-      })
+      });
 
       const response = await startConversation({
         message: firstMessageText,
-      })
+      });
 
       if (!response.success || !response.data) {
         Toast.show({
           type: "error",
-          text1: response.fields ? response.fields[0] : "Erro ao iniciar análise",
+          text1: response.fields
+            ? response.fields[0]
+            : "Erro ao iniciar análise",
         });
         return;
       }
@@ -76,25 +78,34 @@ export default function Chat() {
       setConversationId(response.data.conversationId);
       setCaseId(response.data.caseId);
 
-      addMessage({
-        id: Date.now().toString() + "-assistant",
-        content: response.data.question,
-        role: "Assistant",
-        created_at: String(Date.now()),
-      })
+      if (response.data.finished) {
+        setFinished(response.data.finished);
+      }
+
+      if (response.data.question) {
+        addMessage({
+          id: Date.now().toString() + "-assistant",
+          content: response.data.question,
+          role: "Assistant",
+          created_at: String(Date.now()),
+        });
+      }
 
       router.push("/screens/citizen/chat/conversation");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView contentContainerStyle={{ paddingBottom: 128 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 128 }}
+        showsVerticalScrollIndicator={false}
+      >
         <SafeAreaView style={{ gap: 32 }}>
           <Header title="CHAT" isFirstPage={true} isCitizen={true} />
           <View className="flex-col mt-[24px] gap-[16px] w-full">
