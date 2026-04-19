@@ -12,4 +12,5 @@ export interface IBuildRegisterLawyerFields {
     fields: FieldsType[];
     onSubmit: () => void;
     titleButton: string;
+    disableSubmit: boolean;
 }

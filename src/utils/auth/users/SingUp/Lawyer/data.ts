@@ -8,6 +8,11 @@ import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
 import { SignUpLawyer } from "@/services/users/lawyer/SignUp";
 import Toast from "react-native-toast-message";
+import { Email2FA } from "@/services/users/security/email2FA";
+import { email } from "zod";
+import { useRolesStorage } from "@/store/auth/roles.store";
+import { useAuth } from "@/hooks/useAuth";
+import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 
 type Params = {
   showPassword: boolean;
@@ -28,26 +33,55 @@ export function buildLawyerFields({
   specializationOptions,
 }: Params): IBuildRegisterLawyerFields {
   const router = useRouter();
+  const setRole = useRolesStorage((state) => state.setRole);
+  const { loading, setLoading } = useAuth();
 
   const handleRegister = async (data: ILawyerRegisterData) => {
-    const response = await SignUpLawyer(data);
+    setLoading(true);
+    try {
+      const response = await SignUpLawyer(data);
 
-    if (!response.success) {
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: "Erro no cadastro",
+          text2: response.fields[0],
+        });
+
+        return;
+      }
+
+      const resolvedRole = resolveRoleFromApi(response.data, "lawyer");
+      setRole(resolvedRole);
+
+      const email2FAResponse = await Email2FA(data.email);
+
+      if (!email2FAResponse.success) {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao enviar email de verificação",
+          text2: email2FAResponse.fields[0],
+        });
+
+        return;
+      }
+
       Toast.show({
-        type: "error",
-        text1: "Erro no cadastro",
-        text2: response.fields[0],
+        type: "success",
+        text1: "Verifique seu e-mail",
+        text2: "Enviamos um código de segurança de 6 dígitos.",
       });
 
-      return;
+      router.push({
+        pathname: "/screens/auth/Validate",
+        params: {
+          source: "lawyer",
+          email: data.email,
+        },
+      });
+    } finally {
+      setLoading(false);
     }
-
-    Toast.show({
-      type: "success",
-      text1: "Advogado cadastrado com sucesso",
-    });
-
-    router.push("/screens/lawyer/home");
   };
 
   return {
@@ -104,7 +138,7 @@ export function buildLawyerFields({
         iconNameProps: "phone",
         type: "phone",
         value: registerAuth.phone,
-        onChangeText: (text) => handleRegisterChange("phone", text), 
+        onChangeText: (text) => handleRegisterChange("phone", text),
       } as IInputProps,
       {
         label: "Especialização Principal",
@@ -150,6 +184,7 @@ export function buildLawyerFields({
         cpf: registerAuth.cpf,
         oabNumber: registerAuth.oabNumber,
       }),
-    titleButton: "Continuar",
+    titleButton: loading ? "Carregando..." : "Cadastrar",
+    disableSubmit: loading,
   };
 }
