@@ -106,6 +106,8 @@ export default function ConversationAI() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
+            <ScrollView contentContainerStyle={{ paddingBottom: 128, flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+      
       <SafeAreaView style={{ flex: 1, gap: 32 }}>
         <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
@@ -166,6 +168,7 @@ export default function ConversationAI() {
           </View>
         )}
       </SafeAreaView>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
