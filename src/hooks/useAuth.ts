@@ -1,5 +1,6 @@
 import {
   ZodLoginTypes,
+  ZodSignUpLawyerTypes,
   ZodSignUpTypes,
   ZodUpdatePasswordTypes,
 } from "@/interfaces/validation/zodTypes";
@@ -19,6 +20,17 @@ export const useAuth = () => {
     phone: "",
   });
 
+  const [registerAuthLawyer, setRegisterAuthLawyer] = useState<ZodSignUpLawyerTypes>({
+    email: "",
+    password: "",
+    cpf: "",
+    fullName: "",
+    phone: "",
+    oabNumber: "",
+    oabState: "",
+    specialization: "",
+  });
+
   const [password, setPassword] = useState<ZodUpdatePasswordTypes>({
     email: "",
     password: "",
@@ -34,12 +46,17 @@ export const useAuth = () => {
     setRegisterAuth((prev) => ({ ...prev, [name]: value }));
   }
 
+  function handleRegisterChangeLawyer(name: keyof ZodSignUpLawyerTypes, value: string) {
+    setRegisterAuthLawyer((prev) => ({ ...prev, [name]: value }));
+  }
+
   return {
     loginAuth,
     registerAuth,
+    registerAuthLawyer,
     handleLoginChange,
     handleRegisterChange,
-
+    handleRegisterChangeLawyer,
     loading,
     setLoading,
   };

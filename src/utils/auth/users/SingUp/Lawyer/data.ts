@@ -5,22 +5,18 @@ import { IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegiste
 import { useRouter } from "expo-router";
 import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
 import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
-
-type RegisterLawyer = {
-  fullName: string;
-  cpf: string;
-  oabNumber: string;
-  uf: string;
-  specialization: string;
-  email: string;
-  password: string;
-};
+import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
+import { SignUpLawyer } from "@/services/users/lawyer/SignUp";
+import Toast from "react-native-toast-message";
 
 type Params = {
   showPassword: boolean;
   onToggleShowPassword: () => void;
-  registerAuth: RegisterLawyer;
-  handleRegisterChange: (name: keyof RegisterLawyer, value: string) => void;
+  registerAuth: ILawyerRegisterData;
+  handleRegisterChange: (
+    name: keyof ILawyerRegisterData,
+    value: string,
+  ) => void;
   specializationOptions: { label: string; value: string }[];
 };
 
@@ -33,9 +29,26 @@ export function buildLawyerFields({
 }: Params): IBuildRegisterLawyerFields {
   const router = useRouter();
 
-  const handleRegister = async (data: ) => {
-    if (!acce)
-  }
+  const handleRegister = async (data: ILawyerRegisterData) => {
+    const response = await SignUpLawyer(data);
+
+    if (!response.success) {
+      Toast.show({
+        type: "error",
+        text1: "Erro no cadastro",
+        text2: response.fields[0],
+      });
+
+      return;
+    }
+
+    Toast.show({
+      type: "success",
+      text1: "Advogado cadastrado com sucesso",
+    });
+
+    router.push("/screens/lawyer/home");
+  };
 
   return {
     fields: [
@@ -78,9 +91,21 @@ export function buildLawyerFields({
       } as IInputProps,
       {
         label: "Estado",
-        value: registerAuth.uf,
-        onValueChange: (value) => handleRegisterChange("uf", value),
+        value: registerAuth.oabState,
+        onValueChange: (value) => handleRegisterChange("oabState", value),
       } as UfSelectProps,
+      {
+        label: "Telefone",
+        placeholder: "(00) 00000-0000",
+        keyboardType: "phone-pad",
+        leftIcon: true,
+        rightIcon: false,
+        iconSize: 24,
+        iconNameProps: "phone",
+        type: "phone",
+        value: registerAuth.phone,
+        onChangeText: (text) => handleRegisterChange("phone", text), 
+      } as IInputProps,
       {
         label: "Especialização Principal",
         value: registerAuth.specialization,
@@ -114,7 +139,17 @@ export function buildLawyerFields({
         onRightIconPress: onToggleShowPassword,
       } as IInputProps,
     ],
-    onSubmit: () => router.push("/screens/lawyer/home"),
+    onSubmit: () =>
+      handleRegister({
+        fullName: registerAuth.fullName,
+        email: registerAuth.email,
+        password: registerAuth.password,
+        oabState: registerAuth.oabState,
+        phone: registerAuth.phone,
+        specialization: registerAuth.specialization,
+        cpf: registerAuth.cpf,
+        oabNumber: registerAuth.oabNumber,
+      }),
     titleButton: "Continuar",
   };
 }

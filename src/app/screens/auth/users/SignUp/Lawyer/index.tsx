@@ -7,56 +7,28 @@ import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 import Toast from "react-native-toast-message";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Lawyer() {
-  const [fullName, setFullName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [oabNumber, setOabNumber] = useState("");
-  const [uf, setUf] = useState("");
-  const [specialization, setSpecialization] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { registerAuthLawyer, handleRegisterChangeLawyer } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const strength = useMemo(() => passwordValidate(password), [password]);
+  const strength = useMemo(() => passwordValidate(registerAuthLawyer.password), [registerAuthLawyer.password]);
   const registerAuth = buildLawyerFields({
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
     registerAuth: {
-      fullName,
-      cpf,
-      oabNumber,
-      uf,
-      specialization,
-      email,
-      password,
+      fullName: registerAuthLawyer.fullName,
+      cpf: registerAuthLawyer.cpf,
+      oabNumber: registerAuthLawyer.oabNumber,
+      oabState: registerAuthLawyer.oabState,
+      phone: registerAuthLawyer.phone,
+      specialization: registerAuthLawyer.specialization,
+      email: registerAuthLawyer.email,
+      password: registerAuthLawyer.password,
     },
-    handleRegisterChange: (name, value) => {
-      switch (name) {
-        case "fullName":
-          setFullName(value);
-          break;
-        case "cpf":
-          setCpf(value);
-          break;
-        case "oabNumber":
-          setOabNumber(value);
-          break;
-        case "uf":
-          setUf(value);
-          break;
-        case "specialization":
-          setSpecialization(value);
-          break;
-        case "email":
-          setEmail(value);
-          break;
-        case "password":
-          setPassword(value);
-          break;
-      }
-    },
+    handleRegisterChange: handleRegisterChangeLawyer,
     specializationOptions: specializationOptions.map((spec) => ({
       label: spec,
       value: spec,
