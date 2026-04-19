@@ -24,8 +24,8 @@ export default function Home() {
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <SafeAreaView style={{ flex: 1 }} className=" gap-[32px]">
+    <ScrollView contentContainerStyle={{ paddingBottom: 84}} showsVerticalScrollIndicator={false}>
+      <SafeAreaView className="gap-8">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">

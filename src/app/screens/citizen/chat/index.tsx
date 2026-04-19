@@ -94,8 +94,8 @@ export default function Chat() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        <SafeAreaView style={{ flex: 1, gap: 32 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 128 }} showsVerticalScrollIndicator={false}>
+        <SafeAreaView style={{ gap: 32 }}>
           <Header title="CHAT" isFirstPage={true} isCitizen={true} />
           <View className="flex-col mt-[24px] gap-[16px] w-full">
             <Text className="text-[14px] text-[#94A3B8] font-inter uppercase">

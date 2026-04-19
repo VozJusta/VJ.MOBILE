@@ -1,6 +1,6 @@
 import ButtonUI from "@/ui/ButtonUI";
 import { useRouter } from "expo-router";
-import { Text, FlatList, View } from "react-native";
+import { Text, FlatList, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputUI from "@/ui/InputUI";
 import { casesData } from "@/utils/home/cases/data";
@@ -12,6 +12,7 @@ import CaseCard from "@/components/CaseCard";
 export default function ListCases() {
   const router = useRouter();
   return (
+    <ScrollView contentContainerStyle={{ paddingBottom: 84}} showsVerticalScrollIndicator={false}>
     <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
       <Header title="MEUS CASOS" isFirstPage={false} isCitizen={true} />
       <InputUI
@@ -67,5 +68,6 @@ export default function ListCases() {
         )}
       />
     </SafeAreaView>
+    </ScrollView>
   );
 }
