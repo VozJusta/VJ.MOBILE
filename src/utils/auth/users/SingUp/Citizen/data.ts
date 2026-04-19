@@ -4,7 +4,7 @@ import { ZodSingUpTypes } from "@/interfaces/validation/zodTypes";
 import { IInputProps } from "@/interfaces/ui/InputUI";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/useAuth";
-import { SingUpCitizen } from "@/services/users/citizen/SingUp";
+import { SingUpCitizen } from "@/services/users/citizen/SignUp";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";

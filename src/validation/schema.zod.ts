@@ -35,6 +35,12 @@ export const ZodSignUpSchema = z.object({
   ),
 });
 
+export const ZodSignUpLawyerSchema = ZodSignUpSchema.extend({
+  oabNumber: z.string().min(1, "OAB é obrigatória"),
+  oabState: z.string().min(1, "Estado da OAB é obrigatório"),
+  specialization: z.string().min(1, "Especialização é obrigatória"),
+});
+
 export const ZodLoginSchema = z.object({
   email: z.email("Email inválido"),
   password: z.string(),
@@ -64,6 +70,6 @@ export const ZodUpdatePasswordSchema = z.object({
     .refine((val) => /\d/.test(val), "A senha deve conter pelo menos um número")
     .refine(
       (val) => /[!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]/.test(val),
-      "A senha deve conter pelo menos um caractere especial"
-    )
-})
+      "A senha deve conter pelo menos um caractere especial",
+    ),
+});
