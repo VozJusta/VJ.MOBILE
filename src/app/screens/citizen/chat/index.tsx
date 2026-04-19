@@ -12,9 +12,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 
 export default function Chat() {
   const router = useRouter();
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -29,7 +33,12 @@ export default function Chat() {
             </Text>
 
             {newRequestData.map((request, index) => (
-              <CategoryCard {...request} key={index} />
+              <CategoryCard
+                {...request}
+                key={index}
+                isSelected={selectedCategory === request.title}
+                onPress={() => setSelectedCategory(request.title)}
+              />
             ))}
           </View>
           {/* <View className="mt-[32px] gap-[16px]">

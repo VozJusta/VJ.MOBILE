@@ -48,7 +48,7 @@ export default function RootLayout() {
                 </Text>
 
                 {text2 ? (
-                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>{String(text2)}</Text>
                 ) : null}
               </View>
             </LinearGradient>
@@ -86,7 +86,7 @@ export default function RootLayout() {
                 </Text>
 
                 {text2 ? (
-                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>{String(text2)}</Text>
                 ) : null}
               </View>
             </LinearGradient>
