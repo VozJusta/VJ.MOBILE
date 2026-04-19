@@ -1,6 +1,6 @@
-import { ZodLoginSchema, ZodSingUpSchema, ZodUpdatePasswordSchema } from "@/validation/schema.zod";
+import { ZodLoginSchema, ZodSignUpSchema, ZodUpdatePasswordSchema } from "@/validation/schema.zod";
 import { z } from "zod";
 
 export type ZodLoginTypes = z.infer<typeof ZodLoginSchema>;
-export type ZodSingUpTypes = z.infer<typeof ZodSingUpSchema>;
+export type ZodSignUpTypes = z.infer<typeof ZodSignUpSchema>;
 export type ZodUpdatePasswordTypes = z.infer<typeof ZodUpdatePasswordSchema>;
