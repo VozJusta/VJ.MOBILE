@@ -5,6 +5,7 @@ export interface MessageBubbleProps {
   message: string;
   isUser: boolean;
   userName?: string;
+  createdAt?: string;
 }
 
 export default function MessageBubble(props: MessageBubbleProps) {
@@ -33,6 +34,14 @@ export default function MessageBubble(props: MessageBubbleProps) {
           {props.message}
         </Text>
       </View>
+      <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
+        {props.createdAt
+          ? new Date(Number(props.createdAt)).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : ""}
+      </Text>
     </View>
   );
 }

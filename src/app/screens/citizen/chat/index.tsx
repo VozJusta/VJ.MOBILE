@@ -115,6 +115,8 @@ export default function Chat() {
           <TextArea
             placeholder="Descreva o que aconteceu com suas 
 próprias palavras..."
+            value={description}
+            onChangeText={setDescription}
           />
         </SafeAreaView>
 
