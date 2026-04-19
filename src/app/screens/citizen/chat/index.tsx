@@ -9,6 +9,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -17,6 +18,7 @@ import { useChatStorage } from "@/store/chat/chat.store";
 import Toast from "react-native-toast-message";
 import { set } from "zod";
 import { startConversation } from "@/services/ai/conversation/startConversation";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Chat() {
   const router = useRouter();
@@ -124,7 +126,11 @@ próprias palavras..."
           children={
             <View className="justify-center items-center flex-1">
               <Text className="text-white font-interSemiBold text-[16px]">
-                Iniciar análise por IA
+                {loading ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  "Iniciar análise por IA"
+                )}
               </Text>
             </View>
           }
