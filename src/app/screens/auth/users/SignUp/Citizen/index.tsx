@@ -62,7 +62,7 @@ export default function Citizen() {
           Já possui registro?{" "}
           <Text
             className="text-white underline font-interBold"
-            onPress={() => router.push("/screens/auth/users/SingIn")}
+            onPress={() => router.push("/screens/auth/users/SignIn")}
           >
             Fazer Login
           </Text>

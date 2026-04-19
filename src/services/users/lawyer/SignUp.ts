@@ -2,8 +2,11 @@ import { ZodValidate } from "@/validation/safeValidate.zod";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodSignUpLawyerTypes } from "@/interfaces/validation/zodTypes";
 import { ZodSignUpLawyerSchema} from "@/validation/schema.zod";
+import { useXTokenStorage } from "@/store/auth/token.store";
 
 export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
+  const setToken = useXTokenStorage.getState().setToken;
+
   try {
     const validate = ZodValidate(ZodSignUpLawyerSchema, data);
 
@@ -31,6 +34,12 @@ export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
         specialization: validate.data?.specialization,
       }),
     });
+
+    const token = response.headers.get("x-security-token") || (response.headers as any).map?.['x-security-token'];
+
+    if (token) {
+      setToken(token);
+    }
 
     const json = await response.json().catch(() => ({}));
 

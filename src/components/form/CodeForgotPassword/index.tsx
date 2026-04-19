@@ -18,6 +18,7 @@ export function CodeForgotPassword({
   resolvedCodeTitle,
   resolvedVerifyButtonLabel,
   timerLabel,
+  onCodeVerified
 }: ICodeForgotPasswordProps) {
   const { loading, setLoading } = useAuth();
   const emailStorage = useEmailStorage((state) => state.email);
@@ -45,7 +46,10 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.push("/screens/citizen/home");
+    if (onCodeVerified) {
+    onCodeVerified();
+  }
+    setLoading(false);
     return;
   };
 
@@ -68,7 +72,9 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.push("/screens/auth/ForgotPassword/Update");
+    if (onCodeVerified) {
+    onCodeVerified();
+  }
     setLoading(false);
   };
 

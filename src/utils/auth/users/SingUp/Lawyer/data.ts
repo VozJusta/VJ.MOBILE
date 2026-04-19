@@ -60,13 +60,17 @@ export function buildLawyerFields({
       const email2FAResponse = await Email2FA(data.email);
 
       if (!email2FAResponse.success) {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao enviar email de verificação",
-          text2: email2FAResponse.fields[0],
-        });
+        const errorMessage = email2FAResponse.fields[0];
+        const isCodeAlreadySent = errorMessage === "Código já enviado" || errorMessage === "Código enviado";
 
-        return;
+        if (!isCodeAlreadySent) {
+          Toast.show({
+            type: "error",
+            text1: "Erro ao enviar email de verificação",
+            text2: errorMessage,
+          });
+          return;
+        }
       }
 
       Toast.show({

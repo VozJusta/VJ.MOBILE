@@ -11,7 +11,7 @@ import { IDecodedToken } from "@/interfaces/services/token/token";
 import { isTokenExpired } from "@/helpers/store";
 
 export default function App() {
-  const accessToken: string = useAccessTokenStorage(
+  const accessToken: string | null = useAccessTokenStorage(
     (state) => state.accessToken,
   );
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function App() {
     ]);
 
     anim.start(() => {
-      if (accessToken && !isTokenExpired(decodedToken)) {
+      if (accessToken && decodedToken && !isTokenExpired(decodedToken)) {
         router.replace("/screens/citizen/home");
       } else {
         router.replace("/screens/Onboarding");

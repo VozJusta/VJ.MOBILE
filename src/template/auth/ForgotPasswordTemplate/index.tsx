@@ -94,6 +94,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   resolvedVerifyButtonLabel={resolvedVerifyButtonLabel}
                   timerLabel={timerLabel}
                   emailValidateScreen={props.email}
+                  onCodeVerified={props.onCodeVerified ?? (() => {})}
                 />
               )}
               {props.screen === ScreensForgotPassword.Update && (

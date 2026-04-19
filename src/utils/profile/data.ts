@@ -38,7 +38,7 @@ export const ButtonsProfile: IButtonProfile[] = [
         colorIcon: "#EA3323",
         icon: "logout",
         namebutton: "Sair da Conta",
-        path: "/screens/auth/users/SingIn",
+        path: "/screens/auth/users/SignIn",
         NextButton:false
     },
 ]

@@ -62,7 +62,7 @@ export default function UfSelect({
       style={{ zIndex: 1000, elevation: 1000 }}
       onTouchStart={(event) => event.stopPropagation()}
     >
-      <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+      <Text className="text-[#fff] text-[12px] font-interBold uppercase mb-[6px]">
         {label}
       </Text>
 

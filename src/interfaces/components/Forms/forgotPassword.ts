@@ -6,6 +6,7 @@ export interface ICodeForgotPasswordProps {
   resolvedVerifyButtonLabel: string;
   timerLabel: string;
   emailValidateScreen: string;
+  onCodeVerified: () => void;
 }
 
 export interface IUpdateForgotPasswordProps {
