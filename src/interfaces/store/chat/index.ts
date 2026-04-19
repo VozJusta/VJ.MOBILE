@@ -14,7 +14,7 @@ export interface IChatStore {
     clearFinished: () => void;
 
     messages: IMessageResponse[];
-    addMessage: (messages: IMessageResponse[]) => void;
+    addMessage: (messages: IMessageResponse) => void;
     setMessages: (messages: IMessageResponse[]) => void;
 
     clearChat: () => void;

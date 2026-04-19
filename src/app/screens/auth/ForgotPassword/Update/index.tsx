@@ -57,7 +57,7 @@ export default function UpdatePassword() {
       type: "success",
       text1: response.data?.message || "Senha atualizada com sucesso!",
     });
-    router.push("/screens/auth/users/SingIn");
+    router.push("/screens/auth/users/SignIn");
     clearEmail();
     return;
   };
