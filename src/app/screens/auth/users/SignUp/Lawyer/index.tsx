@@ -14,20 +14,14 @@ export default function Lawyer() {
   const [showPassword, setShowPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const strength = useMemo(() => passwordValidate(registerAuthLawyer.password), [registerAuthLawyer.password]);
+  const strength = useMemo(
+    () => passwordValidate(registerAuthLawyer.password),
+    [registerAuthLawyer.password],
+  );
   const registerAuth = buildLawyerFields({
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
-    registerAuth: {
-      fullName: registerAuthLawyer.fullName,
-      cpf: registerAuthLawyer.cpf,
-      oabNumber: registerAuthLawyer.oabNumber,
-      oabState: registerAuthLawyer.oabState,
-      phone: registerAuthLawyer.phone,
-      specialization: registerAuthLawyer.specialization,
-      email: registerAuthLawyer.email,
-      password: registerAuthLawyer.password,
-    },
+    registerAuth: registerAuthLawyer,
     handleRegisterChange: handleRegisterChangeLawyer,
     specializationOptions: specializationOptions.map((spec) => ({
       label: spec,
