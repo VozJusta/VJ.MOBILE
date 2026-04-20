@@ -12,7 +12,7 @@ export default function LawyerLayout() {
       colors={["#000000", "#052F5F"]}
     >
       <Slot />
-      <Navbar isLawyer={true} />
+      <Navbar profile={false} isLawyer={true} />
     </LinearGradient>
   );
 }

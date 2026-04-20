@@ -1,12 +1,12 @@
-import { IButtonProfile } from "@/interfaces/interfaces";
+import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 
-export const ButtonsProfile:IButtonProfile[] = [
+export const ButtonsProfile: IButtonProfile[] = [
     {
         bgIcon: "rgba(59,130,246,0.1)",
         colorIcon: "#3C77E8",
         icon: "account-circle",
         namebutton: "Meus Dados",
-        path: "",
+        path: "/screens/shared/profile/myData",
         NextButton:true
     },
     {
@@ -14,7 +14,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#CB30E0",
         icon: "settings",
         namebutton: "Configurações",
-        path: "",
+        path: "/screens/shared/profile/settings",
         NextButton:true
     },
     {
@@ -22,7 +22,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#75FB4C",
         icon: "verified-user",
         namebutton: "Privacidade",
-        path: "",
+        path: "/screens/shared/profile/privacity",
         NextButton:true
     },
     {
@@ -30,7 +30,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#FFFF55",
         icon: "help",
         namebutton: "Central de Ajuda",
-        path: "",
+        path: "/screens/shared/profile/help",
         NextButton:true
     },
     {
@@ -38,7 +38,7 @@ export const ButtonsProfile:IButtonProfile[] = [
         colorIcon: "#EA3323",
         icon: "logout",
         namebutton: "Sair da Conta",
-        path: "/screens/auth/users/SingIn",
+        path: "/screens/auth/users/SignIn",
         NextButton:false
     },
 ]

@@ -24,11 +24,15 @@ export default function InputUI({
   onChangeText,
   onRightIconPress,
   inputOTP,
+  onFilledOTP,
+  onSubmitEditing,
   ...restProps
 }: IInputProps) {
   return inputOTP ? (
     <OtpInput
       autoFocus={false}
+      onTextChange={onChangeText}
+      onFilled={onFilledOTP}
       numberOfDigits={6}
       theme={{
         containerStyle: {
@@ -50,7 +54,7 @@ export default function InputUI({
   ) : (
     <View className="w-full ">
       {!!label && (
-        <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+        <Text className="text-[#fff] text-[12px] font-interBold uppercase mb-[6px]">
           {label}
         </Text>
       )}
@@ -71,6 +75,7 @@ export default function InputUI({
           secureTextEntry={secureTextEntry}
           value={value}
           onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
           {...restProps}
         />
 

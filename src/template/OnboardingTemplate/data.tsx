@@ -16,7 +16,7 @@ export const onboardingData: PageData[] = [
         <LinearGradient
           style={{
             width: "100%",
-            minHeight: 200,
+            minHeight: 240,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
             flexDirection: "column",
@@ -79,7 +79,7 @@ export const onboardingData: PageData[] = [
         <LinearGradient
           style={{
             width: "100%",
-            minHeight: 200,
+            minHeight: 240,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
             flexDirection: "column",
@@ -141,7 +141,7 @@ export const onboardingData: PageData[] = [
         <LinearGradient
           style={{
             width: "100%",
-            minHeight: 200,
+            minHeight: 240,
             borderRadius: 12,
             boxShadow: "0px 8px 32px 0px rgba(0,0,0,0.37)",
             flexDirection: "column",

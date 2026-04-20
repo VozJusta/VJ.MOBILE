@@ -3,20 +3,27 @@ import { View, Text } from "react-native";
 import { NavbarItemsCitizen, NavbarItemsLawyer } from "./data";
 import ButtonUI from "@/ui/ButtonUI";
 import React, { useState } from "react";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 
-export default function Navbar({ isLawyer }: { isLawyer: boolean }) {
-  const [isActive, setIsActive] = useState(0);
+export default function Navbar({
+  isLawyer,
+  profile,
+}: {
+  isLawyer: boolean;
+  profile: boolean;
+}) {
+const pathname = usePathname();
   const router = useRouter();
 
   return (
     <View className="bg-[#161E29] rounded-[16px] flex-row border border-solid border-[rgba(255,255,255,0.1)] w-[343px] h-[64px] absolute bottom-6 justify-between items-center self-center px-[16px] mb-6 py-[9.5px] ">
       {!isLawyer
         ? NavbarItemsCitizen.map((item, index) => {
-            const activeItem = isActive === index;
+            const activeItem = pathname === item.path;
+            const profileIndex = NavbarItemsCitizen.length - 1;
             return (
               <ButtonUI
-                key={index}
+                key={ item.path }
                 children={
                   <View className="flex-col gap-[4px] items-center">
                     <MaterialIcons
@@ -32,7 +39,6 @@ export default function Navbar({ isLawyer }: { isLawyer: boolean }) {
                   </View>
                 }
                 onPress={() => {
-                  setIsActive(index);
                   router.push(item.path);
                 }}
                 gradient={false}
@@ -43,10 +49,10 @@ export default function Navbar({ isLawyer }: { isLawyer: boolean }) {
             );
           })
         : NavbarItemsLawyer.map((item, index) => {
-            const activeItem = isActive === index;
+            const activeItem = pathname === item.path;
             return (
               <ButtonUI
-                key={index}
+                key={item.path}
                 children={
                   <View className="flex-col gap-[4px] items-center">
                     <MaterialIcons
@@ -62,7 +68,6 @@ export default function Navbar({ isLawyer }: { isLawyer: boolean }) {
                   </View>
                 }
                 onPress={() => {
-                  setIsActive(index);
                   router.push(item.path);
                 }}
                 gradient={false}

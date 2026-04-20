@@ -14,7 +14,7 @@ module.exports = {
         EconGreen900: "#59B666",
         DarkTeal: "#052F5F",
         White: "#FFFFFF",
-        Placeholder: "475569",
+        Placeholder: "#475569",
         BlueRoyal: "#02A6FF",
         BlueAzure: "#135BEC",
       },

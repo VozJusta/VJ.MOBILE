@@ -1,25 +1,50 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
+import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { jwtDecode } from "jwt-decode";
+import CaseCard from "@/components/CaseCard";
+import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import {
+  getCategoryLabel,
+  getStatusIcon,
+  translateStatus,
+} from "@/utils/screens/citizen/home";
 
 export default function Home() {
   const router = useRouter();
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  if (token === null) {
+    router.push("/screens/auth/users/SignIn");
+    return null;
+  }
+  let decodedToken: IDecodedToken
+
+  try {
+    decodedToken = jwtDecode<IDecodedToken>(token);
+  } catch (errordecode) {
+    router.replace("/screens/OnBoarding/roles");
+    return null
+  }
+
+  const { loading, reports } = useDashboard(3);
+
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={{ flex: 1 }}
-        className=" gap-[32px]"
-      >
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: 84 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <SafeAreaView className="gap-8">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
-            Olá, Ricardo!
+            Olá, {decodedToken.fullName}!
           </Text>
           <Text className="text-[16px] text-[#94A3B8] font-interLight">
             Bem-vindo ao seu painel jurídico.
@@ -35,14 +60,14 @@ export default function Home() {
           </Text>
           <ButtonUI
             children={
-              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px]">
+              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px] h-full">
                 <Text className="text-white font-interSemiBold text-[14px]">
                   Relatar Novo Caso
                 </Text>
                 <MaterialIcons name="arrow-forward" size={20} color="white" />
               </View>
             }
-            onPress={() => router.replace("/screens/citizen/home/newRequest")}
+            onPress={() => router.push("/screens/citizen/chat")}
             gradient={true}
             hover={false}
             iconLeft={false}
@@ -54,56 +79,33 @@ export default function Home() {
             <Text className="text-white text-[18px] font-interSemiBold">
               Meus Casos
             </Text>
-            <Text className="font-inter text-[14px] text-[#2563EB]">
+            <Text
+              className="font-inter text-[14px] text-[#2563EB]"
+              onPress={() => router.push("/screens/citizen/home/listCases")}
+            >
               Ver todos
             </Text>
           </View>
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Ação Trabalhista - XPTO
-              </Text>
-            }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Em Análise"
-            iconName="article"
-            paddingButtonStatus={"p-[16px]"}
-          />
-          <ButtonUI
-            children={
-              <Text className="text-white text-[14px] font-inter">
-                Indenização Danos Morais
-              </Text>
-            }
-            onPress={() => {}}
-            gradient={false}
-            hover={false}
-            iconLeft={true}
-            statusBorder={false}
-            status="Concluído"
-            iconName="verified"
-            paddingButtonStatus={"p-[16px]"}
-          />
+
+          {loading ? (
+            <ActivityIndicator size="large" color="#2563EB" className="mt-4" />
+          ) : reports.length === 0 ? (
+            <Text className="text-white text-[16px] font-interSemiBold">
+              Você não tem casos registrados.
+            </Text>
+          ) : (
+            reports.map((report) => (
+              <CaseCard
+                key={report.id}
+                iconName={getStatusIcon(report.status)}
+                onPress={() => {}}
+                status={report.status}
+                title={getCategoryLabel(report.category_detected)}
+              />
+            ))
+          )}
         </View>
-        <LinearGradient
-          style={{
-            borderRadius: 24,
-            backgroundColor: "rgba(255,255,255,0.03)",
-            height: 225,
-            paddingTop: 24,
-            paddingHorizontal: 24,
-            paddingBottom: 56,
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0.8, y: 1 }}
-          colors={["rgba(49, 46, 129,0.4)", "#312E81"]}
-        >
+        <View className="rounded-3xl bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] h-fit p-6 w-full gap-[24px]">
           <View className="flex-row justify-between">
             <View>
               <Text className="text-[18px] text-white font-interBold">
@@ -133,7 +135,7 @@ export default function Home() {
             iconLeft={false}
             paddingButtonStatus={""}
           />
-        </LinearGradient>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

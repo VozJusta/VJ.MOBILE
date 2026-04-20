@@ -11,8 +11,8 @@ export default function NotificationTemplate({
   notifications,
 }: NotificationTemplateProps) {
   return (
-    <SafeAreaView className="flex-1  gap-4">
-      <Header isFirstPage={false} title="NOTIFICAÇÕES"></Header>
+    <SafeAreaView className="flex-1 gap-4 px-[16px]">
+      <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true}></Header>
       <FlatList
         className="mt-8"
         data={notifications}
@@ -36,7 +36,6 @@ export default function NotificationTemplate({
       <ButtonUI
         iconLeft={true}
         gradient={true}
-        colorsStatus="blue"
         hover={false}
         paddingButtonStatus="px-[16px] py-[12px] mt-12"
         onPress={() => console.log("Limpei tudo")}

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { PasswordStrengthSection } from "../../components/PasswordStrengh";
 
 export enum ScreensForgotPassword {
@@ -16,9 +17,13 @@ type CodeScreenOptions = {
 
 export type IForgotPasswordProps =
   | ({
+      email: string;
       screen: ScreensForgotPassword.Email | ScreensForgotPassword.Code;
     } & CodeScreenOptions)
   | ({
+      email: string;
+      labelButton?: ReactNode | string;
+      onSubmit?: () => void;
       screen: ScreensForgotPassword.Update;
       passwordStrength: PasswordStrengthSection;
       newPassword: string;

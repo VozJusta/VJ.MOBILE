@@ -44,7 +44,7 @@ export default function RequestSelected() {
         ))}
 
         <ContactCard
-          nameCitizen={requestSelected[0].nameCitizen}
+          name={requestSelected[0].nameCitizen}
           phone="(11) 98765-4321"
           email="exemplo@gmail.com"
         />

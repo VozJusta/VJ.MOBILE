@@ -1,14 +1,32 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { jwtDecode } from "jwt-decode";
+import { IDecodedToken } from "@/interfaces/services/token/token";
+import { isTokenExpired } from "@/helpers/store";
 
 export default function App() {
+  const accessToken: string | null = useAccessTokenStorage(
+    (state) => state.accessToken,
+  );
   const router = useRouter();
   const scale = useRef(new Animated.Value(1)).current;
+
+  const decodedToken = useMemo(() => {
+    if (!accessToken) {
+      return null;
+    }
+    try {
+      return jwtDecode<IDecodedToken>(accessToken);
+    } catch (error) {
+      return null;
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     const anim = Animated.sequence([
@@ -20,7 +38,7 @@ export default function App() {
       }),
       Animated.delay(800),
       Animated.timing(scale, {
-        toValue: 1.7,
+        toValue: 2.7,
         duration: 200,
         easing: Easing.in(Easing.quad),
         useNativeDriver: true,
@@ -29,11 +47,15 @@ export default function App() {
     ]);
 
     anim.start(() => {
-      router.push("/screens/Onboarding");
+      if (accessToken && decodedToken && !isTokenExpired(decodedToken)) {
+        router.replace("/screens/citizen/home");
+      } else {
+        router.replace("/screens/Onboarding");
+      }
     });
 
     return () => anim.stop();
-  }, []);
+  }, [accessToken, decodedToken]);
 
   return (
     <>

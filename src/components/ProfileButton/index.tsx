@@ -1,11 +1,18 @@
-import { IButtonProfile } from "@/interfaces/interfaces";
+import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
 export default function ProfileButton({ ...item }: IButtonProfile) {
-  const router = useRouter()
+  const router = useRouter();
+
+  const handleNavigate = () => {
+    if (!item.path) {
+      return;
+    }
+    router.push(item.path);
+  };
   return (
     <ButtonUI
       key={item.namebutton}
@@ -29,9 +36,7 @@ export default function ProfileButton({ ...item }: IButtonProfile) {
           </View>
           {item.NextButton && (
             <ButtonUI
-              onPress={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+              onPress={handleNavigate}
               gradient={false}
               hover={false}
               bg="bg-white/5"
@@ -52,12 +57,7 @@ export default function ProfileButton({ ...item }: IButtonProfile) {
           )}
         </View>
       }
-      onPress={() => {
-        if (!item.path) {
-          return;
-        }
-        router.replace(item.path);
-      }}
+      onPress={handleNavigate}
       gradient={false}
       hover={false}
       iconLeft={false}

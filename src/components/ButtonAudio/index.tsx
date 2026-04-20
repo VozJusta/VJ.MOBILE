@@ -1,58 +1,27 @@
-import { useState, useEffect } from 'react';
-import { View, StyleSheet, Button, Alert } from 'react-native';
-import {
-  useAudioRecorder,
-  AudioModule,
-  RecordingPresets,
-  setAudioModeAsync,
-  useAudioRecorderState,
-} from 'expo-audio';
+import { IButtonAudio } from "@/interfaces/components/ButtonAudio";
+import { MaterialIcons } from "@expo/vector-icons";
+import { View, TouchableOpacity } from "react-native";
 
-export default function ButtonAudio() {
-  const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
-  const recorderState = useAudioRecorderState(audioRecorder);
-
-  const record = async () => {
-    await audioRecorder.prepareToRecordAsync();
-    audioRecorder.record();
-    console.log(audioRecorder);
-  };
-  console.log(record)
-
-  const stopRecording = async () => {
-    await audioRecorder.stop();
-  };
-  console.log(stopRecording)
-
-  useEffect(() => {
-    (async () => {
-      const status = await AudioModule.requestRecordingPermissionsAsync();
-      if (!status.granted) {
-        Alert.alert('Permission to access microphone was denied');
-      }
-
-      setAudioModeAsync({
-        playsInSilentMode: true,
-        allowsRecording: true,
-      });
-    })();
-  }, []);
-
+export default function ButtonAudio(props: IButtonAudio) {
   return (
-    <View style={styles.container}>
-      <Button
-        title={recorderState.isRecording ? 'Stop Recording' : 'Start Recording'}
-        onPress={recorderState.isRecording ? stopRecording : record}
+    <TouchableOpacity
+      onPress={
+        props.isRecording ? props.onStopRecording : props.onStartRecording
+      }
+      disabled={props.disabled}
+      className={`flex h-12 w-12 items-center justify-center rounded-full shadow-sm ${
+        props.disabled
+          ? "bg-slate-400"
+          : props.isRecording
+            ? "bg-[#EF4444]"
+            : "bg-[#2563EB]"
+      }`}
+    >
+      <MaterialIcons
+        name={props.isRecording ? "stop" : "mic"}
+        size={24}
+        color="white"
       />
-    </View>
+    </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 10,
-  },
-});

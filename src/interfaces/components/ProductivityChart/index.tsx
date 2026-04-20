@@ -1,14 +1,8 @@
 "use client";
+import { ProductivityChartProps } from "@/types/components/ProductivityChart";
 import { useMemo } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { CurveType, LineChart } from "react-native-gifted-charts";
-import type { ChartDataPoint } from "@/types/dashboard.types";
-
-type ProductivityChartProps = {
-  data: ChartDataPoint[];
-  className?: string;
-  style?: object;
-};
 
 const BLUE = "rgb(37, 133, 244)";
 const BLUE_LIGHT = "rgba(37, 133, 244, 0.15)";
@@ -27,12 +21,12 @@ export function ProductivityChart({ data, style }: ProductivityChartProps) {
         label: String(d.date),
         dataPointText: "",
       })),
-    [data]
+    [data],
   );
 
   const maxValue = useMemo(
     () => Math.max(...chartData.map((d) => d.value), 0) + 10,
-    [chartData]
+    [chartData],
   );
 
   const CustomTooltip = ({
@@ -53,7 +47,7 @@ export function ProductivityChart({ data, style }: ProductivityChartProps) {
     <View style={[styles.container, style]}>
       <LineChart
         data={chartData}
-        width={screenWidth - 48} 
+        width={screenWidth - 48}
         height={220}
         color={BLUE}
         thickness={2}
@@ -84,7 +78,9 @@ export function ProductivityChart({ data, style }: ProductivityChartProps) {
           pointerLabelHeight: 70,
           activatePointersOnLongPress: false,
           autoAdjustPointerLabelPosition: true,
-          pointerLabelComponent: (items: Array<{ value: number; label: string }>) => {
+          pointerLabelComponent: (
+            items: Array<{ value: number; label: string }>,
+          ) => {
             const item = items[0];
             if (!item) return null;
             return <CustomTooltip value={item.value} label={item.label} />;

@@ -1,27 +1,19 @@
+import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
 import { PasswordStrengthSection } from "../../components/PasswordStrengh";
-import { CareerSelectProps, UfSelectProps } from "../../interfaces";
 import { IInputProps } from "../../ui/InputUI";
+import { ReactNode } from "react";
+import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 export type FieldsType = IInputProps | UfSelectProps | CareerSelectProps;
 
-
 export interface ISignInTemplateProps {
-  layout?: "default" | "login";
-  showHeader?: boolean;
   title: string;
   description: string;
-  descriptionToFieldsSpacing?: number;
   fields: FieldsType[];
-  passwordStrength?: PasswordStrengthSection;
-  onSubmit?: () => Promise<void> | void;
-  submitLabel?: string;
-  showTerms?: boolean;
-  showForgotPassword?: boolean;
-  forgotPasswordRoute?: string;
-  showSocialGoogle?: boolean;
-  footerPrefixText?: string;
-  footerActionText?: string;
-  footerActionRoute?: string;
+  onSubmit: () => Promise<void> | void;
+  submitLabel: ReactNode;
   disableSubmit?: boolean;
-  footerActionTextClassName?: string;
+  passwordStrength?: PasswordStrengthSection;
+  extraActions?: ReactNode;
+  footer?: ReactNode;
 }
