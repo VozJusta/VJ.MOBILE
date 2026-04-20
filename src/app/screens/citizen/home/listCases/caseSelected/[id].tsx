@@ -114,22 +114,7 @@ export default function CaseSelected() {
                     </Text>
                   </View>
                 </View>
-                <View className="flex-row gap-[16px]">
-                  <View className="flex-col items-center gap-[4px]">
-                    <View className="w-[24px] h-[24px] bg-[#10B981] rounded-full items-center justify-center">
-                      <MaterialIcons name="check" size={16} color="white" />
-                    </View>
-                    <View className="w-[2px] h-[34px] bg-[rgba(16,185,129,0.3)]"></View>
-                  </View>
-                  <View className="flex-col items-start">
-                    <Text className="text-[16px] font-inter text-white">
-                      Provas Validadas{" "}
-                    </Text>
-                    <Text className="text-[12px] font-interRegular text-[#64748B]">
-                      14 Out, 2023 - 09:15{" "}
-                    </Text>
-                  </View>
-                </View>
+                
                 <View className="flex-row gap-[16px]">
                   <View className="flex-col items-center gap-[4px]">
                     <View className="w-[24px] h-[24px] bg-[#2563EB] rounded-full items-center justify-center">
