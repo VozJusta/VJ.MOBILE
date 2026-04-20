@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useChat } from "@/hooks/chat/useChat";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime, getBarHeight } from "@/utils/components/ButtonAudio";
+import { AnimatedAudioBar } from "@/components/AudioBar";
 
 export default function Chat() {
   const {
@@ -56,8 +57,8 @@ export default function Chat() {
               />
             ))}
           </View>
-          
-            <View className="w-full">
+
+          <View className="w-full">
             {!isRecording ? (
               <View className="relative w-full">
                 <TextArea
@@ -76,15 +77,42 @@ export default function Chat() {
               </View>
             ) : (
               <View className="relative w-full min-h-[200px] flex items-center justify-center bg-[rgba(255,255,255,0.03)] rounded-xl border border-solid border-white/10">
-                
                 <View className="flex-row items-end justify-center gap-1 h-12 mb-2">
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(12, 0.4, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(20, 0.7, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(30, 0.9, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(45, 1.3, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(30, 0.9, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(20, 0.7, meteringVoice) }} />
-                  <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(12, 0.4, meteringVoice) }} />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={12}
+                    modifier={0.4}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={20}
+                    modifier={0.7}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={30}
+                    modifier={0.9}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={45}
+                    modifier={1.3}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={30}
+                    modifier={0.9}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={20}
+                    modifier={0.7}
+                  />
+                  <AnimatedAudioBar
+                    meteringVoice={meteringVoice}
+                    baseHeight={12}
+                    modifier={0.4}
+                  />
                 </View>
 
                 <Text className="text-lg font-interSemiBold text-[#2563EB]">
@@ -102,7 +130,6 @@ export default function Chat() {
                     disabled={loading}
                   />
                 </View>
-
               </View>
             )}
           </View>
