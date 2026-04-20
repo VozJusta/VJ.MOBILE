@@ -11,6 +11,7 @@ import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/repor
 import { useEffect, useState } from "react";
 import { useDashboard } from "@/hooks/dashboard/useDashboard";
 import { getCategoryLabel, translateStatus } from "@/utils/screens/citizen/home";
+import Header from "@/components/Header";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -38,20 +39,11 @@ export default function CaseSelected() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1, paddingTop: 20, gap: 24 }}>
-        <View className="flex-row items-center gap-[16px]">
-          <ButtonUI
-            onPress={() => router.push("/screens/citizen/home")}
-            gradient={false}
-            hover={false}
-            size="h-[40px] w-[40px]"
-            goBack={true}
-            iconLeft={false}
-            paddingButtonStatus={""}
-          />
-          <Text className="text-[18px] text-white font-interBold">
-            {reportData && getCategoryLabel(reportData?.user.report.category_detected)}
-          </Text>
-        </View>
+        <Header
+          isFirstPage={false}
+          title={reportData ? getCategoryLabel(reportData.user.report.category_detected).toUpperCase() : ""}
+          isCitizen
+        />
         <View className="py-[24px] pl-[24px] gap-2 pr-[37px] bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[24px]">
           <Text className="text-[14px] font-interSemiBold text-[#2563EB]">
             STATUS ATUAL
