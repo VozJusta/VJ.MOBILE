@@ -79,7 +79,7 @@ export default function CaseSelected() {
               <Text className="text-[14px] font-interSemiBold text-[#2563EB]">
                 STATUS ATUAL
               </Text>
-              <View className="flex-row gap-[8px] items-center ">
+              <View className="flex-row gap-[8px] items-center justify-between">
                 <Text className="text-[24px] font-interBold text-white">
                   {reportData &&
                     translateStatus(
@@ -89,54 +89,26 @@ export default function CaseSelected() {
                 <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
               </View>
               <Text className="text-[14px] text-[#94A3B8] w-[] font-interRegular">
-                Nossa inteligência artificial está processando as provas
-                anexadas.
+                {Object.keys(reportData?.user.report.lawyer || {}).length > 0
+                  ? reportData?.user.report.transcription
+                  : "Seu caso ainda está sendo analisado por nossos especialistas. Assim que um advogado for designado para o seu caso, você terá acesso a mais detalhes e orientações específicas."}
               </Text>
             </View>
             <View className="flex-col gap-[16px]">
               <Text className="text-[14px] text-[#94A3B8] uppercase font-interSemiBold">
-                Evolução do Caso
+                ANÁLISE TÉCNICA DA IA
               </Text>
-              <View className="py-[24px] gap-[16px] pl-[24px] pr-[37px] bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[24px]">
-                <View className="flex-row gap-[16px]">
-                  <View className="flex-col items-center gap-[4px]">
-                    <View className="w-[24px] h-[24px] bg-[#10B981] rounded-full items-center justify-center">
-                      <MaterialIcons name="check" size={16} color="white" />
-                    </View>
-                    <View className="w-[2px] h-[34px] bg-[rgba(16,185,129,0.3)]"></View>
-                  </View>
-                  <View className="flex-col items-start">
-                    <Text className="text-[16px] font-inter text-white">
-                      Relato Enviado
-                    </Text>
-                    <Text className="text-[12px] font-interRegular text-[#64748B]">
-                      12 Out, 2023 - 14:30
-                    </Text>
-                  </View>
-                </View>
-                
-                <View className="flex-row gap-[16px]">
-                  <View className="flex-col items-center gap-[4px]">
-                    <View className="w-[24px] h-[24px] bg-[#2563EB] rounded-full items-center justify-center">
-                      <View className="w-[8px] h-[8px] bg-white rounded-full"></View>
-                    </View>
-                  </View>
-                  <View className="flex-col items-start">
-                    <Text className="text-[16px] font-inter text-[#2563EB]">
-                      Análise Técnica{" "}
-                    </Text>
-                    <Text className="text-[12px] font-interRegular uppercase text-[#64748B]">
-                      {reportData?.user.report.legal_analysis}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View className="flex-col uppercase gap-[16px]">
-                <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
-                  Resumo do Relato
+              <View className="p-5 bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[24px]">
+                <Text className="text-[14px] font-interRegular text-white">
+                  {reportData?.user.report.legal_analysis}
                 </Text>
-                <View className="p-5 pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
-                  <Text className="font-interRegular text-[14px] text-[#CBD5E1]">
+              </View>
+              <View className="flex-col gap-[16px]">
+                <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
+                  RESUMO DO RELATO
+                </Text>
+                <View className="p-5 border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
+                  <Text className="font-interRegular text-[14px] text-white">
                     {reportData?.user.report.simplified_explanation}
                   </Text>
                 </View>
@@ -170,10 +142,15 @@ export default function CaseSelected() {
                   phone={reportData.user.report.lawyer.phone}
                 />
               ) : (
-                <View className="p-5 pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
-                  <Text className="font-interRegular text-[14px] text-[#CBD5E1]">
-                    Nenhum advogado foi designado para este caso ainda.
+                <View className="flex flex-col items-start gap-[8px]">
+                  <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
+                    CONTATO DO ADVOGADO
                   </Text>
+                  <View className="p-5 flex flex-col border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
+                    <Text className="font-interRegular text-[14px] text-white">
+                      Nenhum advogado foi designado para este caso ainda.
+                    </Text>
+                  </View>
                 </View>
               )}
 

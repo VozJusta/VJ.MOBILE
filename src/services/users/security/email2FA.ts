@@ -20,9 +20,11 @@ export async function Email2FA(email: string) {
       };
     }
 
+    console.log("Resposta do servidor para envio de código 2FA:", json);
+
     return {
       success: true,
-      data: json.message,
+      data: json,
     };
   } catch (err: any) {
     return {
