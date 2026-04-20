@@ -25,6 +25,7 @@ export default function InputUI({
   onRightIconPress,
   inputOTP,
   onFilledOTP,
+  onSubmitEditing,
   ...restProps
 }: IInputProps) {
   return inputOTP ? (
@@ -74,6 +75,7 @@ export default function InputUI({
           secureTextEntry={secureTextEntry}
           value={value}
           onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
           {...restProps}
         />
 

@@ -1,6 +1,5 @@
-import { ITokenService } from "@/interfaces/services/token/token";
+import { ITokenService, IValidateCodeForgotResponse } from "@/interfaces/services/token/token";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { Alert } from "react-native";
 
 export async function ValidateCode(email: string, code: string) {
   try {
@@ -15,12 +14,13 @@ export async function ValidateCode(email: string, code: string) {
         code: code,
       }),
     });
-    const json: ITokenService = await response.json();
+
+    const json: IValidateCodeForgotResponse = await response.json().catch(() => ({}));
 
     if (!response.ok) {
       return {
         success: false,
-        fields: json.message,
+        fields: json.message ? [json.message] : ["Erro ao validar código"],
       };
     }
 

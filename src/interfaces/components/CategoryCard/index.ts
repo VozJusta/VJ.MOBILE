@@ -7,4 +7,6 @@ export interface ICategoryCard {
   title: string;
   path: string;
   description: string;
+  isSelected?: boolean;
+  onPress?: () => void;
 }

@@ -44,11 +44,13 @@ export default function RootLayout() {
                     marginBottom: 3,
                   }}
                 >
-                  {text1}
+                  {String(text1)}
                 </Text>
 
                 {text2 ? (
-                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>
+                    {String(text2)}
+                  </Text>
                 ) : null}
               </View>
             </LinearGradient>
@@ -82,11 +84,13 @@ export default function RootLayout() {
                     marginBottom: 3,
                   }}
                 >
-                  {text1}
+                  {String(text1)}
                 </Text>
 
                 {text2 ? (
-                  <Text style={{ fontSize: 13, color: "#ddd" }}>{text2}</Text>
+                  <Text style={{ fontSize: 13, color: "#ddd" }}>
+                    {String(text2)}
+                  </Text>
                 ) : null}
               </View>
             </LinearGradient>

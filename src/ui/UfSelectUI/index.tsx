@@ -1,8 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { UfSelectProps } from "@/interfaces/interfaces";
 import { useMemo, useState } from "react";
 import type { UF } from "@/utils/mask";
+import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
 
 const states: { label: string; value: UF }[] = [
   { label: "Acre (AC)", value: "AC" },
@@ -62,7 +62,7 @@ export default function UfSelect({
       style={{ zIndex: 1000, elevation: 1000 }}
       onTouchStart={(event) => event.stopPropagation()}
     >
-      <Text className="text-[#fff] text-[10px] font-interBold uppercase mb-[6px]">
+      <Text className="text-[#fff] text-[12px] font-interBold uppercase mb-[6px]">
         {label}
       </Text>
 

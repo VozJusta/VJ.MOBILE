@@ -3,10 +3,10 @@ import { ForgotPasswordTemplate } from "@/template/auth/ForgotPasswordTemplate";
 import React, { useEffect, useRef, useState } from "react";
 import passwordValidate from "@/utils/passwordValidate";
 import Toast from "react-native-toast-message";
-import { useEmailStorage } from "@/store/email.store";
-import { useAuth } from "@/hooks/useAuth";
+import { useEmailStorage } from "@/store/auth/email.store";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
-import { Alert } from "react-native";
+import { ActivityIndicator, Alert, Text } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function UpdatePassword() {
@@ -57,7 +57,7 @@ export default function UpdatePassword() {
       type: "success",
       text1: response.data?.message || "Senha atualizada com sucesso!",
     });
-    router.push("/screens/auth/users/SingIn");
+    router.push("/screens/auth/users/SignIn");
     clearEmail();
     return;
   };
@@ -71,28 +71,15 @@ export default function UpdatePassword() {
       setNewPassword={setNewPassword}
       screen={ScreensForgotPassword.Update}
       onSubmit={() => handleUpdatePassword(email, confirmPassword, newPassword)}
-      labelButton={loading ? "Atualizando..." : "Redefinir senha"}
+      labelButton={loading ? (
+        <ActivityIndicator size="small" color="#FFFFFF" />
+      ) : (
+        <Text className="font-interBold text-[16px] text-white">Redefinir senha</Text>
+      )}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: [
-          {
-            label: "8+ Caracteres",
-            valid: newPassword.length >= 8,
-          },
-          {
-            label: "Símbolo",
-            valid: /[@$!%*?&]/.test(newPassword),
-          },
-          {
-            label: "Maiúscula",
-            valid: /[A-Z]/.test(newPassword),
-          },
-          {
-            label: "Número",
-            valid: /[0-9]/.test(newPassword),
-          },
-        ],
+        checklist: strength.checklist
       }}
     />
   );

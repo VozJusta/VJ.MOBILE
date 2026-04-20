@@ -3,10 +3,8 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
-} from "@/store/token.store";
-import { fetch } from "expo/fetch"
-import { Alert } from "react-native";
-
+} from "@/store/auth/token.store";
+import { fetch } from "expo/fetch";
 
 export async function ValidateEmail(
   email: string,
@@ -22,27 +20,35 @@ export async function ValidateEmail(
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "x-security-token":`${token}`,
+        "x-security-token": `${token}`,
       },
       body: JSON.stringify({
         email: email,
         code: code,
       }),
     });
-    const text = await response.text();
 
-    const jsonResponse: ITokenService = JSON.parse(text);
-    
+    const json = await response.json().catch(() => ({}));
+
     if (!response.ok) {
       return {
         success: false,
-        fields: jsonResponse.message || "Erro desconhecido",
+        fields: json.message
+          ? [json.message]
+          : ["Erro desconhecido"],
       };
     }
-    
-    setAccessToken(jsonResponse.access_token || "");
-    setRefreshToken(jsonResponse.refresh_token || "");
-    
+
+    if (!json.access_token || !json.refresh_token) {
+      return {
+        success: false,
+        fields: ["Resposta do servidor inválida"],
+      };
+    }
+
+    setAccessToken(json.access_token);
+    setRefreshToken(json.refresh_token);
+
     return {
       success: true,
       data: "",
@@ -50,7 +56,7 @@ export async function ValidateEmail(
   } catch (err: any) {
     return {
       success: false,
-      fields: "Erro de conexão com o servidor",
+      fields: ["Erro de conexão com o servidor"],
     };
   }
 }

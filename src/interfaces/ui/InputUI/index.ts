@@ -20,4 +20,5 @@ export interface IInputProps {
   iconColor?: string;
   inputOTP?: boolean
   onFilledOTP?: (code: string) => void;
+  onSubmitEditing?: () => void;
 }

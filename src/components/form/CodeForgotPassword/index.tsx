@@ -1,7 +1,7 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
 import { ValidateEmail } from "@/services/users/security/validateEmail";
-import { useEmailStorage } from "@/store/email.store";
+import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { router, usePathname } from "expo-router";
@@ -9,8 +9,9 @@ import React, { useState } from "react";
 import { View, Text, Alert } from "react-native";
 import Shield from "@/assets/svg/icons/shield.svg";
 import Toast from "react-native-toast-message";
-import { useXTokenStorage } from "@/store/token.store";
+import { useXTokenStorage } from "@/store/auth/token.store";
 import { ICodeForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
+import { ActivityIndicator } from "react-native";
 
 export function CodeForgotPassword({
   emailValidateScreen,
@@ -18,6 +19,7 @@ export function CodeForgotPassword({
   resolvedCodeTitle,
   resolvedVerifyButtonLabel,
   timerLabel,
+  onCodeVerified,
 }: ICodeForgotPasswordProps) {
   const { loading, setLoading } = useAuth();
   const emailStorage = useEmailStorage((state) => state.email);
@@ -45,7 +47,10 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.push("/screens/citizen/home");
+    if (onCodeVerified) {
+      onCodeVerified();
+    }
+    setLoading(false);
     return;
   };
 
@@ -68,7 +73,9 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
-    router.push("/screens/auth/ForgotPassword/Update");
+    if (onCodeVerified) {
+      onCodeVerified();
+    }
     setLoading(false);
   };
 
@@ -91,9 +98,11 @@ export function CodeForgotPassword({
         onChangeText={(value) => setCodeChange(value)}
         onFilledOTP={(value) => {
           setCodeChange(value);
-          if (pathName.includes("/screens/auth/Validate")) {
+          const currentPath = pathName.toLowerCase();
+          if (currentPath.includes("validate")) {
+            
             handleValidateCode(emailValidateScreen, value, token ? token : "");
-          } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
+          } else if (currentPath.includes("forgotpassword")) {
             handleValidateCodeForgotPassword(emailStorage, value);
           }
         }}
@@ -109,13 +118,14 @@ export function CodeForgotPassword({
       <View className="w-full pb-[16px]">
         <ButtonUI
           onPress={() => {
-            if (pathName.includes("/screens/auth/Validate")) {
+            const currentPath = pathName.toLowerCase();
+            if (currentPath.includes("validate")) {
               handleValidateCode(
                 emailValidateScreen,
                 codeAuth,
                 token ? token : "",
               );
-            } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
+            } else if (currentPath.includes("forgotpassword")) {
               handleValidateCodeForgotPassword(emailStorage, codeAuth);
             }
           }}
@@ -126,7 +136,9 @@ export function CodeForgotPassword({
           children={
             <View className="flex-1 justify-center items-center">
               <Text className="text-[16px] font-interBold text-white">
-                {loading ? "Validando..." : resolvedVerifyButtonLabel}
+                {loading ? (
+                  <ActivityIndicator size="small" color="#FFF" />
+                ) : resolvedVerifyButtonLabel}
               </Text>
             </View>
           }

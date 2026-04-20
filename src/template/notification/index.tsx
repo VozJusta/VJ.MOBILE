@@ -36,7 +36,6 @@ export default function NotificationTemplate({
       <ButtonUI
         iconLeft={true}
         gradient={true}
-        colorsStatus="blue"
         hover={false}
         paddingButtonStatus="px-[16px] py-[12px] mt-12"
         onPress={() => console.log("Limpei tudo")}

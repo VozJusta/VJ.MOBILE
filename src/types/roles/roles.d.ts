@@ -1,1 +1,1 @@
-export type Role = "citizen" | "lawyer";
+export type Role = "citizen" | "lawyer" | "Citizen" | "Lawyer";

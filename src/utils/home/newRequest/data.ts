@@ -8,6 +8,7 @@ export const newRequestData: ICategoryCard[] = [
     colorIcon: "#F97316",
     bgIcon: "rgba(249,115,22,0.2)",
     path: "",
+    
   },
   {
     title: "Consumidor",

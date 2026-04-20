@@ -13,7 +13,7 @@ export default function AnalysysConcludedTemplate(
         <Header
           isFirstPage={false}
           isCitizen={true}
-          title="SOLICITAÇÃO FEITA"
+          title={props.titleHeader ? props.titleHeader.toUpperCase() : ""}
         />
         <View className="flex flex-col w-full items-center gap-6">
           <View className="flex w-full flex-col items-center gap-6 bg-[#1152D4]/5 border border-[#1152D4]/20 rounded-3xl p-8 h-fit">
@@ -35,10 +35,10 @@ export default function AnalysysConcludedTemplate(
                 <MaterialIcons name="gavel" color={"#1152D4"} />
               </View>
               <Text className="font-inter text-sm text-[#94A3B8]">
-                {props.firstCardProps.title}
+                {props.firstCardProps?.title}
               </Text>
               <Text className="font-inter text-base text-white">
-                {props.firstCardProps.description}
+                {props.firstCardProps?.description}
               </Text>
             </View>
             <View className="flex-1 flex flex-col justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl min-h-[132px]">

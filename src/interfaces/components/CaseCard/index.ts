@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
-export type CaseStatus = "Em Análise" | "Concluído" | "Aguardando Advogado";
+export type CaseStatus = "Pending" | "Accepted" | "Refused";
 
 export interface CaseCardProps {
   title: string;

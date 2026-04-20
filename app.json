@@ -36,12 +36,15 @@
       "package": "com.oliveiraz.vjmobile"
     },
     "plugins": [
-      [
-        "expo-router",
-        { "root": "src/app" }
-      ],
+      ["expo-router", { "root": "src/app" }],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      ["expo-audio",
+      {
+        "microphonePermission": "Allow VozJusta to access your microphone.",
+        "enableBackgroundPlayback": true,
+        "enableBackgroundRecording": false
+      }]
     ]
   }
 }

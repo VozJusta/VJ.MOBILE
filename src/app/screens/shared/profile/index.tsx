@@ -8,7 +8,7 @@ import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import { jwtDecode } from "jwt-decode";
-import { useAccessTokenStorage } from "@/store/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
 

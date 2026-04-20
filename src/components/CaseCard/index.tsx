@@ -1,7 +1,8 @@
 import { Pressable, View, Text } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { CaseCardProps } from "@/interfaces/components/CaseCard";
+import { CaseCardProps, CaseStatus } from "@/interfaces/components/CaseCard";
 import { STATUS_STYLES } from "@/utils/components/CaseCard";
+import { translateStatus } from "@/utils/screens/citizen/home";
 
 export default function CaseCard({
   title,
@@ -9,7 +10,7 @@ export default function CaseCard({
   iconName,
   onPress,
 }: CaseCardProps) {
-  const styles = STATUS_STYLES[status] ?? STATUS_STYLES["Aguardando Advogado"];
+  const styles = STATUS_STYLES[status as CaseStatus];
 
   return (
     <Pressable
@@ -38,7 +39,7 @@ export default function CaseCard({
               <Text
                 className={`font-interBold text-[10px] uppercase ${styles.label}`}
               >
-                {status}
+                {translateStatus(status)}
               </Text>
             </View>
           </View>

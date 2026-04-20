@@ -1,10 +1,18 @@
 import { ICategoryCard } from "@/interfaces/components/CategoryCard";
 import { MaterialIcons } from "@expo/vector-icons";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 export default function CategoryCard(request: ICategoryCard) {
   return (
-    <View className="w-full flex-row p-[20px] justify-between items-center bg-[rgb(255,255,255,0.03)] rounded-xl border border-solid border-[rgba(255,255,255,0.1)]">
+    <TouchableOpacity
+      onPress={request.onPress}
+      activeOpacity={0.7}
+      className={`w-full flex-row p-[20px] justify-between items-center rounded-xl border border-solid border-[rgba(255,255,255,0.1)] ${
+        request.isSelected
+          ? "bg-[rgba(19,91,236,0.1)] " 
+          : "bg-[rgb(255,255,255,0.03)] " 
+      }`}
+    >
       <View className="flex-row gap-[16px] items-center">
         <View
           style={{ backgroundColor: request.bgIcon }}
@@ -25,7 +33,11 @@ export default function CategoryCard(request: ICategoryCard) {
           </Text>
         </View>
       </View>
-      <MaterialIcons name="keyboard-arrow-right" size={24} color="#475569" />
-    </View>
+      <MaterialIcons 
+        name={request.isSelected ? "radio-button-checked" : "radio-button-unchecked"} 
+        size={24} 
+        color={request.isSelected ? "#135BEC" : "#475569"} 
+      />
+    </TouchableOpacity>
   );
 }

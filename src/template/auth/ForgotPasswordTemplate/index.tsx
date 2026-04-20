@@ -19,7 +19,7 @@ import {
 } from "@/interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "expo-router";
-import { useXTokenStorage } from "@/store/token.store";
+import { useXTokenStorage } from "@/store/auth/token.store";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
 import { UpdateForgotPassword } from "@/components/form/UpdateForgotPassword";
@@ -94,6 +94,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   resolvedVerifyButtonLabel={resolvedVerifyButtonLabel}
                   timerLabel={timerLabel}
                   emailValidateScreen={props.email}
+                  onCodeVerified={props.onCodeVerified || (() => {})}
                 />
               )}
               {props.screen === ScreensForgotPassword.Update && (

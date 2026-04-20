@@ -17,7 +17,7 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
     if (validate.data?.password !== validate.data?.confirmPassword) {
       return {
         success: false,
-        fields: "As senhas não coincidem",
+        fields: ["As senhas não coincidem"],
       };
     }
 
@@ -33,19 +33,12 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
       }),
     });
 
-    const text = await response.text();
-
-    let json: any = {};
-    try {
-      json = text ? JSON.parse(text) : {};
-    } catch {
-      json = { message: text };
-    }
+    const json = await response.json().catch(() => ({}));
 
     if (!response.ok) {
       return {
         success: false,
-        fields: json.fields || [json.message],
+        fields: json.message ? [json.message] : ["Erro ao atualizar a senha"],
       };
     }
 

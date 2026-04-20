@@ -1,4 +1,4 @@
-import { Role } from "@/interfaces/interfaces";
+import { Role } from "@/types/roles/roles";
 
 function normalizeRoleValue(value: unknown): Role | null {
   if (typeof value !== "string") {

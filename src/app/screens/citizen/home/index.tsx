@@ -1,31 +1,45 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, ScrollView, Alert } from "react-native";
-import Logo from "@/assets/svg/icons/logo.svg";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
-import { casesData } from "@/utils/home/cases/data";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
-import { useAccessTokenStorage } from "@/store/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import CaseCard from "@/components/CaseCard";
+import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import {
+  getCategoryLabel,
+  getStatusIcon,
+  translateStatus,
+} from "@/utils/screens/citizen/home";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (token === null) {
-    Alert.alert("Token de acesso não encontrado");
     router.push("/screens/auth/users/SignIn");
     return null;
   }
-  const decodedToken = jwtDecode<IDecodedToken>(token);
+  let decodedToken: IDecodedToken
+
+  try {
+    decodedToken = jwtDecode<IDecodedToken>(token);
+  } catch (errordecode) {
+    router.replace("/screens/OnBoarding/roles");
+    return null
+  }
+
+  const { loading, reports } = useDashboard(3);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <SafeAreaView style={{ flex: 1 }} className=" gap-[32px]">
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: 84 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <SafeAreaView className="gap-8">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
         <View className="mt-[32px] gap-[4px]">
@@ -72,18 +86,24 @@ export default function Home() {
               Ver todos
             </Text>
           </View>
-          <CaseCard
-            iconName="article"
-            onPress={() => {}}
-            status="Em Análise"
-            title="Ação trabalhista - XPTO"
-          />
-          <CaseCard
-            iconName="verified"
-            onPress={() => {}}
-            status="Concluído"
-            title="Reclamação contra vizinho barulhento"
-          />
+
+          {loading ? (
+            <ActivityIndicator size="large" color="#2563EB" className="mt-4" />
+          ) : reports.length === 0 ? (
+            <Text className="text-white text-[16px] font-interSemiBold">
+              Você não tem casos registrados.
+            </Text>
+          ) : (
+            reports.map((report) => (
+              <CaseCard
+                key={report.id}
+                iconName={getStatusIcon(report.status)}
+                onPress={() => {}}
+                status={report.status}
+                title={getCategoryLabel(report.category_detected)}
+              />
+            ))
+          )}
         </View>
         <View className="rounded-3xl bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] h-fit p-6 w-full gap-[24px]">
           <View className="flex-row justify-between">
