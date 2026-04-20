@@ -2,7 +2,7 @@ import { IGetReportsResponse } from "@/interfaces/services/dashboard/reports";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 
-export async function ReportByCitizen(page: number, pageSize: number) {
+export async function reportByCitizen(page: number, pageSize: number) {
   const token = useAccessTokenStorage.getState().accessToken;
 
   try {
