@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useRouter } from "expo-router";
-
 import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
@@ -9,16 +8,22 @@ import { startConversation } from "@/services/ai/conversation/startConversation"
 import {
   AudioModule,
   useAudioRecorder,
-  AndroidOutputFormat,
-  AndroidAudioEncoder,
   RecordingPresets,
   setAudioModeAsync,
+  useAudioRecorderState
 } from "expo-audio";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 
 export function useChat() {
   const router = useRouter();
-  const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
+  const audioRecorder = useAudioRecorder({
+    ...RecordingPresets.HIGH_QUALITY,
+    isMeteringEnabled: true,
+  });
+
+  const audioRecorderState = useAudioRecorderState(audioRecorder);
+
+  const meteringVoice = audioRecorderState.metering || -160;
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -211,7 +216,7 @@ export function useChat() {
     }
   };
 
-  const handleStopRecording = async () => {
+  const handleStopRecording = async (target: "description" | "message") => {
     try {
       setIsRecording(false);
       setLoading(true);
@@ -232,7 +237,11 @@ export function useChat() {
       const response = await transcribeAudio(audioUri);
 
       if (response.success && response.data) {
-        setMessage(response.data);
+        if (target === "description") {
+          setDescription(response.data);
+        } else {
+          setMessage(response.data);
+        }
       } else {
         Toast.show({
           type: "error",
@@ -268,5 +277,6 @@ export function useChat() {
     handleStartRecording,
     handleStopRecording,
     isRecording,
+    meteringVoice
   };
 }

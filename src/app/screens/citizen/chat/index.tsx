@@ -12,13 +12,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 import { useChat } from "@/hooks/chat/useChat";
 import ButtonAudio from "@/components/ButtonAudio";
 
 export default function Chat() {
-  const router = useRouter();
-
   const {
     loading,
     description,
@@ -67,7 +64,7 @@ export default function Chat() {
               <ButtonAudio
                 isRecording={isRecording}
                 onStartRecording={handleStartRecording}
-                onStopRecording={handleStopRecording}
+                onStopRecording={() => handleStopRecording("description")}
                 disabled={loading}
               />
             </View>
