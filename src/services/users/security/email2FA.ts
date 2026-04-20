@@ -22,7 +22,7 @@ export async function Email2FA(email: string) {
 
     return {
       success: true,
-      data: json,
+      data: json.message,
     };
   } catch (err: any) {
     return {
