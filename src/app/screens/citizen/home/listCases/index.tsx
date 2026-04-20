@@ -69,7 +69,7 @@ export default function ListCases() {
               </Text>
 
               <ButtonUI
-                onPress={() => router.push(`/screens/citizen/home/newRequest`)}
+                onPress={() => router.push(`/screens/citizen/chat/`)}
                 gradient
                 bg="bg-[#135BEC]"
                 hover={false}
