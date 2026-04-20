@@ -9,7 +9,6 @@ import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
 import { SignUpLawyer } from "@/services/users/lawyer/SignUp";
 import Toast from "react-native-toast-message";
 import { Email2FA } from "@/services/users/security/email2FA";
-import { email } from "zod";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";

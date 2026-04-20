@@ -8,6 +8,7 @@ import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 import Toast from "react-native-toast-message";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
 
 export default function Lawyer() {
   const { registerAuthLawyer, handleRegisterChangeLawyer } = useAuth();
@@ -21,7 +22,7 @@ export default function Lawyer() {
   const registerAuth = buildLawyerFields({
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
-    registerAuth: registerAuthLawyer,
+    registerAuth: registerAuthLawyer as ILawyerRegisterData,
     handleRegisterChange: handleRegisterChangeLawyer,
     specializationOptions: specializationOptions.map((spec) => ({
       label: spec.label,
