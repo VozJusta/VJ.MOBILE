@@ -1,3 +1,12 @@
+import { Role } from "@/types/roles/roles";
+
+export interface IGetReportDetailsResponse {
+    role: Role;
+    user: {
+        report: IReportDetails
+    }
+}
+
 export interface IReportDetails {
     id: string;
     transcription: string;
@@ -6,7 +15,7 @@ export interface IReportDetails {
     category_detected: string;
     status: string;
     evidence: string[];
-    lawyer: ILaywerInformations;    
+    lawyer: ILaywerInformations;
 }
 
 export interface ILaywerInformations {
