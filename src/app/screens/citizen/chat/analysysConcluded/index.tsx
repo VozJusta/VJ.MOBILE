@@ -11,15 +11,15 @@ export default function AnalysysConcluded() {
   const router = useRouter();
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const { caseId } = useChatStorage();
+  const { reportId } = useChatStorage();
 
   const handleDownloadReport = async () => {
-    if (!caseId) return;
+    if (!reportId) return;
 
     try {
       setIsDownloading(true);
 
-      const response = await downloadReportAsPdf(caseId);
+      const response = await downloadReportAsPdf(reportId);
 
       console.log("Relatório baixado com sucesso:", response);
     } finally {
