@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useChatStorage } from "@/store/chat/chat.store";
-import { downloadReportAsPdf } from "@/services/reports/dowloadPdf";
+import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
 
 export default function AnalysysConcluded() {
   const router = useRouter();
