@@ -1,4 +1,5 @@
 import { IReport } from "@/interfaces/services/dashboard/reports/cards";
+import { getReportDetails } from "@/services/dashboard/reports/detailsReport";
 import { reportByCitizen } from "@/services/dashboard/reports/reportByCitizen";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -44,6 +45,32 @@ export function useDashboard(initialPageSize: number = 3) {
     }
   };
 
+  const getDetailsReportById = async (reportId: string) => {
+    setLoading(true);
+
+    try {
+      const response = await getReportDetails(reportId);
+
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao buscar detalhes do relatório",
+        });
+      }
+
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao buscar detalhes do relatório",
+        text2: "Tente novamente mais tarde",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     fetchReports(page);
   }, [page, pageSize]);
@@ -69,5 +96,6 @@ export function useDashboard(initialPageSize: number = 3) {
     hasPreviousPage,
     goToNextPage,
     goToPreviousPage,
+    getDetailsReportById
   }
 }
