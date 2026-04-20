@@ -9,6 +9,7 @@ export default function RequestConcluded() {
   return (
     <AnalysysConcludedTemplate
       title="Dossiê técnico enviado!"
+      titleHeader="SOLICITAÇÃO FEITA!"
       description="O Dr. Ricardo Silveira recebeu sua
 análise. Assim que ele aceitar o caso,
 você receberá o contato direto via
