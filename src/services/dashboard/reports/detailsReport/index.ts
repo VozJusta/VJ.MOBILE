@@ -1,4 +1,4 @@
-import { IReportDetails } from "@/interfaces/services/dashboard/reports/detailsReport";
+import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/reports/detailsReport";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 
@@ -25,7 +25,7 @@ export async function getReportDetails(reportId: string) {
 
         return {
             success: true,
-            data: data as IReportDetails,
+            data: data as IGetReportDetailsResponse,
         }
     } catch (error) {
         return {
