@@ -40,18 +40,19 @@ export default function ConversationAI() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView
-        ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current?.scrollToEnd({ animated: true })
-        }
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-      >
+      
         <SafeAreaView style={{ flex: 1, gap: 32 }}>
           <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ gap: 8 }}>
+          <ScrollView
+            style={{ flex: 1 }}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current?.scrollToEnd({ animated: true })
+            }
+            contentContainerStyle={{ flexGrow: 1 }}
+            showsVerticalScrollIndicator={false}
+          >
             {messages.map((msg) => (
               <MessageBubble
                 key={msg.id}
@@ -78,7 +79,7 @@ export default function ConversationAI() {
                   <ButtonAudio
                     isRecording={false}
                     onStartRecording={handleStartRecording}
-                    onStopRecording={() => handleStopRecording("message")} 
+                    onStopRecording={() => handleStopRecording("message")}
                     disabled={loading}
                   />
 
@@ -149,7 +150,7 @@ export default function ConversationAI() {
                     <ButtonAudio
                       isRecording={true}
                       onStartRecording={handleStartRecording}
-                      onStopRecording={() => handleStopRecording("message")} 
+                      onStopRecording={() => handleStopRecording("message")}
                       disabled={loading}
                     />
                   </View>
@@ -177,7 +178,6 @@ export default function ConversationAI() {
             </View>
           )}
         </SafeAreaView>
-      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
