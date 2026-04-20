@@ -7,14 +7,32 @@ import { casesData } from "@/utils/home/cases/data";
 import { MaterialIcons } from "@expo/vector-icons";
 import Report from "@/assets/svg/reportIcon.svg";
 import DocCard from "@/components/DocCard";
+import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/reports/detailsReport";
+import { useEffect, useState } from "react";
+import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import { getCategoryLabel, translateStatus } from "@/utils/screens/citizen/home";
 
 export default function CaseSelected() {
   const router = useRouter();
   const local = useLocalSearchParams();
-  console.log(local.id);
-  const caseSelected: IButtonCases[] = local.id
-    ? casesData.filter((item) => item.id === Number(local.id))
-    : [];
+  const [reportData, setReportData] = useState<IGetReportDetailsResponse | undefined>(undefined);
+  const { getDetailsReportById, loading } = useDashboard();
+
+  useEffect(() => {
+    async function load() {
+      if (!local.id) return;
+
+
+      const data = await getDetailsReportById(local.id[0]);
+
+      if (data) {
+        setReportData(data);
+      }
+    }
+
+    load();
+  }, [local.id]);
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1, paddingTop: 20, gap: 24 }}>
@@ -29,7 +47,7 @@ export default function CaseSelected() {
             paddingButtonStatus={""}
           />
           <Text className="text-[18px] text-white font-interBold">
-            {caseSelected[0].title}
+            {reportData && getCategoryLabel(reportData?.user.report.category_detected)}
           </Text>
         </View>
         <View className="py-[24px] pl-[24px] pr-[37px] bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[24px]">
@@ -38,7 +56,7 @@ export default function CaseSelected() {
           </Text>
           <View className="flex-row gap-[8px] items-center ">
             <Text className="text-[24px] font-interBold text-white">
-              EM ANÁLISE PELA IA
+              {reportData && translateStatus(reportData?.user.report.status)}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
@@ -105,10 +123,7 @@ export default function CaseSelected() {
             </Text>
             <View className="pl-[20px] pt-[19px] pb-[20.75px] pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
               <Text className="font-interRegular text-[14px] text-[#CBD5E1]">
-                "Fui demitido sem justa causa da empresa XPTO Tecnologia após 3
-                anos de serviço. Reclamo o não pagamento de horas extras
-                acumuladas nos últimos 6 meses e irregularidades no depósito do
-                FGTS..."
+                {reportData?.user.report.simplified_explanation}
               </Text>
             </View>
           </View>

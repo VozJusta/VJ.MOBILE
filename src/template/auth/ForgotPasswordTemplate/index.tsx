@@ -33,7 +33,6 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
     props.codeDescription ?? "Enviamos um código de 6 dígitos para seu email";
   const resolvedVerifyButtonLabel =
     props.verifyButtonLabel ?? "Verificar Email";
-  const onCodeVerified = () => router.push("/screens/auth/ForgotPassword/Update");
 
   useEffect(() => {
     if (props.screen !== ScreensForgotPassword.Code) {
@@ -95,7 +94,7 @@ export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
                   resolvedVerifyButtonLabel={resolvedVerifyButtonLabel}
                   timerLabel={timerLabel}
                   emailValidateScreen={props.email}
-                  onCodeVerified={onCodeVerified}
+                  onCodeVerified={props.onCodeVerified || (() => {})}
                 />
               )}
               {props.screen === ScreensForgotPassword.Update && (
