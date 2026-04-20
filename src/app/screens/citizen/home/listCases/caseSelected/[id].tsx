@@ -152,7 +152,7 @@ export default function CaseSelected() {
             </View>
           </View>
           <View className="flex-col gap-[16px] w-full">
-            <View className="flex-row justify-between items-center w-full">
+            {/* <View className="flex-row justify-between items-center w-full">
               <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
                 Documentos
               </Text>
@@ -171,7 +171,7 @@ export default function CaseSelected() {
                 date="14 Out 2023"
                 size="840KB"
               />
-            </View>
+            </View> */}
             <View className="w-full mt-[9px] mb-[24px]">
               <ButtonUI
                 onPress={handleDownloadReport}
