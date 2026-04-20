@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { PasswordStrengthSection } from "../PasswordStrengh";
 
 export interface ICodeForgotPasswordProps {
@@ -11,7 +12,7 @@ export interface ICodeForgotPasswordProps {
 
 export interface IUpdateForgotPasswordProps {
   passwordStrength: PasswordStrengthSection;
-  labelButton?: string;
+  labelButton?: ReactNode;
   newPassword: string;
   setNewPassword: (password: string) => void;
   confirmPassword: string;
