@@ -6,7 +6,6 @@ import * as Sharing from "expo-sharing";
 export async function downloadReportAsPdf(reportId: string) {
   const token = useAccessTokenStorage.getState().accessToken;
 
-
   try {
     const fileUri = FileSystem.documentDirectory + `relatorio_vozjusta_${reportId}.pdf`;
 
