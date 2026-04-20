@@ -90,7 +90,7 @@ export function useChat() {
     try {
       clearChat();
 
-      const firstMessageText = `Categoria: ${selectedCategory}\n\nRelato: ${description}`;
+      const firstMessageText = `${description}`;
 
       addMessage({
         id: Date.now().toString() + "-user",
