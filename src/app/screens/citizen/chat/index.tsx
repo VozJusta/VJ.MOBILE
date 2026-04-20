@@ -116,7 +116,7 @@ export default function Chat() {
                 </View>
 
                 <Text className="text-lg font-interSemiBold text-[#2563EB]">
-                  Gravando o aúdio
+                  Gravando o áudio
                 </Text>
                 <Text className="text-sm font-interRegular text-[#64748B]">
                   {formatTime(recordingDuration)}
