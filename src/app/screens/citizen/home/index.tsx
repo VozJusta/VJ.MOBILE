@@ -23,7 +23,14 @@ export default function Home() {
     router.push("/screens/auth/users/SignIn");
     return null;
   }
-  const decodedToken = jwtDecode<IDecodedToken>(token);
+  let decodedToken: IDecodedToken
+
+  try {
+    decodedToken = jwtDecode<IDecodedToken>(token);
+  } catch (errordecode) {
+    router.replace("/screens/onBoarding/roles");
+    return null
+  }
 
   const { loading, reports } = useDashboard(3);
 
