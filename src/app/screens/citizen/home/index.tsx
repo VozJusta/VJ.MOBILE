@@ -1,12 +1,9 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
-import Logo from "@/assets/svg/icons/logo.svg";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
-import { casesData } from "@/utils/home/cases/data";
 import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
