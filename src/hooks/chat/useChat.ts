@@ -10,7 +10,7 @@ import {
   useAudioRecorder,
   RecordingPresets,
   setAudioModeAsync,
-  useAudioRecorderState
+  useAudioRecorderState,
 } from "expo-audio";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 
@@ -24,6 +24,8 @@ export function useChat() {
   const audioRecorderState = useAudioRecorderState(audioRecorder);
 
   const meteringVoice = audioRecorderState.metering || -160;
+
+  const recordingDuration = audioRecorderState.durationMillis || 0;
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -277,6 +279,7 @@ export function useChat() {
     handleStartRecording,
     handleStopRecording,
     isRecording,
-    meteringVoice
+    meteringVoice,
+    recordingDuration,
   };
 }
