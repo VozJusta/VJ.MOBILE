@@ -121,7 +121,8 @@ export default function ListCases() {
 
               <View className="flex-row items-center gap-3">
                 {pageNumbers.map((num) => (
-                  <View
+                  <TouchableOpacity
+                    onPress={() => }
                     key={num}
                     className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${
                       page === num
@@ -134,7 +135,7 @@ export default function ListCases() {
                     >
                       {num}
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 ))}
               </View>
 

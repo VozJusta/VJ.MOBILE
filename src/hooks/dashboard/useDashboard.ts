@@ -87,6 +87,12 @@ export function useDashboard(initialPageSize: number = 3) {
     }
   };
 
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber !== page) {
+      setPage(pageNumber);
+    }
+  };
+
   return {
     reports,
     loading,
@@ -96,6 +102,7 @@ export function useDashboard(initialPageSize: number = 3) {
     hasPreviousPage,
     goToNextPage,
     goToPreviousPage,
-    getDetailsReportById
+    getDetailsReportById,
+    goToPage
   }
 }
