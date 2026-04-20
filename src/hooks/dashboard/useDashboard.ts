@@ -54,7 +54,11 @@ export function useDashboard(initialPageSize: number = 3) {
     }
   };
 
-  
+  const goToPreviousPage = () => {
+    if (hasPreviousPage) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
 
   return {
     reports,
@@ -63,6 +67,7 @@ export function useDashboard(initialPageSize: number = 3) {
     totalPages,
     hasNextPage,
     hasPreviousPage,
-    goToNextPage
+    goToNextPage,
+    goToPreviousPage,
   }
 }
