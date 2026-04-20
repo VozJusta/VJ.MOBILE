@@ -49,10 +49,11 @@ export default function ListCases() {
         type={"text"}
       />
       <FlatList
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           loading ? (
-            <View className="justify-center items-center h-full">
+            <View className="flex-1 justify-center items-center">
               <ActivityIndicator size="large" color="#fff" />
             </View>
           ) : (
@@ -87,6 +88,7 @@ export default function ListCases() {
           )
         }
         contentContainerClassName="flex flex-col gap-6 items-center"
+        contentContainerStyle={{ flexGrow: 1}}
         data={loading ? [] : reports}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
