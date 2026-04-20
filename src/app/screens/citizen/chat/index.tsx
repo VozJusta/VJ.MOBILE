@@ -77,7 +77,7 @@ export default function Chat() {
             ) : (
               <View className="relative w-full min-h-[200px] flex items-center justify-center bg-[rgba(255,255,255,0.03)] rounded-xl border border-solid border-white/10">
                 
-                <View className="flex-row items-center justify-center gap-1 h-12 mb-2">
+                <View className="flex-row items-end justify-center gap-1 h-12 mb-2">
                   <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(12, 0.4, meteringVoice) }} />
                   <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(20, 0.7, meteringVoice) }} />
                   <View className="w-2 bg-[#2563EB] rounded-full" style={{ height: getBarHeight(30, 0.9, meteringVoice) }} />
