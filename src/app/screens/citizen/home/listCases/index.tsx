@@ -8,14 +8,24 @@ import Header from "@/components/Header";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { MaterialIcons } from "@expo/vector-icons";
 import CaseCard from "@/components/CaseCard";
+import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import { getCategoryLabel, getStatusIcon, translateStatus } from "@/utils/screens/citizen/home";
 
 export default function ListCases() {
   const router = useRouter();
+
+  const {
+    reports,
+    loading,
+    page,
+    totalPages,
+    hasNextPage,
+    goToNextPage,
+    goToPreviousPage,
+    hasPreviousPage,
+  } = useDashboard(5);
+
   return (
-    <ScrollView
-      contentContainerStyle={{ paddingBottom: 84 }}
-      showsVerticalScrollIndicator={false}
-    >
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
         <Header title="MEUS CASOS" isFirstPage={false} isCitizen={true} />
         <InputUI
@@ -59,13 +69,13 @@ export default function ListCases() {
             </>
           }
           contentContainerClassName="flex flex-col gap-6 items-center"
-          data={casesData}
+          data={reports}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <CaseCard
-              iconName={item.icon}
-              title={item.title}
-              status={item.status}
+              iconName={getStatusIcon(item.status)}
+              title={getCategoryLabel(item.category_detected)}
+              status={translateStatus(item.status)}
               onPress={() =>
                 router.push(
                   `/screens/citizen/home/listCases/caseSelected/${item.id}`,
@@ -75,6 +85,5 @@ export default function ListCases() {
           )}
         />
       </SafeAreaView>
-    </ScrollView>
   );
 }
