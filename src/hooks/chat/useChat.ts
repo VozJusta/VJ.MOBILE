@@ -183,6 +183,10 @@ export function useChat() {
 
       if (response.data?.finished) {
         setFinished(true);
+
+        if (response.data?.reportId) {
+          setReportId(response.data.reportId);
+        }
       }
     } catch (err) {
       removeMessage(tempId);
