@@ -1,6 +1,7 @@
+import { CaseStatus } from "@/interfaces/components/CaseCard";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 
-export const translateStatus = (status: string) => {
+export const translateStatus = (status: CaseStatus) => {
   switch (status) {
     case "Accepted":
       return "Aceito";
