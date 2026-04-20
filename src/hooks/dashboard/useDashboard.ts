@@ -1,4 +1,4 @@
-import { IReport } from "@/interfaces/services/dashboard/reports";
+import { IReport } from "@/interfaces/services/dashboard/reports/cards";
 import { reportByCitizen } from "@/services/dashboard/reports/reportByCitizen";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
