@@ -98,9 +98,11 @@ export function CodeForgotPassword({
         onChangeText={(value) => setCodeChange(value)}
         onFilledOTP={(value) => {
           setCodeChange(value);
-          if (pathName.includes("/screens/auth/Validate")) {
+          const currentPath = pathName.toLowerCase();
+          if (currentPath.includes("validate")) {
+            
             handleValidateCode(emailValidateScreen, value, token ? token : "");
-          } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
+          } else if (currentPath.includes("forgotpassword")) {
             handleValidateCodeForgotPassword(emailStorage, value);
           }
         }}
@@ -116,13 +118,14 @@ export function CodeForgotPassword({
       <View className="w-full pb-[16px]">
         <ButtonUI
           onPress={() => {
-            if (pathName.includes("/screens/auth/Validate")) {
+            const currentPath = pathName.toLowerCase();
+            if (currentPath.includes("validate")) {
               handleValidateCode(
                 emailValidateScreen,
                 codeAuth,
                 token ? token : "",
               );
-            } else if (pathName.includes("/screens/auth/ForgotPassword/Code")) {
+            } else if (currentPath.includes("forgotpassword")) {
               handleValidateCodeForgotPassword(emailStorage, codeAuth);
             }
           }}

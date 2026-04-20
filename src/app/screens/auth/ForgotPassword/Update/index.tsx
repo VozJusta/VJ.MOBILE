@@ -6,7 +6,7 @@ import Toast from "react-native-toast-message";
 import { useEmailStorage } from "@/store/auth/email.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
-import { Alert } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function UpdatePassword() {
@@ -71,7 +71,9 @@ export default function UpdatePassword() {
       setNewPassword={setNewPassword}
       screen={ScreensForgotPassword.Update}
       onSubmit={() => handleUpdatePassword(email, confirmPassword, newPassword)}
-      labelButton={loading ? "Atualizando..." : "Redefinir senha"}
+      labelButton={loading ? (
+        <ActivityIndicator size="small" color="#FFFFFF" />
+      ) : "Redefinir senha"}
       passwordStrength={{
         score: strength.score,
         color: strength.color,
