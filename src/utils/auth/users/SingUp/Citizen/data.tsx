@@ -140,7 +140,7 @@ export function buildCitizenFields({
     titleButton: loading ? (
       <ActivityIndicator size="small" color="#FFF" />
     ) : (
-      <Text className="text-white text-[14px] font-inter">
+      <Text className="text-white text-[16px] font-interBold">
         Entrar
       </Text>
     ),
