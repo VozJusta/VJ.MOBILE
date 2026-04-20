@@ -5,6 +5,7 @@ import {
   FlatList,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputUI from "@/ui/InputUI";
@@ -49,34 +50,40 @@ export default function ListCases() {
       <FlatList
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <>
-            <EmptyCases />
+          loading ? (
+            <View className="justify-center items-center h-full">
+              <ActivityIndicator size="large" color="#fff" />
+            </View>
+          ) : (
+            <>
+              <EmptyCases />
 
-            <Text className="text-[24px] font-interBold text-white text-center">
-              Nenhum caso por aqui
-            </Text>
-            <Text className="text-[14px] font-interRegular text-[#94A3B8] text-center">
-              Você ainda não iniciou nenhum relato jurídico. Clique no botão
-              abaixo para começar a garantir seus direitos.
-            </Text>
+              <Text className="text-[24px] font-interBold text-white text-center">
+                Nenhum caso por aqui
+              </Text>
+              <Text className="text-[14px] font-interRegular text-[#94A3B8] text-center">
+                Você ainda não iniciou nenhum relato jurídico. Clique no botão
+                abaixo para começar a garantir seus direitos.
+              </Text>
 
-            <ButtonUI
-              onPress={() => router.push(`/screens/citizen/home/newRequest`)}
-              gradient
-              bg="bg-[#135BEC]"
-              hover={false}
-              size="w-full h-[56px]"
-              iconLeft={false}
-              paddingButtonStatus=""
-            >
-              <View className="flex-1 flex-row justify-center gap-3 items-center">
-                <MaterialIcons name="add" size={24} color="white" />
-                <Text className="text-[16px] font-interBold text-white text-center">
-                  Relatar novo caso
-                </Text>
-              </View>
-            </ButtonUI>
-          </>
+              <ButtonUI
+                onPress={() => router.push(`/screens/citizen/home/newRequest`)}
+                gradient
+                bg="bg-[#135BEC]"
+                hover={false}
+                size="w-full h-[56px]"
+                iconLeft={false}
+                paddingButtonStatus=""
+              >
+                <View className="flex-1 flex-row justify-center gap-3 items-center">
+                  <MaterialIcons name="add" size={24} color="white" />
+                  <Text className="text-[16px] font-interBold text-white text-center">
+                    Relatar novo caso
+                  </Text>
+                </View>
+              </ButtonUI>
+            </>
+          )
         }
         contentContainerClassName="flex flex-col gap-6 items-center"
         data={reports}
@@ -117,7 +124,9 @@ export default function ListCases() {
                   <View
                     key={num}
                     className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${
-                      page === num ? "bg-[#2563EB]" : "bg-white/5 border border-solid border-white/10"
+                      page === num
+                        ? "bg-[#2563EB]"
+                        : "bg-white/5 border border-solid border-white/10"
                     }`}
                   >
                     <Text

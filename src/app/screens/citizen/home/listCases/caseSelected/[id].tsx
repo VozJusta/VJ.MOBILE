@@ -56,9 +56,9 @@ export default function CaseSelected() {
   };
 
   return loading || !reportData ? (
-        <View className="flex-1 justify-center items-center">
-          <ActivityIndicator size="large" color="#fff" />
-        </View>
+    <View className="flex-1 justify-center items-center">
+      <ActivityIndicator size="large" color="#fff" />
+    </View>
   ) : (
     <ScrollView
       style={{ flex: 1 }}
