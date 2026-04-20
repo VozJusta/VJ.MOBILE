@@ -1,20 +1,22 @@
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
-import { documentDirectory, downloadAsync } from "expo-file-system/legacy";
+import * as FileSystem from "expo-file-system/legacy";
 import * as Sharing from "expo-sharing";
 
 export async function downloadReportAsPdf(reportId: string) {
   const token = useAccessTokenStorage.getState().accessToken;
 
-  try {
-    const fileUri = documentDirectory + `relatorio_vozjusta_${reportId}.pdf`;
 
-    const downloadRes = await downloadAsync(
+  try {
+    const fileUri = FileSystem.documentDirectory + `relatorio_vozjusta_${reportId}.pdf`;
+
+    const downloadRes = await FileSystem.downloadAsync(
       `${BASE_URL}/report/pdf/${reportId}`,
       fileUri,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          Accept: "application/pdf",
         },
       },
     );
