@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 
 export interface ContactCardProps {
-  nameCitizen: string;
+  name: string;
   phone: string;
   email: string;
 }
@@ -19,7 +19,7 @@ export default function ContactCard({ ...props }: ContactCardProps) {
           <Text className="font-interBold text-[14px] text-white">CO</Text>
         </View>
         <Text className="font-interBold text-[18px] text-[#FFFFFF]">
-          {props.nameCitizen}
+          {props.name}
         </Text>
       </View>
       <View className="flex flex-col gap-1">

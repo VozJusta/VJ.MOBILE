@@ -17,6 +17,7 @@ import {
 import Header from "@/components/Header";
 import { useChatStorage } from "@/store/chat/chat.store";
 import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
+import ContactCard from "@/components/ContactCard";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -136,7 +137,7 @@ export default function CaseSelected() {
                   Análise Técnica{" "}
                 </Text>
                 <Text className="text-[12px] font-interRegular uppercase text-[#64748B]">
-                  Em processamento...{" "}
+                  {reportData?.user.report.legal_analysis}
                 </Text>
               </View>
             </View>
@@ -145,14 +146,13 @@ export default function CaseSelected() {
             <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
               Resumo do Relato
             </Text>
-            <View className="pl-[20px] pt-[19px] pb-[20.75px] pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
+            <View className="p-5 pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
               <Text className="font-interRegular text-[14px] text-[#CBD5E1]">
                 {reportData?.user.report.simplified_explanation}
               </Text>
             </View>
           </View>
-          <View className="flex-col gap-[16px] w-full">
-            {/* <View className="flex-row justify-between items-center w-full">
+          {/* <View className="flex-row justify-between items-center w-full">
               <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
                 Documentos
               </Text>
@@ -172,29 +172,44 @@ export default function CaseSelected() {
                 size="840KB"
               />
             </View> */}
-            <View className="w-full mt-[9px] mb-[24px]">
-              <ButtonUI
-                onPress={handleDownloadReport}
-                children={
-                  <View className="flex-1 justify-center items-center gap-[8px] flex-row">
-                    {isDownloading ? (
-                      <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                      <>
-                        <Report width={24} height={24} />
-                        <Text className="font-interSemiBold text-[16px] text-white">
-                          Baixar Relatório
-                        </Text>
-                      </>
-                    )}
-                  </View>
-                }
-                gradient={true}
-                hover={false}
-                iconLeft={false}
-                paddingButtonStatus={""}
-              />
+
+          {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
+          reportData?.user.report.lawyer ? (
+            <ContactCard
+              name={reportData.user.report.lawyer.full_name}
+              email={reportData.user.report.lawyer.email}
+              phone={reportData.user.report.lawyer.phone}
+            />
+          ) : (
+            <View className="p-5 pr-[17px] border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
+              <Text className="font-interRegular text-[14px] text-[#CBD5E1]">
+                Nenhum advogado foi designado para este caso ainda.
+              </Text>
             </View>
+          )}
+
+          <View className="w-full mt-[9px] mb-[24px]">
+            <ButtonUI
+              onPress={handleDownloadReport}
+              children={
+                <View className="flex-1 justify-center items-center gap-[8px] flex-row">
+                  {isDownloading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <>
+                      <Report width={24} height={24} />
+                      <Text className="font-interSemiBold text-[16px] text-white">
+                        Baixar Relatório
+                      </Text>
+                    </>
+                  )}
+                </View>
+              }
+              gradient={true}
+              hover={false}
+              iconLeft={false}
+              paddingButtonStatus={""}
+            />
           </View>
         </View>
       </SafeAreaView>
