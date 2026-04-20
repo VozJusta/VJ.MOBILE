@@ -92,7 +92,7 @@ export default function Home() {
                 key={report.id}
                 iconName={getStatusIcon(report.status)}
                 onPress={() => {}}
-                status={translateStatus(report.status)}
+                status={report.status}
                 title={getCategoryLabel(report.category_detected)}
               />
             ))

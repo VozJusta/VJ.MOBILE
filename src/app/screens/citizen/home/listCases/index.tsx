@@ -95,7 +95,7 @@ export default function ListCases() {
           <CaseCard
             iconName={getStatusIcon(item.status)}
             title={getCategoryLabel(item.category_detected)}
-            status={translateStatus(item.status)}
+            status={(item.status)}
             onPress={() =>
               router.push(
                 `/screens/citizen/home/listCases/caseSelected/${item.id}`,
