@@ -138,9 +138,7 @@ export default function SignInTemplate({
                       paddingButtonStatus=""
                     >
                       <View className="flex-1 justify-center items-center">
-                        <Text className="text-[16px] font-interBold text-white text-center">
-                          {submitLabel}
-                        </Text>
+                        {submitLabel}
                       </View>
                     </ButtonUI>
                   </>

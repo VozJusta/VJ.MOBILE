@@ -14,6 +14,7 @@ import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { formatPhone } from "@/utils/phoneValidate";
+import { ActivityIndicator, Text } from "react-native";
 
 type Params = {
   showPassword: boolean;
@@ -202,7 +203,13 @@ export function buildLawyerFields({
         oabNumber: registerAuth.oabNumber,
       });
     },
-    titleButton: loading ? "Carregando..." : "Cadastrar",
+    titleButton: loading ? (
+      <ActivityIndicator size="small" color="#FFF" />
+    ) : (
+      <Text className="text-white text-[14px] font-inter">
+        Entrar
+      </Text>
+    ),
     disableSubmit: loading,
   };
 }

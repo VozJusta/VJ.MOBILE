@@ -7,6 +7,7 @@ import { useRolesStorage } from "@/store/auth/roles.store";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
+import { ActivityIndicator, Text } from "react-native";
 
 type Params = {
   showPassword: boolean;
@@ -105,6 +106,12 @@ export function buildLoginFields({
     ],
     onSubmit: () => handleLogin(loginAuth),
     disableSubmit: loading,
-    titleButton: loading ? "Carregando..." : "Entrar",
+    titleButton: loading ? (
+      <ActivityIndicator size="small" color="#FFF" />
+    ) : (
+      <Text className="text-white text-[14px] font-inter">
+        Entrar
+      </Text>
+    ),
   };
 }

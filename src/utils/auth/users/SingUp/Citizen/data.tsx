@@ -9,6 +9,7 @@ import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
 import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { SignUpCitizen } from "@/services/users/citizen/SignUp";
+import { ActivityIndicator, Text } from "react-native";
 
 type Params = {
   showPassword: boolean;
@@ -136,6 +137,12 @@ export function buildCitizenFields({
     ],
     onSubmit: () => handleRegister(registerAuth),
     disableSubmit: loading,
-    titleButton: loading ? "Carregando..." : "Continuar",
+    titleButton: loading ? (
+      <ActivityIndicator size="small" color="#FFF" />
+    ) : (
+      <Text className="text-white text-[14px] font-inter">
+        Entrar
+      </Text>
+    ),
   };
 }
