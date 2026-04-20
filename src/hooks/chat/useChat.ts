@@ -47,6 +47,8 @@ export function useChat() {
     finished,
     setFinished,
     clearChat,
+    reportId,
+    setReportId,
   } = useChatStorage();
 
   useEffect(() => {
@@ -112,7 +114,12 @@ export function useChat() {
       setConversationId(response.data.conversationId);
       setCaseId(response.data.caseId);
 
-      if (response.data.finished) setFinished(response.data.finished);
+      if (response.data.finished) {
+        setFinished(response.data.finished);
+        if (response.data.reportId) {
+          setReportId(response.data.reportId);
+        }
+      }
 
       if (response.data.question) {
         addMessage({
