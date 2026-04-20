@@ -6,7 +6,7 @@ import InputUI from "@/ui/InputUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, ActivityIndicator } from "react-native";
 import Toast from "react-native-toast-message";
 
 export function EmailForgotPassword() {
@@ -79,7 +79,9 @@ export function EmailForgotPassword() {
         children={
           <View className="flex-1 justify-center items-center">
             <Text className="text-[16px] font-interBold text-white">
-              {loading ? "Enviando código..." : "Enviar código"}
+              {loading ? (
+                <ActivityIndicator size="small" color="#FFF" />
+              ) : "Enviar código"}
             </Text>
           </View>
         }

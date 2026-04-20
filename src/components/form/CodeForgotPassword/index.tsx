@@ -11,6 +11,7 @@ import Shield from "@/assets/svg/icons/shield.svg";
 import Toast from "react-native-toast-message";
 import { useXTokenStorage } from "@/store/auth/token.store";
 import { ICodeForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
+import { ActivityIndicator } from "react-native";
 
 export function CodeForgotPassword({
   emailValidateScreen,
@@ -132,7 +133,9 @@ export function CodeForgotPassword({
           children={
             <View className="flex-1 justify-center items-center">
               <Text className="text-[16px] font-interBold text-white">
-                {loading ? "Validando..." : resolvedVerifyButtonLabel}
+                {loading ? (
+                  <ActivityIndicator size="small" color="#FFF" />
+                ) : resolvedVerifyButtonLabel}
               </Text>
             </View>
           }
