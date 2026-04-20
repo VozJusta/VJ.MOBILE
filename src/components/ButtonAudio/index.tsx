@@ -1,5 +1,6 @@
 import { IButtonAudio } from "@/interfaces/components/ButtonAudio";
-import { View, TouchableOpacity, Text } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { View, TouchableOpacity } from "react-native";
 
 export default function ButtonAudio(props: IButtonAudio) {
   return (
@@ -9,7 +10,7 @@ export default function ButtonAudio(props: IButtonAudio) {
           props.isRecording ? props.onStopRecording : props.onStartRecording
         }
         disabled={props.disabled}
-        className={`flex min-w-[150px] items-center justify-center rounded-full px-5 py-3 shadow-sm ${
+        className={`flex h-12 w-12 items-center justify-center rounded-full shadow-sm ${
           props.disabled
             ? "bg-slate-400"
             : props.isRecording
@@ -17,9 +18,11 @@ export default function ButtonAudio(props: IButtonAudio) {
               : "bg-blue-600"
         }`}
       >
-        <Text className="text-base font-bold text-white">
-          {props.isRecording ? "Parar Gravação" : "Gravar Áudio"}
-        </Text>
+        <MaterialIcons
+          name={props.isRecording ? "stop" : "mic"}
+          size={24}
+          color="white"
+        />
       </TouchableOpacity>
     </View>
   );
