@@ -6,7 +6,15 @@ import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import { startConversation } from "@/services/ai/conversation/startConversation";
-import { AudioModule, useAudioRecorder, AndroidOutputFormat, AndroidAudioEncoder, RecordingPresets, setAudioModeAsync } from "expo-audio";
+import {
+  AudioModule,
+  useAudioRecorder,
+  AndroidOutputFormat,
+  AndroidAudioEncoder,
+  RecordingPresets,
+  setAudioModeAsync,
+} from "expo-audio";
+import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 
 export function useChat() {
   const router = useRouter();
@@ -20,7 +28,6 @@ export function useChat() {
   const [fetchingHistory, setFetchingHistory] = useState(false);
 
   const [isRecording, setIsRecording] = useState(false);
-  const [recordingDuration, setRecordingDuration] = useState(0);
 
   const {
     messages,
@@ -188,9 +195,9 @@ export function useChat() {
       await setAudioModeAsync({
         playsInSilentMode: true,
         allowsRecording: true,
-      })
+      });
 
-      await audioRecorder.prepareToRecordAsync()
+      await audioRecorder.prepareToRecordAsync();
 
       audioRecorder.record();
 
@@ -201,6 +208,47 @@ export function useChat() {
         text1: "Erro ao iniciar gravação",
         text2: "Ocorreu um erro ao tentar iniciar a gravação de áudio",
       });
+    }
+  };
+
+  const handleStopRecording = async () => {
+    try {
+      setIsRecording(false);
+      setLoading(true);
+
+      await audioRecorder.stop();
+
+      const audioUri = audioRecorder.uri;
+
+      if (!audioUri) {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao obter gravação",
+          text2: "Não foi possível obter o arquivo de áudio gravado",
+        });
+        return;
+      }
+
+      const response = await transcribeAudio(audioUri);
+
+      if (response.success && response.data) {
+        setMessage(response.data);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.fields
+            ? response.fields[0]
+            : "Erro ao transcrever áudio",
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao transcrever áudio",
+        text2: "Ocorreu um erro ao tentar transcrever o áudio",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -217,5 +265,8 @@ export function useChat() {
     fetchingHistory,
     finished,
     handleSendMessage,
+    handleStartRecording,
+    handleStopRecording,
+    isRecording,
   };
 }
