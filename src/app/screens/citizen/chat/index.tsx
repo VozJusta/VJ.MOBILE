@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useChat } from "@/hooks/chat/useChat";
+import ButtonAudio from "@/components/ButtonAudio";
 
 export default function Chat() {
   const router = useRouter();
@@ -25,6 +26,9 @@ export default function Chat() {
     selectedCategory,
     setSelectedCategory,
     handleStartAnalysis,
+    handleStartRecording,
+    handleStopRecording,
+    isRecording,
   } = useChat();
 
   return (
@@ -52,15 +56,22 @@ export default function Chat() {
               />
             ))}
           </View>
-          {/* <View className="mt-[32px] gap-[16px]">
-          <ButtonAudio />
-        </View> */}
-          <TextArea
-            placeholder="Descreva o que aconteceu com suas 
-próprias palavras..."
-            value={description}
-            onChangeText={setDescription}
-          />
+          <View className="relative w-full">
+            <TextArea
+              placeholder="Descreva o que aconteceu com suas próprias palavras..."
+              value={description}
+              onChangeText={setDescription}
+            />
+
+            <View className="absolute bottom-3 right-3">
+              <ButtonAudio
+                isRecording={isRecording}
+                onStartRecording={handleStartRecording}
+                onStopRecording={handleStopRecording}
+                disabled={loading}
+              />
+            </View>
+          </View>
         </SafeAreaView>
 
         <ButtonUI
