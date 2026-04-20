@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { IButtonCases } from "@/interfaces/utils/cases/interface";
@@ -10,13 +10,20 @@ import DocCard from "@/components/DocCard";
 import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/reports/detailsReport";
 import { useEffect, useState } from "react";
 import { useDashboard } from "@/hooks/dashboard/useDashboard";
-import { getCategoryLabel, translateStatus } from "@/utils/screens/citizen/home";
+import {
+  getCategoryLabel,
+  translateStatus,
+} from "@/utils/screens/citizen/home";
 import Header from "@/components/Header";
+import { useChatStorage } from "@/store/chat/chat.store";
+import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
 
 export default function CaseSelected() {
   const router = useRouter();
   const local = useLocalSearchParams<{ id?: string | string[] }>();
-  const [reportData, setReportData] = useState<IGetReportDetailsResponse | undefined>(undefined);
+  const [reportData, setReportData] = useState<
+    IGetReportDetailsResponse | undefined
+  >(undefined);
   const { getDetailsReportById, loading } = useDashboard();
 
   console.log("ID do relatório selecionado:", local.id);
@@ -36,12 +43,34 @@ export default function CaseSelected() {
     load();
   }, [local.id]);
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const { reportId } = useChatStorage();
+
+  const handleDownloadReport = async () => {
+    if (!reportId) return;
+
+    try {
+      setIsDownloading(true);
+
+      await downloadReportAsPdf(reportId);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1, paddingTop: 20, gap: 24 }}>
         <Header
           isFirstPage={false}
-          title={reportData ? getCategoryLabel(reportData.user.report.category_detected).toUpperCase() : ""}
+          title={
+            reportData
+              ? getCategoryLabel(
+                  reportData.user.report.category_detected,
+                ).toUpperCase()
+              : ""
+          }
           isCitizen
         />
         <View className="py-[24px] pl-[24px] gap-2 pr-[37px] bg-[rgba(15,23,42,0.7)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[24px]">
@@ -50,7 +79,8 @@ export default function CaseSelected() {
           </Text>
           <View className="flex-row gap-[8px] items-center ">
             <Text className="text-[24px] font-interBold text-white">
-              {reportData && translateStatus(reportData?.user.report.status).toUpperCase()}
+              {reportData &&
+                translateStatus(reportData?.user.report.status).toUpperCase()}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
@@ -144,15 +174,19 @@ export default function CaseSelected() {
             </View>
             <View className="w-full mt-[9px] mb-[24px]">
               <ButtonUI
-                onPress={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
+                onPress={handleDownloadReport}
                 children={
                   <View className="flex-1 justify-center items-center gap-[8px] flex-row">
-                    <Report width={24} height={24} />
-                    <Text className="font-interSemiBold text-[16px] text-white">
-                      Baixar Relatório
-                    </Text>
+                    {isDownloading ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                      <>
+                        <Report width={24} height={24} />
+                        <Text className="font-interSemiBold text-[16px] text-white">
+                          Baixar Relatório
+                        </Text>
+                      </>
+                    )}
                   </View>
                 }
                 gradient={true}
