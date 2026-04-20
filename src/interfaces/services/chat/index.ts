@@ -3,4 +3,5 @@ export interface IConversationResponse {
   caseId: string;
   question: string;
   finished: boolean;
+  reportId?: string;
 }
