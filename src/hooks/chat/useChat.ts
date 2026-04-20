@@ -6,9 +6,11 @@ import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import { startConversation } from "@/services/ai/conversation/startConversation";
+import { AudioModule, useAudioRecorder, AndroidOutputFormat, AndroidAudioEncoder, RecordingPresets, setAudioModeAsync } from "expo-audio";
 
 export function useChat() {
   const router = useRouter();
+  const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -53,11 +55,17 @@ export function useChat() {
 
   const handleStartAnalysis = async () => {
     if (!selectedCategory) {
-      Toast.show({ type: "error", text1: "Selecione uma categoria para iniciar a análise" });
+      Toast.show({
+        type: "error",
+        text1: "Selecione uma categoria para iniciar a análise",
+      });
       return;
     }
     if (!description.trim()) {
-      Toast.show({ type: "error", text1: "Descreva o ocorrido para iniciar a análise" });
+      Toast.show({
+        type: "error",
+        text1: "Descreva o ocorrido para iniciar a análise",
+      });
       return;
     }
 
@@ -80,7 +88,9 @@ export function useChat() {
       if (!response.success || !response.data) {
         Toast.show({
           type: "error",
-          text1: response.fields ? response.fields[0] : "Erro ao iniciar análise",
+          text1: response.fields
+            ? response.fields[0]
+            : "Erro ao iniciar análise",
         });
         return;
       }
@@ -100,7 +110,6 @@ export function useChat() {
       }
 
       router.push("/screens/citizen/chat/conversation");
-
     } catch (err) {
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
     } finally {
@@ -135,7 +144,9 @@ export function useChat() {
         setMessage(userMessage);
         Toast.show({
           type: "error",
-          text1: response.fields ? response.fields[0] : "Erro ao enviar mensagem",
+          text1: response.fields
+            ? response.fields[0]
+            : "Erro ao enviar mensagem",
         });
         return;
       }
@@ -154,10 +165,42 @@ export function useChat() {
       }
     } catch (err) {
       removeMessage(tempId);
-      setMessage(userMessage); 
+      setMessage(userMessage);
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleStartRecording = async () => {
+    try {
+      const permission = await AudioModule.requestRecordingPermissionsAsync();
+
+      if (!permission.granted) {
+        Toast.show({
+          type: "error",
+          text1: "Permissão de gravação negada",
+          text2:
+            "Por favor, permita o acesso ao microfone para usar esta função",
+        });
+        return;
+      }
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        allowsRecording: true,
+      })
+
+      await audioRecorder.prepareToRecordAsync()
+
+      audioRecorder.record();
+
+      setIsRecording(true);
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao iniciar gravação",
+        text2: "Ocorreu um erro ao tentar iniciar a gravação de áudio",
+      });
     }
   };
 
