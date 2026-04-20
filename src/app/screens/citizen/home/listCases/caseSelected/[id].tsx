@@ -25,9 +25,9 @@ export default function CaseSelected() {
   >(undefined);
   const { getDetailsReportById, loading } = useDashboard();
 
+  const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
   useEffect(() => {
     async function load() {
-      const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
       if (!reportId) return;
 
       const data = await getDetailsReportById(reportId);
@@ -41,8 +41,6 @@ export default function CaseSelected() {
   }, [local.id]);
 
   const [isDownloading, setIsDownloading] = useState(false);
-
-  const { reportId } = useChatStorage();
 
   const handleDownloadReport = async () => {
     if (!reportId) return;
@@ -84,7 +82,9 @@ export default function CaseSelected() {
           <View className="flex-row gap-[8px] items-center justify-between">
             <Text className="text-[24px] font-interBold text-white">
               {reportData &&
-                translateStatus(reportData?.user.report.status as CaseStatus).toUpperCase()}
+                translateStatus(
+                  reportData?.user.report.status as CaseStatus,
+                ).toUpperCase()}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
