@@ -48,6 +48,12 @@ export function useDashboard(initialPageSize: number = 3) {
     fetchReports(page);
   }, [page, pageSize]);
 
+  const goToNextPage = () => {
+    if (hasNextPage) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
   
 
   return {
@@ -57,6 +63,6 @@ export function useDashboard(initialPageSize: number = 3) {
     totalPages,
     hasNextPage,
     hasPreviousPage,
-    
+    goToNextPage
   }
 }
