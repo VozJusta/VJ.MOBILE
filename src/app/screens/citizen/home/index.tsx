@@ -17,14 +17,16 @@ export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (token === null) {
-    Alert.alert("Token de acesso não encontrado");
     router.push("/screens/auth/users/SignIn");
     return null;
   }
   const decodedToken = jwtDecode<IDecodedToken>(token);
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 84}} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: 84 }}
+      showsVerticalScrollIndicator={false}
+    >
       <SafeAreaView className="gap-8">
         <Header isFirstPage={true} title="CIDADÃO" isCitizen={true} />
 
