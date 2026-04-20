@@ -28,7 +28,7 @@ export default function Home() {
   try {
     decodedToken = jwtDecode<IDecodedToken>(token);
   } catch (errordecode) {
-    router.replace("/screens/onBoarding/roles");
+    router.replace("/screens/OnBoarding/roles");
     return null
   }
 
