@@ -32,6 +32,7 @@ export default function ListCases() {
     goToNextPage,
     goToPreviousPage,
     hasPreviousPage,
+    goToPage
   } = useDashboard(5);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -122,7 +123,7 @@ export default function ListCases() {
               <View className="flex-row items-center gap-3">
                 {pageNumbers.map((num) => (
                   <TouchableOpacity
-                    onPress={() => }
+                    onPress={() => goToPage(num)}
                     key={num}
                     className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${
                       page === num
