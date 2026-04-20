@@ -15,6 +15,7 @@ import Header from "@/components/Header";
 import { useChatStorage } from "@/store/chat/chat.store";
 import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
+import { CaseStatus } from "@/interfaces/components/CaseCard";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -83,7 +84,7 @@ export default function CaseSelected() {
           <View className="flex-row gap-[8px] items-center justify-between">
             <Text className="text-[24px] font-interBold text-white">
               {reportData &&
-                translateStatus(reportData?.user.report.status).toUpperCase()}
+                translateStatus(reportData?.user.report.status as CaseStatus).toUpperCase()}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
