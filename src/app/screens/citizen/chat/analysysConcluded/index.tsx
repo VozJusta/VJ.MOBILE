@@ -19,7 +19,7 @@ export default function AnalysysConcluded() {
     try {
       setIsDownloading(true);
 
-      const response = await downloadReportAsPdf(reportId);
+      await downloadReportAsPdf(reportId);
     } finally {
       setIsDownloading(false);
     }
