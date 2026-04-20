@@ -87,7 +87,7 @@ export default function ListCases() {
           )
         }
         contentContainerClassName="flex flex-col gap-6 items-center"
-        data={reports}
+        data={loading ? [] : reports}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <CaseCard
