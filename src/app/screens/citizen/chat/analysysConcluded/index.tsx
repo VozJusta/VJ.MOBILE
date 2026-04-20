@@ -11,6 +11,7 @@ export default function AnalysysConcluded() {
   return (
     <AnalysysConcludedTemplate
       title="Análise Concluída!"
+      titleHeader="Análise Concluída"
       description="Nossa IA processou seu relato e
 documentos com sucesso. Seu
 diagnóstico jurídico está pronto
