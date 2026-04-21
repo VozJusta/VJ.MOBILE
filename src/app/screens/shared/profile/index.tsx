@@ -12,10 +12,12 @@ import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
 import { useEffect } from "react";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
+  const { handleLogout } = useAuth();
   let decodedToken: IDecodedToken | null = null;
   if (token) {
     try {
@@ -84,6 +86,7 @@ export default function ProfileCitizen() {
                       namebutton={item.namebutton}
                       NextButton={item.NextButton}
                       path={item.path}
+                      onLogout={handleLogout}
                     />
 
                     {i < group.length - 1 && (

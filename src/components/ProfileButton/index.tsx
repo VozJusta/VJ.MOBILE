@@ -1,14 +1,13 @@
-import { useAuth } from "@/hooks/auth/useAuth";
 import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
-export default function ProfileButton({ ...item }: IButtonProfile) {
+export default function ProfileButton({
+  ...item
+}: IButtonProfile & { onLogout?: () => void }) {
   const router = useRouter();
-
-  const { handleLogout } = useAuth();
 
   const handleNavigate = () => {
     if (!item.path) {
@@ -16,17 +15,21 @@ export default function ProfileButton({ ...item }: IButtonProfile) {
     }
 
     if (item.path === "ACTION_LOGOUT") {
-      handleLogout();
+      if (item.onLogout) {
+        item.onLogout();
+      }
       return;
     }
-    
+
     router.push(item.path);
   };
   return (
     <ButtonUI
       key={item.namebutton}
       children={
-        <View className={`min-w-full flex-row ${item.NextButton ? "justify-between items-center" : "justify-start items-start"}`}>
+        <View
+          className={`min-w-full flex-row ${item.NextButton ? "justify-between items-center" : "justify-start items-start"}`}
+        >
           <View className={`flex-row gap-[16px] items-center`}>
             <View
               style={{ backgroundColor: item.bgIcon }}

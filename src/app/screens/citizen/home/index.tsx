@@ -19,6 +19,7 @@ import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
+  const { loading, reports } = useDashboardCitizen(3);
 
   let decodedToken: IDecodedToken | null = null;
   if (token) {
@@ -36,8 +37,6 @@ export default function Home() {
   }, [token]);
 
   if (!token) return null;
-
-  const { loading, reports } = useDashboardCitizen(3);
 
   return (
     <ScrollView
