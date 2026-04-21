@@ -10,7 +10,7 @@ import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";
 
 export default function LawyerHome() {
-  const { loading, analyticsData } = useDashboardLawyer();
+  const { loading, analyticsData, operationalStats } = useDashboardLawyer();
   const chartData = analyticsData?.data || [];
 
   return (
@@ -54,7 +54,11 @@ export default function LawyerHome() {
               <Text className="font-interBold text-white text-[18px]">
                 Status operacional dos casos
               </Text>
-              <OperationalStats />
+              <OperationalStats
+                accepted={operationalStats?.accepted}
+                pending={operationalStats?.pending}
+                refused={operationalStats?.refused}
+              />
             </View>
             <View className="flex flex-col gap-6">
               <Text className="text-white text-[20px] font-interBold">
