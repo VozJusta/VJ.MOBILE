@@ -4,7 +4,7 @@ import ButtonUI from "@/ui/ButtonUI";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import Report from "@/assets/svg/reportIcon.svg";
-import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/reports/detailsReport";
+import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
 import { useEffect, useState } from "react";
 import { useDashboard } from "@/hooks/dashboard/useDashboard";
 import {

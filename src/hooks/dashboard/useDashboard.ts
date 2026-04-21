@@ -1,4 +1,4 @@
-import { IReport } from "@/interfaces/services/dashboard/reports/cards";
+import { IReport } from "@/interfaces/services/dashboard/citizen/reports/cards";
 import { getReportDetails } from "@/services/dashboard/reports/detailsReport";
 import { reportByCitizen } from "@/services/dashboard/reports/reportByCitizen";
 import { useEffect, useState } from "react";
@@ -59,7 +59,6 @@ export function useDashboard(initialPageSize: number = 3) {
           text1: "Erro ao buscar detalhes do relatório",
         });
       }
-
     } catch (error) {
       Toast.show({
         type: "error",
@@ -69,7 +68,7 @@ export function useDashboard(initialPageSize: number = 3) {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchReports(page);
@@ -103,6 +102,6 @@ export function useDashboard(initialPageSize: number = 3) {
     goToNextPage,
     goToPreviousPage,
     getDetailsReportById,
-    goToPage
-  }
+    goToPage,
+  };
 }

@@ -1,4 +1,4 @@
-import { IGetReportsResponse } from "@/interfaces/services/dashboard/reports/cards";
+import { IGetReportsResponse } from "@/interfaces/services/dashboard/citizen/reports/cards";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 
