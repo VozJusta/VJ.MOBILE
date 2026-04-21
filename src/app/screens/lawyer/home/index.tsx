@@ -11,9 +11,7 @@ import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer"
 
 export default function LawyerHome() {
   const { loading, analyticsData } = useDashboardLawyer();
-  const chartData = Array.isArray((analyticsData as any)?.data)
-    ? (analyticsData as any).data
-    : [];
+  const chartData = analyticsData?.data || [];
 
   return (
     <ScrollView>

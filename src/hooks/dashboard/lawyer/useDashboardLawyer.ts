@@ -36,7 +36,7 @@ export const useDashboardLawyer = () => {
 
   useEffect(() => {
     getAnalytics();
-  }, [analyticsData]);
+  }, []);
 
   return {
     analyticsData,
