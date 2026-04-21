@@ -13,6 +13,7 @@ export default function SharedLayout() {
     "/screens/shared/profile/settings",
     "/screens/shared/profile/privacy",
     "/screens/shared/terms",
+    "/screens/shared/terminate-account"
   ];
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
