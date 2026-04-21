@@ -2,12 +2,12 @@ import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { IInputProps } from "@/interfaces/ui/InputUI";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
-import { SingInCitizen } from "@/services/users/SingIn";
+import { SingIn } from "@/services/users/SingIn";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
-import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
 import { ActivityIndicator, Text } from "react-native";
+import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
 
 type Params = {
   showPassword: boolean;
@@ -29,48 +29,49 @@ export function buildLoginFields({
   async function handleLogin(data: ZodLoginTypes) {
     setLoading(true);
     try {
-      if (role === "citizen") {
-        const response = await SingInCitizen(data);
-        if (!response.success) {
-          Toast.show({
-            type: "error",
-            text1: response.fields && response.fields[0],
-          });
-          return;
-        }
+      const response = await SingIn(data);
 
-        const validateEmail2FA = await Email2FA(data.email);
-        if (
-          !validateEmail2FA.success &&
-          validateEmail2FA.fields &&
-          validateEmail2FA.fields[0] === "Código já enviado"
-        ) {
-          Toast.show({
-            type: "error",
-            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
-          });
-          router.push(
-            `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(loginAuth.email)}`,
-          );
-          return;
-        }
-        if (!validateEmail2FA.success) {
-          Toast.show({
-            type: "error",
-            text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
-          });
-          return;
-        }
+      if (!response.success) {
         Toast.show({
-          type: "success",
-          text1: validateEmail2FA.data,
+          type: "error",
+          text1: response.fields?.[0] || "Erro ao autenticar",
         });
+        return;
+      }
 
+      const userRole = response.data?.role;
+
+      const validateEmail2FA = await Email2FA(data.email);
+      if (
+        !validateEmail2FA.success &&
+        validateEmail2FA.fields &&
+        validateEmail2FA.fields[0] === "Código já enviado"
+      ) {
+        Toast.show({
+          type: "error",
+          text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+        });
         router.push(
-          `/screens/auth/Validate?source=citizen&email=${encodeURIComponent(loginAuth.email)}`,
+          `/screens/auth/Validate?source=${userRole}&email=${encodeURIComponent(loginAuth.email)}`,
         );
         return;
       }
+      if (!validateEmail2FA.success) {
+        Toast.show({
+          type: "error",
+          text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
+        });
+        return;
+      }
+      Toast.show({
+        type: "success",
+        text1: validateEmail2FA.data,
+      });
+
+      router.push(
+        `/screens/auth/Validate?source=${userRole}&email=${encodeURIComponent(loginAuth.email)}`,
+      );
+      return;
     } finally {
       setLoading(false);
     }
@@ -109,9 +110,7 @@ export function buildLoginFields({
     titleButton: loading ? (
       <ActivityIndicator size="small" color="#FFF" />
     ) : (
-      <Text className="text-white text-[16px] font-interBold">
-        Entrar
-      </Text>
+      <Text className="text-white text-[16px] font-interBold">Entrar</Text>
     ),
   };
 }

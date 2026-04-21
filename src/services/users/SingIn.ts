@@ -4,7 +4,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/auth/token.store";
 
-export async function SingInCitizen(data: ZodLoginTypes) {
+export async function SingIn(data: ZodLoginTypes) {
   const setToken = useXTokenStorage.getState().setToken;
   try {
     const validate = ZodValidate(ZodLoginSchema, data);

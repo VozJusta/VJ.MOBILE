@@ -59,7 +59,6 @@ export default function SignInTemplate({
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
@@ -172,7 +171,6 @@ export default function SignInTemplate({
               </View>
             )}
           </ScrollView>
-        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

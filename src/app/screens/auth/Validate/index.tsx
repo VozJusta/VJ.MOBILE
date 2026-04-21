@@ -14,7 +14,7 @@ export default function ValidateEmail() {
   const sourceValue = Array.isArray(source) ? source[0] : source;
   const emailValue = Array.isArray(email) ? email[0] : email;
   const resolvedSource: ValidationSource =
-    sourceValue === "lawyer" ? "lawyer" : "citizen";
+    sourceValue?.toLowerCase() === "lawyer" ? "lawyer" : "citizen";
 
   return (
     <ForgotPasswordTemplate
