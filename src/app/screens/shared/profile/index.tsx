@@ -13,11 +13,12 @@ import { useRouter } from "expo-router";
 import Header from "@/components/Header";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { PlanType } from "@/interfaces/services/auth/me";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
-  const { handleLogout } = useAuth();
+  const { handleLogout, user } = useAuth();
   let decodedToken: IDecodedToken | null = null;
   if (token) {
     try {
@@ -60,11 +61,13 @@ export default function ProfileCitizen() {
           </LinearGradient>
           <View className="flex-col justify-center items-center">
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
-              {decodedToken?.fullName ?? ""}
+              {user?.full_name}
             </Text>
             <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
-                Membro Premium
+               {
+                user?.subscription.plan.type === PlanType.FREE ? "Plano Gratuito" : user?.subscription.plan.type === PlanType.PREMIUM ? "Plano Premium" : "Plano Médio"
+               }
               </Text>
             </View>
           </View>
@@ -73,7 +76,7 @@ export default function ProfileCitizen() {
           {sections.map((group, index) => (
             <View
               key={index}
-              className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16] border border-solid border-white/5 justify-center items-center"
+              className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16px] border border-solid border-white/5 justify-center items-center"
             >
               {group.map((itemIndex, i) => {
                 const item = ButtonsProfile[itemIndex];

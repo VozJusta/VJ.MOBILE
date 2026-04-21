@@ -1,4 +1,4 @@
-enum PlanType {
+export enum PlanType {
   FREE = "FREE",
   PREMIUM = "PREMIUM",
   MEDIUM = "MEDIUM",

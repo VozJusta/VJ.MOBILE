@@ -155,6 +155,6 @@ export const useAuth = () => {
     setLoading,
     handleLogout,
     terminateAccount,
-    authMe
+    user
   };
 };
