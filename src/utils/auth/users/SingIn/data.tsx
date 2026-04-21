@@ -39,7 +39,7 @@ export function buildLoginFields({
         return;
       }
 
-      const userRole = response.data?.role;
+      const userRole = response.data?.role ?? role;
 
       const validateEmail2FA = await Email2FA(data.email);
       if (
