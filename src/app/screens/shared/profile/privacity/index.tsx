@@ -64,7 +64,7 @@ export default function PrivacySettings() {
 					"Ao excluir sua conta, todos os seus dados e documentos serão permanentemente removidos dos nossos servidores. Esta ação é irreversível conforme o RNF07 da LGPD.",
 				buttonLabel: "Excluir Conta",
 				icon: "warning",
-				onPress: () => {},
+				onPress: () => router.push("/screens/shared/terminate-account"),
 			}}
 		/>
 	);

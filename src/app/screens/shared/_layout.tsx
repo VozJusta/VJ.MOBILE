@@ -11,7 +11,7 @@ export default function SharedLayout() {
     "/screens/shared/profile/myData",
     "/screens/shared/profile/help",
     "/screens/shared/profile/settings",
-    "/screens/shared/profile/privacy",
+    "/screens/shared/profile/privacity",
     "/screens/shared/terms",
     "/screens/shared/terminate-account"
   ];
