@@ -1,11 +1,9 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function deleteAccount(password: string) {
-  const token = await useAccessTokenStorage.getState().accessToken;
-
   try {
-    const response = await apiFetch("/auth/terminate-account", {
+    const response = await apiFetch(`${BASE_URL}/auth/terminate-account`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
