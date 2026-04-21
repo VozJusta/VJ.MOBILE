@@ -4,7 +4,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function getMe() {
   try {
-    const response = await apiFetch(`${BASE_URL}/auth/ME`, {
+    const response = await apiFetch(`${BASE_URL}/auth/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

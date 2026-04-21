@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,7 +18,7 @@ import { PlanType } from "@/interfaces/services/auth/me";
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
-  const { handleLogout, user } = useAuth();
+  const { handleLogout, user, loading, authMe } = useAuth();
   let decodedToken: IDecodedToken | null = null;
   if (token) {
     try {
@@ -31,12 +31,22 @@ export default function ProfileCitizen() {
   useEffect(() => {
     if (!token) {
       router.replace("/screens/Onboarding/roles");
+    } else {
+      authMe();
     }
   }, [token]);
 
+  console.log("USER", user);
+
+  console.log(token)
+
   if (!token) return null;
   const sections = [[0, 1], [2, 3], [4]];
-  return (
+  return loading || !user ? (
+    <View className="flex-1 items-center justify-center">
+      <ActivityIndicator size="large" color="#FFF" />
+    </View>
+  ) : (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
         <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
@@ -65,9 +75,11 @@ export default function ProfileCitizen() {
             </Text>
             <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
-               {
-                user?.subscription.plan.type === PlanType.FREE ? "Plano Gratuito" : user?.subscription.plan.type === PlanType.PREMIUM ? "Plano Premium" : "Plano Médio"
-               }
+                {user?.subscription.plan.type === PlanType.FREE
+                  ? "Plano Gratuito"
+                  : user?.subscription.plan.type === PlanType.PREMIUM
+                    ? "Plano Premium"
+                    : "Plano Médio"}
               </Text>
             </View>
           </View>
