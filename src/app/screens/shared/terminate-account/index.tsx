@@ -1,14 +1,30 @@
 import Header from "@/components/Header";
+import { useAuth } from "@/hooks/auth/useAuth";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import Toast from "react-native-toast-message";
 
 export default function TerminateAccount() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+
+  const { terminateAccount, loading } = useAuth();
+
+  const handleTerminateAccount = async () => {
+    if (!password.trim()) {
+      Toast.show({
+        type: "error",
+        text1: "Senha obrigatória",
+        text2: "Por favor, digite sua senha para continuar",
+      });
+      return;
+    }
+
+    await terminateAccount(password);
+  };
 
   return (
     <SafeAreaView className="flex-1 items-center justify-center">
@@ -43,7 +59,7 @@ export default function TerminateAccount() {
         />
 
         <ButtonUI
-          onPress={dangerCard.onPress ?? (() => {})}
+          onPress={handleTerminateAccount}
           gradient={false}
           hover={false}
           bg="bg-[#EA2027]"
@@ -53,9 +69,13 @@ export default function TerminateAccount() {
           paddingButtonStatus={"px-[20px]"}
         >
           <View className="w-full h-full items-center justify-center">
-            <Text className={"text-[16px] tracking-[0.8px]"}>
-              Excluir conta
-            </Text>
+            {loading ? (
+              <ActivityIndicator size="small" color="#FFF" />
+            ) : (
+              <Text className={"text-[14px] font-interBold text-white"}>
+                Excluir conta
+              </Text>
+            )}
           </View>
         </ButtonUI>
       </View>

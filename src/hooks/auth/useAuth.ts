@@ -98,6 +98,8 @@ export const useAuth = () => {
           text1: "Conta encerrada",
           text2: response.message,
         });
+
+        router.replace("/screens/Onboarding/roles");
       }
     } catch (error) {
       Toast.show({
@@ -120,5 +122,6 @@ export const useAuth = () => {
     loading,
     setLoading,
     handleLogout,
+    terminateAccount
   };
 };
