@@ -1,4 +1,5 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
+import { IMeResponse } from "@/interfaces/services/auth/me";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function getMe() {
@@ -21,7 +22,7 @@ export async function getMe() {
 
     return {
       success: true,
-      data: json.data || null,
+      data: json.data as IMeResponse,
     };
   } catch (error) {
     return {

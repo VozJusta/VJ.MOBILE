@@ -1,3 +1,4 @@
+import { IMeResponse } from "@/interfaces/services/auth/me";
 import {
   ZodLoginTypes,
   ZodSignUpLawyerTypes,
@@ -5,6 +6,7 @@ import {
   ZodUpdatePasswordTypes,
 } from "@/interfaces/validation/zodTypes";
 import { logout } from "@/services/auth/logout";
+import { getMe } from "@/services/auth/me";
 import { deleteAccount } from "@/services/auth/terminate-account";
 import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/auth/token.store";
 import { router } from "expo-router";
@@ -12,6 +14,8 @@ import { useState } from "react";
 import Toast from "react-native-toast-message";
 
 export const useAuth = () => {
+  const [user, setUser] = useState<IMeResponse | undefined>(undefined);
+
   const [loginAuth, setLoginAuth] = useState<ZodLoginTypes>({
     email: "",
     password: "",
@@ -112,6 +116,34 @@ export const useAuth = () => {
     }
   }
 
+  async function authMe() {
+      setLoading(true);
+
+      try {
+       const response = await getMe();
+       
+        if (!response.success) {
+          Toast.show({
+            type: "error",
+            text1: "Não foi possível obter os dados do usuário",
+            text2: response.message,
+          });
+
+          return;
+        } 
+        
+        setUser(response.data);
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          text1: "Não foi possível obter os dados do usuário",
+          text2: "Ocorreu um erro ao tentar obter os dados do usuário",
+        });
+      } finally {
+        setLoading(false);
+      }
+  }
+
   return {
     loginAuth,
     registerAuth,
@@ -122,6 +154,7 @@ export const useAuth = () => {
     loading,
     setLoading,
     handleLogout,
-    terminateAccount
+    terminateAccount,
+    authMe
   };
 };
