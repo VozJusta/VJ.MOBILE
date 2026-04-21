@@ -1,6 +1,6 @@
 import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
 import { getAnalyticsDashboardLawyer } from "@/services/dashboard/lawyer/analytics";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export const useDashboardLawyer = () => {
@@ -33,6 +33,10 @@ export const useDashboardLawyer = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getAnalytics();
+  }, [analyticsData]);
 
   return {
     analyticsData,
