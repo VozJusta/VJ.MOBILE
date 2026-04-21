@@ -7,6 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 function getHelpIconPalette(itemId: string) {
   switch (itemId) {
@@ -329,7 +330,7 @@ export default function SettingsTemplate({
             </Text>
 
             <ButtonUI
-              onPress={dangerCard.onPress ?? (() => {})}
+              onPress={() => router.push("/screens/shared/terminate-account")}
               gradient={false}
               hover={false}
               bg="bg-[#EA2027]"
