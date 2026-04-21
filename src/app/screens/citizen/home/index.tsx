@@ -14,22 +14,28 @@ import {
   getCategoryLabel,
   getStatusIcon,
 } from "@/utils/screens/citizen/home";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
-  if (token === null) {
-    router.push("/screens/auth/users/SignIn");
-    return null;
-  }
-  let decodedToken: IDecodedToken;
 
-  try {
-    decodedToken = jwtDecode<IDecodedToken>(token);
-  } catch (errordecode) {
-    router.replace("/screens/Onboarding/roles");
-    return null;
+  let decodedToken: IDecodedToken | null = null;
+  if (token) {
+    try {
+      decodedToken = jwtDecode<IDecodedToken>(token);
+    } catch {
+      decodedToken = null;
+    }
   }
+
+  useEffect(() => {
+    if (!token) {
+      router.replace("/screens/Onboarding/roles");
+    }
+  }, [token]);
+
+  if (!token) return null;
 
   const { loading, reports } = useDashboardCitizen(3);
 
@@ -43,7 +49,7 @@ export default function Home() {
 
         <View className="mt-[32px] gap-[4px]">
           <Text className="font-interBold text-[30px] text-white">
-            Olá, {decodedToken.fullName}!
+            Olá, {decodedToken?.fullName || "Cidadão"}!
           </Text>
           <Text className="text-[16px] text-[#94A3B8] font-interLight">
             Bem-vindo ao seu painel jurídico.

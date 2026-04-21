@@ -11,17 +11,28 @@ import { jwtDecode } from "jwt-decode";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
+import { useEffect } from "react";
 
 export default function ProfileCitizen() {
-  const sections = [[0, 1], [2, 3], [4]];
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
-  if (token === null) {
-    Alert.alert("Token de acesso não encontrado");
-    router.push("/screens/auth/login");
-    return null;
+  let decodedToken: IDecodedToken | null = null;
+  if (token) {
+    try {
+      decodedToken = jwtDecode<IDecodedToken>(token);
+    } catch {
+      decodedToken = null;
+    }
   }
-  const decodedToken = jwtDecode<IDecodedToken>(token);
+
+  useEffect(() => {
+    if (!token) {
+      router.replace("/screens/Onboarding/roles");
+    }
+  }, [token]);
+
+  if (!token) return null;
+  const sections = [[0, 1], [2, 3], [4]];
   return (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
@@ -47,7 +58,7 @@ export default function ProfileCitizen() {
           </LinearGradient>
           <View className="flex-col justify-center items-center">
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
-              {decodedToken.fullName}
+              {decodedToken?.fullName ?? ""}
             </Text>
             <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
