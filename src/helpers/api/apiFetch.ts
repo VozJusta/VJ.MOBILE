@@ -22,7 +22,7 @@ const processQueue = (error: Error | null, token: string | null = null) => {
   failedQueue = [];
 };
 
-export async function apiFetch(input: RequestInfo, init?: RequestInit) {
+export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
   const accessToken = useAccessTokenStorage.getState().accessToken;
 
   const headers = new Headers(init?.headers);
@@ -39,7 +39,7 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit) {
 
   if (response.status === 401) {
     if (isRefreshing) {
-      return new Promise((resolve, reject) => {
+      return new Promise<Response>((resolve, reject) => {
         failedQueue.push({
           onSuccess: (newToken: string) => {
             config.headers = new Headers(config.headers);

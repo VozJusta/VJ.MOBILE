@@ -1,21 +1,20 @@
+import { apiFetch } from "@/helpers/api/apiFetch";
 import { IConversationResponse } from "@/interfaces/services/chat";
 import { IContinueConversationRequest } from "@/interfaces/services/chat/continueConversation";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function continueConversation(body: IContinueConversationRequest) {
   try {
-    const accessToken = useAccessTokenStorage.getState().accessToken;
-
-    const response = await fetch(`${BASE_URL}/report/conversation/continue`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${accessToken}`,
+    const response = await apiFetch(
+      `${BASE_URL}/report/conversation/continue`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => {});
