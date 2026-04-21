@@ -5,6 +5,7 @@ import {
   ZodUpdatePasswordTypes,
 } from "@/interfaces/validation/zodTypes";
 import { logout } from "@/services/auth/logout";
+import { deleteAccount } from "@/services/auth/terminate-account";
 import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/auth/token.store";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -77,6 +78,32 @@ export const useAuth = () => {
         type: "error",
         text1: "Não foi possível fazer sair da conta",
         text2: "Ocorreu um erro ao tentar fazer logout",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function terminateAccount(password: string) {
+    setLoading(true);
+    try {
+      const response = await deleteAccount(password);
+
+      if (response.success) {
+        useAccessTokenStorage.getState().clearTokens();
+        useRefreshTokenStorage.getState().clearTokens();
+
+        Toast.show({
+          type: "success",
+          text1: "Conta encerrada",
+          text2: response.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível encerrar a conta",
+        text2: "Ocorreu um erro ao tentar encerrar a conta",
       });
     } finally {
       setLoading(false);

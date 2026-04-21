@@ -1,12 +1,12 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 
-export async function terminateAccount(password: string) {
+export async function deleteAccount(password: string) {
   const token = await useAccessTokenStorage.getState().accessToken;
 
   try {
     const response = await apiFetch("/auth/terminate-account", {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
