@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import OperationalStatsCard from "../OperationalStatsCard";
 import { operationalStatsData } from "./data";
-import { OperationalStatsCardProps } from "@/interfaces/components/OperationalStatsCard";
 import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStas";
 
 export default function OperationalStats({
