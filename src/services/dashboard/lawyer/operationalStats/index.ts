@@ -1,4 +1,4 @@
-import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStas";
+import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStats";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 

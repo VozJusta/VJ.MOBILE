@@ -1,5 +1,5 @@
 import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
-import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStas";
+import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStats";
 import { getAnalyticsDashboardLawyer } from "@/services/dashboard/lawyer/analytics";
 import { getOperationalStatsDashboard } from "@/services/dashboard/lawyer/operationalStats";
 import { useEffect, useState } from "react";
