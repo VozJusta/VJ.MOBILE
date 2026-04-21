@@ -1,6 +1,9 @@
 import { Slot, usePathname } from "expo-router";
 import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { jwtDecode } from "jwt-decode";
+import { IDecodedToken } from "@/interfaces/services/token/token";
 
 export default function SharedLayout() {
   const pathName = usePathname();
@@ -13,6 +16,13 @@ export default function SharedLayout() {
   ];
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
+
+  const token = useAccessTokenStorage.getState().accessToken;
+
+  const decodedToken = jwtDecode<IDecodedToken>(token || "");
+
+  const isCitizen = decodedToken?.role.toLowerCase() === "citizen";
+
   return (
     <LinearGradient
       style={{ flex: 1, paddingBottom: 84, paddingTop: 32, paddingInline: 16 }}
@@ -21,7 +31,7 @@ export default function SharedLayout() {
       colors={["#000000", "#052F5F"]}
     >
       <Slot />
-      {!shouldHideNavbar && <Navbar isLawyer={false} profile={true} />}
+      {!shouldHideNavbar && <Navbar isLawyer={!isCitizen} profile={true} />}
     </LinearGradient>
   );
 }
