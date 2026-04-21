@@ -47,7 +47,7 @@ export default function TerminateAccount() {
             label="SENHA"
             placeholder={"••••••••"}
             leftIcon
-            keyboardType="visible-password"
+            keyboardType="default"
             iconSize={24}
             iconNameProps={"lock"}
             type={"password"}
