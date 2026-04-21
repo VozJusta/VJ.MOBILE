@@ -1,6 +1,6 @@
 import { IReport } from "@/interfaces/services/dashboard/citizen/reports/cards";
-import { getReportDetails } from "@/services/dashboard/reports/detailsReport";
-import { reportByCitizen } from "@/services/dashboard/reports/reportByCitizen";
+import { getReportDetails } from "@/services/dashboard/citizen/reports/detailsReport";
+import { reportByCitizen } from "@/services/dashboard/citizen/reports/reportByCitizen";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 

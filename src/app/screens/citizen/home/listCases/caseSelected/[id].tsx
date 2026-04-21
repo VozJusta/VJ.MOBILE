@@ -13,7 +13,7 @@ import {
 } from "@/utils/screens/citizen/home";
 import Header from "@/components/Header";
 import { useChatStorage } from "@/store/chat/chat.store";
-import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
+import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { CaseStatus } from "@/interfaces/components/CaseCard";
 
