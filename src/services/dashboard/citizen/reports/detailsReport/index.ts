@@ -1,7 +1,6 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
 import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function getReportDetails(reportId: string) {
   try {
