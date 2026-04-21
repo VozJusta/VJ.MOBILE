@@ -19,9 +19,15 @@ export default function SharedLayout() {
 
   const token = useAccessTokenStorage((state) => state.accessToken);
 
-  const decodedToken = jwtDecode<IDecodedToken>(token || "");
-
-  const isCitizen = decodedToken?.role.toLowerCase() === "citizen";
+  let decodedToken: IDecodedToken | null = null;
+  if (token) {
+    try {
+      decodedToken = jwtDecode<IDecodedToken>(token);
+    } catch {
+      decodedToken = null;
+    }
+  }
+  const isCitizen = decodedToken?.role?.toLowerCase() === "citizen";
 
   return (
     <LinearGradient
