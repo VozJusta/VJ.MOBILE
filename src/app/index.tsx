@@ -47,8 +47,20 @@ export default function App() {
     ]);
 
     anim.start(() => {
-      if (accessToken && decodedToken && !isTokenExpired(decodedToken)) {
+      if (
+        accessToken &&
+        decodedToken &&
+        !isTokenExpired(decodedToken) &&
+        decodedToken.role.toLowerCase() === "citizen"
+      ) {
         router.replace("/screens/citizen/home");
+      } else if (
+        accessToken &&
+        decodedToken &&
+        !isTokenExpired(decodedToken) &&
+        decodedToken.role.toLowerCase() === "lawyer"
+      ) {
+        router.replace("/screens/lawyer/home");
       } else {
         router.replace("/screens/Onboarding");
       }

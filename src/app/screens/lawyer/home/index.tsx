@@ -14,7 +14,7 @@ export default function LawyerHome() {
   const chartData = analyticsData?.data || [];
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
 
