@@ -1,16 +1,13 @@
+import { apiFetch } from "@/helpers/api/apiFetch";
 import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function getAnalyticsDashboardLawyer() {
-  const token = useAccessTokenStorage.getState().accessToken;
-
   try {
-    const response = await fetch(`${BASE_URL}/dashboard/lawyer/analytics`, {
+    const response = await apiFetch(`${BASE_URL}/dashboard/lawyer/analytics`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
 
