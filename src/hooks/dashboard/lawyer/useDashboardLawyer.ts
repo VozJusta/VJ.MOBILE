@@ -13,8 +13,6 @@ export const useDashboardLawyer = () => {
   const [loading, setLoading] = useState(false);
 
   const getAnalytics = async () => {
-    setLoading(true);
-
     try {
       const response = await getAnalyticsDashboardLawyer();
 
@@ -33,14 +31,10 @@ export const useDashboardLawyer = () => {
         text1: "Erro ao buscar analytics",
         text2: "Tente novamente mais tarde",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
   const getOperationalStats = async () => {
-    setLoading(true);
-
     try {
       const response = await getOperationalStatsDashboard();
 
@@ -59,8 +53,6 @@ export const useDashboardLawyer = () => {
         text1: "Erro ao buscar estatísticas operacionais",
         text2: "Tente novamente mais tarde",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
