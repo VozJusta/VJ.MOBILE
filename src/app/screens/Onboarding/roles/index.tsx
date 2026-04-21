@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
+import { BackHandler, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
 import Button from "@/ui/ButtonUI";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AccountBalace from "@/assets/svg/icons/account-balace.svg";
 import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
@@ -14,6 +14,13 @@ export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
   const setRole = useRolesStorage((state) => state.setRole)
+
+  useEffect(() => {
+    const sub = BackHandler.addEventListener("hardwareBackPress", () => {
+      return true; 
+    });
+    return () => sub.remove();
+  }, []);
 
   const handleSelectedRole = () => {
     if (activeCitizen) {
