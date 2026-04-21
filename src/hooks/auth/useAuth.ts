@@ -4,7 +4,11 @@ import {
   ZodSignUpTypes,
   ZodUpdatePasswordTypes,
 } from "@/interfaces/validation/zodTypes";
+import { logout } from "@/services/auth/logout";
+import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/auth/token.store";
+import { router } from "expo-router";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 
 export const useAuth = () => {
   const [loginAuth, setLoginAuth] = useState<ZodLoginTypes>({
@@ -50,6 +54,35 @@ export const useAuth = () => {
     setRegisterAuthLawyer((prev) => ({ ...prev, [name]: value }));
   }
 
+  async function handleLogout() {
+    setLoading(true);
+
+    try {
+      const response = await logout()
+
+      if (response.success) {
+        useAccessTokenStorage.getState().clearTokens();
+        useRefreshTokenStorage.getState().clearTokens();
+
+        router.replace("/screens/Onboarding/roles");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Não foi possível fazer sair da conta",
+          text2: response.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível fazer sair da conta",
+        text2: "Ocorreu um erro ao tentar fazer logout",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
     loginAuth,
     registerAuth,
@@ -59,5 +92,6 @@ export const useAuth = () => {
     handleRegisterChangeLawyer,
     loading,
     setLoading,
+    handleLogout,
   };
 };
