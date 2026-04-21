@@ -59,7 +59,13 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit) {
     try {
       const newToken = await refreshToken();
 
+      if (!newToken.success || !newToken.accessToken) {
+        throw new Error("Falha ao atualizar o token.");
+      }
+
       processQueue(null, newToken.accessToken);
+
+      isRefreshing = false;
 
       config.headers = new Headers(config.headers);
       (config.headers as Headers).set(
