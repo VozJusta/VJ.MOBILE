@@ -32,6 +32,8 @@ export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
         oabNumber: validate.data?.oabNumber,
         oabState: validate.data?.oabState,
         specialization: validate.data?.specialization,
+        billingType: "Monthly",
+        namePlan: "Plano Adv Premium",
       }),
     });
 

@@ -33,7 +33,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.oliveiraz.vjmobile"
+      "package": "com.vozjusta.mobile"
     },
     "plugins": [
       ["expo-router", { "root": "src/app" }],

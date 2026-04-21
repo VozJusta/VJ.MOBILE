@@ -2,18 +2,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { MaterialIcons } from "@expo/vector-icons";
 import Report from "@/assets/svg/reportIcon.svg";
-import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/reports/detailsReport";
+import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
 import { useEffect, useState } from "react";
-import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import {
   getCategoryLabel,
   translateStatus,
 } from "@/utils/screens/citizen/home";
 import Header from "@/components/Header";
 import { useChatStorage } from "@/store/chat/chat.store";
-import { downloadReportAsPdf } from "@/services/dashboard/reports/dowloadPdf";
+import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { CaseStatus } from "@/interfaces/components/CaseCard";
 
@@ -23,7 +22,7 @@ export default function CaseSelected() {
   const [reportData, setReportData] = useState<
     IGetReportDetailsResponse | undefined
   >(undefined);
-  const { getDetailsReportById, loading } = useDashboard();
+  const { getDetailsReportById, loading } = useDashboardCitizen();
 
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
   useEffect(() => {

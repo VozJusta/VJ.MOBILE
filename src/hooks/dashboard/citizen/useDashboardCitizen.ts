@@ -1,10 +1,10 @@
-import { IReport } from "@/interfaces/services/dashboard/reports/cards";
-import { getReportDetails } from "@/services/dashboard/reports/detailsReport";
-import { reportByCitizen } from "@/services/dashboard/reports/reportByCitizen";
+import { IReport } from "@/interfaces/services/dashboard/citizen/reports/cards";
+import { getReportDetails } from "@/services/dashboard/citizen/reports/detailsReport";
+import { reportByCitizen } from "@/services/dashboard/citizen/reports/reportByCitizen";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
-export function useDashboard(initialPageSize: number = 3) {
+export function useDashboardCitizen(initialPageSize: number = 3) {
   const [reports, setReports] = useState<IReport[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,6 @@ export function useDashboard(initialPageSize: number = 3) {
           text1: "Erro ao buscar detalhes do relatório",
         });
       }
-
     } catch (error) {
       Toast.show({
         type: "error",
@@ -69,7 +68,7 @@ export function useDashboard(initialPageSize: number = 3) {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchReports(page);
@@ -103,6 +102,6 @@ export function useDashboard(initialPageSize: number = 3) {
     goToNextPage,
     goToPreviousPage,
     getDetailsReportById,
-    goToPage
-  }
+    goToPage,
+  };
 }

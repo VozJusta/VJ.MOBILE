@@ -9,11 +9,10 @@ import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import CaseCard from "@/components/CaseCard";
-import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import {
   getCategoryLabel,
   getStatusIcon,
-  translateStatus,
 } from "@/utils/screens/citizen/home";
 
 export default function Home() {
@@ -23,16 +22,16 @@ export default function Home() {
     router.push("/screens/auth/users/SignIn");
     return null;
   }
-  let decodedToken: IDecodedToken
+  let decodedToken: IDecodedToken;
 
   try {
     decodedToken = jwtDecode<IDecodedToken>(token);
   } catch (errordecode) {
-    router.replace("/screens/OnBoarding/roles");
-    return null
+    router.replace("/screens/Onboarding/roles");
+    return null;
   }
 
-  const { loading, reports } = useDashboard(3);
+  const { loading, reports } = useDashboardCitizen(3);
 
   return (
     <ScrollView
