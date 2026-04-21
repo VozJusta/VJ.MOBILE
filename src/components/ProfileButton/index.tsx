@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/auth/useAuth";
 import { IButtonProfile } from "@/interfaces/components/ButtonProfile";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,10 +8,18 @@ import { View, Text } from "react-native";
 export default function ProfileButton({ ...item }: IButtonProfile) {
   const router = useRouter();
 
+  const { handleLogout } = useAuth();
+
   const handleNavigate = () => {
     if (!item.path) {
       return;
     }
+
+    if (item.path === "ACTION_LOGOUT") {
+      handleLogout();
+      return;
+    }
+    
     router.push(item.path);
   };
   return (
