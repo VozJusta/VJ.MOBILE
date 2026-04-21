@@ -17,7 +17,7 @@ export default function SharedLayout() {
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
 
-  const token = useAccessTokenStorage.getState().accessToken;
+  const token = useAccessTokenStorage((state) => state.accessToken);
 
   const decodedToken = jwtDecode<IDecodedToken>(token || "");
 
