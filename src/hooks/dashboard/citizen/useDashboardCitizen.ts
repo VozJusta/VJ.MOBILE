@@ -4,7 +4,7 @@ import { reportByCitizen } from "@/services/dashboard/citizen/reports/reportByCi
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
-export function useDashboard(initialPageSize: number = 3) {
+export function useDashboardCitizen(initialPageSize: number = 3) {
   const [reports, setReports] = useState<IReport[]>([]);
   const [loading, setLoading] = useState(false);
 

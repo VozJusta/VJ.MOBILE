@@ -13,7 +13,7 @@ import Header from "@/components/Header";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { MaterialIcons } from "@expo/vector-icons";
 import CaseCard from "@/components/CaseCard";
-import { useDashboard } from "@/hooks/dashboard/useDashboard";
+import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import {
   getCategoryLabel,
   getStatusIcon,
@@ -32,8 +32,8 @@ export default function ListCases() {
     goToNextPage,
     goToPreviousPage,
     hasPreviousPage,
-    goToPage
-  } = useDashboard(5);
+    goToPage,
+  } = useDashboardCitizen(5);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -88,14 +88,14 @@ export default function ListCases() {
           )
         }
         contentContainerClassName="flex flex-col gap-6 items-center"
-        contentContainerStyle={{ flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         data={loading ? [] : reports}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <CaseCard
             iconName={getStatusIcon(item.status)}
             title={getCategoryLabel(item.category_detected)}
-            status={(item.status)}
+            status={item.status}
             onPress={() =>
               router.push(
                 `/screens/citizen/home/listCases/caseSelected/${item.id}`,
