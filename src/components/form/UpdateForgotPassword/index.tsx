@@ -1,12 +1,12 @@
 import PasswordStrength from "@/components/PasswordStrengh";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
+import { IUpdateForgotPassword } from "@/interfaces/components/Forms/forgotPassword";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { useRouter } from "expo-router";
 import { View, Text, ActivityIndicator } from "react-native";
 
-export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
+export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
   const { loading, setLoading } = useAuth();
   const router = useRouter();
   return (

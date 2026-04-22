@@ -10,7 +10,7 @@ import { View, Text, Alert } from "react-native";
 import Shield from "@/assets/svg/icons/shield.svg";
 import Toast from "react-native-toast-message";
 import { useXTokenStorage } from "@/store/auth/token.store";
-import { ICodeForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
+import { ICodeForgotPassword } from "@/interfaces/components/Forms/forgotPassword";
 import { ActivityIndicator } from "react-native";
 
 export function CodeForgotPassword({
@@ -20,7 +20,7 @@ export function CodeForgotPassword({
   resolvedVerifyButtonLabel,
   timerLabel,
   onCodeVerified,
-}: ICodeForgotPasswordProps) {
+}: ICodeForgotPassword) {
   const { loading, setLoading } = useAuth();
   const emailStorage = useEmailStorage((state) => state.email);
   const pathName = usePathname();
