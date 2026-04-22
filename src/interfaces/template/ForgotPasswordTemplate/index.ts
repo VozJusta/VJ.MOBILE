@@ -15,7 +15,7 @@ type CodeScreenOptions = {
   onCodeVerified?: () => void;
 };
 
-export type IForgotPasswordProps =
+export type IForgotPassword =
   | ({
       email: string;
       screen: ScreensForgotPassword.Email | ScreensForgotPassword.Code;
