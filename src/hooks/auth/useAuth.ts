@@ -112,7 +112,14 @@ export const useAuth = () => {
         });
 
         router.replace("/screens/Onboarding/roles");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Não foi possível encerrar a conta",
+          text2: response.message,
+        });
       }
+      
     } catch (error) {
       Toast.show({
         type: "error",
