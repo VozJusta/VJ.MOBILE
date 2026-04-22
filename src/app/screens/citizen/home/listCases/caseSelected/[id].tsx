@@ -131,7 +131,10 @@ export default function CaseSelected() {
           {Object.keys(reportData?.user.report.evidence).length === 0 ? (
             <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
               <MaterialIcons name="folder-off" size={48} color="#8D90A1" />
-              <Text className="font-interRegular text-[16px] text-[#8D90A1] text-center">
+              <Text
+                className="font-interRegular text-[16px] text-center"
+                style={{ color: "#8D90A1" }}
+              >
                 Não há documentos anexados a este caso.
               </Text>
             </View>
@@ -145,6 +148,9 @@ export default function CaseSelected() {
             </View>
           )}
 
+          <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
+            CONTATO DO ADVOGADO
+          </Text>
           {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
           reportData?.user.report.lawyer ? (
             <ContactCard
@@ -155,7 +161,10 @@ export default function CaseSelected() {
           ) : (
             <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
               <MaterialIcons name="person-off" size={48} color="#8D90A1" />
-              <Text className="font-interRegular text-[16px] text-[#8D90A1] text-center">
+              <Text
+                className="font-interRegular text-[16px] text-[#8D90A1] text-center"
+                style={{ color: "#8D90A1" }}
+              >
                 Informações de contato não disponíveis
               </Text>
             </View>
