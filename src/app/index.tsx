@@ -26,7 +26,7 @@ export default function App() {
     } catch (error) {
       return null;
     }
-  }, [accessToken]);
+  }, []);
 
   useEffect(() => {
     const anim = Animated.sequence([

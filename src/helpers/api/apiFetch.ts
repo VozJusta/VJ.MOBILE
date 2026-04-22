@@ -3,6 +3,7 @@ import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
 } from "@/store/auth/token.store";
+import { router } from "expo-router";
 
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -82,6 +83,8 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<
 
       useAccessTokenStorage.getState().clearTokens();
       useRefreshTokenStorage.getState().clearTokens();
+
+      router.replace("/screens/Onboarding/roles");
 
       throw error;
     }
