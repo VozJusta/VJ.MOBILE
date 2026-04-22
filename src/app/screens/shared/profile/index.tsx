@@ -28,10 +28,10 @@ export default function ProfileCitizen() {
 
   useEffect(() => {
     if (!token) {
-    router.replace("/screens/Onboarding/roles");
-    return;
-  }
-  authMe();
+      router.replace("/screens/Onboarding/roles");
+      return;
+    }
+    authMe();
   }, []);
 
   if (!token) return null;
@@ -41,7 +41,7 @@ export default function ProfileCitizen() {
       <ActivityIndicator size="large" color="#FFF" />
     </View>
   ) : (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
         <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
         <View className="w-full justify-center items-center gap-[16px]">
@@ -67,13 +67,15 @@ export default function ProfileCitizen() {
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
               {user?.full_name}
             </Text>
-            <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
+            <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)] mt-1">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
-                {user?.subscription.plan.type === PlanType.FREE
+                {user?.subscription?.plan?.type === PlanType.FREE
                   ? "Plano Gratuito"
-                  : user?.subscription.plan.type === PlanType.PREMIUM
+                  : user?.subscription?.plan?.type === PlanType.PREMIUM
                     ? "Plano Premium"
-                    : "Plano Médio"}
+                    : user?.subscription?.plan?.type === PlanType.MEDIUM
+                      ? "Plano Médio"
+                      : "Sem plano"}
               </Text>
             </View>
           </View>
