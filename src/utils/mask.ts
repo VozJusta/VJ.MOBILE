@@ -10,10 +10,10 @@ export const formatCPF = (value: string) => {
 export const formatPhone = (value: string) => {
   return value
     .replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/^(\d{2})(\d)/g, "($1) $2")
     .replace(/(\d{5})(\d)/, "$1-$2")
     .slice(0, 15);
-};
+}
 
 export type UF =
   "" | "AC" | "AL" | "AP" | "AM" | "BA" | "CE"

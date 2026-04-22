@@ -1,5 +1,4 @@
-import { formatCPF } from "@/utils/mask";
-import { formatPhone } from "@/utils/phoneValidate";
+import { formatCPF, formatPhone } from "@/utils/mask";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
