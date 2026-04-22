@@ -1,10 +1,10 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
-import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
+import { IMeResponse } from "@/interfaces/services/auth/me";
 import { BASE_URL } from "@/settings/BASE_URL";
 
-export async function getAnalyticsDashboardLawyer() {
+export async function getMe() {
   try {
-    const response = await apiFetch(`${BASE_URL}/dashboard/lawyer/analytics`, {
+    const response = await apiFetch(`${BASE_URL}/auth/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -16,18 +16,18 @@ export async function getAnalyticsDashboardLawyer() {
     if (!response.ok) {
       return {
         success: false,
-        fields: json.message ? [json.message] : ["Erro ao buscar analytics"],
+        message: json.message || "Erro ao obter os dados do usuário",
       };
     }
 
     return {
       success: true,
-      data: json as IGetAnalyticsResponse,
+      data: json.data as IMeResponse,
     };
   } catch (error) {
     return {
       success: false,
-      fields: ["Erro ao buscar analytics"],
+      message: "Erro de rede ao obter os dados do usuário",
     };
   }
 }

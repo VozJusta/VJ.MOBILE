@@ -1,18 +1,15 @@
+import { apiFetch } from "@/helpers/api/apiFetch";
 import { IGetReportsResponse } from "@/interfaces/services/dashboard/citizen/reports/cards";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function reportByCitizen(page: number, pageSize: number) {
-  const token = useAccessTokenStorage.getState().accessToken;
-
   try {
-    const response = await fetch(
+    const response = await apiFetch(
       `${BASE_URL}/dashboard/citizens/me/reports?page=${page}&pageSize=${pageSize}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
       },
     );

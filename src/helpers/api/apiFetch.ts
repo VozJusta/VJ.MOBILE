@@ -1,0 +1,91 @@
+import { refreshToken } from "@/services/users/security/refreshToken";
+import {
+  useAccessTokenStorage,
+  useRefreshTokenStorage,
+} from "@/store/auth/token.store";
+
+let isRefreshing = false;
+let failedQueue: Array<{
+  onSuccess: (token: string) => void;
+  onFailure: (error: Error) => void;
+}> = [];
+
+const processQueue = (error: Error | null, token: string | null = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) {
+      promise.onFailure(error);
+    } else if (token) {
+      promise.onSuccess(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
+export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+  const accessToken = useAccessTokenStorage.getState().accessToken;
+
+  const headers = new Headers(init?.headers);
+  if (accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  const config: RequestInit = {
+    ...init,
+    headers,
+  };
+
+  let response = await fetch(input, config);
+
+  if (response.status === 401) {
+    if (isRefreshing) {
+      return new Promise<Response>((resolve, reject) => {
+        failedQueue.push({
+          onSuccess: (newToken: string) => {
+            config.headers = new Headers(config.headers);
+            (config.headers as Headers).set(
+              "Authorization",
+              `Bearer ${newToken}`,
+            );
+            resolve(fetch(input, config));
+          },
+          onFailure: (err: Error) => reject(err),
+        });
+      });
+    }
+
+    isRefreshing = true;
+
+    try {
+      const newToken = await refreshToken();
+
+      if (!newToken.success || !newToken.accessToken) {
+        throw new Error("Falha ao atualizar o token.");
+      }
+
+      processQueue(null, newToken.accessToken);
+
+      isRefreshing = false;
+
+      config.headers = new Headers(config.headers);
+      (config.headers as Headers).set(
+        "Authorization",
+        `Bearer ${newToken.accessToken}`,
+      );
+
+      response = await fetch(input, config);
+
+      return response;
+    } catch (error) {
+      processQueue(error as Error, null);
+      isRefreshing = false;
+
+      useAccessTokenStorage.getState().clearTokens();
+      useRefreshTokenStorage.getState().clearTokens();
+
+      throw error;
+    }
+  }
+
+  return response;
+}

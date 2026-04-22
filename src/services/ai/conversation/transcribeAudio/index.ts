@@ -1,9 +1,7 @@
+import { apiFetch } from "@/helpers/api/apiFetch";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function transcribeAudio(fileUri: string) {
-  const token = useAccessTokenStorage.getState().accessToken;
-
   try {
     const formData = new FormData();
 
@@ -13,11 +11,8 @@ export async function transcribeAudio(fileUri: string) {
       type: "audio/m4a",
     } as any);
 
-    const response = await fetch(`${BASE_URL}/report/transcribe`, {
+    const response = await apiFetch(`${BASE_URL}/report/transcribe`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       body: formData,
     });
 

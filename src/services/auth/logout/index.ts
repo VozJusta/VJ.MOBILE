@@ -1,11 +1,10 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
-import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
 import { BASE_URL } from "@/settings/BASE_URL";
 
-export async function getAnalyticsDashboardLawyer() {
+export async function logout() {
   try {
-    const response = await apiFetch(`${BASE_URL}/dashboard/lawyer/analytics`, {
-      method: "GET",
+    const response = await apiFetch(`${BASE_URL}/auth/logout`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -16,18 +15,18 @@ export async function getAnalyticsDashboardLawyer() {
     if (!response.ok) {
       return {
         success: false,
-        fields: json.message ? [json.message] : ["Erro ao buscar analytics"],
+        message: json.message || "Logout failed",
       };
     }
 
     return {
       success: true,
-      data: json as IGetAnalyticsResponse,
+      message: json.message || "Logout successful",
     };
   } catch (error) {
     return {
       success: false,
-      fields: ["Erro ao buscar analytics"],
+      message: "An error occurred during logout",
     };
   }
 }

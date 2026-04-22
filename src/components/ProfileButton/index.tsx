@@ -4,20 +4,32 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
-export default function ProfileButton({ ...item }: IButtonProfile) {
+export default function ProfileButton({
+  ...item
+}: IButtonProfile & { onLogout?: () => void }) {
   const router = useRouter();
 
   const handleNavigate = () => {
     if (!item.path) {
       return;
     }
+
+    if (item.path === "ACTION_LOGOUT") {
+      if (item.onLogout) {
+        item.onLogout();
+      }
+      return;
+    }
+
     router.push(item.path);
   };
   return (
     <ButtonUI
       key={item.namebutton}
       children={
-        <View className={`min-w-full flex-row ${item.NextButton ? "justify-between items-center" : "justify-start items-start"}`}>
+        <View
+          className={`min-w-full flex-row ${item.NextButton ? "justify-between items-center" : "justify-start items-start"}`}
+        >
           <View className={`flex-row gap-[16px] items-center`}>
             <View
               style={{ backgroundColor: item.bgIcon }}

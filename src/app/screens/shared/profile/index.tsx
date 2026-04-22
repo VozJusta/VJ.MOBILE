@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,18 +11,42 @@ import { jwtDecode } from "jwt-decode";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
+import { useEffect } from "react";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { PlanType } from "@/interfaces/services/auth/me";
 
 export default function ProfileCitizen() {
-  const sections = [[0, 1], [2, 3], [4]];
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
-  if (token === null) {
-    Alert.alert("Token de acesso não encontrado");
-    router.push("/screens/auth/login");
-    return null;
+  const { handleLogout, user, loading, authMe } = useAuth();
+  let decodedToken: IDecodedToken | null = null;
+  if (token) {
+    try {
+      decodedToken = jwtDecode<IDecodedToken>(token);
+    } catch {
+      decodedToken = null;
+    }
   }
-  const decodedToken = jwtDecode<IDecodedToken>(token);
-  return (
+
+  useEffect(() => {
+    if (!token) {
+      router.replace("/screens/Onboarding/roles");
+    } else {
+      authMe();
+    }
+  }, [token]);
+
+  console.log("USER", user);
+
+  console.log(token)
+
+  if (!token) return null;
+  const sections = [[0, 1], [2, 3], [4]];
+  return loading || !user ? (
+    <View className="flex-1 items-center justify-center">
+      <ActivityIndicator size="large" color="#FFF" />
+    </View>
+  ) : (
     <ScrollView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
         <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
@@ -47,11 +71,15 @@ export default function ProfileCitizen() {
           </LinearGradient>
           <View className="flex-col justify-center items-center">
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
-              {decodedToken.fullName}
+              {user?.full_name}
             </Text>
             <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
-                Membro Premium
+                {user?.subscription.plan.type === PlanType.FREE
+                  ? "Plano Gratuito"
+                  : user?.subscription.plan.type === PlanType.PREMIUM
+                    ? "Plano Premium"
+                    : "Plano Médio"}
               </Text>
             </View>
           </View>
@@ -60,7 +88,7 @@ export default function ProfileCitizen() {
           {sections.map((group, index) => (
             <View
               key={index}
-              className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16] border border-solid border-white/5 justify-center items-center"
+              className="flex-col gap-[16px] p-[16px] bg-[rgba(30,40,59,0.4)] rounded-[16px] border border-solid border-white/5 justify-center items-center"
             >
               {group.map((itemIndex, i) => {
                 const item = ButtonsProfile[itemIndex];
@@ -73,6 +101,7 @@ export default function ProfileCitizen() {
                       namebutton={item.namebutton}
                       NextButton={item.NextButton}
                       path={item.path}
+                      onLogout={handleLogout}
                     />
 
                     {i < group.length - 1 && (

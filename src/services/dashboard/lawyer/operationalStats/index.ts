@@ -1,18 +1,15 @@
+import { apiFetch } from "@/helpers/api/apiFetch";
 import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStats";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export async function getOperationalStatsDashboard() {
-  const token = useAccessTokenStorage.getState().accessToken;
-
   try {
-    const response = await fetch(
+    const response = await apiFetch(
       `${BASE_URL}/dashboard/lawyer/operational-status`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
       },
     );
