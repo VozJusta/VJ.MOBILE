@@ -6,7 +6,7 @@ export interface IToken {
   fullName: string;
 }
 
-export interface ICitizenRegisterResponse {
+export interface IRegisterResponse {
   validated: boolean;
   sub: string;
   role: Role;

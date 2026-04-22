@@ -11,8 +11,8 @@ import Toast from "react-native-toast-message";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { ActivityIndicator, Text } from "react-native";
+import { Role } from "@/types/roles/roles";
 
 type Params = {
   showPassword: boolean;
@@ -53,8 +53,7 @@ export function buildLawyerFields({
         return;
       }
 
-      const resolvedRole = resolveRoleFromApi(response.data, "lawyer");
-      setRole(resolvedRole);
+      setRole(response.data?.role?.toLowerCase() as Role);
 
       const email2FAResponse = await Email2FA(data.email);
 
@@ -204,9 +203,7 @@ export function buildLawyerFields({
     titleButton: loading ? (
       <ActivityIndicator size="small" color="#FFF" />
     ) : (
-      <Text className="text-white text-[16px] font-interBold">
-        Entrar
-      </Text>
+      <Text className="text-white text-[16px] font-interBold">Entrar</Text>
     ),
     disableSubmit: loading,
   };

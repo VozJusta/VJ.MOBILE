@@ -3,6 +3,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodSignUpLawyerTypes } from "@/interfaces/validation/zodTypes";
 import { ZodSignUpLawyerSchema} from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/auth/token.store";
+import { IRegisterResponse } from "@/interfaces/services/auth/citizen/SingUp";
 
 export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
   const setToken = useXTokenStorage.getState().setToken;
@@ -54,7 +55,7 @@ export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
 
     return {
       success: true,
-      data: json,
+      data: json as IRegisterResponse,
     };
   } catch (err: any) {
     return {

@@ -59,9 +59,13 @@ export function buildCitizenFields({
         text1: validateEmail2FA.data,
       });
 
-      router.push(
-        `/screens/auth/Validate?source=${response.data?.role?.toLowerCase()}&email=${encodeURIComponent(registerAuth.email)}`,
-      );
+      router.push({
+        pathname: "/screens/auth/Validate",
+        params: {
+          source: "citizen",
+          email: data.email,
+        },
+      });
       return;
     } finally {
       setLoading(false);
