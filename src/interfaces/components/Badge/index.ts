@@ -1,4 +1,4 @@
-export interface BadgeProps {
+export interface IBadge {
   textBadge: string;
   badgeColor: string;
 }
