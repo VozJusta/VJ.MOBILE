@@ -9,18 +9,46 @@ import OperationalStats from "@/components/OperationalStats";
 import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { IDecodedToken } from "@/interfaces/services/token/token";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
+import { router } from "expo-router";
 
 export default function LawyerHome() {
+  const token = useAccessTokenStorage((state) => state.accessToken);
   const { loading, analyticsData, operationalStats, highRelevanceCases } =
     useDashboardLawyer();
+  const { authMe, user } = useAuth();
   const chartData = analyticsData?.data || [];
+
+  let decodedToken: IDecodedToken | null = null;
+   if (token) {
+     try {
+       decodedToken = jwtDecode<IDecodedToken>(token);
+     } catch {
+       decodedToken = null;
+     }
+   }
+ 
+   useEffect(() => {
+     if (!token) {
+       router.replace("/screens/Onboarding/roles");
+     } else {
+       authMe();
+     }
+   }, [token]);
+ 
+ 
+   if (!token) return null;
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
 
-        {loading ? (
+        {loading || !analyticsData || !operationalStats || !highRelevanceCases ? (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator size="large" color="#fff" />
           </View>
@@ -28,7 +56,7 @@ export default function LawyerHome() {
           <>
             <View className="mt-[32px] gap-3">
               <Text className="font-interBold text-[30px] text-white">
-                Olá, Ricardo!
+                Olá, {user?.full_name}!
               </Text>
               <Text className="text-[16px] text-[#94A3B8] font-interLight">
                 Bem-vindo ao seu painel jurídico.

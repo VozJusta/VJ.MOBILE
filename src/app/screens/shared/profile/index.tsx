@@ -36,9 +36,6 @@ export default function ProfileCitizen() {
     }
   }, [token]);
 
-  console.log("USER", user);
-
-  console.log(token)
 
   if (!token) return null;
   const sections = [[0, 1], [2, 3], [4]];
