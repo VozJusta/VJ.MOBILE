@@ -1,14 +1,7 @@
 import { View, Text } from "react-native";
-import React from "react";
+import { IMessageBubbleProps } from "@/interfaces/components/MessageBubble";
 
-export interface MessageBubbleProps {
-  message: string;
-  isUser: boolean;
-  userName?: string;
-  createdAt?: string;
-}
-
-export default function MessageBubble(props: MessageBubbleProps) {
+export default function MessageBubble(props: IMessageBubbleProps) {
 
   const formatTime = (dateStr: string) => {
     try {
