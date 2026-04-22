@@ -1,15 +1,23 @@
+import { Role } from "@/types/roles/roles";
+import { PlanType } from "../me";
+
 export interface IToken {
   email: string;
   fullName: string;
 }
 
 export interface ICitizenRegisterResponse {
-  fullName: string;
-  cpf: string;
-  cnpj: string;
-  phone: string;
+  validated: boolean;
+  sub: string;
+  role: Role;
   email: string;
-  password: string;
-  billingType: "Monthly" | "Yearly" | "OneTime";
-  namePlan: string;
+  full_name: string;
+  loggedWithGoogle: boolean;
+  subscription: {
+    plan: {
+      type: PlanType;
+      billing_type: "Monthly" | "Yearly" | "OneTime";
+      name: string;
+    };
+  };
 }

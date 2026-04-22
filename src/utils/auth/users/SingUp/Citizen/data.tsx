@@ -2,13 +2,13 @@ import { formatCPF, formatPhone } from "@/utils/mask";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
 import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { SignUpCitizen } from "@/services/users/citizen/SignUp";
 import { ActivityIndicator, Text } from "react-native";
+import { Role } from "@/types/roles/roles";
 
 type Params = {
   showPassword: boolean;
@@ -39,8 +39,7 @@ export function buildCitizenFields({
         return;
       }
 
-      const resolvedRole = resolveRoleFromApi(response.data, "citizen");
-      setRole(resolvedRole);
+     setRole(response.data?.role?.toLowerCase() as Role);
 
       Toast.show({
         type: "success",
@@ -61,7 +60,7 @@ export function buildCitizenFields({
       });
 
       router.push(
-        `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(registerAuth.email)}`,
+        `/screens/auth/Validate?source=${response.data?.role?.toLowerCase()}&email=${encodeURIComponent(registerAuth.email)}`,
       );
       return;
     } finally {
