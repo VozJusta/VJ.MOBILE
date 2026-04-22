@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
-import { IMessageBubbleProps } from "@/interfaces/components/MessageBubble";
+import { IMessageBubble } from "@/interfaces/components/MessageBubble";
 
-export default function MessageBubble(props: IMessageBubbleProps) {
+export default function MessageBubble(props: IMessageBubble) {
 
   const formatTime = (dateStr: string) => {
     try {
       const isNumeric = /^\d+$/.test(dateStr);
       const dateObj = isNumeric ? new Date(Number(dateStr)) : new Date(dateStr);
-      
+
       return dateObj.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
