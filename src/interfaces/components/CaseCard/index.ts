@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
-export type TCaseStatus = "pending" | "accepted" | "refused";
+export type TCaseStatus = "Pending" | "Accepted" | "Refused";
 
 export interface ICaseCard {
   title: string;

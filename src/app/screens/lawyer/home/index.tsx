@@ -101,9 +101,9 @@ export default function LawyerHome() {
                     {...request}
                     textBadge={getCategoryLabel(request.category_detected)}
                     badgeColor={
-                      request.status === "accepted"
+                      request.status === "Accepted"
                         ? "#34D399"
-                        : request.status === "pending"
+                        : request.status === "Pending"
                           ? "#F59E0B"
                           : "#EF4444"
                     }

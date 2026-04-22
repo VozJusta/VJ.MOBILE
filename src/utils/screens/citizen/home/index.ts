@@ -3,11 +3,11 @@ import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 
 export const translateStatus = (status: TCaseStatus) => {
   switch (status) {
-    case "accepted":
+    case "Accepted":
       return "Aceito";
-    case "pending":
+    case "Pending":
       return "Em Análise";
-    case "refused":
+    case "Refused":
       return "Recusado";
     default:
       return status;
@@ -21,11 +21,11 @@ export const getCategoryLabel = (value: string) => {
 
 export const getStatusIcon = (status: TCaseStatus) => {
   switch (status) {
-    case "accepted":
+    case "Accepted":
       return "verified";
-    case "pending":
+    case "Pending":
       return "article";
-    case "refused":
+    case "Refused":
       return "cancel";
     default:
       return "article";

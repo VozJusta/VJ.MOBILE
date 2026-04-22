@@ -1,10 +1,11 @@
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { IPagination } from "@/interfaces/shared/pagination";
 import { Role } from "@/types/roles/roles";
 
 export interface IReport {
   id: string;
   category_detected: string;
-  status: "pending" | "accepted" | "refused";
+  status: TCaseStatus;
   created_at: string;
 }
 
