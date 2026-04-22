@@ -1,8 +1,8 @@
 
-import { NotificationTemplateProps } from "@/interfaces/template/NotificationTemplate";
+import { INotificationTemplate } from "@/interfaces/template/NotificationTemplate";
 import NotificationTemplate from "@/template/notification";
 
-export const data: NotificationTemplateProps = {
+export const data: INotificationTemplate = {
   notifications: [
     
   ],

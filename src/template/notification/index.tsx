@@ -1,15 +1,15 @@
 import Header from "@/components/Header";
 import NotificationCard from "@/components/NotificationCard";
-import { NotificationTemplateProps } from "@/interfaces/template/NotificationTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyNotification from "@/assets/svg/illustration-empty-notification.svg";
+import { INotificationTemplate } from "@/interfaces/template/NotificationTemplate";
 
 export default function NotificationTemplate({
   notifications,
-}: NotificationTemplateProps) {
+}: INotificationTemplate) {
   return (
     <SafeAreaView className="flex-1 gap-4 px-[16px]">
       <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true}></Header>

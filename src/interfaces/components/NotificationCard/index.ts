@@ -1,6 +1,6 @@
-import { TypeNotificationCardProps } from "../TypeNotificationCard";
+import { ITypeNotificationCard } from "../TypeNotificationCard";
 
-export type NotificationCardProps = TypeNotificationCardProps & {
+export type TNotificationCard = ITypeNotificationCard & {
   id: string;
   title: string;
   description: string;
