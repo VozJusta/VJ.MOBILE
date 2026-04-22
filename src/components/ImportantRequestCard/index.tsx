@@ -1,9 +1,9 @@
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import Badge from "../Badge";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ImportantRequestCardProps } from "@/interfaces/components/ImportantRequestCard";
+import { IImportantRequestCardProps } from "@/interfaces/components/ImportantRequestCard";
 
-export default function ImportantRequestCard(props: ImportantRequestCardProps) {
+export default function ImportantRequestCard(props: IImportantRequestCardProps) {
   return (
     <View className="flex flex-col w-full gap-6 p-5 bg-[#161E29]/70 border border-[#2B86EE]/20 rounded-2xl">
       <View className="flex flex-col items-start gap-3">
