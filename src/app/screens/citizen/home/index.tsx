@@ -4,7 +4,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
@@ -15,6 +14,7 @@ import {
   getStatusIcon,
 } from "@/utils/screens/citizen/home";
 import { useEffect } from "react";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function Home() {
   const router = useRouter();

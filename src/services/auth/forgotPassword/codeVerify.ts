@@ -1,4 +1,4 @@
-import { IValidateCodeForgotResponse } from "@/interfaces/services/token/token";
+import { IValidateCodeForgotResponse } from "@/interfaces/services/auth/forgotPassoword";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function ValidateCode(email: string, code: string) {
@@ -15,7 +15,9 @@ export async function ValidateCode(email: string, code: string) {
       }),
     });
 
-    const json: IValidateCodeForgotResponse = await response.json().catch(() => ({}));
+    const json: IValidateCodeForgotResponse = await response
+      .json()
+      .catch(() => ({}));
 
     if (!response.ok) {
       return {

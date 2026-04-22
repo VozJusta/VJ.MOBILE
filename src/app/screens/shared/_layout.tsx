@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
-import { IDecodedToken } from "@/interfaces/services/token/token";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function SharedLayout() {
   const pathName = usePathname();

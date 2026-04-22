@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
-import { IDecodedToken } from "@/interfaces/services/token/token";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 type EditableFieldProps = {
   label: string;

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface IAnalysysConcludedTemplateProps {
+export interface IAnalysysConcludedTemplate {
   title: string;
   description: string;
   titleHeader?: string;

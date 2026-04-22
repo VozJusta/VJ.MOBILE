@@ -6,7 +6,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import { jwtDecode } from "jwt-decode";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
@@ -14,6 +13,7 @@ import Header from "@/components/Header";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { PlanType } from "@/interfaces/services/auth/me";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);

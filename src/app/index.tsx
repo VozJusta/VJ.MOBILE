@@ -7,8 +7,8 @@ import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import { isTokenExpired } from "@/helpers/store";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function App() {
   const accessToken: string | null = useAccessTokenStorage(

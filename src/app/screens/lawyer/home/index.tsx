@@ -9,12 +9,12 @@ import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { router } from "expo-router";
 import { ProductivityChart } from "@/components/ProductivityChart";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function LawyerHome() {
   const token = useAccessTokenStorage((state) => state.accessToken);
