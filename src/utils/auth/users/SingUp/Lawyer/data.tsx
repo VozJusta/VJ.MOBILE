@@ -1,4 +1,4 @@
-import { formatCPF } from "@/utils/mask";
+import { formatCPF, formatPhone } from "@/utils/mask";
 import { formatOABNumber } from "@/utils/oabValidate";
 import { IInputProps } from "@/interfaces/ui/InputUI";
 import { IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegisterFields";
@@ -12,7 +12,6 @@ import { Email2FA } from "@/services/users/security/email2FA";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
-import { formatPhone } from "@/utils/phoneValidate";
 import { ActivityIndicator, Text } from "react-native";
 
 type Params = {
