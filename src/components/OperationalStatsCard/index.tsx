@@ -1,10 +1,10 @@
-import { OperationalStatsCardProps } from "@/interfaces/components/OperationalStatsCard";
+import { IOperationalStatsCard } from "@/interfaces/components/OperationalStatsCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
 export default function OperationalStatsCard({
   ...props
-}: OperationalStatsCardProps) {
+}: IOperationalStatsCard) {
   return (
     <View
       className="flex-1 flex-col border gap-2 py-8 px-4 h-[155px] rounded-2xl"

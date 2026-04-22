@@ -23,7 +23,7 @@ export enum OperationalStatsCardBorderColor {
   PENDING = "rgba(245, 158, 11, 0.1)",
 }
 
-export interface OperationalStatsCardProps {
+export interface IOperationalStatsCard {
   icon: OperationalStatsCardIcon;
   title: string;
   stat: string;
