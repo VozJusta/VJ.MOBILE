@@ -2,10 +2,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { HeaderProps } from "@/interfaces/components/Header";
 import ButtonUI from "@/ui/ButtonUI";
+import { IHeader } from "@/interfaces/components/Header";
 
-export default function Header({ ...props }: HeaderProps) {
+export default function Header({ ...props }: IHeader) {
   const router = useRouter();
 
   return (
