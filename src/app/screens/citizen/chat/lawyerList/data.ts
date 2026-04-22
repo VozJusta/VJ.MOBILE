@@ -1,7 +1,7 @@
-import { LawyerCardProps } from "@/interfaces/components/LawyerCard";
+import { ILawyerCard } from "@/interfaces/components/LawyerCard";
 import { router } from "expo-router";
 
-export const lawyers: LawyerCardProps[] = [
+export const lawyers: ILawyerCard[] = [
   {
     name: "Dr. João Silva",
     badges: [

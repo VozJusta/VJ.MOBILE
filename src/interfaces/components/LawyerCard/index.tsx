@@ -1,6 +1,6 @@
 import { IBadge } from "../Badge";
 
-export interface LawyerCardProps {
+export interface ILawyerCard {
   name: string;
   badges: IBadge[];
   rating?: number;
