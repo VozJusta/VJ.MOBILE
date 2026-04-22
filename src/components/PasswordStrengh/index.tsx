@@ -1,11 +1,11 @@
 import { View, Animated, Text } from "react-native";
-import { PasswordStrengthSection } from "@/interfaces/components/PasswordStrengh";
 import CheckListFunction from "@/ui/CheckListFunctionUI";
 import React, { useEffect, useRef } from "react";
+import { IPasswordStrength } from "@/interfaces/components/PasswordStrengh";
 
 export default function PasswordStrength({
   ...props
-}: PasswordStrengthSection) {
+}: IPasswordStrength) {
   const animatedWidth = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     const percentage = props ? (props.score / 5) * 100 : 0;

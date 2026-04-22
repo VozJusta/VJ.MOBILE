@@ -1,8 +1,8 @@
 import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
-import { PasswordStrengthSection } from "../../components/PasswordStrengh";
 import { IInputProps } from "../../ui/InputUI";
 import { ReactNode } from "react";
 import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
+import { IPasswordStrength } from "@/interfaces/components/PasswordStrengh";
 
 export type FieldsType = IInputProps | UfSelectProps | CareerSelectProps;
 
@@ -13,7 +13,7 @@ export interface ISignInTemplateProps {
   onSubmit: () => Promise<void> | void;
   submitLabel: ReactNode;
   disableSubmit?: boolean;
-  passwordStrength?: PasswordStrengthSection;
+  passwordStrength?: IPasswordStrength;
   extraActions?: ReactNode;
   footer?: ReactNode;
 }
