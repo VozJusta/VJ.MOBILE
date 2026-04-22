@@ -4,18 +4,13 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { getBarHeight } from "@/utils/components/ButtonAudio";
-
-interface AnimatedBarProps {
-  meteringVoice: number;
-  baseHeight: number;
-  modifier?: number;
-}
+import { IAudioBar } from "@/interfaces/components/AudioBar";
 
 export function AnimatedAudioBar({
   meteringVoice,
   baseHeight,
   modifier = 1,
-}: AnimatedBarProps) {
+}: IAudioBar) {
   const targetHeight = getBarHeight(baseHeight, modifier, meteringVoice);
   const animatedStyles = useAnimatedStyle(() => {
     return {
