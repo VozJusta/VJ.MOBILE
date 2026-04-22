@@ -1,6 +1,6 @@
-import { StatsCardBgColor, StatsCardIcon, StatsCardIconColor, StatsCardProps } from "@/interfaces/components/StatCard";
+import { IStatsCard, StatsCardBgColor, StatsCardIcon, StatsCardIconColor} from "@/interfaces/components/StatCard";
 
-export const lawyerStats: StatsCardProps[] = [
+export const lawyerStats: IStatsCard[] = [
   {
     icon: StatsCardIcon.REQUEST,
     iconColor: StatsCardIconColor.REQUEST,
