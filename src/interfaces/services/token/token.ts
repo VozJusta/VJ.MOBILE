@@ -1,8 +1,3 @@
-
-export interface IValidateCodeForgotResponse {
-  message: string;
-}
-
 export interface IDecodedToken {
   fullName: string;
   email: string;
