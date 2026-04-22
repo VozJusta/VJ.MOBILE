@@ -1,6 +1,8 @@
 import { IGetAnalyticsResponse } from "@/interfaces/services/dashboard/lawyer/analytics";
+import { IHighRelevanceResponse } from "@/interfaces/services/dashboard/lawyer/high-relevance";
 import { IGetOperationalStatsResponse } from "@/interfaces/services/dashboard/lawyer/operationalStats";
 import { getAnalyticsDashboardLawyer } from "@/services/dashboard/lawyer/analytics";
+import { getHighRelevanceDashboardLawyer } from "@/services/dashboard/lawyer/high-relevance";
 import { getOperationalStatsDashboard } from "@/services/dashboard/lawyer/operationalStats";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -10,6 +12,9 @@ export const useDashboardLawyer = () => {
     useState<IGetAnalyticsResponse | null>(null);
   const [operationalStats, setOperationalStats] =
     useState<IGetOperationalStatsResponse | null>(null);
+  const [highRelevanceCases, setHighRelevanceCases] = useState<
+    IHighRelevanceResponse[]
+  >([]);
   const [loading, setLoading] = useState(false);
 
   const getAnalytics = async () => {
@@ -56,10 +61,31 @@ export const useDashboardLawyer = () => {
     }
   };
 
+  const getHighRelevanceCases = async () => {
+    try {
+      const response = await getHighRelevanceDashboardLawyer();
+      if (response.success && response.data) {
+        setHighRelevanceCases(response.data);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao buscar casos de alta relevância",
+          text2: response.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao buscar casos de alta relevância",
+        text2: "Tente novamente mais tarde",
+      });
+    }
+  }
+
   useEffect(() => {
     const fetchAllData = async () => {
       setLoading(true);
-      await Promise.all([getAnalytics(), getOperationalStats()]);
+      await Promise.all([getAnalytics(), getOperationalStats(), getHighRelevanceCases()]);
       setLoading(false);
     };
     fetchAllData();
@@ -68,8 +94,7 @@ export const useDashboardLawyer = () => {
   return {
     analyticsData,
     loading,
-    getAnalytics,
     operationalStats,
-    getOperationalStats,
+    highRelevanceCases,
   };
 };

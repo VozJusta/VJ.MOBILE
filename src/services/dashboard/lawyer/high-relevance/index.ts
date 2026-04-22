@@ -2,7 +2,7 @@ import { apiFetch } from "@/helpers/api/apiFetch";
 import { IHighRelevanceResponse } from "@/interfaces/services/dashboard/lawyer/high-relevance";
 import { BASE_URL } from "@/settings/BASE_URL";
 
-export async function getHighRelevanceCases() {
+export async function getHighRelevanceDashboardLawyer() {
   try {
     const response = await apiFetch(
       `${BASE_URL}/dashboard/lawyer/high-relevance`,
