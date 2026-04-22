@@ -1,11 +1,6 @@
 import { Role } from "@/types/roles/roles";
 import { PlanType } from "../me";
 
-export interface IToken {
-  email: string;
-  fullName: string;
-}
-
 export interface IRegisterResponse {
   validated: boolean;
   sub: string;

@@ -10,13 +10,6 @@ export interface IRefreshTokenStore {
   clearTokens: () => void;
 }
 
-export interface ITokenService {
-  access_token: string | null;
-  refresh_token: string | null;
-  message: [string] | string;
-  fields: [string] | string;
-}
-
 export interface IValidateCodeForgotResponse {
   message: string;
 }

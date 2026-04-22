@@ -1,4 +1,4 @@
-import { ITokenService, IValidateCodeForgotResponse } from "@/interfaces/services/token/token";
+import { IValidateCodeForgotResponse } from "@/interfaces/services/token/token";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function ValidateCode(email: string, code: string) {

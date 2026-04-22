@@ -1,4 +1,3 @@
-import { ITokenService } from "@/interfaces/services/token/token";
 import { BASE_URL } from "@/settings/BASE_URL";
 import {
   useAccessTokenStorage,
