@@ -1,22 +1,24 @@
 import { View, Text, Alert, TouchableOpacity } from "react-native";
-import React from "react";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
+
+import { router, usePathname } from "expo-router/build/exports";
 import {
-  RequestCardProps,
+  IRequestCard,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
-import { router, usePathname } from "expo-router/build/exports";
 
-export default function RequestCard({ ...props }: RequestCardProps) {
-
+export default function RequestCard({ ...props }: IRequestCard) {
   const pathname = usePathname();
 
   return (
     <TouchableOpacity
       className="flex flex-col w-full h-fit border-l-4 rounded-xl p-5 bg-[#161E29]/70 gap-6"
       style={{ borderLeftColor: props.badgeColor }}
-      onPress={() => pathname === "/screens/lawyer/requests" && router.push(`/screens/lawyer/requests/requestSelected/${props.id}`)}
+      onPress={() =>
+        pathname === "/screens/lawyer/requests" &&
+        router.push(`/screens/lawyer/requests/requestSelected/${props.id}`)
+      }
     >
       <View className="flex flex-row justify-between items-start w-full">
         <View className="flex flex-col gap-2 text-start">
