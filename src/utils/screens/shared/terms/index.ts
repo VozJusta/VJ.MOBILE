@@ -1,7 +1,7 @@
-import { TermsContentProps } from "@/components/terms/TermsContent";
-import { TermsTitleProps } from "@/interfaces/components/terms/TermsTitle";
+import { ITermsContent } from "@/interfaces/components/terms/TermsContent";
+import { ITermsTitle } from "@/interfaces/components/terms/TermsTitle";
 
-export const termsTitles: TermsTitleProps[] = [
+export const termsTitles: ITermsTitle[] = [
   {
     number: 1,
     title: "CONTRATO",
@@ -20,7 +20,7 @@ export const termsTitles: TermsTitleProps[] = [
   },
 ];
 
-export const termsContents: TermsContentProps[] = [
+export const termsContents: ITermsContent[] = [
   {
     numberSection: 1,
     title: "ELEGIBILIDADE",

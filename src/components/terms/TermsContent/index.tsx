@@ -1,13 +1,8 @@
 import { View, Text } from "react-native";
 import React from "react";
+import { ITermsContent } from "@/interfaces/components/terms/TermsContent";
 
-export interface TermsContentProps {
-  numberSection: number;
-  title: string;
-  content: string;
-}
-
-export default function TermsContent(props: TermsContentProps) {
+export default function TermsContent(props: ITermsContent) {
   return (
     <View className="flex flex-col gap-2 text-start">
       <Text className="text-white text-[14px] font-interBold">

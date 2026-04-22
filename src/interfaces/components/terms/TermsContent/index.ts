@@ -1,4 +1,5 @@
-export interface TermsContentProps {
+export interface ITermsContent {
+  numberSection: number;
   title: string;
   content: string;
 }

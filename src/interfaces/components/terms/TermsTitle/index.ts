@@ -1,4 +1,4 @@
-export interface TermsTitleProps {
+export interface ITermsTitle {
   number: number;
   title: string;
 }
