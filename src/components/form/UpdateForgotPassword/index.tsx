@@ -1,13 +1,10 @@
 import PasswordStrength from "@/components/PasswordStrengh";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { IUpdateForgotPasswordProps } from "@/interfaces/components/Forms/forgotPassword";
-import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
-import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
 import { useRouter } from "expo-router";
-import { View, Text } from "react-native";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { View, Text, ActivityIndicator } from "react-native";
 
 export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
   const { loading, setLoading } = useAuth();
@@ -65,9 +62,13 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPasswordProps) {
         hover={false}
         children={
           <View className="flex-1 justify-center items-center">
-            <Text className="text-[16px] font-interBold text-white">
-              {props.labelButton || "Redefinir senha"}
-            </Text>
+            {loading ? (
+              <ActivityIndicator size="small" color="#FFF" />
+            ) : (
+              <Text className="text-[16px] font-interBold text-white">
+                {props.labelButton || "Redefinir senha"}
+              </Text>
+            )}
           </View>
         }
         iconLeft={false}

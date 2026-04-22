@@ -11,8 +11,8 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { ActivityIndicator, Text } from "react-native";
 import { Role } from "@/types/roles/roles";
 import { IInput } from "@/interfaces/ui/InputUI";
-import { IUfSelect } from "@/interfaces/ui/SelectUIProps/ufSelect";
-import { ICareerSelect } from "@/interfaces/ui/SelectUIProps/careerSelect";
+import { IUfSelect } from "@/interfaces/ui/SelectUI/ufSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUI/careerSelect";
 
 type Params = {
   showPassword: boolean;

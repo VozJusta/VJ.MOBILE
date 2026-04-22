@@ -1,4 +1,3 @@
-import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { SingIn } from "@/services/users/SingIn";
@@ -8,6 +7,7 @@ import Toast from "react-native-toast-message";
 import { ActivityIndicator, Text } from "react-native";
 import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
 import { IInput } from "@/interfaces/ui/InputUI";
+import { ZodLoginTypes } from "@/types/validation";
 
 type Params = {
   showPassword: boolean;

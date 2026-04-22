@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useMemo, useState } from "react";
 import type { UF } from "@/utils/mask";
-import { IUfSelect } from "@/interfaces/ui/SelectUIProps/ufSelect";
+import { IUfSelect } from "@/interfaces/ui/SelectUI/ufSelect";
 
 const states: { label: string; value: UF }[] = [
   { label: "Acre (AC)", value: "AC" },

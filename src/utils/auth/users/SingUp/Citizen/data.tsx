@@ -5,11 +5,11 @@ import { Email2FA } from "@/services/users/security/email2FA";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
-import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { SignUpCitizen } from "@/services/users/citizen/SignUp";
 import { ActivityIndicator, Text } from "react-native";
 import { Role } from "@/types/roles/roles";
 import { IInput } from "@/interfaces/ui/InputUI";
+import { ZodSignUpTypes } from "@/types/validation";
 
 type Params = {
   showPassword: boolean;

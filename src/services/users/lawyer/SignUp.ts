@@ -1,9 +1,9 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodSignUpLawyerTypes } from "@/interfaces/validation/zodTypes";
 import { ZodSignUpLawyerSchema } from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/auth/token.store";
 import { IRegisterResponse } from "@/interfaces/services/auth/signUp";
+import { ZodSignUpLawyerTypes } from "@/types/validation";
 
 export async function SignUpLawyer(data: ZodSignUpLawyerTypes) {
   const setToken = useXTokenStorage.getState().setToken;

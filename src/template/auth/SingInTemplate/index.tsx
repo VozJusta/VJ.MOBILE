@@ -18,8 +18,8 @@ import {
 } from "@/interfaces/template/SignInTemplate";
 import UfSelectUI from "@/ui/UfSelectUI";
 import CareerSelectUI from "@/ui/CareerSelectUI";
-import { IUfSelect } from "@/interfaces/ui/SelectUIProps/ufSelect";
-import { ICareerSelect } from "@/interfaces/ui/SelectUIProps/careerSelect";
+import { IUfSelect } from "@/interfaces/ui/SelectUI/ufSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUI/careerSelect";
 
 function isUfField(field: FieldsType): field is IUfSelect {
   return "onValueChange" in field && !("options" in field);
