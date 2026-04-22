@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { DocCardProps } from "@/interfaces/components/DocCard";
+import { IDocCard } from "@/interfaces/components/DocCard";
 
-export default function DocCard({ ...props }: DocCardProps) {
+export default function DocCard({ ...props }: IDocCard) {
   return (
     <View className="flex flex-row items-center p-3 justify-between bg-[#161E29]/70 border border-[#2B86EE]/20 rounded-2xl w-full h-fit">
       <View className="flex flex-row gap-3 items-center">

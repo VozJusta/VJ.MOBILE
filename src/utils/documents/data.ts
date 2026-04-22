@@ -1,6 +1,6 @@
-import { DocCardProps } from "@/interfaces/components/DocCard";
+import { IDocCard } from "@/interfaces/components/DocCard";
 
-export const documentsData: DocCardProps[] = [
+export const documentsData: IDocCard[] = [
     {
         nameFile: "Contrato_aluguel",
         date: "14 Out 2023",
