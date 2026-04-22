@@ -34,8 +34,6 @@ export default function ListCases() {
     goToPage,
   } = useDashboardCitizen(5);
 
-  console.log(reports.map((item) => item.id))
-
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (

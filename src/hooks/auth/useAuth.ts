@@ -140,7 +140,6 @@ export const useAuth = () => {
         return;
       }
 
-      console.log(response.data)
 
       setUser(response.data);
     } catch (error) {

@@ -49,7 +49,7 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
     try {
       const response = await getReportDetails(reportId);
 
-      console.log(response)
+      (response)
 
       if (response.success && response.data) {
         return response.data;

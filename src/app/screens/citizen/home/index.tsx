@@ -38,8 +38,6 @@ export default function Home() {
 
   if (!token) return null;
 
-  console.log(token)
-
   return (
     <ScrollView
       contentContainerStyle={{ paddingBottom: 84 }}

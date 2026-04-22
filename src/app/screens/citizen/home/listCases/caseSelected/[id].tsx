@@ -27,8 +27,6 @@ export default function CaseSelected() {
 
   
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
-  console.log(reportId)
-  console.log(getDetailsReportById(reportId ? reportId : ""))
   useEffect(() => {
     async function load() {
       if (!reportId) return;

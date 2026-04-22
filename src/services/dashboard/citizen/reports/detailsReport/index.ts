@@ -25,8 +25,6 @@ export async function getReportDetails(reportId: string) {
       };
     }
 
-    console.log(response)
-    console.log(data)
 
     return {
       success: true,

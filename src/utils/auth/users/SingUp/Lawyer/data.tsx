@@ -48,7 +48,6 @@ export function buildLawyerFields({
           text2: response.fields[0],
         });
 
-        console.log("Erro no cadastro:", response.fields);
 
         return;
       }
