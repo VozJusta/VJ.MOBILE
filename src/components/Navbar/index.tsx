@@ -1,9 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
-import { NavbarItemsCitizen, NavbarItemsLawyer } from "./data";
 import ButtonUI from "@/ui/ButtonUI";
-import React, { useState } from "react";
 import { usePathname, useRouter } from "expo-router";
+import { NavbarItemsCitizen, NavbarItemsLawyer } from "@/utils/components/Navbar";
 
 export default function Navbar({
   isLawyer,
