@@ -120,18 +120,18 @@ export default function CaseSelected() {
               </Text>
             </View>
           </View>
-           <View className="flex-row justify-between items-center w-full">
-              <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
-                Documentos
-              </Text>
-              <Text className=" text-[12px] font-inter text-[#2563EB]">
-                {Object.keys(reportData?.user.report.evidence).length} anexos
-              </Text>
-            </View>
+          <View className="flex-row justify-between items-center w-full">
+            <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
+              Documentos
+            </Text>
+            <Text className=" text-[12px] font-inter text-[#2563EB]">
+              {Object.keys(reportData?.user.report.evidence).length} anexos
+            </Text>
+          </View>
           {Object.keys(reportData?.user.report.evidence).length === 0 ? (
-            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-2 justify-center items-center">
+            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
               <MaterialIcons name="folder-off" size={48} color="#8D90A1" />
-              <Text className="font-interRegular text-[16px] text-white text-center">
+              <Text className="font-interRegular text-[16px] text-[#8D90A1] text-center">
                 Não há documentos anexados a este caso.
               </Text>
             </View>
@@ -142,8 +142,7 @@ export default function CaseSelected() {
                 date="14 Out 2023"
                 size="14MB"
               />
-            </View> 
-
+            </View>
           )}
 
           {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
@@ -154,15 +153,11 @@ export default function CaseSelected() {
               phone={reportData.user.report.lawyer.phone}
             />
           ) : (
-            <View className="flex flex-col items-start gap-[8px]">
-              <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
-                CONTATO DO ADVOGADO
+            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
+              <MaterialIcons name="person-off" size={48} color="#8D90A1" />
+              <Text className="font-interRegular text-[16px] text-[#8D90A1] text-center">
+                Informações de contato não disponíveis
               </Text>
-              <View className="p-5 flex flex-col border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
-                <Text className="font-interRegular text-[14px] text-white">
-                  Nenhum advogado foi designado para este caso ainda.
-                </Text>
-              </View>
             </View>
           )}
 
