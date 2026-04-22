@@ -38,7 +38,7 @@ export function buildLoginFields({
         return;
       }
 
-      const userRole = response.data?.role?.toLowerCase();
+      const userRole = response.data?.role;
 
       const validateEmail2FA = await Email2FA(data.email);
       if (
@@ -50,15 +50,27 @@ export function buildLoginFields({
           type: "error",
           text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
         });
-        router.push({
-          pathname: "/screens/auth/Validate",
-          params: {
-            source: userRole,
-            email: data.email,
-          },
+        router.push(
+          `/screens/auth/Validate?source=${userRole}&email=${encodeURIComponent(loginAuth.email)}`,
+        );
+        return;
+      }
+      if (!validateEmail2FA.success) {
+        Toast.show({
+          type: "error",
+          text1: validateEmail2FA.fields && validateEmail2FA.fields[0],
         });
         return;
       }
+      Toast.show({
+        type: "success",
+        text1: validateEmail2FA.data,
+      });
+
+      router.push(
+        `/screens/auth/Validate?source=${userRole}&email=${encodeURIComponent(loginAuth.email)}`,
+      );
+      return;
     } finally {
       setLoading(false);
     }

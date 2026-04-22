@@ -17,7 +17,6 @@ import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitiz
 import {
   getCategoryLabel,
   getStatusIcon,
-  translateStatus,
 } from "@/utils/screens/citizen/home";
 
 export default function ListCases() {
@@ -34,6 +33,8 @@ export default function ListCases() {
     hasPreviousPage,
     goToPage,
   } = useDashboardCitizen(5);
+
+  console.log(reports.map((item) => item.id))
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 

@@ -17,13 +17,16 @@ export async function getReportDetails(reportId: string) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      return {
+      return {  
         success: false,
         fields: data?.message
           ? [data.message]
           : ["Erro ao obter detalhes do relatório"],
       };
     }
+
+    console.log(response)
+    console.log(data)
 
     return {
       success: true,

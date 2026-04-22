@@ -1,9 +1,7 @@
 import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
-
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
 import { jwtDecode } from "jwt-decode";
@@ -30,12 +28,11 @@ export default function ProfileCitizen() {
 
   useEffect(() => {
     if (!token) {
-      router.replace("/screens/Onboarding/roles");
-    } else {
-      authMe();
-    }
-  }, [token]);
-
+    router.replace("/screens/Onboarding/roles");
+    return;
+  }
+  authMe();
+  }, []);
 
   if (!token) return null;
   const sections = [[0, 1], [2, 3], [4]];

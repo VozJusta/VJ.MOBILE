@@ -7,7 +7,7 @@ export async function getMe() {
     const response = await apiFetch(`${BASE_URL}/auth/me`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "accept": "application/json",
       },
     });
 
@@ -22,7 +22,7 @@ export async function getMe() {
 
     return {
       success: true,
-      data: json.data as IMeResponse,
+      data: json as IMeResponse,
     };
   } catch (error) {
     return {

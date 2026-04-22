@@ -21,18 +21,30 @@ export default function CaseSelected() {
   const [reportData, setReportData] = useState<
     IGetReportDetailsResponse | undefined
   >(undefined);
-  const { getDetailsReportById, loading } = useDashboardCitizen();
+  const { getDetailsReportById } = useDashboardCitizen();
 
+  const [loading, setLoading] = useState<boolean>(false)
+
+  
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
+  console.log(reportId)
+  console.log(getDetailsReportById(reportId ? reportId : ""))
   useEffect(() => {
     async function load() {
       if (!reportId) return;
 
-      const data = await getDetailsReportById(reportId);
+      setLoading(true)
 
-      if (data) {
-        setReportData(data);
+      try {
+        const data = await getDetailsReportById(reportId);
+        if (data) {
+          setReportData(data);
+        }
+
+      } finally {
+        setLoading(false)
       }
+
     }
 
     load();
@@ -67,8 +79,8 @@ export default function CaseSelected() {
           title={
             reportData
               ? getCategoryLabel(
-                  reportData.user.report.category_detected,
-                ).toUpperCase()
+                reportData.user.report.category_detected,
+              ).toUpperCase()
               : ""
           }
           isCitizen
@@ -133,7 +145,7 @@ export default function CaseSelected() {
             </View> */}
 
           {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
-          reportData?.user.report.lawyer ? (
+            reportData?.user.report.lawyer ? (
             <ContactCard
               name={reportData.user.report.lawyer.full_name}
               email={reportData.user.report.lawyer.email}
