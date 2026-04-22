@@ -6,8 +6,8 @@ import {
   Keyboard,
 } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { IInputProps } from "@/interfaces/ui/InputUI";
 import { OtpInput } from "react-native-otp-entry";
+import { IInput } from "@/interfaces/ui/InputUI";
 
 export default function InputUI({
   label,
@@ -27,7 +27,7 @@ export default function InputUI({
   onFilledOTP,
   onSubmitEditing,
   ...restProps
-}: IInputProps) {
+}: IInput) {
   return inputOTP ? (
     <OtpInput
       autoFocus={false}

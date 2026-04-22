@@ -1,7 +1,3 @@
-
-
-
-export interface ISwitchProps {
-    leftIcon?: boolean;
-    
+export interface ISwitch {
+  leftIcon?: boolean;
 }

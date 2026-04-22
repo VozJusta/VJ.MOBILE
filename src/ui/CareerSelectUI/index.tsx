@@ -1,14 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, View, Text, ScrollView } from "react-native";
 import { useMemo, useState } from "react";
-import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 export default function CareerSelectUI({
   label,
   value,
   options,
   onValueChange,
-}: CareerSelectProps) {
+}: ICareerSelect) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = useMemo(() => {

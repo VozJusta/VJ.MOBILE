@@ -9,6 +9,7 @@ import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { SignUpCitizen } from "@/services/users/citizen/SignUp";
 import { ActivityIndicator, Text } from "react-native";
 import { Role } from "@/types/roles/roles";
+import { IInput } from "@/interfaces/ui/InputUI";
 
 type Params = {
   showPassword: boolean;
@@ -84,7 +85,7 @@ export function buildCitizenFields({
         type: "name",
         value: registerAuth.fullName ?? "",
         onChangeText: (text) => handleRegisterChange("fullName", text),
-      },
+      } as IInput,
       {
         label: "CPF",
         placeholder: "000.000.000-00",
@@ -96,7 +97,7 @@ export function buildCitizenFields({
         type: "cpf",
         value: registerAuth.cpf ?? "",
         onChangeText: (text) => handleRegisterChange("cpf", formatCPF(text)),
-      },
+      } as IInput,
       {
         label: "Telefone",
         placeholder: "(00) 00000-0000",
@@ -109,7 +110,7 @@ export function buildCitizenFields({
         value: registerAuth.phone ?? "",
         onChangeText: (text) =>
           handleRegisterChange("phone", formatPhone(text)),
-      },
+      } as IInput,
       {
         label: "E-mail",
         placeholder: "email@exemplo.com",
@@ -121,7 +122,7 @@ export function buildCitizenFields({
         type: "email",
         value: registerAuth.email ?? "",
         onChangeText: (text) => handleRegisterChange("email", text),
-      },
+      } as IInput,
       {
         label: "Senha de acesso",
         placeholder: "••••••••",
@@ -135,7 +136,7 @@ export function buildCitizenFields({
         value: registerAuth.password ?? "",
         onChangeText: (text) => handleRegisterChange("password", text),
         onRightIconPress: onToggleShowPassword,
-      },
+      } as IInput,
     ],
     onSubmit: () => handleRegister(registerAuth),
     disableSubmit: loading,

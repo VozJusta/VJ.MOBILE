@@ -1,12 +1,12 @@
-import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
-import { IInputProps } from "../../ui/InputUI";
 import { ReactNode } from "react";
-import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 import { IPasswordStrength } from "@/interfaces/components/PasswordStrengh";
+import { IInput } from "@/interfaces/ui/InputUI";
+import { IUfSelect } from "@/interfaces/ui/SelectUIProps/ufSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
-export type FieldsType = IInputProps | UfSelectProps | CareerSelectProps;
+export type FieldsType = IInput | IUfSelect | ICareerSelect;
 
-export interface ISignInTemplateProps {
+export interface ISignInTemplate {
   title: string;
   description: string;
   fields: FieldsType[];

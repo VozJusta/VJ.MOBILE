@@ -14,7 +14,7 @@ import {
   ScreensForgotPassword,
 } from "@/interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "expo-router";
+import {  useRouter } from "expo-router";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
 import { UpdateForgotPassword } from "@/components/form/UpdateForgotPassword";

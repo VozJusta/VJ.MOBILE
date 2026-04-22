@@ -1,10 +1,7 @@
 import { formatCPF, formatPhone } from "@/utils/mask";
 import { formatOABNumber } from "@/utils/oabValidate";
-import { IInputProps } from "@/interfaces/ui/InputUI";
 import { IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegisterFields";
 import { useRouter } from "expo-router";
-import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
-import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
 import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
 import { SignUpLawyer } from "@/services/users/lawyer/SignUp";
 import Toast from "react-native-toast-message";
@@ -13,6 +10,9 @@ import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { ActivityIndicator, Text } from "react-native";
 import { Role } from "@/types/roles/roles";
+import { IInput } from "@/interfaces/ui/InputUI";
+import { IUfSelect } from "@/interfaces/ui/SelectUIProps/ufSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUIProps/careerSelect";
 
 type Params = {
   showPassword: boolean;
@@ -104,7 +104,7 @@ export function buildLawyerFields({
         type: "name",
         value: registerAuth.fullName,
         onChangeText: (text) => handleRegisterChange("fullName", text),
-      } as IInputProps,
+      } as IInput,
       {
         label: "CPF",
         placeholder: "000.000.000-00",
@@ -116,7 +116,7 @@ export function buildLawyerFields({
         type: "cpf",
         value: registerAuth.cpf,
         onChangeText: (text) => handleRegisterChange("cpf", formatCPF(text)),
-      } as IInputProps,
+      } as IInput,
       {
         label: "Número OAB",
         placeholder: "000.000",
@@ -129,12 +129,12 @@ export function buildLawyerFields({
         value: registerAuth.oabNumber,
         onChangeText: (text) =>
           handleRegisterChange("oabNumber", formatOABNumber(text)),
-      } as IInputProps,
+      } as IInput,
       {
         label: "Estado",
         value: registerAuth.oabState,
         onValueChange: (value) => handleRegisterChange("oabState", value),
-      } as UfSelectProps,
+      } as IUfSelect,
       {
         label: "Telefone",
         placeholder: "(00) 00000-0000",
@@ -147,13 +147,13 @@ export function buildLawyerFields({
         value: registerAuth.phone,
         onChangeText: (text) =>
           handleRegisterChange("phone", formatPhone(text)),
-      } as IInputProps,
+      } as IInput,
       {
         label: "Especialização Principal",
         value: registerAuth.specialization,
         options: specializationOptions.map(({ label }) => label),
         onValueChange: (value) => handleRegisterChange("specialization", value),
-      } as CareerSelectProps,
+      } as ICareerSelect,
       {
         label: "E-mail Profissional",
         placeholder: "email@exemplo.com.br",
@@ -165,7 +165,7 @@ export function buildLawyerFields({
         type: "email",
         value: registerAuth.email,
         onChangeText: (text) => handleRegisterChange("email", text),
-      } as IInputProps,
+      } as IInput,
       {
         label: "Senha de acesso",
         placeholder: "••••••••",
@@ -179,7 +179,7 @@ export function buildLawyerFields({
         value: registerAuth.password,
         onChangeText: (text) => handleRegisterChange("password", text),
         onRightIconPress: onToggleShowPassword,
-      } as IInputProps,
+      } as IInput,
     ],
     onSubmit: () => {
       const specializationValue =
