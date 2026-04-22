@@ -16,7 +16,7 @@ export default function ImportantRequestCard(props: ImportantRequestCardProps) {
         <View className="flex flex-col pr-6 border-r border-[#2B86EE]/10">
           <Text className="font-inter text-[14px] text-[#94A3B8]">SCORE</Text>
           <Text className="font-interBold text-[20px] text-[#34D399]">
-            {props.score}
+            {props.confidence_score}%
           </Text>
         </View>
         <View className="flex flex-row items-center gap-4">

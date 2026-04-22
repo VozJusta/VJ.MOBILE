@@ -3,14 +3,16 @@ import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lawyerRequests, lawyerStats } from "./data";
+import { lawyerStats } from "./data";
 import StatsCard from "@/components/StatsCard";
 import OperationalStats from "@/components/OperationalStats";
 import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";
+import { getCategoryLabel } from "@/utils/screens/citizen/home";
 
 export default function LawyerHome() {
-  const { loading, analyticsData, operationalStats } = useDashboardLawyer();
+  const { loading, analyticsData, operationalStats, highRelevanceCases } =
+    useDashboardLawyer();
   const chartData = analyticsData?.data || [];
 
   return (
@@ -65,8 +67,19 @@ export default function LawyerHome() {
                 Solicitações relevantes
               </Text>
               <View className="flex flex-col gap-3">
-                {lawyerRequests.map((request, index) => (
-                  <ImportantRequestCard key={index} {...request} />
+                {highRelevanceCases.map((request, index) => (
+                  <ImportantRequestCard
+                    key={index}
+                    {...request}
+                    textBadge={getCategoryLabel(request.category_detected)}
+                    badgeColor={
+                      request.status === "Accepted"
+                        ? "#34D399"
+                        : request.status === "Pending"
+                          ? "#F59E0B"
+                          : "#EF4444"
+                    }
+                  />
                 ))}
               </View>
             </View>
