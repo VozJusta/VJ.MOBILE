@@ -1,5 +1,4 @@
 import {
-  IFilterStatus,
   StatusText,
 } from "@/interfaces/components/FilterStatus";
 import { ScrollView } from "react-native";
