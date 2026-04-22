@@ -1,4 +1,3 @@
-import { ProductivityChart } from "@/interfaces/components/ProductivityChart";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -15,6 +14,7 @@ import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { router } from "expo-router";
+import { ProductivityChart } from "@/components/ProductivityChart";
 
 export default function LawyerHome() {
   const token = useAccessTokenStorage((state) => state.accessToken);
