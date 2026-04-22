@@ -99,6 +99,12 @@ export const useAuth = () => {
   async function terminateAccount(password: string) {
     setLoading(true);
     try {
+      const accessToken = useAccessTokenStorage.getState().accessToken;
+      if (!accessToken) {
+        router.replace("/screens/Onboarding/roles");
+        return;
+      }
+
       const response = await deleteAccount(password);
 
       if (response.success) {
@@ -119,7 +125,6 @@ export const useAuth = () => {
           text2: response.message,
         });
       }
-      
     } catch (error) {
       Toast.show({
         type: "error",
@@ -146,7 +151,6 @@ export const useAuth = () => {
 
         return;
       }
-
 
       setUser(response.data);
     } catch (error) {
