@@ -2,13 +2,6 @@ import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function Email2FA(email: string) {
   try {
-    if (!BASE_URL) {
-      return {
-        success: false,
-        fields: ["API não configurada. Defina EXPO_PUBLIC_API_URL no ambiente."],
-      };
-    }
-
     const response = await fetch(`${BASE_URL}/auth/send/email`, {
       method: "POST",
       headers: {
@@ -18,7 +11,6 @@ export async function Email2FA(email: string) {
         email: email,
       }),
     });
-
 
     if (!response.ok) {
       return {
