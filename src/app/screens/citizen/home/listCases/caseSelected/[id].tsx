@@ -14,6 +14,8 @@ import Header from "@/components/Header";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
+import { MaterialIcons } from "@expo/vector-icons";
+import DocCard from "@/components/DocCard";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -23,26 +25,23 @@ export default function CaseSelected() {
   >(undefined);
   const { getDetailsReportById } = useDashboardCitizen();
 
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
 
-  
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
   useEffect(() => {
     async function load() {
       if (!reportId) return;
 
-      setLoading(true)
+      setLoading(true);
 
       try {
         const data = await getDetailsReportById(reportId);
         if (data) {
           setReportData(data);
         }
-
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-
     }
 
     load();
@@ -77,8 +76,8 @@ export default function CaseSelected() {
           title={
             reportData
               ? getCategoryLabel(
-                reportData.user.report.category_detected,
-              ).toUpperCase()
+                  reportData.user.report.category_detected,
+                ).toUpperCase()
               : ""
           }
           isCitizen
@@ -96,7 +95,7 @@ export default function CaseSelected() {
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
-          <Text className="text-[14px] text-[#94A3B8] w-[] font-interRegular">
+          <Text className="text-[14px] text-[#94A3B8] font-interRegular">
             {Object.keys(reportData?.user.report.lawyer || {}).length > 0
               ? reportData?.user.report.transcription
               : "Seu caso ainda está sendo analisado por nossos especialistas. Assim que um advogado for designado para o seu caso, você terá acesso a mais detalhes e orientações específicas."}
@@ -121,29 +120,34 @@ export default function CaseSelected() {
               </Text>
             </View>
           </View>
-          {/* <View className="flex-row justify-between items-center w-full">
+           <View className="flex-row justify-between items-center w-full">
               <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
                 Documentos
               </Text>
               <Text className=" text-[12px] font-inter text-[#2563EB]">
-                4 anexos
+                {Object.keys(reportData?.user.report.evidence).length} anexos
               </Text>
             </View>
+          {Object.keys(reportData?.user.report.evidence).length === 0 ? (
+            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-2 justify-center items-center">
+              <MaterialIcons name="folder-off" size={48} color="#8D90A1" />
+              <Text className="font-interRegular text-[16px] text-white text-center">
+                Não há documentos anexados a este caso.
+              </Text>
+            </View>
+          ) : (
             <View className="flex-col gap-[8px]">
               <DocCard
                 nameFile="Contrato_aluguel"
                 date="14 Out 2023"
                 size="14MB"
               />
-              <DocCard
-                nameFile="Screenshot_Ponto"
-                date="14 Out 2023"
-                size="840KB"
-              />
-            </View> */}
+            </View> 
+
+          )}
 
           {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
-            reportData?.user.report.lawyer ? (
+          reportData?.user.report.lawyer ? (
             <ContactCard
               name={reportData.user.report.lawyer.full_name}
               email={reportData.user.report.lawyer.email}

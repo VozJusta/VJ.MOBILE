@@ -35,6 +35,8 @@ export default function Home() {
     }
   }, [token]);
 
+  console.log(token)
+
   if (!token) return null;
 
   return (
