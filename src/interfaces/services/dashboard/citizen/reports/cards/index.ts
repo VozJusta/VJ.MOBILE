@@ -4,7 +4,7 @@ import { Role } from "@/types/roles/roles";
 export interface IReport {
   id: string;
   category_detected: string;
-  status: "Pending" | "Accepted" | "Refused";
+  status: "pending" | "accepted" | "refused";
   created_at: string;
 }
 

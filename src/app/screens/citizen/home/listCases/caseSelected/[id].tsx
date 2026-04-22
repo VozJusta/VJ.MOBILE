@@ -11,10 +11,9 @@ import {
   translateStatus,
 } from "@/utils/screens/citizen/home";
 import Header from "@/components/Header";
-import { useChatStorage } from "@/store/chat/chat.store";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
-import { CaseStatus } from "@/interfaces/components/CaseCard";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -82,7 +81,7 @@ export default function CaseSelected() {
             <Text className="text-[24px] font-interBold text-white">
               {reportData &&
                 translateStatus(
-                  reportData?.user.report.status as CaseStatus,
+                  reportData?.user.report.status as TCaseStatus,
                 ).toUpperCase()}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>

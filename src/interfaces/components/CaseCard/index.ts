@@ -1,10 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 
-export type CaseStatus = "Pending" | "Accepted" | "Refused";
+export type TCaseStatus = "pending" | "accepted" | "refused";
 
-export interface CaseCardProps {
+export interface ICaseCard {
   title: string;
-  status: CaseStatus;
+  status: TCaseStatus;
   iconName: keyof typeof MaterialIcons.glyphMap;
   onPress: () => void;
 }
