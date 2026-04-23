@@ -16,6 +16,7 @@ import ContactCard from "@/components/ContactCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import DocCard from "@/components/DocCard";
+import EmptyState from "@/components/EmptyState";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -129,15 +130,11 @@ export default function CaseSelected() {
             </Text>
           </View>
           {Object.keys(reportData?.user.report.evidence).length === 0 ? (
-            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
-              <MaterialIcons name="folder-off" size={48} color="#8D90A1" />
-              <Text
-                className="font-interRegular text-[16px] text-center"
-                style={{ color: "#8D90A1" }}
-              >
-                Não há documentos anexados a este caso.
-              </Text>
-            </View>
+            <EmptyState
+              icon="folder-off"
+              title="Nenhum documento anexado"
+              description="Você não anexou nenhum documento a este caso."
+            />
           ) : (
             <View className="flex-col gap-[8px]">
               <DocCard
