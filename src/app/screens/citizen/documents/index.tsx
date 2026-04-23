@@ -1,10 +1,8 @@
 import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Logo from "@/assets/svg/icons/logo.svg";
 import * as DocumentPicker from "expo-document-picker";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
-import Document from "@/assets/svg/icons/document.svg";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";

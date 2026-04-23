@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { BackHandler, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "@/assets/svg/icons/logo.svg";

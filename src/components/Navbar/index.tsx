@@ -45,7 +45,7 @@ const pathname = usePathname();
               />
             );
           })
-        : NavbarItemsLawyer.map((item, index) => {
+        : NavbarItemsLawyer.map((item) => {
             const activeItem = pathname === item.path;
             return (
               <ButtonUI

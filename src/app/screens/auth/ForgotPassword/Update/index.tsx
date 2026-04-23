@@ -6,7 +6,7 @@ import Toast from "react-native-toast-message";
 import { useEmailStorage } from "@/store/auth/email.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { UpdatePasswordService } from "@/services/auth/forgotPassword/updatePassword";
-import { ActivityIndicator, Alert, Text } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function UpdatePassword() {

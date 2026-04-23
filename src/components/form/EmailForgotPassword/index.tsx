@@ -6,7 +6,7 @@ import InputUI from "@/ui/InputUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, Alert, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import Toast from "react-native-toast-message";
 
 export function EmailForgotPassword() {

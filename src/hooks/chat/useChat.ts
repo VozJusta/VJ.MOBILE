@@ -47,7 +47,6 @@ export function useChat() {
     finished,
     setFinished,
     clearChat,
-    reportId,
     setReportId,
   } = useChatStorage();
 

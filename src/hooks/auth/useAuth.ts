@@ -45,12 +45,6 @@ export const useAuth = () => {
       specialization: "",
     });
 
-  const [password, setPassword] = useState<ZodUpdatePasswordTypes>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
   const [loading, setLoading] = useState(false);
 
   function handleLoginChange(name: keyof ZodLoginTypes, value: string) {

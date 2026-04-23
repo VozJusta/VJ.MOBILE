@@ -3,12 +3,10 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { IUpdateForgotPassword } from "@/interfaces/components/Forms/forgotPassword";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
-import { useRouter } from "expo-router";
 import { View, Text, ActivityIndicator } from "react-native";
 
 export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
-  const { loading, setLoading } = useAuth();
-  const router = useRouter();
+  const { loading } = useAuth();
   return (
     <>
       <View className="gap-[7px] w-full items-start">
