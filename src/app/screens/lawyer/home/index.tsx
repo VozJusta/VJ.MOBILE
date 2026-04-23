@@ -108,20 +108,28 @@ export default function LawyerHome() {
                 Solicitações relevantes
               </Text>
               <View className="flex flex-col gap-3">
-                {highRelevanceCases.map((request, index) => (
-                  <ImportantRequestCard
-                    key={index}
-                    {...request}
-                    textBadge={getCategoryLabel(request.category_detected)}
-                    badgeColor={
-                      request.status === "Accepted"
-                        ? "#34D399"
-                        : request.status === "Pending"
-                          ? "#F59E0B"
-                          : "#EF4444"
-                    }
+                {highRelevanceCases.length === 0 ? (
+                  <EmptyState
+                    icon="note-add"
+                    title="Nenhuma solicitação relevante"
+                    description="Não há solicitações de alta relevância no momento."
                   />
-                ))}
+                ) : (
+                  highRelevanceCases.map((request, index) => (
+                    <ImportantRequestCard
+                      key={index}
+                      {...request}
+                      textBadge={getCategoryLabel(request.category_detected)}
+                      badgeColor={
+                        request.status === "Accepted"
+                          ? "#34D399"
+                          : request.status === "Pending"
+                            ? "#F59E0B"
+                            : "#EF4444"
+                      }
+                    />
+                  ))
+                )}
               </View>
             </View>
           </>
