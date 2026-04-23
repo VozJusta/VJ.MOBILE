@@ -7,7 +7,6 @@ export async function getRequestDetailsById(requestId: string) {
     const response = await apiFetch(`${BASE_URL}/lawyer/cases/${requestId}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
       },
     });

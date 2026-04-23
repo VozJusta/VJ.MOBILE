@@ -54,7 +54,7 @@ export const useLawyerRequests = () => {
           text2: response.fields?.[0],
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar detalhes da solicitação",
