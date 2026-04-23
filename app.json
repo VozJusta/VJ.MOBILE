@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/svg/icons/icon.png",
     "scheme": "vozjusta",
+    "jsEngine": "hermes",
     "experiments": {
       "tsconfigPaths": true
     },
