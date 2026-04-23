@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { router } from "expo-router";
 import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
-import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
+import { useBuildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { useAuth } from "@/hooks/auth/useAuth";
 import Toast from "react-native-toast-message";
@@ -16,7 +16,7 @@ export default function Citizen() {
     return passwordValidate(registerAuth.password);
   }, [registerAuth.password]);
 
-  const citizenData = buildCitizenFields({
+  const citizenData = useBuildCitizenFields({
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
     registerAuth,

@@ -18,7 +18,7 @@ type Params = {
   handleRegisterChange: (name: keyof ZodSignUpTypes, value: string) => void;
 };
 
-export function buildCitizenFields({
+export function useBuildCitizenFields({
   showPassword,
   onToggleShowPassword,
   registerAuth,
