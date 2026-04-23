@@ -1,13 +1,14 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
-import React, { useState } from "react";
+import { View, Text, ScrollView, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import Filters from "@/components/Filters";
 import RequestCard from "@/components/RequestCard";
-import { requestsCards } from "./data";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
 import EmptyState from "@/components/EmptyState";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
 import {
   RequestCardBadgeColor,
   RequestCardTextBadge,
@@ -16,6 +17,10 @@ import {
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
   const { fetchRequests, loading, requests } = useLawyerRequests();
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
 
   const handleFilterChange = (filter: TCaseStatus | "") => {
     setSelectedFilter(filter);
@@ -66,13 +71,56 @@ export default function RequestsScreens() {
           </>
         }
         ListEmptyComponent={
-          <EmptyState
-            icon="folder-off"
-            title="Nenhuma solicitação encontrada"
-            description="Você ainda não possui solicitações na nossa plataforma. Assim que receber uma solicitação, ela aparecerá aqui."
-          />
+          loading ? (
+            <MotiView
+              transition={{
+                type: "timing",
+              }}
+              style={[styles.container, styles.padded]}
+              animate={{ backgroundColor: "transparent" }}
+            >
+              <Skeleton
+                width={"100%"}
+                height={250}
+                radius={25}
+                colorMode="dark"
+              />
+              <Skeleton
+                width={"100%"}
+                height={250}
+                radius={25}
+                colorMode="dark"
+              />
+            </MotiView>
+          ) : (
+            <EmptyState
+              icon="folder-off"
+              title="Nenhuma solicitação encontrada"
+              description="Você ainda não possui solicitações na nossa plataforma. Assim que receber uma solicitação, ela aparecerá aqui."
+            />
+          )
         }
       />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  shape: {
+    justifyContent: "center",
+    height: 250,
+    width: 250,
+    borderRadius: 25,
+    marginRight: 10,
+    backgroundColor: "white",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
+  },
+  padded: {
+    padding: 16,
+  },
+});
