@@ -1,12 +1,19 @@
 import { View, Text, ScrollView, FlatList } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import Filters from "@/components/Filters";
 import RequestCard from "@/components/RequestCard";
 import { requestsCards } from "./data";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
 
 export default function RequestsScreens() {
+  const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
+
+  const handleFilterChange = (filter: TCaseStatus | "") => {
+    setSelectedFilter(filter);
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <FlatList
@@ -28,7 +35,7 @@ export default function RequestsScreens() {
                 nome do caso.
               </Text>
             </View>
-            <Filters />
+            <Filters onFilterChange={handleFilterChange} />
           </>
         }
       />

@@ -37,5 +37,6 @@ export const useLawyerRequests = () => {
   return {
     requests,
     loading,
+    fetchRequests
   };
 };

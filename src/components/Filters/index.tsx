@@ -1,16 +1,9 @@
-import {
-  StatusText,
-} from "@/interfaces/components/FilterStatus";
 import { ScrollView } from "react-native";
 import FilterStatus from "../FilterStatus";
-import { useState } from "react";
 import { filters } from "./data";
+import { IFiltersProps } from "@/interfaces/components/Filters";
 
-export default function Filters() {
-  const [statusSelected, setStatusSelected] = useState<StatusText>(
-    StatusText.ALL,
-  );
-
+export default function Filters({ ...props }: IFiltersProps) {
   return (
     <ScrollView
       contentContainerClassName="flex flex-row gap-2 h-fit mb-8"
@@ -21,8 +14,8 @@ export default function Filters() {
         <FilterStatus
           key={index}
           {...filter}
-          statusSelected={statusSelected}
-          onPress={(status) => setStatusSelected(status)}
+          statusSelected={props.statusSelected}
+          onPress={(status) => props.onFilterChange(status)}
         />
       ))}
     </ScrollView>
