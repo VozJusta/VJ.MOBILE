@@ -76,7 +76,7 @@ export default function RequestsScreens() {
               transition={{
                 type: "timing",
               }}
-              style={[styles.container, styles.padded]}
+              style={styles.container}
               animate={{ backgroundColor: "transparent" }}
             >
               <Skeleton
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   shape: {
     justifyContent: "center",
     height: 250,
-    width: 250,
+    width: '100%',
     borderRadius: 25,
     marginRight: 10,
     backgroundColor: "white",
@@ -119,8 +119,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
-  },
-  padded: {
-    padding: 16,
   },
 });
