@@ -14,6 +14,7 @@ export default function Filters({ ...props }: IFiltersProps) {
         <FilterStatus
           key={index}
           {...filter}
+          amount={filter.status ? props.amounts[filter.status] : props.amounts.total}
           statusSelected={props.statusSelected}
           onPress={(status) => props.onFilterChange(status)}
         />

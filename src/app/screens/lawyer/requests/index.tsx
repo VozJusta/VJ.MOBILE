@@ -13,6 +13,7 @@ import {
   RequestCardBadgeColor,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
+import { IAmounts } from "@/interfaces/components/Filters";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
@@ -26,6 +27,16 @@ export default function RequestsScreens() {
     setSelectedFilter(filter);
 
     fetchRequests(filter || undefined);
+  };
+
+  const amounts: IAmounts = {
+    total: requests.length,
+    Accepted: requests.filter((request) => request.statusCase === "Accepted")
+      .length,
+    Pending: requests.filter((request) => request.statusCase === "Pending")
+      .length,
+    Refused: requests.filter((request) => request.statusCase === "Refused")
+      .length,
   };
 
   return (
@@ -67,7 +78,7 @@ export default function RequestsScreens() {
                 nome do caso.
               </Text>
             </View>
-            <Filters onFilterChange={handleFilterChange} />
+            <Filters onFilterChange={handleFilterChange} amounts={amounts} />
           </>
         }
         ListEmptyComponent={
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
   shape: {
     justifyContent: "center",
     height: 250,
-    width: '100%',
+    width: "100%",
     borderRadius: 25,
     marginRight: 10,
     backgroundColor: "white",
