@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,6 +16,7 @@ import { router } from "expo-router";
 import { ProductivityChart } from "@/components/ProductivityChart";
 import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 import EmptyState from "@/components/EmptyState";
+import Skeletons from "@/components/Skeletons";
 
 export default function LawyerHome() {
   const token = useAccessTokenStorage((state) => state.accessToken);
@@ -52,9 +53,7 @@ export default function LawyerHome() {
         !analyticsData ||
         !operationalStats ||
         !highRelevanceCases ? (
-          <View className="flex-1 justify-center items-center">
-            <ActivityIndicator size="large" color="#fff" />
-          </View>
+          <Skeletons amountOfSkeletons={3} height={250} />
         ) : (
           <>
             <View className="mt-[32px] gap-3">
