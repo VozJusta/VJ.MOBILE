@@ -66,57 +66,37 @@ export const useLawyerRequests = () => {
     }
   };
 
-  const acceptRequest = async (requestId: string) => {
+  const handleRequestAction = async (
+    requestId: string,
+    action: "accept" | "reject",
+  ) => {
+    setLoading(true);
     try {
-      const response = await patchRequest(requestId, "accept")
+      const response = await patchRequest(requestId, action);
 
       if (response.success) {
         Toast.show({
           type: "success",
-          text1: "Solicitação aceita com sucesso!",
+          text1: `Solicitação ${action === "accept" ? "aceita" : "rejeitada"} com sucesso!`,
         });
         fetchRequestById(requestId);
       } else {
         Toast.show({
           type: "error",
-          text1: "Erro ao aceitar solicitação",
+          text1: `Erro ao ${action === "accept" ? "aceitar" : "rejeitar"} solicitação`,
           text2: response.message,
         });
       }
     } catch {
       Toast.show({
         type: "error",
-        text1: "Erro ao aceitar solicitação",
+        text1: `Erro ao ${action === "accept" ? "aceitar" : "rejeitar"} solicitação`,
         text2: "Tente novamente mais tarde",
       });
+    } finally {
+      setLoading(false);
     }
-  }
-
-  const rejectRequest = async (requestId: string) => {
-    try {
-      const response = await patchRequest(requestId, "reject")
-
-      if (response.success) {
-        Toast.show({
-          type: "success",
-          text1: "Solicitação rejeitada com sucesso!",
-        });
-        fetchRequestById(requestId);
-      } else {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao rejeitar solicitação",
-          text2: response.message,
-        });
-      }
-    } catch {
-      Toast.show({
-        type: "error",
-        text1: "Erro ao rejeitar solicitação",
-        text2: "Tente novamente mais tarde",
-      });
-    }
-  }
+  };
 
   return {
     requests,
@@ -124,7 +104,6 @@ export const useLawyerRequests = () => {
     fetchRequests,
     fetchRequestById,
     requestDetails,
-    acceptRequest,
-    rejectRequest,
+    handleRequestAction
   };
 };
