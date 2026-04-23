@@ -16,7 +16,7 @@ export default function DocumentsCitizen() {
     DocumentPicker.DocumentPickerAsset[] | null
   >(null);
   const pickFile = async () => {
-    let result = await DocumentPicker.getDocumentAsync({
+    const result = await DocumentPicker.getDocumentAsync({
       type: "*/*",
       copyToCacheDirectory: true,
     });

@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { router } from "expo-router";
 import Checkbox from "@/ui/CheckboxUI";
 import passwordValidate from "@/utils/passwordValidate";
-import { buildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
+import { useBuildLawyerFields } from "@/utils/auth/users/SingUp/Lawyer/data";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 import Toast from "react-native-toast-message";
@@ -19,7 +19,7 @@ export default function Lawyer() {
     () => passwordValidate(registerAuthLawyer.password),
     [registerAuthLawyer.password],
   );
-  const registerAuth = buildLawyerFields({
+  const registerAuth = useBuildLawyerFields({
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
     registerAuth: registerAuthLawyer as ILawyerRegisterData,

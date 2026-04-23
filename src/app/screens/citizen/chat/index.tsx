@@ -70,7 +70,7 @@ export default function Chat() {
                   <ButtonAudio
                     isRecording={false}
                     onStartRecording={handleStartRecording}
-                    onStopRecording={() => handleStopRecording("description")} // Nunca roda aqui
+                    onStopRecording={() => handleStopRecording("description")}
                     disabled={loading}
                   />
                 </View>

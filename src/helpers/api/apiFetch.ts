@@ -1,4 +1,4 @@
-import { refreshToken } from "@/services/users/security/refreshToken";
+import { refreshToken } from "@/services/auth/users/security/refreshToken";
 import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
@@ -41,8 +41,6 @@ export async function apiFetch(
 
   let response = await fetch(input, config);
 
-  
-
   if (response.status === 401) {
     if (isRefreshing) {
       return new Promise<Response>((resolve, reject) => {
@@ -65,10 +63,11 @@ export async function apiFetch(
     try {
       const newToken = await refreshToken();
 
-
       if (!newToken.success || !newToken.accessToken) {
         throw new Error("Falha ao atualizar o token.");
       }
+
+      useAccessTokenStorage.getState().setTokens(newToken.accessToken);
 
       processQueue(null, newToken.accessToken);
 
@@ -80,7 +79,6 @@ export async function apiFetch(
       response = await fetch(input, { ...init, headers: retryHeaders });
       return response;
     } catch (error) {
-
       processQueue(error as Error, null);
       isRefreshing = false;
 

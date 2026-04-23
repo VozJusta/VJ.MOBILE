@@ -1,11 +1,11 @@
 import { formatCPF, formatPhone } from "@/utils/mask";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { Email2FA } from "@/services/users/security/email2FA";
+import { Email2FA } from "@/services/auth/users/security/email2FA";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
-import { SignUpCitizen } from "@/services/users/citizen/SignUp";
+import { SignUpCitizen } from "@/services/auth/users/citizen/SignUp";
 import { ActivityIndicator, Text } from "react-native";
 import { Role } from "@/types/roles/roles";
 import { IInput } from "@/interfaces/ui/InputUI";
@@ -18,7 +18,7 @@ type Params = {
   handleRegisterChange: (name: keyof ZodSignUpTypes, value: string) => void;
 };
 
-export function buildCitizenFields({
+export function useBuildCitizenFields({
   showPassword,
   onToggleShowPassword,
   registerAuth,
@@ -40,7 +40,7 @@ export function buildCitizenFields({
         return;
       }
 
-     setRole(response.data?.role?.toLowerCase() as Role);
+      setRole(response.data?.role?.toLowerCase() as Role);
 
       Toast.show({
         type: "success",
@@ -143,9 +143,7 @@ export function buildCitizenFields({
     titleButton: loading ? (
       <ActivityIndicator size="small" color="#FFF" />
     ) : (
-      <Text className="text-white text-[16px] font-interBold">
-        Entrar
-      </Text>
+      <Text className="text-white text-[16px] font-interBold">Entrar</Text>
     ),
   };
 }

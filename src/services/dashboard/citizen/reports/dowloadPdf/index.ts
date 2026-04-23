@@ -44,7 +44,7 @@ export async function downloadReportAsPdf(reportId: string) {
       success: true,
       data: downloadRes.uri,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

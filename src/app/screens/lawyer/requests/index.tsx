@@ -1,18 +1,69 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import Filters from "@/components/Filters";
 import RequestCard from "@/components/RequestCard";
-import { requestsCards } from "./data";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
+import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
+import EmptyState from "@/components/EmptyState";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
+import {
+  RequestCardBadgeColor,
+  RequestCardTextBadge,
+} from "@/interfaces/components/RequestCard";
+import { IAmounts } from "@/interfaces/components/Filters";
+import Skeletons from "@/components/Skeletons";
 
 export default function RequestsScreens() {
+  const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
+  const { fetchRequests, loading, requests } = useLawyerRequests();
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const handleFilterChange = (filter: TCaseStatus | "") => {
+    setSelectedFilter(filter);
+
+    fetchRequests(filter || undefined);
+  };
+
+  const amounts: IAmounts = {
+    total: requests.length,
+    Accepted: requests.filter((request) => request.statusCase === "Accepted")
+      .length,
+    Pending: requests.filter((request) => request.statusCase === "Pending")
+      .length,
+    Refused: requests.filter((request) => request.statusCase === "Refused")
+      .length,
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <FlatList
-        data={requestsCards}
+        data={requests}
         keyExtractor={(item, index) => item.id}
-        renderItem={({ item }) => <RequestCard {...item} />}
+        renderItem={({ item }) => (
+          <RequestCard
+            {...item}
+            textBadge={
+              item.statusCase === "Accepted"
+                ? RequestCardTextBadge.ACCEPTED
+                : item.statusCase === "Refused"
+                  ? RequestCardTextBadge.REJECTED
+                  : RequestCardTextBadge.PENDING
+            }
+            badgeColor={
+              item.statusCase === "Accepted"
+                ? RequestCardBadgeColor.ACCEPTED
+                : item.statusCase === "Refused"
+                  ? RequestCardBadgeColor.REJECTED
+                  : RequestCardBadgeColor.PENDING
+            }
+          />
+        )}
         contentContainerClassName="gap-8 pb-6"
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
@@ -28,8 +79,23 @@ export default function RequestsScreens() {
                 nome do caso.
               </Text>
             </View>
-            <Filters />
+            <Filters
+              onFilterChange={handleFilterChange}
+              amounts={amounts}
+              statusSelected={selectedFilter || undefined}
+            />
           </>
+        }
+        ListEmptyComponent={
+          loading ? (
+            <Skeletons amountOfSkeletons={2} height={250} />
+          ) : (
+            <EmptyState
+              icon="folder-off"
+              title="Nenhuma solicitação encontrada"
+              description="Você ainda não possui solicitações na nossa plataforma. Assim que receber uma solicitação, ela aparecerá aqui."
+            />
+          )
         }
       />
     </SafeAreaView>

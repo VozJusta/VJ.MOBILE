@@ -29,7 +29,7 @@ export async function getOperationalStatsDashboard() {
       success: true,
       data: json as IGetOperationalStatsResponse,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro ao buscar estatísticas operacionais"],

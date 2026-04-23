@@ -3,7 +3,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Keyboard,
 } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { OtpInput } from "react-native-otp-entry";

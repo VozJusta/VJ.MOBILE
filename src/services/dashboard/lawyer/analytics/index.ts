@@ -24,7 +24,7 @@ export async function getAnalyticsDashboardLawyer() {
       success: true,
       data: json as IGetAnalyticsResponse,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro ao buscar analytics"],

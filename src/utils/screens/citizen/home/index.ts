@@ -6,7 +6,7 @@ export const translateStatus = (status: TCaseStatus) => {
     case "Accepted":
       return "Aceito";
     case "Pending":
-      return "Em Análise";
+      return "Pendente";
     case "Refused":
       return "Recusado";
     default:

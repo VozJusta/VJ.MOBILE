@@ -33,7 +33,7 @@ export async function continueConversation(body: IContinueConversationRequest) {
       success: true,
       data,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

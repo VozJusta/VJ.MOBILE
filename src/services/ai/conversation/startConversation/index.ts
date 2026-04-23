@@ -31,7 +31,7 @@ export async function startConversation(body: IStartConversationRequest) {
       success: true,
       data,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

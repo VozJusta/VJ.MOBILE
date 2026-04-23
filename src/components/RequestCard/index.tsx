@@ -26,10 +26,10 @@ export default function RequestCard({ ...props }: IRequestCard) {
             className="font-interSemiBold text-[12px]"
             style={{ color: props.badgeColor }}
           >
-            {props.area}
+            {props.category_detected}
           </Text>
           <Text className="font-interBold text-[16px] text-[#FFFFFF]">
-            {props.nameCase}
+            {props.title ? props.title : "Sem título"}
           </Text>
         </View>
         <Badge textBadge={props.textBadge} badgeColor={props.badgeColor} />
@@ -40,10 +40,10 @@ export default function RequestCard({ ...props }: IRequestCard) {
         </View>
         <View className="flex flex-col">
           <Text className="font-interSemiBold text-[14px] text-white">
-            {props.nameCitizen}
+            {props.clientName}
           </Text>
           <Text className="font-inter text-[12px] text-[#94A3B8]">
-            Solicitado em {props.requestDate}
+            Solicitado em {props.created_at}
           </Text>
         </View>
       </View>

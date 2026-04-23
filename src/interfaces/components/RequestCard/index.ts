@@ -12,10 +12,10 @@ export enum RequestCardTextBadge {
 
 export interface IRequestCard {
   id: string;
-  area: string;
-  nameCase: string;
-  nameCitizen: string;
-  requestDate: string;
+  category_detected: string;
+  title?: string;
+  clientName: string;
+  created_at: string;
   badgeColor: RequestCardBadgeColor;
   textBadge: RequestCardTextBadge;
 }

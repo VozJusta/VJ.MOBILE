@@ -52,7 +52,7 @@ export async function ValidateEmail(
       success: true,
       data: "",
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

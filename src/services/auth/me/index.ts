@@ -24,7 +24,7 @@ export async function getMe() {
       success: true,
       data: json as IMeResponse,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "Erro de rede ao obter os dados do usuário",

@@ -1,4 +1,3 @@
-import Logo from "@/assets/svg/icons/logo.svg";
 import DangerAlertIcon from "@/assets/svg/icons/danger-alert.svg";
 import Header from "@/components/Header";
 import ButtonUI from "@/ui/ButtonUI";

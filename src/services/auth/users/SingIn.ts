@@ -45,7 +45,7 @@ export async function SingIn(data: ZodLoginTypes) {
       success: true,
       data: json as ISignInResponse,
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

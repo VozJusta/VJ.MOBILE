@@ -23,7 +23,7 @@ export async function CodeSeding(email: string) {
     }
 
     return { success: true, data: json };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

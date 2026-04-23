@@ -1,13 +1,8 @@
-export enum StatusText {
-    ALL = "Todos",
-    ACCEPTED = "Aceitos",
-    REJECTED = "Recusados",
-    PENDING = "Pendentes",
-}
+import { TCaseStatus } from "../CaseCard";
 
 export interface IFilterStatus {
-    status: StatusText;
+    status: TCaseStatus | undefined;
     amount: number;
-    onPress: (filter: StatusText) => void;
-    statusSelected: StatusText;
+    onPress: (filter: TCaseStatus) => void;
+    statusSelected: TCaseStatus | undefined;
 }

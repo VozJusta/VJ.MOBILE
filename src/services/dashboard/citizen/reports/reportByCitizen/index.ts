@@ -27,7 +27,7 @@ export async function reportByCitizen(page: number, pageSize: number) {
       success: true,
       data: json as IGetReportsResponse,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro ao buscar relatórios"],

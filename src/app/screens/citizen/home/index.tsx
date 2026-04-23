@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import EmptyState from "@/components/EmptyState";
+import Skeletons from "@/components/Skeletons";
 
 export default function Home() {
   const router = useRouter();
@@ -91,7 +92,7 @@ export default function Home() {
           </View>
 
           {loading ? (
-            <ActivityIndicator size="large" color="#2563EB" className="mt-4" />
+            <Skeletons height={220} amountOfSkeletons={1} />
           ) : reports.length === 0 ? (
             <EmptyState
               icon="gavel"

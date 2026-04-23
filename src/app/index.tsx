@@ -15,7 +15,8 @@ export default function App() {
     (state) => state.accessToken,
   );
   const router = useRouter();
-  const scale = useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1));
+
 
   const decodedToken = useMemo(() => {
     if (!accessToken) {
@@ -23,21 +24,21 @@ export default function App() {
     }
     try {
       return jwtDecode<IDecodedToken>(accessToken);
-    } catch (error) {
+    } catch {
       return null;
     }
   }, [accessToken]);
 
   useEffect(() => {
     const anim = Animated.sequence([
-      Animated.timing(scale, {
+      Animated.timing(scaleAnim.current, {
         toValue: 0.7,
         duration: 400,
         easing: Easing.out(Easing.cubic),
         useNativeDriver: true,
       }),
       Animated.delay(800),
-      Animated.timing(scale, {
+      Animated.timing(scaleAnim.current, {
         toValue: 2.7,
         duration: 200,
         easing: Easing.in(Easing.quad),
@@ -80,7 +81,7 @@ export default function App() {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <Animated.View
-            style={{ transform: [{ scale }], flex: 1 }}
+            style={{ transform: [{ scale: scaleAnim.current }], flex: 1 }}
             className="flex-1 items-center justify-center"
           >
             <View className="flex justify-center items-center w-[812px] h-[804px] rounded-full bg-black800">

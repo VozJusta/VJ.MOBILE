@@ -10,7 +10,7 @@ export default function EmptyState(props: IEmptyState) {
         {props.title}
       </Text>
       {props.description && (
-        <Text className="font-interRegular text-[14px] text-cente" style={{ color: "#8D90A1" }}>
+        <Text className="font-interRegular text-[14px] text-center" style={{ color: "#8D90A1" }}>
           {props.description}
         </Text>
       )}
