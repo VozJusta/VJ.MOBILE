@@ -188,14 +188,8 @@ export function useBuildLawyerFields({
         )?.value || registerAuth.specialization;
 
       return handleRegister({
-        fullName: registerAuth.fullName,
-        email: registerAuth.email,
-        password: registerAuth.password,
-        oabState: registerAuth.oabState,
-        phone: registerAuth.phone,
+        ...registerAuth,
         specialization: specializationValue,
-        cpf: registerAuth.cpf,
-        oabNumber: registerAuth.oabNumber,
       });
     },
     titleButton: loading ? (
