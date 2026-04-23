@@ -1,12 +1,12 @@
 import Logo from "@/assets/svg/icons/logo.svg";
 import DangerAlertIcon from "@/assets/svg/icons/danger-alert.svg";
 import Header from "@/components/Header";
-import { ISettingsItem, ISettingsSection, ISettingsTemplateProps } from "@/interfaces/template/configTemplate";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { ISettingsItem, ISettingsSection, ISettingsTemplate } from "@/interfaces/template/configTemplate";
 
 function getHelpIconPalette(itemId: string) {
   switch (itemId) {
@@ -192,7 +192,7 @@ export default function SettingsTemplate({
   versionLabel,
   supportCard,
   dangerCard,
-}: ISettingsTemplateProps) {
+}: ISettingsTemplate) {
   const isPrivacy = templateVariant === "privacy";
   const isHelp = templateVariant === "help";
   const insets = useSafeAreaInsets();

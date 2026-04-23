@@ -1,14 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, View, Text, ScrollView } from "react-native";
 import { useMemo, useState } from "react";
-import { CareerSelectProps } from "@/interfaces/ui/SelectUIProps/careerSelect";
+import { ICareerSelect } from "@/interfaces/ui/SelectUI/careerSelect";
 
 export default function CareerSelectUI({
   label,
   value,
   options,
   onValueChange,
-}: CareerSelectProps) {
+}: ICareerSelect) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = useMemo(() => {
@@ -70,7 +70,11 @@ export default function CareerSelectUI({
                     onPress={() => selectOption(option)}
                   >
                     <MaterialIcons
-                      name={selected ? "radio-button-checked" : "radio-button-unchecked"}
+                      name={
+                        selected
+                          ? "radio-button-checked"
+                          : "radio-button-unchecked"
+                      }
                       size={20}
                       color={selected ? "#34D399" : "#94A3B8"}
                     />

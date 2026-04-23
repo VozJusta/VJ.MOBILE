@@ -1,8 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { ReactNode } from "react";
-import { IButtonProps } from "@/interfaces/ui/ButtonUI";
+import { IButton } from "@/interfaces/ui/ButtonUI";
 
 export default function ButtonUI({
   goNext = false,
@@ -11,7 +10,7 @@ export default function ButtonUI({
   gradient = false,
   hover = false,
   ...props
-}: IButtonProps) {
+}: IButton) {
   const isNavigation = goNext || goBack;
 
   if (isNavigation) {

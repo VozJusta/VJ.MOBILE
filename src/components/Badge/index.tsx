@@ -1,7 +1,7 @@
-import { BadgeProps } from "@/interfaces/components/Badge";
+import { IBadge } from "@/interfaces/components/Badge";
 import { Text, View } from "react-native";
 
-export default function Badge({ ...props }: BadgeProps) {
+export default function Badge({ ...props }: IBadge) {
   return (
     <View
       className="flex flex-row text-center items-center justify-center py-2 px-4 rounded-full gap-2"

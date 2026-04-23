@@ -1,14 +1,18 @@
 import { IMeResponse } from "@/interfaces/services/auth/me";
+
+import { logout } from "@/services/auth/logout";
+import { getMe } from "@/services/auth/me";
+import { deleteAccount } from "@/services/auth/terminate-account";
+import {
+  useAccessTokenStorage,
+  useRefreshTokenStorage,
+} from "@/store/auth/token.store";
 import {
   ZodLoginTypes,
   ZodSignUpLawyerTypes,
   ZodSignUpTypes,
   ZodUpdatePasswordTypes,
-} from "@/interfaces/validation/zodTypes";
-import { logout } from "@/services/auth/logout";
-import { getMe } from "@/services/auth/me";
-import { deleteAccount } from "@/services/auth/terminate-account";
-import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/auth/token.store";
+} from "@/types/validation";
 import { router } from "expo-router";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -29,16 +33,17 @@ export const useAuth = () => {
     phone: "",
   });
 
-  const [registerAuthLawyer, setRegisterAuthLawyer] = useState<ZodSignUpLawyerTypes>({
-    email: "",
-    password: "",
-    cpf: "",
-    fullName: "",
-    phone: "",
-    oabNumber: "",
-    oabState: "",
-    specialization: "",
-  });
+  const [registerAuthLawyer, setRegisterAuthLawyer] =
+    useState<ZodSignUpLawyerTypes>({
+      email: "",
+      password: "",
+      cpf: "",
+      fullName: "",
+      phone: "",
+      oabNumber: "",
+      oabState: "",
+      specialization: "",
+    });
 
   const [password, setPassword] = useState<ZodUpdatePasswordTypes>({
     email: "",
@@ -55,7 +60,10 @@ export const useAuth = () => {
     setRegisterAuth((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleRegisterChangeLawyer(name: keyof ZodSignUpLawyerTypes, value: string) {
+  function handleRegisterChangeLawyer(
+    name: keyof ZodSignUpLawyerTypes,
+    value: string,
+  ) {
     setRegisterAuthLawyer((prev) => ({ ...prev, [name]: value }));
   }
 
@@ -63,7 +71,7 @@ export const useAuth = () => {
     setLoading(true);
 
     try {
-      const response = await logout()
+      const response = await logout();
 
       if (response.success) {
         useAccessTokenStorage.getState().clearTokens();
@@ -91,6 +99,12 @@ export const useAuth = () => {
   async function terminateAccount(password: string) {
     setLoading(true);
     try {
+      const accessToken = useAccessTokenStorage.getState().accessToken;
+      if (!accessToken) {
+        router.replace("/screens/Onboarding/roles");
+        return;
+      }
+
       const response = await deleteAccount(password);
 
       if (response.success) {
@@ -104,6 +118,12 @@ export const useAuth = () => {
         });
 
         router.replace("/screens/Onboarding/roles");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Não foi possível encerrar a conta",
+          text2: response.message,
+        });
       }
     } catch (error) {
       Toast.show({
@@ -117,31 +137,31 @@ export const useAuth = () => {
   }
 
   async function authMe() {
-      setLoading(true);
+    setLoading(true);
 
-      try {
-       const response = await getMe();
-       
-        if (!response.success) {
-          Toast.show({
-            type: "error",
-            text1: "Não foi possível obter os dados do usuário",
-            text2: response.message,
-          });
+    try {
+      const response = await getMe();
 
-          return;
-        } 
-        
-        setUser(response.data);
-      } catch (error) {
+      if (!response.success) {
         Toast.show({
           type: "error",
           text1: "Não foi possível obter os dados do usuário",
-          text2: "Ocorreu um erro ao tentar obter os dados do usuário",
+          text2: response.message,
         });
-      } finally {
-        setLoading(false);
+
+        return;
       }
+
+      setUser(response.data);
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível obter os dados do usuário",
+        text2: "Ocorreu um erro ao tentar obter os dados do usuário",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {
@@ -156,6 +176,6 @@ export const useAuth = () => {
     handleLogout,
     terminateAccount,
     user,
-    authMe
+    authMe,
   };
 };

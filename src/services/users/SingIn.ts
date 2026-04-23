@@ -1,8 +1,9 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
-import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodLoginSchema } from "@/validation/schema.zod";
 import { useXTokenStorage } from "@/store/auth/token.store";
+import { ISignInResponse } from "@/interfaces/services/auth/signIn";
+import { ZodLoginTypes } from "@/types/validation";
 
 export async function SingIn(data: ZodLoginTypes) {
   const setToken = useXTokenStorage.getState().setToken;
@@ -42,7 +43,7 @@ export async function SingIn(data: ZodLoginTypes) {
     }
     return {
       success: true,
-      data: json,
+      data: json as ISignInResponse,
     };
   } catch (err: any) {
     return {

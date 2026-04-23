@@ -46,10 +46,10 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
   };
 
   const getDetailsReportById = async (reportId: string) => {
-    setLoading(true);
-
     try {
       const response = await getReportDetails(reportId);
+
+      (response)
 
       if (response.success && response.data) {
         return response.data;
@@ -65,8 +65,6 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
         text1: "Erro ao buscar detalhes do relatório",
         text2: "Tente novamente mais tarde",
       });
-    } finally {
-      setLoading(false);
     }
   };
 

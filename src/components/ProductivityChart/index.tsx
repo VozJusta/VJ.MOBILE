@@ -1,17 +1,15 @@
-"use client";
-import { ProductivityChartProps } from "@/types/components/ProductivityChart";
+import { IProductivityChart } from "@/interfaces/components/ProductivityChart";
 import { useMemo } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { CurveType, LineChart } from "react-native-gifted-charts";
 
 const BLUE = "rgb(37, 133, 244)";
-const BLUE_LIGHT = "rgba(37, 133, 244, 0.15)";
 const AXIS_COLOR = "rgb(148, 163, 184)";
 const GRID_COLOR = "rgba(255, 255, 255, 0.05)";
 const TOOLTIP_BG = "rgb(20, 27, 36)";
 const TOOLTIP_BORDER = "rgb(27, 34, 51)";
 
-export function ProductivityChart({ data, style }: ProductivityChartProps) {
+export function ProductivityChart({ data, style }: IProductivityChart) {
   const screenWidth = Dimensions.get("window").width;
 
   const chartData = useMemo(

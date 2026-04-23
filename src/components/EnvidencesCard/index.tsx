@@ -2,8 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 import DocCard from "../DocCard";
 
-export interface EvidencesCardProps {}
-
 export default function EvidencesCard() {
   return (
     <View className="flex flex-col p-6 gap-4 bg-[#161E29]/70 border border-[#2B86EE]/20 rounded-2xl w-full h-fit">

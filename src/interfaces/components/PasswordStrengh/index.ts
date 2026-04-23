@@ -1,10 +1,10 @@
-export interface PasswordChecklistItem {
+export interface IPasswordChecklistItem {
   label: string;
   valid: boolean;
 }
 
-export interface PasswordStrengthSection {
+export interface IPasswordStrength {
   score: number;
   color: string;
-  checklist: PasswordChecklistItem[];
+  checklist: IPasswordChecklistItem[];
 }

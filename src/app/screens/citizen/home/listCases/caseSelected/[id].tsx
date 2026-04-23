@@ -11,10 +11,12 @@ import {
   translateStatus,
 } from "@/utils/screens/citizen/home";
 import Header from "@/components/Header";
-import { useChatStorage } from "@/store/chat/chat.store";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
-import { CaseStatus } from "@/interfaces/components/CaseCard";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
+import { MaterialIcons } from "@expo/vector-icons";
+import DocCard from "@/components/DocCard";
+import EmptyState from "@/components/EmptyState";
 
 export default function CaseSelected() {
   const router = useRouter();
@@ -22,17 +24,24 @@ export default function CaseSelected() {
   const [reportData, setReportData] = useState<
     IGetReportDetailsResponse | undefined
   >(undefined);
-  const { getDetailsReportById, loading } = useDashboardCitizen();
+  const { getDetailsReportById } = useDashboardCitizen();
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
   useEffect(() => {
     async function load() {
       if (!reportId) return;
 
-      const data = await getDetailsReportById(reportId);
+      setLoading(true);
 
-      if (data) {
-        setReportData(data);
+      try {
+        const data = await getDetailsReportById(reportId);
+        if (data) {
+          setReportData(data);
+        }
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -82,12 +91,12 @@ export default function CaseSelected() {
             <Text className="text-[24px] font-interBold text-white">
               {reportData &&
                 translateStatus(
-                  reportData?.user.report.status as CaseStatus,
+                  reportData?.user.report.status as TCaseStatus,
                 ).toUpperCase()}
             </Text>
             <View className="w-[12px] h-[12px] rounded-full bg-[#2563EB]"></View>
           </View>
-          <Text className="text-[14px] text-[#94A3B8] w-[] font-interRegular">
+          <Text className="text-[14px] text-[#94A3B8] font-interRegular">
             {Object.keys(reportData?.user.report.lawyer || {}).length > 0
               ? reportData?.user.report.transcription
               : "Seu caso ainda está sendo analisado por nossos especialistas. Assim que um advogado for designado para o seu caso, você terá acesso a mais detalhes e orientações específicas."}
@@ -112,27 +121,33 @@ export default function CaseSelected() {
               </Text>
             </View>
           </View>
-          {/* <View className="flex-row justify-between items-center w-full">
-              <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
-                Documentos
-              </Text>
-              <Text className=" text-[12px] font-inter text-[#2563EB]">
-                4 anexos
-              </Text>
-            </View>
+          <View className="flex-row justify-between items-center w-full">
+            <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
+              Documentos
+            </Text>
+            <Text className=" text-[12px] font-inter text-[#2563EB]">
+              {Object.keys(reportData?.user.report.evidence).length} anexos
+            </Text>
+          </View>
+          {Object.keys(reportData?.user.report.evidence).length === 0 ? (
+            <EmptyState
+              icon="folder-off"
+              title="Nenhum documento anexado"
+              description="Você não anexou nenhum documento a este caso."
+            />
+          ) : (
             <View className="flex-col gap-[8px]">
               <DocCard
                 nameFile="Contrato_aluguel"
                 date="14 Out 2023"
                 size="14MB"
               />
-              <DocCard
-                nameFile="Screenshot_Ponto"
-                date="14 Out 2023"
-                size="840KB"
-              />
-            </View> */}
+            </View>
+          )}
 
+          <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
+            CONTATO DO ADVOGADO
+          </Text>
           {Object.keys(reportData?.user.report.lawyer || {}).length > 0 &&
           reportData?.user.report.lawyer ? (
             <ContactCard
@@ -141,16 +156,11 @@ export default function CaseSelected() {
               phone={reportData.user.report.lawyer.phone}
             />
           ) : (
-            <View className="flex flex-col items-start gap-[8px]">
-              <Text className="text-[14px] text-[#94A3B8] font-interSemiBold">
-                CONTATO DO ADVOGADO
-              </Text>
-              <View className="p-5 flex flex-col border border-solid border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] justify-center items-center">
-                <Text className="font-interRegular text-[14px] text-white">
-                  Nenhum advogado foi designado para este caso ainda.
-                </Text>
-              </View>
-            </View>
+            <EmptyState
+              icon="person-off"
+              title="Contato não disponível"
+              description="As informações de contato do advogado não estão disponíveis no momento."
+            />
           )}
 
           <View className="w-full mt-[9px] mb-[24px]">

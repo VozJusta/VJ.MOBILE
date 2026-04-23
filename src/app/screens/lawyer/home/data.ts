@@ -1,7 +1,6 @@
-import { ImportantRequestCardProps } from "@/interfaces/components/ImportantRequestCard";
-import { StatsCardBgColor, StatsCardIcon, StatsCardIconColor, StatsCardProps } from "@/interfaces/components/StatCard";
+import { IStatsCard, StatsCardBgColor, StatsCardIcon, StatsCardIconColor} from "@/interfaces/components/StatCard";
 
-export const lawyerStats: StatsCardProps[] = [
+export const lawyerStats: IStatsCard[] = [
   {
     icon: StatsCardIcon.REQUEST,
     iconColor: StatsCardIconColor.REQUEST,
@@ -24,24 +23,3 @@ export const lawyerStats: StatsCardProps[] = [
     bgColor: StatsCardBgColor.SPEED,
   },
 ];
-
-export const lawyerRequests: ImportantRequestCardProps[] = [
-  {
-    title: "Divulgação de conteúdo digital",
-    score: 85,
-    badgeColor: "#34D399", 
-    textBadge: "DIGITAL",
-  },
-  {
-    title: "Assédio no ambiente de trabalho",
-    score: 78,
-    badgeColor: "#F59E0B", 
-    textBadge: "TRABALHO",
-  },
-  {
-    title: "Violência doméstica",
-    score: 92,
-    badgeColor: "#EF4444", 
-    textBadge: "DOMÉSTICA",
-  }
-]

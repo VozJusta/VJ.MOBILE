@@ -1,8 +1,8 @@
 import {
   IAccessTokenStore,
   IRefreshTokenStore,
-} from "@/interfaces/services/token/token";
-import { IXTokenStore } from "@/interfaces/store/auth/xTokenStore";
+  IXTokenStore,
+} from "@/interfaces/store/auth/tokens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";

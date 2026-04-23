@@ -4,22 +4,20 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
 import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import CaseCard from "@/components/CaseCard";
-import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
-import {
-  getCategoryLabel,
-  getStatusIcon,
-} from "@/utils/screens/citizen/home";
+import { getCategoryLabel, getStatusIcon } from "@/utils/screens/citizen/home";
 import { useEffect } from "react";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
+import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
+import EmptyState from "@/components/EmptyState";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
-  const { loading, reports } = useDashboardCitizen(3);
+  const { loading, reports } = useDashboardCitizen();
 
   let decodedToken: IDecodedToken | null = null;
   if (token) {
@@ -35,6 +33,7 @@ export default function Home() {
       router.replace("/screens/Onboarding/roles");
     }
   }, [token]);
+
 
   if (!token) return null;
 
@@ -94,9 +93,11 @@ export default function Home() {
           {loading ? (
             <ActivityIndicator size="large" color="#2563EB" className="mt-4" />
           ) : reports.length === 0 ? (
-            <Text className="text-white text-[16px] font-interSemiBold">
-              Você não tem casos registrados.
-            </Text>
+            <EmptyState
+              icon="gavel"
+              title="Nenhum caso por aqui"
+              description="Você ainda não iniciou nenhum relato jurídico."
+            />
           ) : (
             reports.map((report) => (
               <CaseCard

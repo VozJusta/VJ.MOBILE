@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode } from "react";
 
-export interface IButtonProps {
+export interface IButton {
   children?: ReactNode;
   onPress: () => void;
   goNext?: boolean;

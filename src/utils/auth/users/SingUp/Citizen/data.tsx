@@ -1,15 +1,15 @@
-import { formatCPF } from "@/utils/mask";
-import { formatPhone } from "@/utils/phoneValidate";
+import { formatCPF, formatPhone } from "@/utils/mask";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
-import { resolveRoleFromApi } from "@/utils/auth/resolveRole";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { IBuildRegisterFields } from "@/interfaces/utils/auth/buildRegisterFields";
-import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { SignUpCitizen } from "@/services/users/citizen/SignUp";
 import { ActivityIndicator, Text } from "react-native";
+import { Role } from "@/types/roles/roles";
+import { IInput } from "@/interfaces/ui/InputUI";
+import { ZodSignUpTypes } from "@/types/validation";
 
 type Params = {
   showPassword: boolean;
@@ -40,8 +40,7 @@ export function buildCitizenFields({
         return;
       }
 
-      const resolvedRole = resolveRoleFromApi(response.data, "citizen");
-      setRole(resolvedRole);
+     setRole(response.data?.role?.toLowerCase() as Role);
 
       Toast.show({
         type: "success",
@@ -61,9 +60,13 @@ export function buildCitizenFields({
         text1: validateEmail2FA.data,
       });
 
-      router.push(
-        `/screens/auth/Validate?source=${resolvedRole}&email=${encodeURIComponent(registerAuth.email)}`,
-      );
+      router.push({
+        pathname: "/screens/auth/Validate",
+        params: {
+          source: "citizen",
+          email: data.email,
+        },
+      });
       return;
     } finally {
       setLoading(false);
@@ -82,7 +85,7 @@ export function buildCitizenFields({
         type: "name",
         value: registerAuth.fullName ?? "",
         onChangeText: (text) => handleRegisterChange("fullName", text),
-      },
+      } as IInput,
       {
         label: "CPF",
         placeholder: "000.000.000-00",
@@ -94,7 +97,7 @@ export function buildCitizenFields({
         type: "cpf",
         value: registerAuth.cpf ?? "",
         onChangeText: (text) => handleRegisterChange("cpf", formatCPF(text)),
-      },
+      } as IInput,
       {
         label: "Telefone",
         placeholder: "(00) 00000-0000",
@@ -107,7 +110,7 @@ export function buildCitizenFields({
         value: registerAuth.phone ?? "",
         onChangeText: (text) =>
           handleRegisterChange("phone", formatPhone(text)),
-      },
+      } as IInput,
       {
         label: "E-mail",
         placeholder: "email@exemplo.com",
@@ -119,7 +122,7 @@ export function buildCitizenFields({
         type: "email",
         value: registerAuth.email ?? "",
         onChangeText: (text) => handleRegisterChange("email", text),
-      },
+      } as IInput,
       {
         label: "Senha de acesso",
         placeholder: "••••••••",
@@ -133,7 +136,7 @@ export function buildCitizenFields({
         value: registerAuth.password ?? "",
         onChangeText: (text) => handleRegisterChange("password", text),
         onRightIconPress: onToggleShowPassword,
-      },
+      } as IInput,
     ],
     onSubmit: () => handleRegister(registerAuth),
     disableSubmit: loading,

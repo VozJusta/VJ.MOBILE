@@ -1,7 +1,7 @@
-import { CaseStatus } from "@/interfaces/components/CaseCard";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
 
 export const STATUS_STYLES: Record<
-  CaseStatus,
+  TCaseStatus,
   {
     dot: string;
     icon: string;

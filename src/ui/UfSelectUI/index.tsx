@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useMemo, useState } from "react";
 import type { UF } from "@/utils/mask";
-import { UfSelectProps } from "@/interfaces/ui/SelectUIProps/ufSelect";
+import { IUfSelect } from "@/interfaces/ui/SelectUI/ufSelect";
 
 const states: { label: string; value: UF }[] = [
   { label: "Acre (AC)", value: "AC" },
@@ -34,14 +34,14 @@ const states: { label: string; value: UF }[] = [
   { label: "Tocantins (TO)", value: "TO" },
 ];
 
-export default function UfSelect({
+export default function UfSelectUI({
   label,
   value,
   open,
   onValueChange,
   onOpenChange,
   onInteractionChange,
-}: UfSelectProps) {
+}: IUfSelect) {
   const [internalOpen, setInternalOpen] = useState(false);
   const items = useMemo(() => states, []);
   const isOpen = open ?? internalOpen;

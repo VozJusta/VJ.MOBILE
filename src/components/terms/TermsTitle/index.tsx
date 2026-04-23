@@ -1,7 +1,7 @@
-import { TermsTitleProps } from "@/interfaces/components/terms/TermsTitle";
+import { ITermsTitle } from "@/interfaces/components/terms/TermsTitle";
 import { View, Text } from "react-native";
 
-export default function TermsTitle(props: TermsTitleProps) {
+export default function TermsTitle(props: ITermsTitle) {
   return (
     <View className="flex flex-row w-full h-fit gap-4 items-center">
       <View className="flex items-center justify-center w-fit h-fit rounded-lg bg-[#135BEC]/10 p-2">

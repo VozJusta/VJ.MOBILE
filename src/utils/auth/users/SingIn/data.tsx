@@ -1,5 +1,3 @@
-import { ZodLoginTypes } from "@/interfaces/validation/zodTypes";
-import { IInputProps } from "@/interfaces/ui/InputUI";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { Email2FA } from "@/services/users/security/email2FA";
 import { SingIn } from "@/services/users/SingIn";
@@ -8,6 +6,8 @@ import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { ActivityIndicator, Text } from "react-native";
 import { IBuildLoginFields } from "@/interfaces/utils/auth/buildLoginFields";
+import { IInput } from "@/interfaces/ui/InputUI";
+import { ZodLoginTypes } from "@/types/validation";
 
 type Params = {
   showPassword: boolean;
@@ -22,7 +22,6 @@ export function buildLoginFields({
   loginAuth,
   handleLoginChange,
 }: Params): IBuildLoginFields {
-  const role = useRolesStorage((state) => state.role);
   const { loading, setLoading } = useAuth();
   const router = useRouter();
 
@@ -39,7 +38,7 @@ export function buildLoginFields({
         return;
       }
 
-      const userRole = response.data?.role ?? role;
+      const userRole = response.data?.role;
 
       const validateEmail2FA = await Email2FA(data.email);
       if (
@@ -89,7 +88,7 @@ export function buildLoginFields({
         type: "email",
         value: loginAuth.email ?? "",
         onChangeText: (text) => handleLoginChange("email", text),
-      },
+      } as IInput,
       {
         label: "Senha",
         placeholder: "••••••••",
@@ -103,7 +102,7 @@ export function buildLoginFields({
         value: loginAuth.password ?? "",
         onChangeText: (text) => handleLoginChange("password", text),
         onRightIconPress: onToggleShowPassword,
-      },
+      } as IInput,
     ],
     onSubmit: () => handleLogin(loginAuth),
     disableSubmit: loading,

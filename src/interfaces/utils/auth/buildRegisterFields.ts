@@ -1,9 +1,9 @@
 import { FieldsType } from "@/interfaces/template/SignInTemplate";
-import { IInputProps } from "@/interfaces/ui/InputUI";
+import { IInput } from "@/interfaces/ui/InputUI";
 import { ReactNode } from "react";
 
 export interface IBuildRegisterFields {
-    fields: IInputProps[];
+    fields: IInput[];
     onSubmit: () => void;
     disableSubmit: boolean;
     titleButton: ReactNode;

@@ -1,9 +1,7 @@
-import { buildLoginFields } from "@/utils/auth/users/SingIn/data";
-import { buildCitizenFields } from "@/utils/auth/users/SingUp/Citizen/data";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TextInputProps } from "react-native";
 
-export interface IInputProps {
+export interface IInput {
   label?: string;
   placeholder: string;
   leftIcon?: boolean;

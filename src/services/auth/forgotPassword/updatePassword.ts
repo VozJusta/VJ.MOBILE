@@ -1,5 +1,5 @@
-import { ZodUpdatePasswordTypes } from "@/interfaces/validation/zodTypes";
 import { BASE_URL } from "@/settings/BASE_URL";
+import { ZodUpdatePasswordTypes } from "@/types/validation";
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { ZodUpdatePasswordSchema } from "@/validation/schema.zod";
 

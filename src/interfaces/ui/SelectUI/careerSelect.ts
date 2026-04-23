@@ -1,4 +1,4 @@
-export interface CareerSelectProps {
+export interface ICareerSelect {
   label: string;
   value: string;
   options: string[];

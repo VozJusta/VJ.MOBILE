@@ -1,6 +1,6 @@
-import { RequestCardBadgeColor, RequestCardProps, RequestCardTextBadge } from "@/interfaces/components/RequestCard";
+import { IRequestCard, RequestCardBadgeColor, RequestCardTextBadge } from "@/interfaces/components/RequestCard";
 
-export const requestsCards: RequestCardProps[] = [
+export const requestsCards: IRequestCard[] = [
   {
     id: "1",
     area: "Direito Civil",

@@ -3,6 +3,7 @@ import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
 } from "@/store/auth/token.store";
+import { router } from "expo-router";
 
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -22,7 +23,10 @@ const processQueue = (error: Error | null, token: string | null = null) => {
   failedQueue = [];
 };
 
-export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+export async function apiFetch(
+  input: RequestInfo,
+  init?: RequestInit,
+): Promise<Response> {
   const accessToken = useAccessTokenStorage.getState().accessToken;
 
   const headers = new Headers(init?.headers);
@@ -36,6 +40,8 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<
   };
 
   let response = await fetch(input, config);
+
+  
 
   if (response.status === 401) {
     if (isRefreshing) {
@@ -59,6 +65,7 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<
     try {
       const newToken = await refreshToken();
 
+
       if (!newToken.success || !newToken.accessToken) {
         throw new Error("Falha ao atualizar o token.");
       }
@@ -67,21 +74,20 @@ export async function apiFetch(input: RequestInfo, init?: RequestInit): Promise<
 
       isRefreshing = false;
 
-      config.headers = new Headers(config.headers);
-      (config.headers as Headers).set(
-        "Authorization",
-        `Bearer ${newToken.accessToken}`,
-      );
+      const retryHeaders = new Headers(init?.headers);
+      retryHeaders.set("Authorization", `Bearer ${newToken.accessToken}`);
 
-      response = await fetch(input, config);
-
+      response = await fetch(input, { ...init, headers: retryHeaders });
       return response;
     } catch (error) {
+
       processQueue(error as Error, null);
       isRefreshing = false;
 
       useAccessTokenStorage.getState().clearTokens();
       useRefreshTokenStorage.getState().clearTokens();
+
+      router.replace("/screens/Onboarding/roles");
 
       throw error;
     }

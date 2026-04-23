@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "VozJusta",
-    "slug": "VozJusta",
+    "slug": "vj-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/svg/icons/icon.png",
-    "scheme": "meuapp",
+    "scheme": "vozjusta",
     "experiments": {
       "tsconfigPaths": true
     },

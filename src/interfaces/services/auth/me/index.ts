@@ -10,8 +10,8 @@ export interface IMeResponse {
   session_id: string;
   subscription: {
     plan: {
-        type: PlanType;
-    }
-  };
+        type: PlanType | null;
+    } | null
+  } | null;
 }
 

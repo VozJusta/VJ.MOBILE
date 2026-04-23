@@ -1,30 +1,25 @@
 import {
   View,
   Text,
-  Animated,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonUI from "@/ui/ButtonUI";
 import Logo from "@/assets/svg/icons/logo.svg";
-import InputUI from "@/ui/InputUI";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
-  IForgotPasswordProps,
+  IForgotPassword,
   ScreensForgotPassword,
 } from "@/interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "expo-router";
-import { useXTokenStorage } from "@/store/auth/token.store";
+import {  useRouter } from "expo-router";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
 import { UpdateForgotPassword } from "@/components/form/UpdateForgotPassword";
 
-export function ForgotPasswordTemplate(props: IForgotPasswordProps) {
+export function ForgotPasswordTemplate(props: IForgotPassword) {
   const router = useRouter();
 
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);

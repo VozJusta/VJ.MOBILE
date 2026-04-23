@@ -1,6 +1,12 @@
-import { OperationalStatsCardBgColor, OperationalStatsCardBorderColor, OperationalStatsCardIcon, OperationalStatsCardIconColor, OperationalStatsCardProps } from "@/interfaces/components/OperationalStatsCard";
+import {
+  IOperationalStatsCard,
+  OperationalStatsCardBgColor,
+  OperationalStatsCardBorderColor,
+  OperationalStatsCardIcon,
+  OperationalStatsCardIconColor,
+} from "@/interfaces/components/OperationalStatsCard";
 
-export const operationalStatsData: OperationalStatsCardProps[] = [
+export const operationalStatsData: IOperationalStatsCard[] = [
   {
     icon: OperationalStatsCardIcon.ACCEPTED,
     title: "Aceitos",

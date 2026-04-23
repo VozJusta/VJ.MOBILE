@@ -1,7 +1,8 @@
 import { ZodValidate } from "@/validation/safeValidate.zod";
 import { BASE_URL } from "@/settings/BASE_URL";
-import { ZodSignUpTypes } from "@/interfaces/validation/zodTypes";
 import { ZodSignUpSchema } from "@/validation/schema.zod";
+import { IRegisterResponse } from "@/interfaces/services/auth/signUp";
+import { ZodSignUpTypes } from "@/types/validation";
 
 export async function SignUpCitizen(data: ZodSignUpTypes) {
   try {
@@ -40,7 +41,7 @@ export async function SignUpCitizen(data: ZodSignUpTypes) {
 
     return {
       success: true,
-      data: json,
+      data: json as IRegisterResponse,
     };
   } catch (err: any) {
     return {

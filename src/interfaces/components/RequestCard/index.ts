@@ -10,7 +10,7 @@ export enum RequestCardTextBadge {
   PENDING = "Pendente",
 }
 
-export interface RequestCardProps {
+export interface IRequestCard {
   id: string;
   area: string;
   nameCase: string;

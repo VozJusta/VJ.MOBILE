@@ -1,12 +1,9 @@
 import { View, Text, ScrollView, Alert, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Logo from "@/assets/svg/icons/logo.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
-
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
-import { IDecodedToken } from "@/interfaces/services/token/token";
 import { jwtDecode } from "jwt-decode";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
@@ -14,6 +11,7 @@ import Header from "@/components/Header";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { PlanType } from "@/interfaces/services/auth/me";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
@@ -31,14 +29,10 @@ export default function ProfileCitizen() {
   useEffect(() => {
     if (!token) {
       router.replace("/screens/Onboarding/roles");
-    } else {
-      authMe();
+      return;
     }
-  }, [token]);
-
-  console.log("USER", user);
-
-  console.log(token)
+    authMe();
+  }, []);
 
   if (!token) return null;
   const sections = [[0, 1], [2, 3], [4]];
@@ -47,7 +41,7 @@ export default function ProfileCitizen() {
       <ActivityIndicator size="large" color="#FFF" />
     </View>
   ) : (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
         <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
         <View className="w-full justify-center items-center gap-[16px]">
@@ -73,13 +67,15 @@ export default function ProfileCitizen() {
             <Text className="font-inter text-[20px] text-[#F1F5F9]">
               {user?.full_name}
             </Text>
-            <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)]">
+            <View className="px-[12px] py-[2px] bg-[rgba(25,120,229,0.2)] rounded-full border border-solid border-[rgba(25,120,229,0.3)] mt-1">
               <Text className="font-interBold text-[10px] uppercase text-[#1978E5]">
-                {user?.subscription.plan.type === PlanType.FREE
+                {user?.subscription?.plan?.type === PlanType.FREE
                   ? "Plano Gratuito"
-                  : user?.subscription.plan.type === PlanType.PREMIUM
+                  : user?.subscription?.plan?.type === PlanType.PREMIUM
                     ? "Plano Premium"
-                    : "Plano Médio"}
+                    : user?.subscription?.plan?.type === PlanType.MEDIUM
+                      ? "Plano Médio"
+                      : "Sem plano"}
               </Text>
             </View>
           </View>

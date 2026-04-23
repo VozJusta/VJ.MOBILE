@@ -16,7 +16,7 @@ export enum StatsCardBgColor {
   SPEED = "rgba(0, 242, 255, 0.2)",
 }
 
-export type StatsCardProps = {
+export type IStatsCard = {
   icon: StatsCardIcon;
   iconColor: StatsCardIconColor;
   title: string;

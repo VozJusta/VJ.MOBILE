@@ -1,18 +1,15 @@
+import { IContactCard } from "@/interfaces/components/ContactCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 
-export interface ContactCardProps {
-  name: string;
-  phone: string;
-  email: string;
-}
-
-export default function ContactCard({ ...props }: ContactCardProps) {
+export default function ContactCard({ ...props }: IContactCard) {
   return (
     <View className="flex flex-col p-6 gap-4 bg-[#161E29]/70 border border-[#2B86EE]/20 rounded-2xl w-full h-fit">
       <View className="flex flex-row border-b border-b-[#2b86ee]/20 pb-3 gap-2">
         <MaterialIcons name="assignment-ind" size={24} color="#2b86ee" />
-        <Text className="font-interBold text-[16px] text-white">INFORMAÇÕES DE CONTATO</Text>
+        <Text className="font-interBold text-[16px] text-white">
+          INFORMAÇÕES DE CONTATO
+        </Text>
       </View>
       <View className="flex flex-row gap-4 items-center">
         <View className="flex items-center justify-center p-3 rounded-full bg-[#283546] border border-[#2B86EE]/20">

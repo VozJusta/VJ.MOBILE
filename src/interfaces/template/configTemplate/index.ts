@@ -64,7 +64,7 @@ export interface ISettingsDangerCard {
 	onPress?: () => void;
 }
 
-export interface ISettingsTemplateProps {
+export interface ISettingsTemplate {
 	title: string;
 	description?: string;
 	searchPlaceholder?: string;

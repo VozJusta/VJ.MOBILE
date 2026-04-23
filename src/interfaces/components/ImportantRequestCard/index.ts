@@ -1,6 +1,6 @@
-import { BadgeProps } from "../Badge";
+import { IBadge } from "../Badge";
 
-export type ImportantRequestCardProps = BadgeProps & {
+export type IImportantRequestCardProps = IBadge & {
   title: string;
-  score: number;
+  confidence_score: number;
 };

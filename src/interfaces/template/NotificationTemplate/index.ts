@@ -1,5 +1,5 @@
-import { NotificationCardProps } from "@/interfaces/components/NotificationCard";
+import { TNotificationCard } from "@/interfaces/components/NotificationCard";
 
-export interface NotificationTemplateProps {
-  notifications: NotificationCardProps[];
+export interface INotificationTemplate {
+  notifications: TNotificationCard[];
 }

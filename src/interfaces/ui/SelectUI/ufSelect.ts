@@ -1,4 +1,4 @@
-export interface UfSelectProps {
+export interface IUfSelect {
   label: string;
   value: string;
   style?: Object;

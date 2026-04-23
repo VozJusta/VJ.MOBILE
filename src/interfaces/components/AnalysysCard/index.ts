@@ -1,9 +1,9 @@
-export interface AnalysysCardProps {
-  title: AnalysysCardTitle;
+export interface IAnalysysCard {
+  title: IAnalysysCardTitle;
   text: string;
 }
 
-export enum AnalysysCardTitle {
+export enum IAnalysysCardTitle {
   FACTS = "Fatos relevantes",
   LEGAL_ANALYSIS = "Fundamentação sugerida",
   SIMPLIFIED_EXPLANATION = "Explicação simplificada",

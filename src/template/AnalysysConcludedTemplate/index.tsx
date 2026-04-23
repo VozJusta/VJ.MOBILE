@@ -2,10 +2,10 @@ import { View, Text, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
-import { IAnalysysConcludedTemplateProps } from "@/interfaces/template/analysysConcludedTemplate";
+import { IAnalysysConcludedTemplate } from "@/interfaces/template/analysysConcludedTemplate";
 
 export default function AnalysysConcludedTemplate(
-  props: IAnalysysConcludedTemplateProps,
+  props: IAnalysysConcludedTemplate,
 ) {
   return (
     <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>

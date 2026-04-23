@@ -2,11 +2,11 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Badge from "../Badge";
 import { MaterialIcons } from "@expo/vector-icons";
-import { LawyerCardProps } from "@/interfaces/components/LawyerCard";
+import { ILawyerCard } from "@/interfaces/components/LawyerCard";
 
-export default function LawyerCard(props: LawyerCardProps) {
+export default function LawyerCard(props: ILawyerCard) {
   const totalStars = 5;
-  const rating = props.rating;
+  const rating = props.rating || 0;
 
   const fullStars = Math.floor(rating);
   const decimal = rating % 1;
@@ -15,7 +15,7 @@ export default function LawyerCard(props: LawyerCardProps) {
 
   const roundedFullStars = decimal >= 0.75 ? fullStars + 1 : fullStars;
   return (
-    <TouchableOpacity className="flex flex-row gap-3 justify-between items-center bg-[#fff]/3 rounded-3xl border border-[#fff]/10 py-4 px-3" onPress={() => props.onPress()}>
+    <TouchableOpacity className="flex flex-row gap-3 justify-between items-center bg-[#fff]/3 rounded-3xl border border-[#fff]/10 py-4 px-3" onPress={() => props.onPress?.()}>
       <View className="rounded-full bg-[#0D59F2] border border-[#0B244F] size-16 flex items-center justify-center">
         <Text className="text-white text-[12px] font-interBold">DR</Text>
       </View>

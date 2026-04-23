@@ -1,16 +1,16 @@
 import { Pressable, View, Text } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { CaseCardProps, CaseStatus } from "@/interfaces/components/CaseCard";
 import { STATUS_STYLES } from "@/utils/components/CaseCard";
 import { translateStatus } from "@/utils/screens/citizen/home";
+import { ICaseCard, TCaseStatus } from "@/interfaces/components/CaseCard";
 
 export default function CaseCard({
   title,
   status,
   iconName,
   onPress,
-}: CaseCardProps) {
-  const styles = STATUS_STYLES[status as CaseStatus];
+}: ICaseCard) {
+  const styles = STATUS_STYLES[status as TCaseStatus];
 
   return (
     <Pressable

@@ -1,9 +1,9 @@
-import { StatsCardProps } from "@/interfaces/components/StatCard";
+import { IStatsCard } from "@/interfaces/components/StatCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
 
-export default function StatsCard(props: StatsCardProps) {
+export default function StatsCard(props: IStatsCard) {
   return (
     <View className="flex flex-row items-center gap-5 rounded-2xl p-6 bg-[#161E29]/70 border border-[#2B86EE]/20">
       <View

@@ -3,11 +3,9 @@ import { useRouter } from "expo-router";
 import { Text, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputUI from "@/ui/InputUI";
-import { casesData } from "@/utils/home/cases/data";
 import Header from "@/components/Header";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { MaterialIcons } from "@expo/vector-icons";
-import CaseCard from "@/components/CaseCard";
 import { documentsData } from "@/utils/documents/data";
 import DocCard from "@/components/DocCard";
 

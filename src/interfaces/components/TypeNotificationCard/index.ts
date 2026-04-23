@@ -19,7 +19,7 @@ export enum TypeNotificationBgColor {
   SUCCESS = "#161315",
 }
 
-export interface TypeNotificationCardProps {
+export interface ITypeNotificationCard {
   icon: TypeNotificationIcon;
   iconColor?: string;
   bgColor?: string;

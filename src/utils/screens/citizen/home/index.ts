@@ -1,7 +1,7 @@
-import { CaseStatus } from "@/interfaces/components/CaseCard";
+import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { specializationOptions } from "@/utils/auth/users/Lawyer/data";
 
-export const translateStatus = (status: CaseStatus) => {
+export const translateStatus = (status: TCaseStatus) => {
   switch (status) {
     case "Accepted":
       return "Aceito";
@@ -19,7 +19,7 @@ export const getCategoryLabel = (value: string) => {
   return option ? option.label : value;
 };
 
-export const getStatusIcon = (status: CaseStatus) => {
+export const getStatusIcon = (status: TCaseStatus) => {
   switch (status) {
     case "Accepted":
       return "verified";

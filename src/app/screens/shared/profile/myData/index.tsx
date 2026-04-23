@@ -1,9 +1,7 @@
-import Logo from "@/assets/svg/icons/logo.svg";
 import ButtonUI from "@/ui/ButtonUI";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import {  useMemo, useState } from "react";
 import {
   Alert,
   Pressable,
@@ -15,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
-import { IToken } from "@/interfaces/services/auth/citizen/SingUp";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 type EditableFieldProps = {
   label: string;
@@ -69,7 +67,7 @@ export default function MyDataScreen() {
   const [phone, setPhone] = useState("(11) 98765-4321");
   const token = useAccessTokenStorage((state) => state.accessToken);
   if (!token) return;
-  const decodedToken = jwtDecode<IToken>(token);
+  const decodedToken = jwtDecode<IDecodedToken>(token);
   Alert.alert("Token decodificado", JSON.stringify(decodedToken));
   const fullName = decodedToken.fullName || "";
   Alert.alert(fullName);
