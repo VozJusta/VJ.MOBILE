@@ -18,6 +18,7 @@ import {
   getCategoryLabel,
   getStatusIcon,
 } from "@/utils/screens/citizen/home";
+import Skeletons from "@/components/Skeletons";
 
 export default function ListCases() {
   const router = useRouter();
@@ -52,9 +53,7 @@ export default function ListCases() {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           loading ? (
-            <View className="flex-1 justify-center items-center">
-              <ActivityIndicator size="large" color="#fff" />
-            </View>
+            <Skeletons height={100} amountOfSkeletons={4} />
           ) : (
             <>
               <EmptyCases />
@@ -108,11 +107,10 @@ export default function ListCases() {
               <TouchableOpacity
                 onPress={goToPreviousPage}
                 disabled={!hasPreviousPage || loading}
-                className={`w-[40px] h-[40px] rounded-full justify-center items-center ${
-                  hasPreviousPage
+                className={`w-[40px] h-[40px] rounded-full justify-center items-center ${hasPreviousPage
                     ? "bg-white/5 border border-solid border-white/10"
                     : "bg-transparent opacity-30"
-                }`}
+                  }`}
               >
                 <MaterialIcons
                   name="keyboard-arrow-left"
@@ -126,11 +124,10 @@ export default function ListCases() {
                   <TouchableOpacity
                     onPress={() => goToPage(num)}
                     key={num}
-                    className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${
-                      page === num
+                    className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${page === num
                         ? "bg-[#2563EB]"
                         : "bg-white/5 border border-solid border-white/10"
-                    }`}
+                      }`}
                   >
                     <Text
                       className={`font-interBold text-[16px] ${page === num ? "text-white" : "text-[#94A3B8]"}`}
@@ -144,11 +141,10 @@ export default function ListCases() {
               <TouchableOpacity
                 onPress={goToNextPage}
                 disabled={!hasNextPage || loading}
-                className={`w-[40px] h-[40px] rounded-full justify-center items-center ${
-                  hasNextPage
+                className={`w-[40px] h-[40px] rounded-full justify-center items-center ${hasNextPage
                     ? "bg-[#2563EB]"
                     : "bg-transparent opacity-30 border border-solid border-white/10"
-                }`}
+                  }`}
                 style={
                   hasNextPage && {
                     shadowColor: "#1E3A8A",
