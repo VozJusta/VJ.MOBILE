@@ -2,6 +2,7 @@ import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { ILawyerRequest } from "@/interfaces/services/lawyer/requests";
 import { IRequestDetails } from "@/interfaces/services/lawyer/requests/requestDetails";
 import { getLawyerRequests } from "@/services/lawyer/requests";
+import { patchRequest } from "@/services/lawyer/requests/requestActions";
 import { getRequestDetailsById } from "@/services/lawyer/requests/requestDetails";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
@@ -65,11 +66,38 @@ export const useLawyerRequests = () => {
     }
   };
 
+  const acceptRequest = async (requestId: string) => {
+    try {
+      const response = await patchRequest(requestId, "accept")
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Solicitação aceita com sucesso!",
+        });
+        fetchRequestById(requestId);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao aceitar solicitação",
+          text2: response.message,
+        });
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao aceitar solicitação",
+        text2: "Tente novamente mais tarde",
+      });
+    }
+  }
+
   return {
     requests,
     loading,
     fetchRequests,
     fetchRequestById,
     requestDetails,
+    acceptRequest
   };
 };
