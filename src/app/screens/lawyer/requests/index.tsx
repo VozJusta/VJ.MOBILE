@@ -7,8 +7,6 @@ import RequestCard from "@/components/RequestCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
 import EmptyState from "@/components/EmptyState";
-import { MotiView } from "moti";
-import { Skeleton } from "moti/skeleton";
 import {
   RequestCardBadgeColor,
   RequestCardTextBadge,
@@ -18,7 +16,7 @@ import Skeletons from "@/components/Skeletons";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
-  const { fetchRequests, loading, requests } = useLawyerRequests();
+  const { fetchRequests, loading, requests, handleRequestAction } = useLawyerRequests();
 
   useEffect(() => {
     fetchRequests();
@@ -44,7 +42,7 @@ export default function RequestsScreens() {
     <SafeAreaView className="flex-1">
       <FlatList
         data={requests}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RequestCard
             {...item}
@@ -62,6 +60,8 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
+            onAccept={() => handleRequestAction(item.id, "accept")}
+            onReject={() => handleRequestAction(item.id, "reject")}
           />
         )}
         contentContainerClassName="gap-8 pb-6"
