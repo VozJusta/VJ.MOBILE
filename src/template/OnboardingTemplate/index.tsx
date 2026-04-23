@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 import Onboarding, { DotProps } from "react-native-onboarding-swiper";
 import { onboardingData } from "./data";
