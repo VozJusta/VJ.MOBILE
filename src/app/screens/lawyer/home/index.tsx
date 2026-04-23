@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { router } from "expo-router";
 import { ProductivityChart } from "@/components/ProductivityChart";
 import { IDecodedToken } from "@/interfaces/shared/decodedToken";
+import EmptyState from "@/components/EmptyState";
 
 export default function LawyerHome() {
   const token = useAccessTokenStorage((state) => state.accessToken);
@@ -24,30 +25,33 @@ export default function LawyerHome() {
   const chartData = analyticsData?.data || [];
 
   let decodedToken: IDecodedToken | null = null;
-   if (token) {
-     try {
-       decodedToken = jwtDecode<IDecodedToken>(token);
-     } catch {
-       decodedToken = null;
-     }
-   }
- 
-   useEffect(() => {
-     if (!token) {
-       router.replace("/screens/Onboarding/roles");
-     } else {
-       authMe();
-     }
-   }, [token]);
- 
-   if (!token) return null;
+  if (token) {
+    try {
+      decodedToken = jwtDecode<IDecodedToken>(token);
+    } catch {
+      decodedToken = null;
+    }
+  }
+
+  useEffect(() => {
+    if (!token) {
+      router.replace("/screens/Onboarding/roles");
+    } else {
+      authMe();
+    }
+  }, [token]);
+
+  if (!token) return null;
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
 
-        {loading || !analyticsData || !operationalStats || !highRelevanceCases ? (
+        {loading ||
+        !analyticsData ||
+        !operationalStats ||
+        !highRelevanceCases ? (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator size="large" color="#fff" />
           </View>
@@ -69,7 +73,17 @@ export default function LawyerHome() {
                   Análise de produtividade
                 </Text>
               </View>
-              <ProductivityChart data={chartData} />
+              {chartData.length === 0 ? (
+                <EmptyState
+                  icon="area-chart"
+                  title="Sem dados suficientes"
+                  description="Não há dados disponíveis para exibir a análise de produtividade."
+                />
+              ) : (
+                <>
+                  <ProductivityChart data={chartData} />
+                </>
+              )}
             </View>
             <View className="flex flex-col gap-6">
               <Text className="text-white text-[20px] font-interBold">
