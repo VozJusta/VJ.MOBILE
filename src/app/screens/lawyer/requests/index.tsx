@@ -8,6 +8,10 @@ import { requestsCards } from "./data";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
 import EmptyState from "@/components/EmptyState";
+import {
+  RequestCardBadgeColor,
+  RequestCardTextBadge,
+} from "@/interfaces/components/RequestCard";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
@@ -22,9 +26,27 @@ export default function RequestsScreens() {
   return (
     <SafeAreaView className="flex-1">
       <FlatList
-        data={requestsCards}
+        data={requests}
         keyExtractor={(item, index) => item.id}
-        renderItem={({ item }) => <RequestCard {...item} />}
+        renderItem={({ item }) => (
+          <RequestCard
+            {...item}
+            textBadge={
+              item.statusCase === "Accepted"
+                ? RequestCardTextBadge.ACCEPTED
+                : item.statusCase === "Refused"
+                  ? RequestCardTextBadge.REJECTED
+                  : RequestCardTextBadge.PENDING
+            }
+            badgeColor={
+              item.statusCase === "Accepted"
+                ? RequestCardBadgeColor.ACCEPTED
+                : item.statusCase === "Refused"
+                  ? RequestCardBadgeColor.REJECTED
+                  : RequestCardBadgeColor.PENDING
+            }
+          />
+        )}
         contentContainerClassName="gap-8 pb-6"
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
