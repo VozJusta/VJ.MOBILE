@@ -156,15 +156,11 @@ export default function CaseSelected() {
               phone={reportData.user.report.lawyer.phone}
             />
           ) : (
-            <View className="p-8 border border-dashed border-[rgba(255,255,255,0.1)] bg-[rgba(15,23,42,0.7)] rounded-[16px] flex flex-col gap-4 justify-center items-center">
-              <MaterialIcons name="person-off" size={48} color="#8D90A1" />
-              <Text
-                className="font-interRegular text-[16px] text-[#8D90A1] text-center"
-                style={{ color: "#8D90A1" }}
-              >
-                Informações de contato não disponíveis
-              </Text>
-            </View>
+            <EmptyState
+              icon="person-off"
+              title="Contato não disponível"
+              description="As informações de contato do advogado não estão disponíveis no momento."
+            />
           )}
 
           <View className="w-full mt-[9px] mb-[24px]">
