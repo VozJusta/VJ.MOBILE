@@ -1,6 +1,6 @@
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 
-export interface LawyerRequest {
+export interface ILawyerRequest {
   id: string;
   clientName: string;
   category_detected: string;
