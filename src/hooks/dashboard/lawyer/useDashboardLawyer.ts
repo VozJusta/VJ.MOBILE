@@ -30,7 +30,7 @@ export const useDashboardLawyer = () => {
           text2: response.fields?.[0],
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar analytics",
@@ -52,7 +52,7 @@ export const useDashboardLawyer = () => {
           text2: response.fields?.[0],
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar estatísticas operacionais",
@@ -73,7 +73,7 @@ export const useDashboardLawyer = () => {
           text2: response.message,
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar casos de alta relevância",

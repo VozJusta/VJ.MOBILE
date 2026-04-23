@@ -23,7 +23,7 @@ export async function logout() {
       success: true,
       message: json.message || "Logout successful",
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "An error occurred during logout",

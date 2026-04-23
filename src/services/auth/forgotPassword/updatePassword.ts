@@ -43,7 +43,7 @@ export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
     }
 
     return { success: true, data: json || "" };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

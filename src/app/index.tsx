@@ -24,7 +24,7 @@ export default function App() {
     }
     try {
       return jwtDecode<IDecodedToken>(accessToken);
-    } catch (error) {
+    } catch {
       return null;
     }
   }, [accessToken]);

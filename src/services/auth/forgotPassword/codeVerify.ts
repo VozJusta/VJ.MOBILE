@@ -30,7 +30,7 @@ export async function ValidateCode(email: string, code: string) {
       success: true,
       data: json,
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

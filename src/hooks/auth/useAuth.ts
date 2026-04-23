@@ -85,7 +85,7 @@ export const useAuth = () => {
           text2: response.message,
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Não foi possível fazer sair da conta",
@@ -125,7 +125,7 @@ export const useAuth = () => {
           text2: response.message,
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Não foi possível encerrar a conta",
@@ -153,7 +153,7 @@ export const useAuth = () => {
       }
 
       setUser(response.data);
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Não foi possível obter os dados do usuário",

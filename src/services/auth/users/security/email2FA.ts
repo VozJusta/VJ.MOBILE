@@ -25,7 +25,7 @@ export async function Email2FA(email: string) {
       success: true,
       data: "Código de verificação enviado para o email",
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

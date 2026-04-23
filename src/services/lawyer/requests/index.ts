@@ -29,7 +29,7 @@ export async function getLawyerRequests(status?: TCaseStatus) {
       success: true,
       data: json as ILawyerRequest[],
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro ao buscar solicitações"],

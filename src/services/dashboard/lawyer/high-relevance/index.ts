@@ -27,7 +27,7 @@ export async function getHighRelevanceDashboardLawyer() {
       success: true,
       data: json as IHighRelevanceResponse[],
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       message: "An error occurred while fetching high relevance cases",

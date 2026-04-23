@@ -34,7 +34,7 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
           text2: response.fields?.[0],
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar relatórios",
@@ -59,7 +59,7 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
           text1: "Erro ao buscar detalhes do relatório",
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao buscar detalhes do relatório",

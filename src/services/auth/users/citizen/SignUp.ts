@@ -43,7 +43,7 @@ export async function SignUpCitizen(data: ZodSignUpTypes) {
       success: true,
       data: json as IRegisterResponse,
     };
-  } catch (err: any) {
+  } catch {
     return {
       success: false,
       fields: ["Erro de conexão com o servidor"],

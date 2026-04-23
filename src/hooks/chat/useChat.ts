@@ -131,7 +131,7 @@ export function useChat() {
       }
 
       router.push("/screens/citizen/chat/conversation");
-    } catch (err) {
+    } catch {
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
     } finally {
       setLoading(false);
@@ -188,7 +188,7 @@ export function useChat() {
           setReportId(response.data.reportId);
         }
       }
-    } catch (err) {
+    } catch {
       removeMessage(tempId);
       setMessage(userMessage);
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
@@ -220,7 +220,7 @@ export function useChat() {
       audioRecorder.record();
 
       setIsRecording(true);
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao iniciar gravação",
@@ -263,7 +263,7 @@ export function useChat() {
             : "Erro ao transcrever áudio",
         });
       }
-    } catch (error) {
+    } catch {
       Toast.show({
         type: "error",
         text1: "Erro ao transcrever áudio",

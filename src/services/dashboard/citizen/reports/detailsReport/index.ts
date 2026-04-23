@@ -30,7 +30,7 @@ export async function getReportDetails(reportId: string) {
       success: true,
       data: data as IGetReportDetailsResponse,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       fields: ["Erro ao obter detalhes do relatório"],
