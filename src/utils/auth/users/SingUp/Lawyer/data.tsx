@@ -3,9 +3,9 @@ import { formatOABNumber } from "@/utils/oabValidate";
 import { IBuildRegisterLawyerFields } from "@/interfaces/utils/auth/buildRegisterFields";
 import { useRouter } from "expo-router";
 import { ILawyerRegisterData } from "@/interfaces/store/auth/users/lawyer";
-import { SignUpLawyer } from "@/services/users/lawyer/SignUp";
+import { SignUpLawyer } from "@/services/auth/users/lawyer/SignUp";
 import Toast from "react-native-toast-message";
-import { Email2FA } from "@/services/users/security/email2FA";
+import { Email2FA } from "@/services/auth/users/security/email2FA";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { ActivityIndicator, Text } from "react-native";
@@ -47,7 +47,6 @@ export function buildLawyerFields({
           text1: "Erro no cadastro",
           text2: response.fields[0],
         });
-
 
         return;
       }

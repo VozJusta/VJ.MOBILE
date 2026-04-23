@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/auth/useAuth";
 import { ValidateCode } from "@/services/auth/forgotPassword/codeVerify";
-import { ValidateEmail } from "@/services/users/security/validateEmail";
+import { ValidateEmail } from "@/services/auth/users/security/validateEmail";
 import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
@@ -100,7 +100,6 @@ export function CodeForgotPassword({
           setCodeChange(value);
           const currentPath = pathName.toLowerCase();
           if (currentPath.includes("validate")) {
-            
             handleValidateCode(emailValidateScreen, value, token ? token : "");
           } else if (currentPath.includes("forgotpassword")) {
             handleValidateCodeForgotPassword(emailStorage, value);
@@ -138,7 +137,9 @@ export function CodeForgotPassword({
               <Text className="text-[16px] font-interBold text-white">
                 {loading ? (
                   <ActivityIndicator size="small" color="#FFF" />
-                ) : resolvedVerifyButtonLabel}
+                ) : (
+                  resolvedVerifyButtonLabel
+                )}
               </Text>
             </View>
           }

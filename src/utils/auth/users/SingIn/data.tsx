@@ -1,6 +1,6 @@
 import { useAuth } from "@/hooks/auth/useAuth";
-import { Email2FA } from "@/services/users/security/email2FA";
-import { SingIn } from "@/services/users/SingIn";
+import { Email2FA } from "@/services/auth/users/security/email2FA";
+import { SingIn } from "@/services/auth/users/SingIn";
 import { useRolesStorage } from "@/store/auth/roles.store";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
