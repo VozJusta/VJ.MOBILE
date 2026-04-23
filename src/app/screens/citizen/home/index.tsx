@@ -14,6 +14,7 @@ import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import { IReport } from "@/interfaces/services/dashboard/citizen/reports/cards";
+import EmptyState from "@/components/EmptyState";
 
 export default function Home() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function Home() {
     }
   }, [token]);
 
-  console.log(token)
+  console.log(token);
 
   if (!token) return null;
 
@@ -95,15 +96,11 @@ export default function Home() {
           {loading ? (
             <ActivityIndicator size="large" color="#2563EB" className="mt-4" />
           ) : reports.length === 0 ? (
-            <View className="w-full h-fit bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[12px] px-[16px] pt-[32px] gap-[6.9px] pb-[24px] flex flex-col items-center justify-center">
-              <EmptyCases width={120} height={120} />
-              <Text className="text-[20px] text-white font-interSemiBold">
-                Nenhum caso por aqui
-              </Text>
-              <Text className="text-[14px] text-[#94A3B8] font-interRegular">
-                Você ainda não iniciou nenhum relato jurídico.
-              </Text>
-            </View>
+            <EmptyState
+              icon="gavel"
+              title="Nenhum caso por aqui"
+              description="Você ainda não iniciou nenhum relato jurídico."
+            />
           ) : (
             reports.map((report) => (
               <CaseCard
