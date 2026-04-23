@@ -92,12 +92,39 @@ export const useLawyerRequests = () => {
     }
   }
 
+  const rejectRequest = async (requestId: string) => {
+    try {
+      const response = await patchRequest(requestId, "reject")
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: "Solicitação rejeitada com sucesso!",
+        });
+        fetchRequestById(requestId);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao rejeitar solicitação",
+          text2: response.message,
+        });
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao rejeitar solicitação",
+        text2: "Tente novamente mais tarde",
+      });
+    }
+  }
+
   return {
     requests,
     loading,
     fetchRequests,
     fetchRequestById,
     requestDetails,
-    acceptRequest
+    acceptRequest,
+    rejectRequest,
   };
 };
