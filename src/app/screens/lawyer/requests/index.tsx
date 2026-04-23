@@ -6,12 +6,17 @@ import Filters from "@/components/Filters";
 import RequestCard from "@/components/RequestCard";
 import { requestsCards } from "./data";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
+import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
+import EmptyState from "@/components/EmptyState";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
+  const { fetchRequests, loading, requests } = useLawyerRequests();
 
   const handleFilterChange = (filter: TCaseStatus | "") => {
     setSelectedFilter(filter);
+
+    fetchRequests(filter || undefined);
   };
 
   return (
@@ -37,6 +42,13 @@ export default function RequestsScreens() {
             </View>
             <Filters onFilterChange={handleFilterChange} />
           </>
+        }
+        ListEmptyComponent={
+          <EmptyState
+            icon="folder-off"
+            title="Nenhuma solicitação encontrada"
+            description="Você ainda não possui solicitações na nossa plataforma. Assim que receber uma solicitação, ela aparecerá aqui."
+          />
         }
       />
     </SafeAreaView>
