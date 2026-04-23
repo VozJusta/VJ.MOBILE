@@ -78,7 +78,11 @@ export default function RequestsScreens() {
                 nome do caso.
               </Text>
             </View>
-            <Filters onFilterChange={handleFilterChange} amounts={amounts} />
+            <Filters
+              onFilterChange={handleFilterChange}
+              amounts={amounts}
+              statusSelected={selectedFilter || undefined}
+            />
           </>
         }
         ListEmptyComponent={
