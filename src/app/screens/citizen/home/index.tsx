@@ -11,9 +11,7 @@ import CaseCard from "@/components/CaseCard";
 import { getCategoryLabel, getStatusIcon } from "@/utils/screens/citizen/home";
 import { useEffect } from "react";
 import { IDecodedToken } from "@/interfaces/shared/decodedToken";
-import EmptyCases from "@/assets/svg/empty-cases.svg";
 import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
-import { IReport } from "@/interfaces/services/dashboard/citizen/reports/cards";
 import EmptyState from "@/components/EmptyState";
 
 export default function Home() {
@@ -36,7 +34,6 @@ export default function Home() {
     }
   }, [token]);
 
-  console.log(token);
 
   if (!token) return null;
 
