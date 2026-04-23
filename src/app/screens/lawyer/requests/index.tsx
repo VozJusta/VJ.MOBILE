@@ -13,10 +13,13 @@ import {
 } from "@/interfaces/components/RequestCard";
 import { IAmounts } from "@/interfaces/components/Filters";
 import Skeletons from "@/components/Skeletons";
+import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
-  const { fetchRequests, loading, requests, handleRequestAction } = useLawyerRequests();
+  const [isDownloading, setIsDownloading] = useState(false);
+  const { fetchRequests, loading, requests, handleRequestAction } =
+    useLawyerRequests();
 
   useEffect(() => {
     fetchRequests();
@@ -36,6 +39,18 @@ export default function RequestsScreens() {
       .length,
     Refused: requests.filter((request) => request.statusCase === "Refused")
       .length,
+  };
+
+  const handleDownloadReport = async (reportId: string) => {
+    if (!reportId) return;
+
+    try {
+      setIsDownloading(true);
+
+      await downloadReportAsPdf(reportId);
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -60,6 +75,7 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
+            onSeeReport={() => handleDownloadReport(item.id)}
             onAccept={() => handleRequestAction(item.id, "accept")}
             onReject={() => handleRequestAction(item.id, "reject")}
           />
