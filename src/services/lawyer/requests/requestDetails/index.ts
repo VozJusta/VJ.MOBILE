@@ -2,7 +2,7 @@ import { apiFetch } from "@/helpers/api/apiFetch";
 import { IRequestDetails } from "@/interfaces/services/lawyer/requests/requestDetails";
 import { BASE_URL } from "@/settings/BASE_URL";
 
-export async function requestDetails(requestId: string) {
+export async function getRequestDetailsById(requestId: string) {
   try {
     const response = await apiFetch(`${BASE_URL}/lawyer/cases/${requestId}`, {
       method: "GET",
