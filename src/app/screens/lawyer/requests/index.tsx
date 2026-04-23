@@ -14,6 +14,7 @@ import {
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
 import { IAmounts } from "@/interfaces/components/Filters";
+import Skeletons from "@/components/Skeletons";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
@@ -87,26 +88,7 @@ export default function RequestsScreens() {
         }
         ListEmptyComponent={
           loading ? (
-            <MotiView
-              transition={{
-                type: "timing",
-              }}
-              style={styles.container}
-              animate={{ backgroundColor: "transparent" }}
-            >
-              <Skeleton
-                width={"100%"}
-                height={250}
-                radius={25}
-                colorMode="dark"
-              />
-              <Skeleton
-                width={"100%"}
-                height={250}
-                radius={25}
-                colorMode="dark"
-              />
-            </MotiView>
+            <Skeletons amountOfSkeletons={2} height={250} />
           ) : (
             <EmptyState
               icon="folder-off"
@@ -119,4 +101,3 @@ export default function RequestsScreens() {
     </SafeAreaView>
   );
 }
-
