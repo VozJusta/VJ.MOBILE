@@ -15,7 +15,7 @@ type Params = {
   handleLoginChange: (name: keyof ZodLoginTypes, value: string) => void;
 };
 
-export function buildLoginFields({
+export function useBuildLoginFields({
   showPassword,
   onToggleShowPassword,
   loginAuth,

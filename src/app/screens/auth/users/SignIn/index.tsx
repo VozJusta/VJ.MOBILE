@@ -1,5 +1,5 @@
 import SignInTemplate from "@/template/auth/SingInTemplate";
-import { buildLoginFields } from "@/utils/auth/users/SingIn/data";
+import { useBuildLoginFields } from "@/utils/auth/users/SingIn/data";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -10,7 +10,7 @@ export default function Login() {
   const { loginAuth, handleLoginChange, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
-  const signInData = buildLoginFields({
+  const signInData = useBuildLoginFields({
     loginAuth,
     handleLoginChange,
     showPassword,
