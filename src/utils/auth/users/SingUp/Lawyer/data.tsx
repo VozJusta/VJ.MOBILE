@@ -25,7 +25,7 @@ type Params = {
   specializationOptions: { label: string; value: string }[];
 };
 
-export function buildLawyerFields({
+export function useBuildLawyerFields({
   showPassword,
   onToggleShowPassword,
   registerAuth,
