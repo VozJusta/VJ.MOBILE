@@ -1,4 +1,5 @@
 import { ILawyersList } from "@/interfaces/services/citizen/lawyersList";
+import { getLawyerSelected } from "@/services/citizens/lawyerSelected";
 import { getLawyersList } from "@/services/citizens/lawyersList";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -44,6 +45,32 @@ export function useLawyersList(initialPageSize: number = 6) {
     }
   };
 
+  const fetchLawyerById = async (lawyerId: string) => {
+    setLoading(true);
+
+    try {
+      const response = await getLawyerSelected(lawyerId);
+
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao buscar advogado",
+          text2: response.fields?.[0],
+        });
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao buscar advogado",
+        text2: "Tente novamente mais tarde",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchLawyers(1);
   }, [pageSize]);
@@ -81,5 +108,6 @@ export function useLawyersList(initialPageSize: number = 6) {
     goToPreviousPage,
     goToPage,
     refresh,
+    fetchLawyerById,
   };
 }
