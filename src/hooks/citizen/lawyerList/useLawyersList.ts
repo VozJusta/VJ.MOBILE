@@ -1,3 +1,4 @@
+import { ILawyerSelected } from "@/interfaces/services/citizen/lawyerSelected";
 import { ILawyersList } from "@/interfaces/services/citizen/lawyersList";
 import { getLawyerSelected } from "@/services/citizens/lawyerSelected";
 import { getLawyersList } from "@/services/citizens/lawyersList";
@@ -6,6 +7,7 @@ import Toast from "react-native-toast-message";
 
 export function useLawyersList(initialPageSize: number = 6) {
   const [lawyers, setLawyers] = useState<ILawyersList["data"]>([]);
+  const [lawyerSelected, setLawyerSelected] = useState<ILawyerSelected | null>(null);
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -52,6 +54,7 @@ export function useLawyersList(initialPageSize: number = 6) {
       const response = await getLawyerSelected(lawyerId);
 
       if (response.success && response.data) {
+        setLawyerSelected(response.data);
         return response.data;
       } else {
         Toast.show({
@@ -109,5 +112,6 @@ export function useLawyersList(initialPageSize: number = 6) {
     goToPage,
     refresh,
     fetchLawyerById,
+    lawyerSelected,
   };
 }
