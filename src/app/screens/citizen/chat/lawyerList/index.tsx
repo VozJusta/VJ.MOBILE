@@ -47,6 +47,8 @@ export default function LawyerList() {
 
   const pageNumbers = getPageNumbers();
 
+  console.log("lawyers", lawyers);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -89,6 +91,12 @@ export default function LawyerList() {
             <View className="flex flex-col gap-4">
               <LawyerCard
                 {...item}
+                onPress={() =>
+                  router.push({
+                    pathname: "/screens/citizen/chat/lawyerList/lawyerSelected/[id]",
+                    params: { id: item.id },
+                  })
+                }
                 name={item.full_name}
                 badges={[
                   {
