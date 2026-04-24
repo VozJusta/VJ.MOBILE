@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/svg/icons/icon.png",
     "scheme": "vozjusta",
+    "jsEngine": "hermes",
     "experiments": {
       "tsconfigPaths": true
     },
@@ -33,7 +34,9 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.vozjusta.mobile"
+      "package": "com.vozjusta.mobile",
+      "enableProguardInReleaseBuilds": true,
+      "enableShrinkResourcesInReleaseBuilds": true
     },
     "plugins": [
       ["expo-router", { "root": "src/app" }],

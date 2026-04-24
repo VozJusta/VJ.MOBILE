@@ -10,7 +10,6 @@ export async function getLawyerRequests(status?: TCaseStatus) {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Accept: "application/json",
         },
       },

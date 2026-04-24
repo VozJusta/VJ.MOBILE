@@ -186,7 +186,6 @@ export default function SettingsTemplate({
   description,
   searchPlaceholder,
   templateVariant = "default",
-  onBack,
   sections,
   versionLabel,
   supportCard,

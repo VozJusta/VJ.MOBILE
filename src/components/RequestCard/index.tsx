@@ -1,4 +1,4 @@
-import { View, Text, Alert, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
 
@@ -52,7 +52,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
           paddingButtonStatus="0"
           gradient
           hover={false}
-          onPress={() => Alert.alert("Dossiê aberto.")}
+          onPress={() => props.onSeeReport && props.onSeeReport()}
           iconLeft={true}
           iconName="remove-red-eye"
           children={
@@ -71,7 +71,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
             paddingButtonStatus="0"
             gradient
             hover={false}
-            onPress={() => Alert.alert("Caso aceito")}
+            onPress={() => props.onAccept && props.onAccept()}
             iconLeft={false}
             children={
               <View className="flex flex-row items-center gap-2 w-full justify-center h-full">
@@ -85,7 +85,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
             paddingButtonStatus="0"
             gradient
             hover={false}
-            onPress={() => Alert.alert("Caso recusado.")}
+            onPress={() => props.onReject && props.onReject()}
             iconLeft={false}
             children={
               <View className="flex flex-row items-center gap-2 w-full justify-center h-full bg-[#EF4444]">

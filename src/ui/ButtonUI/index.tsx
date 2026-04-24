@@ -6,7 +6,6 @@ import { IButton } from "@/interfaces/ui/ButtonUI";
 export default function ButtonUI({
   goNext = false,
   goBack = false,
-  iconLeft = false,
   gradient = false,
   hover = false,
   ...props

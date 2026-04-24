@@ -1,7 +1,6 @@
 import { Slot } from "expo-router";
 import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LawyerLayout() {
   return (

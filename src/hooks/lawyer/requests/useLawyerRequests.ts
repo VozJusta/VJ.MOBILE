@@ -1,11 +1,17 @@
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { ILawyerRequest } from "@/interfaces/services/lawyer/requests";
+import { IRequestDetails } from "@/interfaces/services/lawyer/requests/requestDetails";
 import { getLawyerRequests } from "@/services/lawyer/requests";
+import { patchRequest } from "@/services/lawyer/requests/requestActions";
+import { getRequestDetailsById } from "@/services/lawyer/requests/requestDetails";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 
 export const useLawyerRequests = () => {
   const [requests, setRequests] = useState<ILawyerRequest[]>([]);
+  const [requestDetails, setRequestDetails] = useState<IRequestDetails | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
 
   const fetchRequests = async (status?: TCaseStatus) => {
@@ -34,9 +40,70 @@ export const useLawyerRequests = () => {
     }
   };
 
+  const fetchRequestById = async (requestId: string) => {
+    setLoading(true);
+
+    try {
+      const response = await getRequestDetailsById(requestId);
+
+      if (response.success && response.data) {
+        setRequestDetails(response.data);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao buscar detalhes da solicitação",
+          text2: response.fields?.[0],
+        });
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao buscar detalhes da solicitação",
+        text2: "Tente novamente mais tarde",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRequestAction = async (
+    requestId: string,
+    action: "accept" | "reject",
+  ) => {
+    setLoading(true);
+    try {
+      const response = await patchRequest(requestId, action);
+
+      if (response.success) {
+        Toast.show({
+          type: "success",
+          text1: `Solicitação ${action === "accept" ? "aceita" : "rejeitada"} com sucesso!`,
+        });
+        fetchRequestById(requestId);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: `Erro ao ${action === "accept" ? "aceitar" : "rejeitar"} solicitação`,
+          text2: response.message,
+        });
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: `Erro ao ${action === "accept" ? "aceitar" : "rejeitar"} solicitação`,
+        text2: "Tente novamente mais tarde",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     requests,
     loading,
-    fetchRequests
+    fetchRequests,
+    fetchRequestById,
+    requestDetails,
+    handleRequestAction
   };
 };

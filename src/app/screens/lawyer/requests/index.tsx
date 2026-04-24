@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -7,18 +7,19 @@ import RequestCard from "@/components/RequestCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
 import EmptyState from "@/components/EmptyState";
-import { MotiView } from "moti";
-import { Skeleton } from "moti/skeleton";
 import {
   RequestCardBadgeColor,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
 import { IAmounts } from "@/interfaces/components/Filters";
 import Skeletons from "@/components/Skeletons";
+import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
-  const { fetchRequests, loading, requests } = useLawyerRequests();
+  const [isDownloading, setIsDownloading] = useState(false);
+  const { fetchRequests, loading, requests, handleRequestAction } =
+    useLawyerRequests();
 
   useEffect(() => {
     fetchRequests();
@@ -40,11 +41,23 @@ export default function RequestsScreens() {
       .length,
   };
 
+  const handleDownloadReport = async (reportId: string) => {
+    if (!reportId) return;
+
+    try {
+      setIsDownloading(true);
+
+      await downloadReportAsPdf(reportId);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <FlatList
         data={requests}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <RequestCard
             {...item}
@@ -62,6 +75,9 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
+            onSeeReport={() => handleDownloadReport(item.id)}
+            onAccept={() => handleRequestAction(item.id, "accept")}
+            onReject={() => handleRequestAction(item.id, "reject")}
           />
         )}
         contentContainerClassName="gap-8 pb-6"

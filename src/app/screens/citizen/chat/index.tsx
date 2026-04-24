@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useChat } from "@/hooks/chat/useChat";
 import ButtonAudio from "@/components/ButtonAudio";
-import { formatTime, getBarHeight } from "@/utils/components/ButtonAudio";
+import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 
 export default function Chat() {

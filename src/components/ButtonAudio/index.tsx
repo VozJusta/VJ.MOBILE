@@ -1,6 +1,6 @@
 import { IButtonAudio } from "@/interfaces/components/ButtonAudio";
 import { MaterialIcons } from "@expo/vector-icons";
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 export default function ButtonAudio(props: IButtonAudio) {
   return (

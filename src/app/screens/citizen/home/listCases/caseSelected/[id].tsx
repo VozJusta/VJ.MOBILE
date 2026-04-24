@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import Report from "@/assets/svg/reportIcon.svg";
 import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
 import { useEffect, useState } from "react";
@@ -14,13 +14,11 @@ import Header from "@/components/Header";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
-import { MaterialIcons } from "@expo/vector-icons";
 import DocCard from "@/components/DocCard";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
 
 export default function CaseSelected() {
-  const router = useRouter();
   const local = useLocalSearchParams<{ id?: string | string[] }>();
   const [reportData, setReportData] = useState<
     IGetReportDetailsResponse | undefined

@@ -6,7 +6,6 @@ import { NavbarItemsCitizen, NavbarItemsLawyer } from "@/utils/components/Navbar
 
 export default function Navbar({
   isLawyer,
-  profile,
 }: {
   isLawyer: boolean;
   profile: boolean;
@@ -17,9 +16,8 @@ const pathname = usePathname();
   return (
     <View className="bg-[#161E29] rounded-[16px] flex-row border border-solid border-[rgba(255,255,255,0.1)] w-[343px] h-[64px] absolute bottom-6 justify-between items-center self-center px-[16px] mb-6 py-[9.5px] ">
       {!isLawyer
-        ? NavbarItemsCitizen.map((item, index) => {
+        ? NavbarItemsCitizen.map((item) => {
             const activeItem = pathname === item.path;
-            const profileIndex = NavbarItemsCitizen.length - 1;
             return (
               <ButtonUI
                 key={ item.path }
@@ -47,7 +45,7 @@ const pathname = usePathname();
               />
             );
           })
-        : NavbarItemsLawyer.map((item, index) => {
+        : NavbarItemsLawyer.map((item) => {
             const activeItem = pathname === item.path;
             return (
               <ButtonUI
