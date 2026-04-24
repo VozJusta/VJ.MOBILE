@@ -17,6 +17,7 @@ import InputUI from "@/ui/InputUI";
 import { router } from "expo-router";
 import { useLawyersList } from "@/hooks/citizen/lawyerList/useLawyersList";
 import Skeletons from "@/components/Skeletons";
+import { getCategoryLabel } from "@/utils/screens/citizen/home";
 
 export default function LawyerList() {
   const {
@@ -92,7 +93,7 @@ export default function LawyerList() {
                 badges={[
                   {
                     badgeColor: "#0D59F2",
-                    textBadge: item.specialization,
+                    textBadge: getCategoryLabel(item.specialization),
                   },
                 ]}
               />
