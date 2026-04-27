@@ -71,6 +71,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
       {props.textBadge === RequestCardTextBadge.PENDING && (
         <View className="flex flex-col gap-3">
           <ButtonUI
+            disabled={props.isAccepting || props.isRejecting}
             paddingButtonStatus="0"
             gradient
             hover={false}
@@ -89,6 +90,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
             }
           />
           <ButtonUI
+            disabled={props.isAccepting || props.isRejecting}
             paddingButtonStatus="0"
             gradient
             hover={false}
