@@ -104,6 +104,6 @@ export const useLawyerRequests = () => {
     fetchRequests,
     fetchRequestById,
     requestDetails,
-    handleRequestAction
+    handleRequestAction,
   };
 };
