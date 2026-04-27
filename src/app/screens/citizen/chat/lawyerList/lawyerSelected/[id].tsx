@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,7 +12,8 @@ import { useChatStorage } from "@/store/chat/chat.store";
 
 export default function LawyerSelected() {
   const { id } = useLocalSearchParams();
-  const { fetchLawyerById, loading, lawyerSelected, sendRequestToLawyer } = useLawyersList();
+  const { fetchLawyerById, loading, lawyerSelected, sendRequestToLawyer } =
+    useLawyersList();
   const { caseId } = useChatStorage();
 
   useEffect(() => {
@@ -21,11 +22,13 @@ export default function LawyerSelected() {
 
   const handleSendRequest = async () => {
     if (!lawyerSelected) return;
-    
+
     const result = sendRequestToLawyer(caseId, lawyerSelected.id);
 
     if (result) {
-      router.push("/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded");
+      router.push(
+        "/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded",
+      );
     }
   };
   return (
@@ -95,14 +98,16 @@ export default function LawyerSelected() {
           <ButtonUI
             children={
               <View className="justify-center items-center flex-1 flex-row gap-2">
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Solicitar serviço
-                </Text>
+                {loading ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <Text className="text-white font-interSemiBold text-[16px]">
+                    Solicitar serviço
+                  </Text>
+                )}
               </View>
             }
-            onPress={() =>
-              handleSendRequest()
-            }
+            onPress={() => handleSendRequest()}
             gradient={true}
             hover={false}
             iconLeft={false}
