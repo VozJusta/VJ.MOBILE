@@ -7,6 +7,7 @@ import {
   IRequestCard,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
+import { getCategoryLabel } from "@/utils/screens/citizen/home";
 
 export default function RequestCard({ ...props }: IRequestCard) {
   const pathname = usePathname();
@@ -17,7 +18,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
       style={{ borderLeftColor: props.badgeColor }}
       onPress={() =>
         pathname === "/screens/lawyer/requests" &&
-        router.push(`/screens/lawyer/requests/requestSelected/${props.id}`)
+        router.push(`/screens/lawyer/requests/requestSelected/${props.reportId}`)
       }
     >
       <View className="flex flex-row justify-between items-start w-full">
@@ -26,7 +27,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
             className="font-interSemiBold text-[12px]"
             style={{ color: props.badgeColor }}
           >
-            {props.category_detected}
+            {getCategoryLabel(props.category_detected)}
           </Text>
           <Text className="font-interBold text-[16px] text-[#FFFFFF]">
             {props.title ? props.title : "Sem título"}

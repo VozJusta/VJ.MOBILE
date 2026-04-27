@@ -75,9 +75,10 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
-            onSeeReport={() => handleDownloadReport(item.id)}
+            onSeeReport={() => handleDownloadReport(item.reportId)}
             onAccept={() => handleRequestAction(item.id, "accept")}
             onReject={() => handleRequestAction(item.id, "reject")}
+            reportId={item.reportId}
           />
         )}
         contentContainerClassName="gap-8 pb-6"

@@ -18,6 +18,7 @@ export interface IRequestCard {
   created_at: string;
   badgeColor: RequestCardBadgeColor;
   textBadge: RequestCardTextBadge;
+  reportId?: string;
   onSeeReport?: () => void;
   onAccept?: () => void;
   onReject?: () => void;
