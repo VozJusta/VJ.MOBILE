@@ -8,14 +8,26 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useLawyersList } from "@/hooks/citizen/lawyerList/useLawyersList";
 import Skeletons from "@/components/Skeletons";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
+import { useChatStorage } from "@/store/chat/chat.store";
 
 export default function LawyerSelected() {
   const { id } = useLocalSearchParams();
-  const { fetchLawyerById, loading, lawyerSelected } = useLawyersList();
+  const { fetchLawyerById, loading, lawyerSelected, sendRequestToLawyer } = useLawyersList();
+  const { caseId } = useChatStorage();
 
   useEffect(() => {
     if (id) fetchLawyerById(id as string);
   }, [id]);
+
+  const handleSendRequest = async () => {
+    if (!lawyerSelected) return;
+    
+    const result = sendRequestToLawyer(caseId, lawyerSelected.id);
+
+    if (result) {
+      router.push("/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded");
+    }
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, gap: 32 }}
@@ -89,9 +101,7 @@ export default function LawyerSelected() {
               </View>
             }
             onPress={() =>
-              router.push(
-                "/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded",
-              )
+              handleSendRequest()
             }
             gradient={true}
             hover={false}

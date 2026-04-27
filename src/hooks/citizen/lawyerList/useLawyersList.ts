@@ -89,12 +89,14 @@ export function useLawyersList(initialPageSize: number = 6) {
           text1: "Solicitação enviada",
           text2: "Sua solicitação foi enviada com sucesso",
         });
+        return true;
       } else {
         Toast.show({
           type: "error",
           text1: "Erro ao enviar solicitação",
           text2: response.fields?.[0],
         });
+        return false;
       }
     } catch {
       Toast.show({
@@ -102,6 +104,7 @@ export function useLawyersList(initialPageSize: number = 6) {
         text1: "Erro ao enviar solicitação",
         text2: "Tente novamente mais tarde",
       });
+      return false;
     } finally {
       setLoading(false);
     }
@@ -146,6 +149,6 @@ export function useLawyersList(initialPageSize: number = 6) {
     refresh,
     fetchLawyerById,
     lawyerSelected,
-    sendRequestToLawyer
+    sendRequestToLawyer,
   };
 }
