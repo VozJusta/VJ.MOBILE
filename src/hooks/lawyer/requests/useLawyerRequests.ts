@@ -13,6 +13,7 @@ export const useLawyerRequests = () => {
     null,
   );
   const [loading, setLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const fetchRequests = async (status?: TCaseStatus) => {
     setLoading(true);
@@ -70,7 +71,7 @@ export const useLawyerRequests = () => {
     requestId: string,
     action: "accept" | "reject",
   ) => {
-    setLoading(true);
+    setActionLoading(`${requestId}-${action}`);
     try {
       const response = await patchRequest(requestId, action);
 
@@ -94,7 +95,7 @@ export const useLawyerRequests = () => {
         text2: "Tente novamente mais tarde",
       });
     } finally {
-      setLoading(false);
+      setActionLoading(null);
     }
   };
 
@@ -105,5 +106,6 @@ export const useLawyerRequests = () => {
     fetchRequestById,
     requestDetails,
     handleRequestAction,
+    actionLoading,
   };
 };
