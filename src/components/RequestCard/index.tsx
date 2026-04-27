@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
 
@@ -7,6 +7,7 @@ import {
   IRequestCard,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
+import { getCategoryLabel } from "@/utils/screens/citizen/home";
 
 export default function RequestCard({ ...props }: IRequestCard) {
   const pathname = usePathname();
@@ -17,7 +18,9 @@ export default function RequestCard({ ...props }: IRequestCard) {
       style={{ borderLeftColor: props.badgeColor }}
       onPress={() =>
         pathname === "/screens/lawyer/requests" &&
-        router.push(`/screens/lawyer/requests/requestSelected/${props.id}`)
+        router.push(
+          `/screens/lawyer/requests/requestSelected/${props.caseId}`,
+        )
       }
     >
       <View className="flex flex-row justify-between items-start w-full">
@@ -26,7 +29,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
             className="font-interSemiBold text-[12px]"
             style={{ color: props.badgeColor }}
           >
-            {props.category_detected}
+            {getCategoryLabel(props.category_detected)}
           </Text>
           <Text className="font-interBold text-[16px] text-[#FFFFFF]">
             {props.title ? props.title : "Sem título"}
@@ -68,6 +71,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
       {props.textBadge === RequestCardTextBadge.PENDING && (
         <View className="flex flex-col gap-3">
           <ButtonUI
+            disabled={props.isAccepting || props.isRejecting}
             paddingButtonStatus="0"
             gradient
             hover={false}
@@ -75,13 +79,18 @@ export default function RequestCard({ ...props }: IRequestCard) {
             iconLeft={false}
             children={
               <View className="flex flex-row items-center gap-2 w-full justify-center h-full">
-                <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
-                  ACEITAR
-                </Text>
+                {props.isAccepting ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
+                    ACEITAR
+                  </Text>
+                )}
               </View>
             }
           />
           <ButtonUI
+            disabled={props.isAccepting || props.isRejecting}
             paddingButtonStatus="0"
             gradient
             hover={false}
@@ -89,9 +98,13 @@ export default function RequestCard({ ...props }: IRequestCard) {
             iconLeft={false}
             children={
               <View className="flex flex-row items-center gap-2 w-full justify-center h-full bg-[#EF4444]">
-                <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
-                  RECUSAR
-                </Text>
+                {props.isRejecting ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <Text className="font-interSemiBold text-[16px] text-[#FFFFFF]">
+                    RECUSAR
+                  </Text>
+                )}
               </View>
             }
           />

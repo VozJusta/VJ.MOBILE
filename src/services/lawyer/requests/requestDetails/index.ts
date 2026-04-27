@@ -12,6 +12,8 @@ export async function getRequestDetailsById(requestId: string) {
     });
 
     const json = await response.json().catch(() => {});
+    console.log("getRequestDetailsById response:", json);
+    console.log("getRequestDetailsById requestId:", requestId);
 
     if (!response.ok) {
       return {

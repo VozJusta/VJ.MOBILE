@@ -2,12 +2,15 @@ import { ILawyerSelected } from "@/interfaces/services/citizen/lawyerSelected";
 import { ILawyersList } from "@/interfaces/services/citizen/lawyersList";
 import { getLawyerSelected } from "@/services/citizens/lawyerSelected";
 import { getLawyersList } from "@/services/citizens/lawyersList";
+import { sendRequest } from "@/services/citizens/sendRequest";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 export function useLawyersList(initialPageSize: number = 6) {
   const [lawyers, setLawyers] = useState<ILawyersList["data"]>([]);
-  const [lawyerSelected, setLawyerSelected] = useState<ILawyerSelected | null>(null);
+  const [lawyerSelected, setLawyerSelected] = useState<ILawyerSelected | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
@@ -74,6 +77,39 @@ export function useLawyersList(initialPageSize: number = 6) {
     }
   };
 
+  const sendRequestToLawyer = async (caseId: string, lawyerId: string) => {
+    setLoading(true);
+
+    try {
+      const response = await sendRequest(caseId, lawyerId);
+
+      if (response.success && response.data) {
+        Toast.show({
+          type: "success",
+          text1: "Solicitação enviada",
+          text2: "Sua solicitação foi enviada com sucesso",
+        });
+        return true;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao enviar solicitação",
+          text2: response.fields?.[0],
+        });
+        return false;
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Erro ao enviar solicitação",
+        text2: "Tente novamente mais tarde",
+      });
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchLawyers(1);
   }, [pageSize]);
@@ -113,5 +149,6 @@ export function useLawyersList(initialPageSize: number = 6) {
     refresh,
     fetchLawyerById,
     lawyerSelected,
+    sendRequestToLawyer,
   };
 }

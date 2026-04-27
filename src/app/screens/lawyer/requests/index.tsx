@@ -18,8 +18,13 @@ import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloa
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
   const [isDownloading, setIsDownloading] = useState(false);
-  const { fetchRequests, loading, requests, handleRequestAction } =
-    useLawyerRequests();
+  const {
+    fetchRequests,
+    loading,
+    requests,
+    handleRequestAction,
+    actionLoading,
+  } = useLawyerRequests();
 
   useEffect(() => {
     fetchRequests();
@@ -75,9 +80,13 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
-            onSeeReport={() => handleDownloadReport(item.id)}
+            onSeeReport={() => handleDownloadReport(item.reportId)}
             onAccept={() => handleRequestAction(item.id, "accept")}
             onReject={() => handleRequestAction(item.id, "reject")}
+            reportId={item.reportId}
+            caseId={item.caseId}
+            isAccepting={actionLoading === `${item.id}-accept`}
+            isRejecting={actionLoading === `${item.id}-reject`}
           />
         )}
         contentContainerClassName="gap-8 pb-6"
