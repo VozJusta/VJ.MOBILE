@@ -24,4 +24,5 @@ export interface IRequestCard {
   onSeeReport?: () => void;
   onAccept?: () => void;
   onReject?: () => void;
+  caseId?: string;
 }

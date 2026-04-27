@@ -41,11 +41,11 @@ export const useLawyerRequests = () => {
     }
   };
 
-  const fetchRequestById = async (requestId: string) => {
+  const fetchRequestById = async (caseId: string) => {
     setLoading(true);
 
     try {
-      const response = await getRequestDetailsById(requestId);
+      const response = await getRequestDetailsById(caseId);
 
       if (response.success && response.data) {
         setRequestDetails(response.data);

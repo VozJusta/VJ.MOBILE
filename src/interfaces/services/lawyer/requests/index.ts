@@ -7,4 +7,5 @@ export interface ILawyerRequest {
   statusCase: TCaseStatus;
   created_at: string;
   reportId?: string;
+  caseId: string;
 }

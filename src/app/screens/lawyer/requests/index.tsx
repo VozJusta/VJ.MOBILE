@@ -84,6 +84,7 @@ export default function RequestsScreens() {
             onAccept={() => handleRequestAction(item.id, "accept")}
             onReject={() => handleRequestAction(item.id, "reject")}
             reportId={item.reportId}
+            caseId={item.caseId}
             isAccepting={actionLoading === `${item.id}-accept`}
             isRejecting={actionLoading === `${item.id}-reject`}
           />

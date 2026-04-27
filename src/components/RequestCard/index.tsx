@@ -19,7 +19,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
       onPress={() =>
         pathname === "/screens/lawyer/requests" &&
         router.push(
-          `/screens/lawyer/requests/requestSelected/${props.reportId}`,
+          `/screens/lawyer/requests/requestSelected/${props.caseId}`,
         )
       }
     >
