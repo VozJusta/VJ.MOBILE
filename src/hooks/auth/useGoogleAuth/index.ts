@@ -19,7 +19,9 @@ export function useGoogleAuth() {
     setLoading(true);
 
     try {
-      const redirectUrl = Linking.createURL("auth");
+      const redirectUrl =
+        Linking.createURL("/", { scheme: "vozjusta" }).replace("///", "//") +
+        "auth";
       const state = `${role}|mobile`;
       const authUrl = `${BASE_URL}/auth/google?state=${encodeURIComponent(state)}`;
 
