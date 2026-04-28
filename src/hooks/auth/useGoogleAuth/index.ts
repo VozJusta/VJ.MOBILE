@@ -42,6 +42,8 @@ export function useGoogleAuth() {
       const registerCompleted =
         url.searchParams.get("registerCompleted") === "true";
 
+      const email = url.searchParams.get("email");
+
       if (!token) {
         return {
           success: false,
@@ -53,6 +55,7 @@ export function useGoogleAuth() {
         success: true,
         token,
         registerCompleted,
+        email,
       };
     } catch {
       return {
