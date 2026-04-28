@@ -80,7 +80,7 @@ export const useLawyerRequests = () => {
           type: "success",
           text1: `Solicitação ${action === "accept" ? "aceita" : "rejeitada"} com sucesso!`,
         });
-        fetchRequestById(requestId);
+        fetchRequests();
       } else {
         Toast.show({
           type: "error",
