@@ -2,7 +2,7 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import SignInTemplate from "@/template/auth/SingInTemplate";
 import { Role } from "@/types/roles/roles";
 import { useBuildCompleteRegisterFields } from "@/utils/auth/users/CompleteResgister";
-import {  useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
 export default function CompleteRegisterCitizen() {
@@ -23,7 +23,7 @@ export default function CompleteRegisterCitizen() {
   });
   return (
     <SignInTemplate
-       title="Complete seu cadastro"
+      title="Complete seu cadastro"
       description="Preencha os dados para continuar"
       fields={completeRegisterData.fields}
       onSubmit={completeRegisterData.onSubmit}
