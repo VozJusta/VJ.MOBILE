@@ -1,8 +1,8 @@
-import { IInput } from "@/interfaces/ui/InputUI";
+import { FieldsType } from "@/interfaces/template/SignInTemplate";
 import { ReactNode } from "react";
 
 export interface IBuildLoginFields {
-    fields: IInput[];
+    fields: FieldsType[];
     onSubmit: () => void;
     disableSubmit: boolean;
     titleButton: ReactNode;

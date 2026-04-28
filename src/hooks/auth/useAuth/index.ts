@@ -1,4 +1,6 @@
 import { IMeResponse } from "@/interfaces/services/auth/me";
+import { completeCitizenRegister } from "@/services/auth/completeRegister/citizen";
+import { completeLawyerRegister } from "@/services/auth/completeRegister/lawyer";
 
 import { logout } from "@/services/auth/logout";
 import { getMe } from "@/services/auth/me";
@@ -7,11 +9,13 @@ import {
   useAccessTokenStorage,
   useRefreshTokenStorage,
 } from "@/store/auth/token.store";
+import { Role } from "@/types/roles/roles";
 import {
+  ZodCitizenCompleteRegisterTypes,
+  ZodLawyerCompleteRegisterTypes,
   ZodLoginTypes,
   ZodSignUpLawyerTypes,
   ZodSignUpTypes,
-  ZodUpdatePasswordTypes,
 } from "@/types/validation";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -19,6 +23,13 @@ import Toast from "react-native-toast-message";
 
 export const useAuth = () => {
   const [user, setUser] = useState<IMeResponse | undefined>(undefined);
+  const [completeRegisterAuth, setCompleteRegisterAuth] = useState<
+    ZodCitizenCompleteRegisterTypes | ZodLawyerCompleteRegisterTypes
+  >({
+    cpf: "",
+    phone: "",
+    password: "",
+  });
 
   const [loginAuth, setLoginAuth] = useState<ZodLoginTypes>({
     email: "",
@@ -61,6 +72,14 @@ export const useAuth = () => {
     setRegisterAuthLawyer((prev) => ({ ...prev, [name]: value }));
   }
 
+  function handleCompleteRegisterChange(
+    name:
+      | keyof ZodCitizenCompleteRegisterTypes
+      | keyof ZodLawyerCompleteRegisterTypes,
+    value: string,
+  ) {
+    setCompleteRegisterAuth((prev) => ({ ...prev, [name]: value }));
+  }
   async function handleLogout() {
     setLoading(true);
 
@@ -158,6 +177,61 @@ export const useAuth = () => {
     }
   }
 
+  async function completeRegisterData(
+    data: ZodCitizenCompleteRegisterTypes | ZodLawyerCompleteRegisterTypes,
+    role: Role,
+  ) {
+    setLoading(true);
+
+    try {
+      if (role === "Citizen") {
+        const response = await completeCitizenRegister(
+          data as ZodCitizenCompleteRegisterTypes,
+        );
+
+        if (!response.success) {
+          Toast.show({
+            type: "error",
+            text1: "Não foi possível completar o cadastro do cidadão",
+            text2: response.data,
+          });
+        } else {
+          Toast.show({
+            type: "success",
+            text1: "Cadastro completo",
+            text2: response.data,
+          });
+        }
+      } else {
+        const response = await completeLawyerRegister(
+          data as ZodLawyerCompleteRegisterTypes,
+        );
+
+        if (!response.success) {
+          Toast.show({
+            type: "error",
+            text1: "Não foi possível completar o cadastro do advogado",
+            text2: response.data,
+          });
+        } else {
+          Toast.show({
+            type: "success",
+            text1: "Cadastro completo",
+            text2: response.data,
+          });
+        }
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível completar o cadastro",
+        text2: "Ocorreu um erro ao tentar completar o cadastro",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
     loginAuth,
     registerAuth,
@@ -171,5 +245,7 @@ export const useAuth = () => {
     terminateAccount,
     user,
     authMe,
+    completeRegisterData,
+    handleCompleteRegisterChange,
   };
 };

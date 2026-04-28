@@ -1,7 +1,7 @@
 import { BASE_URL } from "@/settings/BASE_URL";
 import { ZodUpdatePasswordTypes } from "@/types/validation";
+import { ZodUpdatePasswordSchema } from "@/validation/auth/UpdatePassword";
 import { ZodValidate } from "@/validation/safeValidate.zod";
-import { ZodUpdatePasswordSchema } from "@/validation/schema.zod";
 
 export async function UpdatePasswordService(data: ZodUpdatePasswordTypes) {
   try {

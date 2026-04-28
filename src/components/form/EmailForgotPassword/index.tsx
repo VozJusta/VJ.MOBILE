@@ -81,7 +81,9 @@ export function EmailForgotPassword() {
             <Text className="text-[16px] font-interBold text-white">
               {loading ? (
                 <ActivityIndicator size="small" color="#FFF" />
-              ) : "Enviar código"}
+              ) : (
+                "Enviar código"
+              )}
             </Text>
           </View>
         }
