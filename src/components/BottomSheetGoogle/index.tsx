@@ -1,6 +1,5 @@
 import {
   IBottomSheetGoogle,
-  IBottomSheetGoogleButtonRoles,
 } from "@/interfaces/components/BottomSheetGoogle";
 import { useEffect, useRef } from "react";
 import {
@@ -15,9 +14,9 @@ import {
 } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
 import { buttonRoles } from "@/utils/components/BottomSheetGoogle";
-
+ 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
-
+ 
 export function BottomSheetGoogle({
   visible,
   onClose,
@@ -28,7 +27,7 @@ export function BottomSheetGoogle({
 }: IBottomSheetGoogle) {
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropOpacity = useRef(new Animated.Value(0)).current;
-
+ 
   useEffect(() => {
     if (visible) {
       Animated.parallel([
@@ -59,7 +58,7 @@ export function BottomSheetGoogle({
       ]).start();
     }
   }, [visible]);
-
+ 
   return (
     <Modal
       transparent
@@ -73,17 +72,17 @@ export function BottomSheetGoogle({
       >
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
       </Animated.View>
-
+ 
       <Animated.View
         style={{ transform: [{ translateY }] }}
         className="absolute bottom-0 left-0 right-0 bg-[#0F172A] rounded-t-[24px] px-6 pt-6 pb-10 border border-white/[0.08]"
       >
         <View className="w-10 h-1 bg-white/15 rounded-full self-center mb-5" />
-
-        <Text className="text-white/35 text-[11px] font-semibold tracking-[2px] text-center mb-4">
+ 
+        <Text className="text-white/35 text-[11px] font-interSemiBold tracking-[2px] text-center mb-4">
           COMO VOCÊ QUER ENTRAR?
         </Text>
-
+ 
         {buttonRoles.map((role) => {
           const isSelected = selectedRole === role.id;
           return (
@@ -99,17 +98,17 @@ export function BottomSheetGoogle({
             >
               <View className="flex-1">
                 <Text
-                  className={`text-[14px] font-medium ${
+                  className={`text-[14px] font-interSemiBold ${
                     isSelected ? "text-white" : "text-white/60"
                   }`}
                 >
                   {role.label}
                 </Text>
-                <Text className="text-white/30 text-[12px] mt-[2px]">
+                <Text className="text-white/30 text-[12px] mt-[2px] font-interRegular">
                   {role.description}
                 </Text>
               </View>
-
+ 
               <View
                 className={`w-[18px] h-[18px] rounded-full border-[1.5px] items-center justify-center ${
                   isSelected ? "border-[#60A5FA]" : "border-white/20"
@@ -122,7 +121,7 @@ export function BottomSheetGoogle({
             </TouchableOpacity>
           );
         })}
-
+ 
         <TouchableOpacity
           onPress={() => onConfirm(selectedRole)}
           disabled={loading}
@@ -132,12 +131,12 @@ export function BottomSheetGoogle({
           }`}
         >
           <GoogleIcon width={18} height={18} />
-          <Text className="text-[#0F172A] text-[15px] font-semibold">
+          <Text className="text-[#0F172A] text-[15px] font-interBold">
             {loading ? "Aguarde..." : "Continuar com Google"}
           </Text>
         </TouchableOpacity>
-
-        <Text className="text-white/20 text-[11px] text-center mt-[14px]">
+ 
+        <Text className="text-white/20 text-[11px] text-center mt-[14px] font-interRegular">
           Você poderá alterar seu perfil depois nas configurações
         </Text>
       </Animated.View>
