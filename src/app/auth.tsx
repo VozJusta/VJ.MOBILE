@@ -11,7 +11,7 @@ export default function AuthCallback() {
     const registerCompleted = params["registerCompleted"] === "true";
 
     if (!token) {
-      router.replace("/screens/auth/Login");
+      router.replace("/screens/auth/users/SignIn");
       return;
     }
   }, []);
