@@ -68,7 +68,19 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
       }
     },
 
-    clearSimulation: () => {},
+    clearSimulation: () => {
+      const { socket } = get();
+
+      socket?.disconnect();
+
+      set({
+        simulation: null,
+        error: null,
+        warning: null,
+        simulationStatus: "Waiting",
+        socket: null,
+      });
+    },
 
     stopSimulation: () => {
       const { socket, simulation } = get();
@@ -80,8 +92,8 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
       set({
         simulationStatus: null,
-        socket: null
+        socket: null,
       });
-    }
+    },
   }),
 );
