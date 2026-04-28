@@ -1,5 +1,6 @@
+import { usePagination } from "@/hooks/shared/pagination";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
-import { ILawyerRequest } from "@/interfaces/services/lawyer/requests";
+import { ILawyerRequest, IRequestDetailsCard } from "@/interfaces/services/lawyer/requests";
 import { IRequestDetails } from "@/interfaces/services/lawyer/requests/requestDetails";
 import { getLawyerRequests } from "@/services/lawyer/requests";
 import { patchRequest } from "@/services/lawyer/requests/requestActions";
@@ -8,21 +9,26 @@ import { useState } from "react";
 import Toast from "react-native-toast-message";
 
 export const useLawyerRequests = () => {
-  const [requests, setRequests] = useState<ILawyerRequest[]>([]);
+  const [requests, setRequests] = useState<IRequestDetailsCard[]>([]);
   const [requestDetails, setRequestDetails] = useState<IRequestDetails | null>(
     null,
   );
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const { setPaginationMeta, page, pageSize, ...pagination } = usePagination();
 
-  const fetchRequests = async (status?: TCaseStatus) => {
+  const fetchRequests = async (status?: TCaseStatus, clearList = true) => {
     setLoading(true);
+    if (clearList) {
+      setRequests([]);
+    }
 
     try {
       const response = await getLawyerRequests(status);
 
       if (response.success && response.data) {
-        setRequests(response.data);
+        setRequests(response.data.data);
+        setPaginationMeta(response.data.pagination);
       } else {
         Toast.show({
           type: "error",
@@ -80,7 +86,7 @@ export const useLawyerRequests = () => {
           type: "success",
           text1: `Solicitação ${action === "accept" ? "aceita" : "rejeitada"} com sucesso!`,
         });
-        fetchRequestById(requestId);
+        fetchRequests(undefined, false);
       } else {
         Toast.show({
           type: "error",
@@ -107,5 +113,7 @@ export const useLawyerRequests = () => {
     requestDetails,
     handleRequestAction,
     actionLoading,
+    ...pagination,
+    page,
   };
 };

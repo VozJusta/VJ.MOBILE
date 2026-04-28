@@ -1,3 +1,4 @@
+import { usePagination } from "@/hooks/shared/pagination";
 import { ILawyerSelected } from "@/interfaces/services/citizen/lawyerSelected";
 import { ILawyersList } from "@/interfaces/services/citizen/lawyersList";
 import { getLawyerSelected } from "@/services/citizens/lawyerSelected";
@@ -13,12 +14,8 @@ export function useLawyersList(initialPageSize: number = 6) {
   );
   const [loading, setLoading] = useState(false);
 
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [hasPreviousPage, setHasPreviousPage] = useState(false);
-
-  const pageSize = initialPageSize;
+  const { page, pageSize, setPaginationMeta, ...pagination } =
+    usePagination(initialPageSize);
 
   const fetchLawyers = async (pageNumber: number) => {
     setLoading(true);
@@ -28,10 +25,7 @@ export function useLawyersList(initialPageSize: number = 6) {
 
       if (response.success && response.data) {
         setLawyers(response.data.data);
-        setTotalPages(response.data.pagination.totalPages);
-        setHasNextPage(response.data.pagination.hasNextPage);
-        setHasPreviousPage(response.data.pagination.hasPreviousPage);
-        setPage(response.data.pagination.page);
+        setPaginationMeta(response.data.pagination);
       } else {
         Toast.show({
           type: "error",
@@ -112,25 +106,7 @@ export function useLawyersList(initialPageSize: number = 6) {
 
   useEffect(() => {
     fetchLawyers(1);
-  }, [pageSize]);
-
-  const goToNextPage = () => {
-    if (hasNextPage) {
-      fetchLawyers(page + 1);
-    }
-  };
-
-  const goToPreviousPage = () => {
-    if (hasPreviousPage) {
-      fetchLawyers(page - 1);
-    }
-  };
-
-  const goToPage = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      fetchLawyers(pageNumber);
-    }
-  };
+  }, [page, pageSize]);
 
   const refresh = () => {
     fetchLawyers(page);
@@ -140,15 +116,10 @@ export function useLawyersList(initialPageSize: number = 6) {
     lawyers,
     loading,
     page,
-    totalPages,
-    hasNextPage,
-    hasPreviousPage,
-    goToNextPage,
-    goToPreviousPage,
-    goToPage,
     refresh,
     fetchLawyerById,
     lawyerSelected,
     sendRequestToLawyer,
+    ...pagination,
   };
 }

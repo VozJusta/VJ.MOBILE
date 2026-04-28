@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -14,6 +14,8 @@ import {
 import { IAmounts } from "@/interfaces/components/Filters";
 import Skeletons from "@/components/Skeletons";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
+import { MaterialIcons } from "@expo/vector-icons";
+import Pagination from "@/components/Pagination";
 
 export default function RequestsScreens() {
   const [selectedFilter, setSelectedFilter] = useState<TCaseStatus | "">("");
@@ -24,6 +26,13 @@ export default function RequestsScreens() {
     requests,
     handleRequestAction,
     actionLoading,
+    totalPages,
+    hasNextPage,
+    hasPreviousPage,
+    goToNextPage,
+    goToPreviousPage,
+    goToPage,
+    page,
   } = useLawyerRequests();
 
   useEffect(() => {
@@ -91,6 +100,22 @@ export default function RequestsScreens() {
         )}
         contentContainerClassName="gap-8 pb-6"
         showsVerticalScrollIndicator={false}
+        ListFooterComponent={
+          loading && requests.length > 0 ? (
+            <Skeletons amountOfSkeletons={1} height={50} />
+          ) : requests.length > 0 && totalPages > 1 ? (
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+              loading={loading}
+              goToNextPage={goToNextPage}
+              goToPreviousPage={goToPreviousPage}
+              goToPage={goToPage}
+            />
+          ) : null
+        }
         ListHeaderComponent={
           <>
             <Header isFirstPage={true} title="SOLICITAÇÕES" isCitizen={false} />
