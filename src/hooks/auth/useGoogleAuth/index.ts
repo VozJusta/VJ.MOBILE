@@ -3,6 +3,8 @@ import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import { Role } from "@/types/roles/roles";
 import { BASE_URL } from "@/settings/BASE_URL";
+import { jwtDecode } from "jwt-decode";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 
 export function useGoogleAuth() {
   const [loading, setLoading] = useState(false);
@@ -42,14 +44,13 @@ export function useGoogleAuth() {
       const registerCompleted =
         url.searchParams.get("registerCompleted") === "true";
 
-      const email = url.searchParams.get("email");
-
       if (!token) {
         return {
           success: false,
           error: "Token de autenticação não encontrado.",
         };
       }
+      const email = jwtDecode<IDecodedToken>(token).email;
 
       return {
         success: true,
