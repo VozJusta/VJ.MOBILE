@@ -26,11 +26,11 @@ export interface IWebSocketSimulationFinished {
 }
 
 export interface IWebSocketSimulation {
-  simulation: ISimulationResponse;
+  simulation: ISimulationResponse | null;
   isLoading: boolean;
   error: string | null;
   warning: IWebSocketSimulationWarning | null;
-  simulationStatus: TSimulationStatus;
+  simulationStatus: TSimulationStatus | null;
   socket: Socket | null;
 
   createAndStartSimulation: (personality: Personality) => Promise<void>;
