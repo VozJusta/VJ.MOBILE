@@ -14,20 +14,7 @@ import {
   View,
 } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
-
-export const buttonRoles: IBottomSheetGoogleButtonRoles[] = [
-  {
-    id: "Citizen",
-    label: "Cidadão",
-    description: "Quero buscar ajuda jurídica e entender meus direitos",
-  },
-  {
-    id: "Lawyer",
-    label: "Advogado",
-    description:
-      "Quero oferecer minha ajuda para pessoas que precisam de assistência jurídica",
-  },
-];
+import { buttonRoles } from "@/utils/components/BottomSheetGoogle";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
