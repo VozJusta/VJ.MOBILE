@@ -91,7 +91,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
       }
 
       set({
-        simulationStatus: null,
+        simulationStatus: "Waiting",
         socket: null,
       });
     },
