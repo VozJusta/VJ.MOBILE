@@ -15,9 +15,11 @@ export const useLawyerRequests = () => {
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  const fetchRequests = async (status?: TCaseStatus) => {
+  const fetchRequests = async (status?: TCaseStatus, clearList = true) => {
     setLoading(true);
-    setRequests([])
+    if (clearList) {
+      setRequests([]);
+    }
 
     try {
       const response = await getLawyerRequests(status);
@@ -81,7 +83,7 @@ export const useLawyerRequests = () => {
           type: "success",
           text1: `Solicitação ${action === "accept" ? "aceita" : "rejeitada"} com sucesso!`,
         });
-        fetchRequests();
+        fetchRequests(undefined, false);
       } else {
         Toast.show({
           type: "error",
