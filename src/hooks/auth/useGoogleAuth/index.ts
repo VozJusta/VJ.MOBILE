@@ -33,6 +33,8 @@ export function useGoogleAuth() {
         };
       }
 
+      console.log("Resultado do WebBrowser:", result);
+
       const url = new URL(result.url);
 
       const token = url.searchParams.get("x-security-token");
