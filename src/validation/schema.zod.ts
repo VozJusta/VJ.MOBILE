@@ -43,3 +43,10 @@ export const ZodCompleteRegisterSharedSchema = z.object({
 });
 
 export const ZodCompleteRegisterCitizenSchema = ZodCompleteRegisterSharedSchema;
+
+export const ZodCompleteRegisterLawyerSchema =
+  ZodCompleteRegisterSharedSchema.extend({
+    oabNumber: oabNumberSchema,
+    oabState: z.string().min(1, "Estado da OAB é obrigatório"),
+    specialization: z.string().min(1, "Especialização é obrigatória"),
+  });
