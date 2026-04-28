@@ -1,6 +1,6 @@
 import { IPagination } from "@/interfaces/shared/pagination";
 
-export interface IPaginationComponent extends IPagination {
+export interface IPaginationComponent extends Omit<IPagination, "totalItems" | "pageSize"> {
   loading?: boolean;
   goToNextPage: () => void;
   goToPreviousPage: () => void;

@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,6 +17,7 @@ import { router } from "expo-router";
 import { useLawyersList } from "@/hooks/citizen/lawyerList/useLawyersList";
 import Skeletons from "@/components/Skeletons";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
+import Pagination from "@/components/Pagination";
 
 export default function LawyerList() {
   const {
@@ -32,9 +32,6 @@ export default function LawyerList() {
     goToPage,
     refresh,
   } = useLawyersList(4);
-
-  
-
 
   return (
     <KeyboardAvoidingView
@@ -80,7 +77,8 @@ export default function LawyerList() {
                 {...item}
                 onPress={() =>
                   router.push({
-                    pathname: "/screens/citizen/chat/lawyerList/lawyerSelected/[id]",
+                    pathname:
+                      "/screens/citizen/chat/lawyerList/lawyerSelected/[id]",
                     params: { id: item.id },
                   })
                 }
@@ -135,72 +133,16 @@ export default function LawyerList() {
             loading && lawyers.length > 0 ? (
               <Skeletons amountOfSkeletons={1} height={50} />
             ) : lawyers.length > 0 && totalPages > 1 ? (
-              <View className="flex-row items-center justify-between w-full mt-4 bg-[rgb(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.1)] rounded-[16px] px-[16px] py-[12px]">
-                <TouchableOpacity
-                  onPress={goToPreviousPage}
-                  disabled={!hasPreviousPage || loading}
-                  className={`w-[40px] h-[40px] rounded-full justify-center items-center ${
-                    hasPreviousPage && !loading
-                      ? "bg-white/5 border border-solid border-white/10"
-                      : "bg-transparent opacity-30"
-                  }`}
-                >
-                  <MaterialIcons
-                    name="keyboard-arrow-left"
-                    size={24}
-                    color="#fff"
-                  />
-                </TouchableOpacity>
-
-                <View className="flex-row items-center gap-3">
-                  {pageNumbers.map((num) => (
-                    <TouchableOpacity
-                      onPress={() => goToPage(num)}
-                      key={num}
-                      disabled={loading}
-                      className={`w-[40px] h-[40px] rounded-[12px] justify-center items-center ${
-                        page === num
-                          ? "bg-[#2563EB]"
-                          : "bg-white/5 border border-solid border-white/10"
-                      } ${loading ? "opacity-50" : ""}`}
-                    >
-                      <Text
-                        className={`font-interBold text-[16px] ${page === num ? "text-white" : "text-[#94A3B8]"}`}
-                      >
-                        {num}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-
-                  {pageNumbers[pageNumbers.length - 1] < totalPages && (
-                    <Text className="text-[#94A3B8] font-interBold text-[16px]">
-                      ...
-                    </Text>
-                  )}
-                </View>
-
-                <TouchableOpacity
-                  onPress={goToNextPage}
-                  disabled={!hasNextPage || loading}
-                  className={`w-[40px] h-[40px] rounded-full justify-center items-center ${
-                    hasNextPage && !loading
-                      ? "bg-[#2563EB]"
-                      : "bg-transparent opacity-30 border border-solid border-white/10"
-                  }`}
-                  style={
-                    hasNextPage &&
-                    !loading && {
-                      shadowColor: "#1E3A8A",
-                      shadowOffset: { width: 0, height: 10 },
-                      shadowOpacity: 0.3,
-                      shadowRadius: 6,
-                      elevation: 8,
-                    }
-                  }
-                >
-                  <MaterialIcons name="chevron-right" size={24} color="#fff" />
-                </TouchableOpacity>
-              </View>
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                hasNextPage={hasNextPage}
+                hasPreviousPage={hasPreviousPage}
+                loading={loading}
+                goToNextPage={goToNextPage}
+                goToPreviousPage={goToPreviousPage}
+                goToPage={goToPage}
+              />
             ) : null
           }
           refreshing={loading}
