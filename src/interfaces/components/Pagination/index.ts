@@ -5,5 +5,4 @@ export interface IPaginationComponent extends IPagination {
   goToNextPage: () => void;
   goToPreviousPage: () => void;
   goToPage: (pageNumber: number) => void;
-  pageNumbers: number[];
 }
