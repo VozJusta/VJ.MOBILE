@@ -7,12 +7,17 @@ import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { BottomSheetGoogle } from "@/components/BottomSheetGoogle";
 import { Role } from "@/types/roles/roles";
+import { useGoogleAuth } from "@/hooks/auth/useGoogleAuth";
+import Toast from "react-native-toast-message";
+import { useXTokenStorage } from "@/store/auth/token.store";
 
 export default function Login() {
   const { loginAuth, handleLoginChange, loading } = useAuth();
+  const { setToken } = useXTokenStorage();
   const [showPassword, setShowPassword] = useState(false);
   const [sheetVisible, setSheetVisible] = useState(false);
   const [selectedRole, setSelectedRole] = useState<Role>("citizen");
+  const { loginWithGoogle, loading: googleLoading } = useGoogleAuth();
 
   const signInData = useBuildLoginFields({
     loginAuth,
@@ -20,6 +25,29 @@ export default function Login() {
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
   });
+
+  const handleLoginWithGoogle = async () => {
+    const result = await loginWithGoogle(selectedRole);
+
+    if (!result.success) {
+      setSheetVisible(false);
+      Toast.show({
+        type: "error",
+        text1: "Erro ao entrar com Google",
+        text2: result.error,
+      });
+      return;
+    }
+
+    setSheetVisible(false);
+    await setToken(result.token || "");
+
+    if (!result.registerCompleted) {
+      router.push("/screens/auth/complete-registration");
+    } else {
+      router.replace(`screens/${selectedRole.toLowerCase()}/home`);
+    }
+  };
 
   return (
     <>
@@ -73,9 +101,10 @@ export default function Login() {
       <BottomSheetGoogle
         visible={sheetVisible}
         onClose={() => setSheetVisible(false)}
-        onConfirm={() => Alert.alert("Função selecionada:", selectedRole)}
+        onConfirm={handleLoginWithGoogle}
         selectedRole={selectedRole}
         onSelectRole={setSelectedRole}
+        loading={googleLoading}
       />
     </>
   );
