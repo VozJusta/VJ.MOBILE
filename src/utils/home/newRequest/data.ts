@@ -7,8 +7,6 @@ export const newRequestData: ICategoryCard[] = [
     icon: "work",
     colorIcon: "#F97316",
     bgIcon: "rgba(249,115,22,0.2)",
-    path: "",
-    
   },
   {
     title: "Consumidor",
@@ -16,7 +14,6 @@ export const newRequestData: ICategoryCard[] = [
     icon: "shopping-cart",
     colorIcon: "#60A5FA",
     bgIcon: "rgba(59,130,246,0.2)",
-    path: "",
   },
   {
     title: "Outros",
@@ -24,6 +21,5 @@ export const newRequestData: ICategoryCard[] = [
     icon: "more-horiz",
     colorIcon: "#94A3B8",
     bgIcon: "rgba(100,116,139,0.2)",
-    path: "",
   },
 ];
