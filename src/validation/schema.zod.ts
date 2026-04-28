@@ -1,4 +1,9 @@
-import { cpfSchema, passwordSchema, phoneSchema } from "@/utils/validation";
+import {
+  cpfSchema,
+  oabNumberSchema,
+  passwordSchema,
+  phoneSchema,
+} from "@/utils/validation";
 import { z } from "zod";
 
 export const ZodSignUpSchema = z.object({
@@ -10,15 +15,7 @@ export const ZodSignUpSchema = z.object({
 });
 
 export const ZodSignUpLawyerSchema = ZodSignUpSchema.extend({
-  oabNumber: z.preprocess(
-    (input) => {
-      if (typeof input === "string") {
-        return input.replace(/[.-]/g, "");
-      }
-      return input;
-    },
-    z.string().min(1, "OAB é obrigatória"),
-  ),
+  oabNumber: oabNumberSchema,
   oabState: z.string().min(1, "Estado da OAB é obrigatório"),
   specialization: z.string().min(1, "Especialização é obrigatória"),
 });

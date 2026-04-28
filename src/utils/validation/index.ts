@@ -32,3 +32,13 @@ export const cpfSchema = z.preprocess(
   },
   z.string().regex(/^\d{11}$/, "CPF deve conter 11 dígitos"),
 );
+
+export const oabNumberSchema = z.preprocess(
+  (input) => {
+    if (typeof input === "string") {
+      return input.replace(/[.-]/g, "");
+    }
+    return input;
+  },
+  z.string().min(1, "OAB é obrigatória"),
+);
