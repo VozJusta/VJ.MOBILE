@@ -43,6 +43,13 @@ export default function Login() {
     setSheetVisible(false);
     await setToken(result.token || "");
 
+    if (!result.registerCompleted) {
+    router.push(
+      `/screens/auth/CompleteRegister?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}`,
+    );
+    return;
+  }
+
     const validateEmail2FA = await Email2FA(result.email || "");
 
     if (
