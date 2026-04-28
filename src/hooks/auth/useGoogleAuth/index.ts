@@ -19,7 +19,7 @@ export function useGoogleAuth() {
     try {
       const redirectUrl = Linking.createURL("auth");
       const state = `${role}|mobile`;
-      const authUrl = `${BASE_URL}/auth/google??state=${encodeURIComponent(state)}`;
+      const authUrl = `${BASE_URL}/auth/google?state=${encodeURIComponent(state)}`;
 
       const result = await WebBrowser.openAuthSessionAsync(
         authUrl,
