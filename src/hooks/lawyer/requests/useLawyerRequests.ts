@@ -113,6 +113,7 @@ export const useLawyerRequests = () => {
     requestDetails,
     handleRequestAction,
     actionLoading,
-    ...pagination
+    ...pagination,
+    page,
   };
 };
