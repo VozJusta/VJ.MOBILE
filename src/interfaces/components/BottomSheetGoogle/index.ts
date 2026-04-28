@@ -8,3 +8,9 @@ export interface IBottomSheetGoogle {
   onSelectRole: (role: Role) => void;
   loading?: boolean;
 }
+
+export interface IBottomSheetGoogleButtonRoles {
+    id: Role;
+    label: string;
+    description: string;
+}
