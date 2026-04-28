@@ -15,7 +15,7 @@ export const useLawyerRequests = () => {
   );
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
-  const { setPaginationMeta, page, pageSize } = usePagination();
+  const { setPaginationMeta, page, pageSize, ...pagination } = usePagination();
 
   const fetchRequests = async (status?: TCaseStatus, clearList = true) => {
     setLoading(true);
@@ -113,5 +113,6 @@ export const useLawyerRequests = () => {
     requestDetails,
     handleRequestAction,
     actionLoading,
+    ...pagination
   };
 };
