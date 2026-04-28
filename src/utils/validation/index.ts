@@ -13,4 +13,12 @@ export const passwordSchema = z
     "A senha deve conter pelo menos um caractere especial",
   );
 
-
+export const phoneSchema = z.preprocess(
+  (input) => {
+    if (typeof input === "string") {
+      return input.replace(/[.-]/g, "");
+    }
+    return input;
+  },
+  z.string().min(1, "OAB é obrigatória"),
+);

@@ -1,19 +1,11 @@
-import { passwordSchema } from "@/utils/validation";
+import { passwordSchema, phoneSchema } from "@/utils/validation";
 import { z } from "zod";
 
 export const ZodSignUpSchema = z.object({
   fullName: z.string(),
   email: z.email("Email inválido"),
   password: passwordSchema,
-  phone: z.preprocess(
-    (input) => {
-      if (typeof input === "string") {
-        return input.replace(/\D/g, "");
-      }
-      return input;
-    },
-    z.string().min(10, "Telefone inválido").max(11, "Telefone inválido"),
-  ),
+  phone: phoneSchema,
   cpf: z.preprocess(
     (input) => {
       if (typeof input === "string") {
