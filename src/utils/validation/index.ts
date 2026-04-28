@@ -22,3 +22,13 @@ export const phoneSchema = z.preprocess(
   },
   z.string().min(1, "OAB é obrigatória"),
 );
+
+export const cpfSchema = z.preprocess(
+  (input) => {
+    if (typeof input === "string") {
+      return input.replace(/[.-]/g, "");
+    }
+    return input;
+  },
+  z.string().regex(/^\d{11}$/, "CPF deve conter 11 dígitos"),
+);

@@ -1,4 +1,4 @@
-import { passwordSchema, phoneSchema } from "@/utils/validation";
+import { cpfSchema, passwordSchema, phoneSchema } from "@/utils/validation";
 import { z } from "zod";
 
 export const ZodSignUpSchema = z.object({
@@ -6,15 +6,7 @@ export const ZodSignUpSchema = z.object({
   email: z.email("Email inválido"),
   password: passwordSchema,
   phone: phoneSchema,
-  cpf: z.preprocess(
-    (input) => {
-      if (typeof input === "string") {
-        return input.replace(/[.-]/g, "");
-      }
-      return input;
-    },
-    z.string().regex(/^\d{11}$/, "CPF deve conter 11 dígitos"),
-  ),
+  cpf: cpfSchema,
 });
 
 export const ZodSignUpLawyerSchema = ZodSignUpSchema.extend({
