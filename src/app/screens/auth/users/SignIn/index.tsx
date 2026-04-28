@@ -10,6 +10,7 @@ import { Role } from "@/types/roles/roles";
 import { useGoogleAuth } from "@/hooks/auth/useGoogleAuth";
 import Toast from "react-native-toast-message";
 import { useXTokenStorage } from "@/store/auth/token.store";
+import { Email2FA } from "@/services/auth/users/security/email2FA";
 
 export default function Login() {
   const { loginAuth, handleLoginChange, loading } = useAuth();
@@ -42,11 +43,38 @@ export default function Login() {
     setSheetVisible(false);
     await setToken(result.token || "");
 
-    if (!result.registerCompleted) {
-      router.push("/screens/auth/complete-registration");
-    } else {
-      router.replace(`screens/${selectedRole.toLowerCase()}/home`);
+    const validateEmail2FA = await Email2FA(result.email || "");
+
+    if (
+      !validateEmail2FA.success &&
+      validateEmail2FA.fields?.[0] === "Código já enviado"
+    ) {
+      Toast.show({
+        type: "error",
+        text1: validateEmail2FA.fields[0],
+      });
+      router.push(
+        `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,
+      );
+      return;
     }
+
+    if (!validateEmail2FA.success) {
+      Toast.show({
+        type: "error",
+        text1: validateEmail2FA.fields?.[0] || "Erro ao enviar código",
+      });
+      return;
+    }
+
+    Toast.show({
+      type: "success",
+      text1: validateEmail2FA.data,
+    });
+
+    router.push(
+      `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,
+    );
   };
 
   return (
