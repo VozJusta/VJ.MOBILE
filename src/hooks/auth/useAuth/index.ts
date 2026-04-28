@@ -23,6 +23,13 @@ import Toast from "react-native-toast-message";
 
 export const useAuth = () => {
   const [user, setUser] = useState<IMeResponse | undefined>(undefined);
+  const [completeRegisterAuth, setCompleteRegisterAuth] = useState<
+    ZodCitizenCompleteRegisterTypes | ZodLawyerCompleteRegisterTypes
+  >({
+    cpf: "",
+    phone: "",
+    password: "",
+  });
 
   const [loginAuth, setLoginAuth] = useState<ZodLoginTypes>({
     email: "",
@@ -65,6 +72,14 @@ export const useAuth = () => {
     setRegisterAuthLawyer((prev) => ({ ...prev, [name]: value }));
   }
 
+  function handleCompleteRegisterChange(
+    name:
+      | keyof ZodCitizenCompleteRegisterTypes
+      | keyof ZodLawyerCompleteRegisterTypes,
+    value: string,
+  ) {
+    setCompleteRegisterAuth((prev) => ({ ...prev, [name]: value }));
+  }
   async function handleLogout() {
     setLoading(true);
 
@@ -231,5 +246,6 @@ export const useAuth = () => {
     user,
     authMe,
     completeRegisterData,
+    handleCompleteRegisterChange,
   };
 };
