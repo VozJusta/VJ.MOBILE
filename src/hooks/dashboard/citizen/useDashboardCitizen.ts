@@ -68,6 +68,7 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
     reports,
     loading,
     getDetailsReportById,
-    ...pagination
+    ...pagination,
+    page
   };
 }
