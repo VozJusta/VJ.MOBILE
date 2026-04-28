@@ -71,15 +71,19 @@ export default function UpdatePassword() {
       setNewPassword={setNewPassword}
       screen={ScreensForgotPassword.Update}
       onSubmit={() => handleUpdatePassword(email, confirmPassword, newPassword)}
-      labelButton={loading ? (
-        <ActivityIndicator size="small" color="#FFFFFF" />
-      ) : (
-        <Text className="font-interBold text-[16px] text-white">Redefinir senha</Text>
-      )}
+      labelButton={
+        loading ? (
+          <ActivityIndicator size="small" color="#FFFFFF" />
+        ) : (
+          <Text className="font-interBold text-[16px] text-white">
+            Redefinir senha
+          </Text>
+        )
+      }
       passwordStrength={{
         score: strength.score,
         color: strength.color,
-        checklist: strength.checklist
+        checklist: strength.checklist,
       }}
     />
   );
