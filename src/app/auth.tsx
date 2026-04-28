@@ -8,12 +8,13 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const token = params["x-security-token"] as string;
-    const registerCompleted = params["registerCompleted"] === "true";
 
     if (!token) {
       router.replace("/screens/auth/users/SignIn");
       return;
     }
+
+    setToken(token);
   }, []);
 
   return null;
