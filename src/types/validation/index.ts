@@ -1,11 +1,13 @@
 import {
   ZodCompleteRegisterCitizenSchema,
   ZodCompleteRegisterLawyerSchema,
-  ZodLoginSchema,
+} from "@/validation/auth/CompleteRegister";
+import { ZodLoginSchema } from "@/validation/auth/SignIn";
+import {
   ZodSignUpLawyerSchema,
   ZodSignUpSchema,
-  ZodUpdatePasswordSchema,
-} from "@/validation/schema.zod";
+} from "@/validation/auth/SignUp";
+import { ZodUpdatePasswordSchema } from "@/validation/auth/UpdatePassword";
 import { z } from "zod";
 
 export type ZodLoginTypes = z.infer<typeof ZodLoginSchema>;
