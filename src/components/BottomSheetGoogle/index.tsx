@@ -76,7 +76,7 @@ export function BottomSheetGoogle({
 
       <Animated.View
         style={{ transform: [{ translateY }] }}
-        className="absolute bottom-0 left-0 right-0 bg-[#0F172A] rounded-t-[24px] px-6 pt-6 pb-10 border border-white/[0.08]"
+        className="absolute bottom-0 left-0 right-0 bg-[#0F172A] rounded-t-[24px] px-6 pt-6 pb-20 border border-white/[0.08]"
       >
         <View className="w-10 h-1 bg-white/15 rounded-full self-center mb-5" />
 
