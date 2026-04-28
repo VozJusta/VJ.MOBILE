@@ -41,3 +41,5 @@ export const ZodCompleteRegisterSharedSchema = z.object({
   phone: phoneSchema,
   password: passwordSchema,
 });
+
+export const ZodCompleteRegisterCitizenSchema = ZodCompleteRegisterSharedSchema;
