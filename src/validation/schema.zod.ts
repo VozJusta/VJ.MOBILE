@@ -35,3 +35,9 @@ export const ZodUpdatePasswordSchema = z
     message: "As senhas não coincidem",
     path: ["confirmPassword"],
   });
+
+export const ZodCompleteRegisterSharedSchema = z.object({
+  cpf: cpfSchema,
+  phone: phoneSchema,
+  password: passwordSchema,
+});
