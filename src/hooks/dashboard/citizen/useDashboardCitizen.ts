@@ -8,7 +8,7 @@ import Toast from "react-native-toast-message";
 export function useDashboardCitizen(initialPageSize: number = 3) {
   const [reports, setReports] = useState<IReport[]>([]);
   const [loading, setLoading] = useState(false);
-  const { setPaginationMeta, pageSize, page } = usePagination(initialPageSize);
+  const { setPaginationMeta, pageSize, page, ...pagination } = usePagination(initialPageSize);
 
   const fetchReports = async (pageNumber: number) => {
     setLoading(true);
@@ -68,5 +68,6 @@ export function useDashboardCitizen(initialPageSize: number = 3) {
     reports,
     loading,
     getDetailsReportById,
+    ...pagination
   };
 }
