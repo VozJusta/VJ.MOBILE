@@ -47,7 +47,6 @@ export default function LawyerList() {
 
   const pageNumbers = getPageNumbers();
 
-  console.log("lawyers", lawyers);
 
   return (
     <KeyboardAvoidingView

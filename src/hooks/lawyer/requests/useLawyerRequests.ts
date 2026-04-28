@@ -17,6 +17,7 @@ export const useLawyerRequests = () => {
 
   const fetchRequests = async (status?: TCaseStatus) => {
     setLoading(true);
+    setRequests([])
 
     try {
       const response = await getLawyerRequests(status);
