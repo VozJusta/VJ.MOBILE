@@ -70,6 +70,18 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     clearSimulation: () => {},
 
-    stopSimulation: () => {},
+    stopSimulation: () => {
+      const { socket, simulation } = get();
+
+      if (socket && simulation) {
+        socket.emit("simulation:stop", { simulationId: simulation.id });
+        socket.disconnect();
+      }
+
+      set({
+        simulationStatus: null,
+        socket: null
+      });
+    }
   }),
 );
