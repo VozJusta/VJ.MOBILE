@@ -1,17 +1,5 @@
+import { passwordSchema } from "@/utils/validation";
 import { z } from "zod";
-
-const passwordSchema = z
-  .string()
-  .min(8, { message: "Senha com no mínimo 8 caracteres" })
-  .refine(
-    (val) => /[A-Z]/.test(val),
-    "A senha deve conter pelo menos uma letra maiúscula",
-  )
-  .refine((val) => /\d/.test(val), "A senha deve conter pelo menos um número")
-  .refine(
-    (val) => /[!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]/.test(val),
-    "A senha deve conter pelo menos um caractere especial",
-  );
 
 export const ZodSignUpSchema = z.object({
   fullName: z.string(),
@@ -56,11 +44,13 @@ export const ZodLoginSchema = z.object({
   password: z.string().min(1, "Senha é obrigatória"),
 });
 
-export const ZodUpdatePasswordSchema = z.object({
-  email: z.email("Email inválido").min(1, "Email é obrigatório"),
-  password: passwordSchema,
-  confirmPassword: passwordSchema,
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "As senhas não coincidem",
-  path: ["confirmPassword"],
-});
+export const ZodUpdatePasswordSchema = z
+  .object({
+    email: z.email("Email inválido").min(1, "Email é obrigatório"),
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  });
