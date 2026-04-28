@@ -16,7 +16,6 @@ export async function getLawyerRequests(status?: TCaseStatus) {
     );
 
     const json = await response.json().catch(() => ({}));
-    console.log("getLawyerRequests response:", json);
 
     if (!response.ok) {
       return {
@@ -27,7 +26,7 @@ export async function getLawyerRequests(status?: TCaseStatus) {
 
     return {
       success: true,
-      data: json.data as ILawyerRequest[],
+      data: json as ILawyerRequest,
     };
   } catch {
     return {
