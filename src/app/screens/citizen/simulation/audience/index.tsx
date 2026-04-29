@@ -7,6 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useSimulationAudience } from "@/hooks/simulation/useSimulationAudience";
 import ButtonUI from "@/ui/ButtonUI";
 import { router } from "expo-router";
+import MessageBubble from "@/components/MessageBubble";
 
 export default function SimulationAudience() {
   const {
@@ -16,6 +17,7 @@ export default function SimulationAudience() {
     isRecording,
     isLoading,
     simulationStatus,
+    transcribedText,
   } = useSimulationAudience();
 
   return (
@@ -28,6 +30,14 @@ export default function SimulationAudience() {
         />
 
         <View className="bg-black w-full h-[100px] rounded-xl" />
+
+        {transcribedText && (
+          <MessageBubble
+            message={transcribedText}
+            isUser={false}
+            userName="Você"
+          />
+        )}
 
         <View className="flex flex-row w-full h-fit gap-6">
           <ButtonAudio

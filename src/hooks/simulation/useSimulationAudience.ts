@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
@@ -7,6 +7,7 @@ import { useRecordAudio } from "@/hooks/shared/audio/useRecordAudio";
 
 export function useSimulationAudience() {
   const router = useRouter();
+  const [transcribedText, setTranscribedText] = useState<string | null>(null);
 
   const {
     sendChat,
@@ -38,6 +39,7 @@ export function useSimulationAudience() {
         return;
       }
 
+      setTranscribedText(response.data);
       await sendChat(response.data);
     },
   });
@@ -102,5 +104,6 @@ export function useSimulationAudience() {
     isSpeaking,
     aiResponse,
     isLoading,
+    transcribedText
   };
 }
