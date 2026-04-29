@@ -7,13 +7,13 @@ export default function CategoryCard(request: ICategoryCard) {
     <TouchableOpacity
       onPress={request.onPress}
       activeOpacity={0.7}
-      className={`w-full flex-row p-[20px] justify-between items-center rounded-xl border border-solid border-[rgba(255,255,255,0.1)] ${
+      className={`w-full flex-row p-[20px] gap-2  justify-between items-center rounded-xl border border-solid border-[rgba(255,255,255,0.1)] ${
         request.isSelected
           ? "bg-[rgba(19,91,236,0.1)] " 
           : "bg-[rgb(255,255,255,0.03)] " 
       }`}
     >
-      <View className="flex-row gap-[16px] items-center">
+      <View className="flex-row gap-[16px] items-center flex-1">
         <View
           style={{ backgroundColor: request.bgIcon }}
           className="w-[48px] h-[48px] rounded-xl justify-center items-center"
@@ -24,7 +24,7 @@ export default function CategoryCard(request: ICategoryCard) {
             color={request.colorIcon}
           />
         </View>
-        <View className="flex-col  w-[149px]">
+        <View className="flex-1">
           <Text className="text-[18px] text-white font-interSemiBold">
             {request.title}
           </Text>
