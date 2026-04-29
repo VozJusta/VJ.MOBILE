@@ -3,15 +3,9 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RequestCard from "@/components/RequestCard";
 import AnalysysCard from "@/components/AnalysysCard";
 import ContactCard from "@/components/ContactCard";
 import { useLawyerRequests } from "@/hooks/lawyer/requests/useLawyerRequests";
-import {
-  RequestCardBadgeColor,
-  RequestCardTextBadge,
-} from "@/interfaces/components/RequestCard";
-import { getCategoryLabel } from "@/utils/screens/citizen/home";
 import { IAnalysysCardTitle } from "@/interfaces/components/AnalysysCard";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
@@ -55,7 +49,7 @@ export default function RequestSelected() {
                 relacionados ao caso.
               </Text>
             </View>
-            
+
             <Text className="font-interSemiBold text-[20px] text-white">
               Análise Jurídica da IA
             </Text>
