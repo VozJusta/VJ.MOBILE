@@ -7,18 +7,19 @@ import { router } from "expo-router";
 import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { downloadReportSimulationAsPdf } from "@/services/ai/simulation/downloadPdf";
 import Toast from "react-native-toast-message";
+import { useWebSocketSimulation } from "@/store/simulation/websocket";
 
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const { simulationId } = useSimulationStorage();
+  const { simulationReportId } = useWebSocketSimulation();
 
   const handleDownloadReport = async () => {
-    if (!simulationId) return;
+    if (!simulationReportId) return;
 
     try {
       setIsDownloading(true);
-      const result = await downloadReportSimulationAsPdf(simulationId);
+      const result = await downloadReportSimulationAsPdf(simulationReportId);
 
       if (!result.success) {
         Toast.show({

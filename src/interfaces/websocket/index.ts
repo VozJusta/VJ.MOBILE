@@ -32,6 +32,7 @@ export interface IWebSocketSimulation {
   warning: IWebSocketSimulationWarning | null;
   simulationStatus: TSimulationStatus | null;
   socket: Socket | null;
+  simulationReportId: string | null;
 
   createAndStartSimulation: (personality: Personality) => Promise<void>;
   stopSimulation: () => void;

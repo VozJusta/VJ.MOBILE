@@ -18,6 +18,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     aiResponse: null,
     audioFile: null,
     isSpeaking: false,
+    simulationReportId: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -64,6 +65,10 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
           set({ error: "Erro de conexão com o servidor de simulação" });
           socket.disconnect();
           set({ socket: null });
+        });
+
+        socket.on("simulation:report", (payload) => {
+          set({ simulationReportId: payload.reportId });
         });
       } catch {
         set({

@@ -24,6 +24,7 @@ export function useSimulationAudience() {
     error,
     clearSimulation,
     clearMessages,
+    simulationReportId
   } = useWebSocketSimulation();
 
   const {
@@ -143,5 +144,6 @@ export function useSimulationAudience() {
     isLoading,
     transcribedText,
     isTranscribing,
+    simulationReportId
   };
 }
