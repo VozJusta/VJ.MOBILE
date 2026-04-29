@@ -22,6 +22,7 @@ export function useSimulationAudience() {
     audioFile,
     isLoading,
     error,
+    clearSimulation
   } = useWebSocketSimulation();
 
   const {
@@ -124,6 +125,13 @@ export function useSimulationAudience() {
   const handleStop = () => {
     stopSimulation();
   };
+
+  useEffect(() => {
+  return () => {
+    setTranscribedText(null);
+    clearSimulation();
+  };
+}, []);
 
   return {
     handleStartRecording,
