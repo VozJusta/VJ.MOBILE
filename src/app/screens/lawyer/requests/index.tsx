@@ -89,7 +89,7 @@ export default function RequestsScreens() {
                   ? RequestCardBadgeColor.REJECTED
                   : RequestCardBadgeColor.PENDING
             }
-            onSeeReport={() => handleDownloadReport(item.reportId)}
+            onSeeReport={() => handleDownloadReport(item.reportId ?? "")}
             onAccept={() => handleRequestAction(item.id, "accept")}
             onReject={() => handleRequestAction(item.id, "reject")}
             reportId={item.reportId}

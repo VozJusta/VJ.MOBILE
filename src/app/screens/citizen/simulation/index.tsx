@@ -19,6 +19,14 @@ export default function SimulationScreen() {
           title="PERSONALIDADE DA IA"
           isCitizen={true}
         />
+        <View className="gap-3 mt-8">
+          <Text className="font-interBold text-[30px] text-white">
+            Simulação de audiência
+          </Text>
+          <Text className="text-[16px] text-[#94A3B8] font-interLight">
+            Escolha a personalidade da IA para simular uma audiência jurídica e pratique seus argumentos.
+          </Text>
+        </View>
         {simulationPersonalities.map((personality, index) => (
           <CategoryCard {...personality} key={index} onPress={() => {}} />
         ))}
@@ -30,7 +38,7 @@ export default function SimulationScreen() {
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
                 <Text className="text-white font-interSemiBold text-[16px]">
-                  Iniciar análise por IA
+                  Inciar simulação
                 </Text>
               )}
             </View>
