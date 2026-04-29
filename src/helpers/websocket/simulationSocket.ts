@@ -1,4 +1,4 @@
-import { Personality } from "@/interfaces/services/citizen/simulation";
+import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket";
 import { startSimulation } from "@/services/ai/simulation";
 import { useSimulationStore } from "@/store/simulation/simulationId/simulation.store";

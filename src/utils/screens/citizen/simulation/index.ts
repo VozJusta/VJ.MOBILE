@@ -1,5 +1,5 @@
 import { ICategoryCard } from "@/interfaces/components/CategoryCard";
-import { Personality } from "@/interfaces/services/citizen/simulation";
+import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 
 export const simulationPersonalities: ICategoryCard[] = [
   {

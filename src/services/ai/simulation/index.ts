@@ -2,7 +2,7 @@ import { apiFetch } from "@/helpers/api/apiFetch";
 import {
   ISimulationResponse,
   Personality,
-} from "@/interfaces/services/citizen/simulation";
+} from "@/interfaces/services/citizen/simulation/startSimulation";
 import { BASE_URL } from "@/settings/BASE_URL";
 import Toast from "react-native-toast-message";
 
