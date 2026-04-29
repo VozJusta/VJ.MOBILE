@@ -1,4 +1,5 @@
 import { ICategoryCard } from "@/interfaces/components/CategoryCard";
+import { Personality } from "@/interfaces/services/citizen/simulation";
 
 export const simulationPersonalities: ICategoryCard[] = [
   {
@@ -50,3 +51,12 @@ export const simulationPersonalities: ICategoryCard[] = [
     bgIcon: "rgba(16,185,129,0.2)",
   },
 ];
+
+export const personalityMap: Record<string, Personality> = {
+  Calmo: Personality.CALM,
+  Agressivo: Personality.AGGRESSIVE,
+  Imparcial: Personality.IMPARTIAL,
+  Empático: Personality.EMPATHETIC,
+  Pragmático: Personality.PRAGMATIC,
+  Pesquisador: Personality.RESEARCHER,
+};
