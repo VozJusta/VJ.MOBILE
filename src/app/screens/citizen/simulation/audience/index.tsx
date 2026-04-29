@@ -30,7 +30,7 @@ export default function SimulationAudience() {
           isCitizen={true}
         />
 
-        <View className="bg-black w-full h-[100px] rounded-xl" />
+        <View className="bg-black w-full h-[200px] rounded-xl" />
 
         {transcribedText && (
           <MessageBubble
@@ -64,21 +64,23 @@ export default function SimulationAudience() {
           </TouchableOpacity>
         </View>
 
-        {(simulationStatus === "Completed" ||
-          simulationStatus === "TimedOut") && (
-          <ButtonUI
-            onPress={() => router.push("/screens/citizen/simulation/report")}
-            gradient={true}
-            hover={false}
-            iconLeft={false}
-            paddingButtonStatus={""}
-            children={
+        <ButtonUI
+          onPress={() => router.push("/screens/citizen/simulation/report")}
+          gradient={true}
+          hover={false}
+          iconLeft={false}
+          paddingButtonStatus={""}
+          disabled={
+            simulationStatus !== "Completed" && simulationStatus !== "TimedOut"
+          }
+          children={
+            <View className="justify-center items-center flex-1">
               <Text className="text-white font-interSemiBold text-[16px]">
                 Encerrar e Ver Feedback
               </Text>
-            }
-          />
-        )}
+            </View>
+          }
+        />
       </SafeAreaView>
     </ScrollView>
   );

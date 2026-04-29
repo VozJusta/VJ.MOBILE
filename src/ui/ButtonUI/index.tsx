@@ -52,6 +52,7 @@ export default function ButtonUI({
           shadowOpacity: 0.4,
           shadowRadius: 15,
           elevation: 8,
+          opacity: props.disabled ? 0.5 : 1,
         }}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
