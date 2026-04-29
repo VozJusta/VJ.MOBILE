@@ -4,7 +4,7 @@ import { IWebSocketSimulation } from "@/interfaces/websocket";
 import { continueSimulation } from "@/services/ai/simulation/continueSimulation";
 import { startSimulation } from "@/services/ai/simulation/startSimulation";
 import { synthesizeAudio } from "@/services/ai/simulation/synthesizeAudio";
-import { useSimulationStore } from "@/store/simulation/simulationId/simulation.store";
+import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { create } from "zustand";
 
 export const useWebSocketSimulation = create<IWebSocketSimulation>(
@@ -37,7 +37,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
           simulation: result.data || null,
           simulationStatus: "InProgress",
         });
-        useSimulationStore.getState().setSimulationId(result.data!.id);
+        useSimulationStorage.getState().setSimulationId(result.data!.id);
 
         const socket = createSimulationSocket();
         set({ socket });

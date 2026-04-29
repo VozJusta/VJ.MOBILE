@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-export const useSimulationStore = create<ISimulationStore>()(
+export const useSimulationStorage = create<ISimulationStore>()(
   persist(
     (set) => ({
       simulationId: "",
