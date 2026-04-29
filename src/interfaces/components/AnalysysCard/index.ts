@@ -4,7 +4,7 @@ export interface IAnalysysCard {
 }
 
 export enum IAnalysysCardTitle {
-  FACTS = "Fatos relevantes",
+  IA_CONVERSATION = "Conversa com a IA",
   LEGAL_ANALYSIS = "Fundamentação sugerida",
   SIMPLIFIED_EXPLANATION = "Explicação simplificada",
 }
