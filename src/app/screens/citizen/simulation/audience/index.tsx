@@ -18,6 +18,7 @@ export default function SimulationAudience() {
     isLoading,
     simulationStatus,
     transcribedText,
+    aiResponse,
   } = useSimulationAudience();
 
   return (
@@ -34,12 +35,20 @@ export default function SimulationAudience() {
         {transcribedText && (
           <MessageBubble
             message={transcribedText}
-            isUser={false}
+            isUser={true}
             userName="Você"
           />
         )}
 
-        <View className="flex flex-row w-full h-fit gap-6">
+        {aiResponse && (
+          <MessageBubble
+            message={aiResponse}
+            isUser={false}
+            userName="Juiz IA"
+          />
+        )}
+
+        <View className="flex flex-row w-full h-fit gap-6 items-center justify-center">
           <ButtonAudio
             isRecording={isRecording}
             onStartRecording={handleStartRecording}
@@ -49,7 +58,7 @@ export default function SimulationAudience() {
 
           <TouchableOpacity
             onPress={handleStop}
-            className="flex h-12 w-12 items-center justify-center rounded-full shadow-sm bg-white"
+            className="flex h-16 w-16 items-center justify-center rounded-full shadow-sm bg-white"
           >
             <MaterialIcons name="stop" size={24} color="black" />
           </TouchableOpacity>

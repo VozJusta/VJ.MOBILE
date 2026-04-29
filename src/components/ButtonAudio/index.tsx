@@ -9,7 +9,7 @@ export default function ButtonAudio(props: IButtonAudio) {
         props.isRecording ? props.onStopRecording : props.onStartRecording
       }
       disabled={props.disabled}
-      className={`flex h-12 w-12 items-center justify-center rounded-full shadow-sm ${
+      className={`flex h-16 w-16 items-center justify-center rounded-full shadow-sm ${
         props.disabled
           ? "bg-slate-400"
           : props.isRecording
