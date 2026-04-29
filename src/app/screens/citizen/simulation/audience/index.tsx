@@ -80,7 +80,7 @@ export default function SimulationAudience() {
         </View>
 
         <ButtonUI
-          onPress={() => router.push("/screens/citizen/simulation/report")}
+          onPress={() => router.push("/screens/citizen/simulation/audience/audienceCompleted")}
           gradient={true}
           hover={false}
           iconLeft={false}
@@ -91,7 +91,7 @@ export default function SimulationAudience() {
           children={
             <View className="justify-center items-center flex-1">
               <Text className="text-white font-interSemiBold text-[16px]">
-                Encerrar e Ver Feedback
+                Encerrar simulação
               </Text>
             </View>
           }
