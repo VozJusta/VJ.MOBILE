@@ -45,6 +45,8 @@ export default function RequestsScreens() {
     fetchRequests(filter || undefined);
   };
 
+  console.log("requests", requests);
+
   const amounts: IAmounts = {
     total: requests.length,
     Accepted: requests.filter((request) => request.statusCase === "Accepted")
