@@ -1,7 +1,9 @@
 import { createSimulationSocket } from "@/helpers/websocket/simulationSocket";
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket";
+import { continueSimulation } from "@/services/ai/simulation/continueSimulation";
 import { startSimulation } from "@/services/ai/simulation/startSimulation";
+import { synthesizeAudio } from "@/services/ai/simulation/synthesizeAudio";
 import { useSimulationStore } from "@/store/simulation/simulationId/simulation.store";
 import { create } from "zustand";
 
@@ -13,6 +15,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     warning: null,
     simulationStatus: "Waiting",
     socket: null,
+    aiResponse: null,
+    audioFile: null,
+    isSpeaking: false,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -79,6 +84,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         warning: null,
         simulationStatus: "Waiting",
         socket: null,
+        aiResponse: null,
+        audioFile: null,
+        isSpeaking: false,
       });
     },
 
@@ -94,6 +102,41 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         simulationStatus: "Waiting",
         socket: null,
       });
+    },
+
+    sendChat: async (text: string) => {
+      const { simulation } = get();
+
+      if (!simulation) return;
+
+      const result = await continueSimulation({
+        simulationId: simulation.id,
+        text,
+      });
+
+      if (!result.success) {
+        set({
+          error: result.fields?.[0] || "Erro ao enviar mensagem",
+        });
+        return;
+      }
+
+      set({ aiResponse: result.data!.text });
+
+      await get().synthesizeAnswer(result.data!.text);
+    },
+
+    synthesizeAnswer: async (text: string) => {
+      set({ isSpeaking: true });
+
+      const result = await synthesizeAudio({ text });
+
+      if (!result.success) {
+        set({ error: result.fields?.[0], isSpeaking: false });
+        return;
+      }
+
+      set({ audioFile: result.data, isSpeaking: false });
     },
   }),
 );

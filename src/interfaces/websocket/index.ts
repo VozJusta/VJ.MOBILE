@@ -36,4 +36,11 @@ export interface IWebSocketSimulation {
   createAndStartSimulation: (personality: Personality) => Promise<void>;
   stopSimulation: () => void;
   clearSimulation: () => void;
+
+  sendChat: (text: string) => Promise<void>;
+  synthesizeAnswer: (text: string) => Promise<void>;
+
+  aiResponse: string | null;
+  audioFile: Blob | null;
+  isSpeaking: boolean;
 }

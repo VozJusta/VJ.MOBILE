@@ -12,7 +12,7 @@ export async function synthesizeAudio(body: ISynthesizeAnswerRequest) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.blob().catch(() => {});
+    const data = await response.blob();
 
     if (!response.ok) {
       return {
@@ -23,7 +23,7 @@ export async function synthesizeAudio(body: ISynthesizeAnswerRequest) {
 
     return {
       success: true,
-      data: data,
+      data: data as Blob,
     };
   } catch {
     return {

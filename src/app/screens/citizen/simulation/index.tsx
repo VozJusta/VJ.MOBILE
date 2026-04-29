@@ -8,8 +8,8 @@ import {
 } from "@/utils/screens/citizen/simulation";
 import CategoryCard from "@/components/CategoryCard";
 import ButtonUI from "@/ui/ButtonUI";
-import { useWebSocketSimulation } from "@/helpers/websocket/simulationSocket";
 import { router } from "expo-router";
+import { useWebSocketSimulation } from "@/store/simulation/websocket";
 
 export default function SimulationScreen() {
   const { createAndStartSimulation, isLoading, error } =
