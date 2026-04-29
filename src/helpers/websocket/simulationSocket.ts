@@ -1,6 +1,6 @@
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket";
-import { startSimulation } from "@/services/ai/simulation";
+import { startSimulation } from "@/services/ai/simulation/startSimulation";
 import { useSimulationStore } from "@/store/simulation/simulationId/simulation.store";
 import { createSimulationSocket } from "@/store/simulation/websocket";
 import { create } from "zustand";

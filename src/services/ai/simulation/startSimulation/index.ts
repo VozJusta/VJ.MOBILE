@@ -4,7 +4,6 @@ import {
   Personality,
 } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { BASE_URL } from "@/settings/BASE_URL";
-import Toast from "react-native-toast-message";
 
 export async function startSimulation(personality: Personality) {
   try {
