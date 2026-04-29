@@ -37,8 +37,8 @@ export default function TerminateAccount() {
               Encerrar conta
             </Text>
             <Text className="text-[#94A3B8] text-[14px] font-interRegular leading-7">
-              Digite sua senha para continuar com a exclusão da conta. Essa ação é
-              permanente e não pode ser desfeita. Todos os seus dados serão
+              Digite sua senha para continuar com a exclusão da conta. Essa ação
+              é permanente e não pode ser desfeita. Todos os seus dados serão
               removidos.
             </Text>
           </View>

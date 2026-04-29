@@ -1,0 +1,34 @@
+import { useAuth } from "@/hooks/auth/useAuth";
+import SignInTemplate from "@/template/auth/SingInTemplate";
+import { Role } from "@/types/roles/roles";
+import { useBuildCompleteRegisterFields } from "@/utils/auth/users/CompleteResgister";
+import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+
+export default function CompleteRegisterCitizen() {
+  const { registerAuth, handleCompleteRegisterChange } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const params = useLocalSearchParams();
+
+  const email = params["email"] as string;
+  const role = params["source"] as Role;
+
+  const completeRegisterData = useBuildCompleteRegisterFields({
+    registerAuth,
+    handleRegisterChange: handleCompleteRegisterChange,
+    showPassword,
+    onToggleShowPassword: () => setShowPassword((prev) => !prev),
+    role,
+    email,
+  });
+  return (
+    <SignInTemplate
+      title="Complete seu cadastro"
+      description="Preencha os dados para continuar"
+      fields={completeRegisterData.fields}
+      onSubmit={completeRegisterData.onSubmit}
+      submitLabel={completeRegisterData.titleButton}
+      disableSubmit={completeRegisterData.disableSubmit}
+    />
+  );
+}

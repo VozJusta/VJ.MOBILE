@@ -1,0 +1,21 @@
+import { useXTokenStorage } from "@/store/auth/token.store";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+
+export default function AuthCallback() {
+  const params = useLocalSearchParams();
+  const { setToken } = useXTokenStorage();
+
+  useEffect(() => {
+    const token = params["x-security-token"] as string;
+
+    if (!token) {
+      router.replace("/screens/auth/users/SignIn");
+      return;
+    }
+
+    setToken(token);
+  }, []);
+
+  return null;
+}

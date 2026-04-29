@@ -36,18 +36,33 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.vozjusta.mobile",
       "enableProguardInReleaseBuilds": true,
-      "enableShrinkResourcesInReleaseBuilds": true
+      "enableShrinkResourcesInReleaseBuilds": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "vozjusta",
+              "host": "auth"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "plugins": [
       ["expo-router", { "root": "src/app" }],
       "expo-font",
       "expo-web-browser",
-      ["expo-audio",
-      {
-        "microphonePermission": "Allow VozJusta to access your microphone.",
-        "enableBackgroundPlayback": true,
-        "enableBackgroundRecording": false
-      }]
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow VozJusta to access your microphone.",
+          "enableBackgroundPlayback": true,
+          "enableBackgroundRecording": false
+        }
+      ]
     ]
   }
 }
