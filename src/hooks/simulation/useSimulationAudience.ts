@@ -22,7 +22,8 @@ export function useSimulationAudience() {
     audioFile,
     isLoading,
     error,
-    clearSimulation
+    clearSimulation,
+    clearMessages,
   } = useWebSocketSimulation();
 
   const {
@@ -33,6 +34,9 @@ export function useSimulationAudience() {
     recordingDuration,
   } = useRecordAudio({
     onRecordingComplete: async (uri) => {
+      setTranscribedText(null);
+      clearMessages();
+
       setIsTranscribing(true);
 
       const response = await transcribeAudio(uri);

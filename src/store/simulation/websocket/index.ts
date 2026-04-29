@@ -138,5 +138,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
       set({ audioFile: result.data, isSpeaking: false });
     },
+
+    clearMessages: () => {
+      set({ aiResponse: null, audioFile: null });
+    },
   }),
 );

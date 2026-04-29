@@ -43,4 +43,6 @@ export interface IWebSocketSimulation {
   aiResponse: string | null;
   audioFile: Blob | null;
   isSpeaking: boolean;
+
+  clearMessages: () => void;
 }
