@@ -10,6 +10,7 @@ import { Audio } from "expo-av";
 export function useSimulationAudience() {
   const router = useRouter();
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
+  const [isTranscribing, setIsTranscribing] = useState(false);
 
   const {
     sendChat,
@@ -31,7 +32,11 @@ export function useSimulationAudience() {
     recordingDuration,
   } = useRecordAudio({
     onRecordingComplete: async (uri) => {
+      setIsTranscribing(true);
+
       const response = await transcribeAudio(uri);
+
+      setIsTranscribing(false);
 
       if (!response.success || !response.data) {
         Toast.show({
@@ -132,5 +137,6 @@ export function useSimulationAudience() {
     aiResponse,
     isLoading,
     transcribedText,
+    isTranscribing,
   };
 }

@@ -8,6 +8,8 @@ import { useSimulationAudience } from "@/hooks/simulation/useSimulationAudience"
 import ButtonUI from "@/ui/ButtonUI";
 import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
+import EmptyState from "@/components/EmptyState";
+import Skeletons from "@/components/Skeletons";
 
 export default function SimulationAudience() {
   const {
@@ -19,7 +21,10 @@ export default function SimulationAudience() {
     simulationStatus,
     transcribedText,
     aiResponse,
+    isTranscribing,
   } = useSimulationAudience();
+
+  const showLoading = isTranscribing || isLoading;
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -30,9 +35,19 @@ export default function SimulationAudience() {
           isCitizen={true}
         />
 
-        <View className="bg-black w-full h-[200px] rounded-xl" />
+        <View className="bg-black w-full h-[250px] rounded-xl" />
 
-        {transcribedText && (
+        {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
+
+        {!showLoading && !transcribedText && !aiResponse && (
+          <EmptyState
+            icon="mic"
+            title="Ainda não há mensagens na audiência"
+            description="Quando você começar a falar, a transcrição aparecerá aqui e o juiz IA responderá com base no que foi dito."
+          />
+        )}
+
+        {transcribedText && !showLoading && (
           <MessageBubble
             message={transcribedText}
             isUser={true}
@@ -40,7 +55,7 @@ export default function SimulationAudience() {
           />
         )}
 
-        {aiResponse && (
+        {aiResponse && !showLoading && (
           <MessageBubble
             message={aiResponse}
             isUser={false}
