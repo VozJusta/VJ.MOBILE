@@ -68,7 +68,7 @@ export default function SimulationAudience() {
             isRecording={isRecording}
             onStartRecording={handleStartRecording}
             onStopRecording={handleStopRecording}
-            disabled={isLoading}
+            disabled={showLoading}
           />
 
           <TouchableOpacity

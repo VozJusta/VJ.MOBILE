@@ -38,21 +38,20 @@ export function useSimulationAudience() {
       clearMessages();
 
       setIsTranscribing(true);
-
-      const response = await transcribeAudio(uri);
-
-      setIsTranscribing(false);
-
-      if (!response.success || !response.data) {
-        Toast.show({
-          type: "error",
-          text1: response.fields?.[0] ?? "Erro ao transcrever áudio",
-        });
-        return;
+      try {
+        const response = await transcribeAudio(uri);
+        if (!response.success || !response.data) {
+          Toast.show({
+            type: "error",
+            text1: response.fields?.[0] ?? "Erro ao transcrever áudio",
+          });
+          return;
+        }
+        setTranscribedText(response.data);
+        await sendChat(response.data);
+      } finally {
+        setIsTranscribing(false);
       }
-
-      setTranscribedText(response.data);
-      await sendChat(response.data);
     },
   });
 
@@ -131,11 +130,11 @@ export function useSimulationAudience() {
   };
 
   useEffect(() => {
-  return () => {
-    setTranscribedText(null);
-    clearSimulation();
-  };
-}, []);
+    return () => {
+      setTranscribedText(null);
+      clearSimulation();
+    };
+  }, []);
 
   return {
     handleStartRecording,
