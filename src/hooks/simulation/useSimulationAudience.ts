@@ -119,12 +119,6 @@ export function useSimulationAudience() {
     });
   }, [error]);
 
-  useEffect(() => {
-    if (simulationStatus === "Completed" || simulationStatus === "TimedOut") {
-      router.push("/screens/citizen/simulation/report");
-    }
-  }, [simulationStatus]);
-
   const handleStop = () => {
     stopSimulation();
   };
