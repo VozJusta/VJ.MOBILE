@@ -7,7 +7,7 @@ export default function CitizenLayout() {
   const navbarRoutes = [
     "/screens/citizen/chat",
     "/screens/citizen/home",
-    "/screens/citizen/documents",
+    "/screens/citizen/simulation",
   ];
 
   return (

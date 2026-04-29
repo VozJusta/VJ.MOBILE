@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "@/components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";

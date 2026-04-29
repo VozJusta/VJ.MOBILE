@@ -26,8 +26,8 @@ export const NavbarItemsCitizen: INavbar[] = [
   },
   {
     iconName: "folder",
-    name: "Documentos",
-    path: "/screens/citizen/documents",
+    name: "Simulação",
+    path: "/screens/citizen/simulation",
   },
   {
     iconName: "chat-bubble",
