@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,7 +17,7 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
-import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
+import { useVideoPlayer, VideoView } from "expo-video";
 
 export default function SimulationAudience() {
   const {
@@ -30,11 +31,23 @@ export default function SimulationAudience() {
     aiResponse,
     isTranscribing,
     remainingSecs,
+    isSpeaking,
+    videoUrl,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
 
   const opacity = useRef(new Animated.Value(1)).current;
+
+  const player = useVideoPlayer(null, (p) => {
+    p.loop = false;
+  });
+
+  useEffect(() => {
+    if (!videoUrl) return;
+    player.replace(videoUrl);
+    player.play();
+  }, [videoUrl]);
 
   useEffect(() => {
     Animated.loop(
@@ -74,7 +87,27 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        <View className="bg-black w-full h-[250px] rounded-xl" />
+        {isSpeaking && !videoUrl && (
+          <View className="bg-black w-full h-[250px] rounded-xl items-center justify-center">
+            <ActivityIndicator color="white" />
+            <Text className="text-white mt-2 font-interRegular text-sm">
+              Gerando vídeo do juiz...
+            </Text>
+          </View>
+        )}
+
+        {!isSpeaking && videoUrl && (
+          <VideoView
+            player={player}
+            style={{ width: "100%", height: 250, borderRadius: 12 }}
+            contentFit="cover"
+            nativeControls={false}
+          />
+        )}
+
+        {!isSpeaking && !videoUrl && (
+          <View className="bg-black w-full h-[250px] rounded-xl" /> // estado inicial
+        )}
 
         <View className="flex flex-col gap-4">
           {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}

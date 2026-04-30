@@ -26,6 +26,7 @@ export function useSimulationAudience() {
     clearSimulation,
     clearMessages,
     simulationReportId,
+    videoUrl,
   } = useWebSocketSimulation();
 
   const {
@@ -165,5 +166,6 @@ export function useSimulationAudience() {
     isTranscribing,
     simulationReportId,
     remainingSecs,
+    videoUrl,
   };
 }

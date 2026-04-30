@@ -47,12 +47,20 @@
               "host": "auth"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
     "plugins": [
-      ["expo-router", { "root": "src/app" }],
+      [
+        "expo-router",
+        {
+          "root": "src/app"
+        }
+      ],
       "expo-font",
       "expo-web-browser",
       [
@@ -62,7 +70,8 @@
           "enableBackgroundPlayback": true,
           "enableBackgroundRecording": false
         }
-      ]
+      ],
+      "expo-video"
     ]
   }
 }
