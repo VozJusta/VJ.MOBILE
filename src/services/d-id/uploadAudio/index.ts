@@ -18,7 +18,6 @@ export async function uploadAudio(audioUri: string) {
     });
 
     const data = await response.json();
-    console.log("D-ID upload response:", JSON.stringify(data));
 
     if (!response.ok) {
       return { success: false, error: data.error || "Erro ao enviar áudio" };

@@ -45,7 +45,6 @@ export default function RequestsScreens() {
     fetchRequests(filter || undefined);
   };
 
-  console.log("requests", requests);
 
   const amounts: IAmounts = {
     total: requests.length,

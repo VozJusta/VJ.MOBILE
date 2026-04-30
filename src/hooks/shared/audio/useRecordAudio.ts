@@ -55,7 +55,6 @@ export function useRecordAudio({ onRecordingComplete }: IUseRecordAudio) {
     await audioRecorder.stop();
 
     const uri = audioRecorder.uri;
-    console.log("URI após stop:", uri);
 
     if (!uri) {
       Toast.show({
