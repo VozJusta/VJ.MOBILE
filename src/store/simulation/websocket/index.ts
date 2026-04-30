@@ -19,6 +19,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     audioFile: null,
     isSpeaking: false,
     simulationReportId: null,
+    remainingSecs: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -52,7 +53,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:warning", (payload) => {
-          set({ warning: payload });
+          set({ warning: payload, remainingSecs: payload.remainingSecs });
         });
 
         socket.on("simulation:end", (payload) => {

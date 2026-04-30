@@ -1,5 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
+import React, { useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import ButtonAudio from "@/components/ButtonAudio";
@@ -22,9 +28,29 @@ export default function SimulationAudience() {
     transcribedText,
     aiResponse,
     isTranscribing,
+    remainingSecs,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
+
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 0.3,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -35,52 +61,70 @@ export default function SimulationAudience() {
           isCitizen={true}
         />
 
+        {remainingSecs !== null && (
+          <View className="flex-row items-center justify-center gap-2 w-full">
+            <Animated.View
+              style={{ opacity }}
+              className="w-3 h-3 rounded-full bg-red-500"
+            />
+            <Text className="text-[#94A3B8] font-interSemiBold text-sm">
+              Tempo restante: {remainingSecs}s
+            </Text>
+          </View>
+        )}
+
         <View className="bg-black w-full h-[250px] rounded-xl" />
 
-        {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
+        <View className="flex flex-col gap-4">
+          {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
 
-        {!showLoading && !transcribedText && !aiResponse && (
-          <EmptyState
-            icon="mic"
-            title="Ainda não há mensagens na audiência"
-            description="Quando você começar a falar, a transcrição aparecerá aqui e o juiz IA responderá com base no que foi dito."
-          />
-        )}
+          {!showLoading && !transcribedText && !aiResponse && (
+            <EmptyState
+              icon="mic"
+              title="Ainda não há mensagens na audiência"
+              description="Quando você começar a falar, a transcrição aparecerá aqui e o juiz IA responderá com base no que foi dito."
+            />
+          )}
 
-        {transcribedText && !showLoading && (
-          <MessageBubble
-            message={transcribedText}
-            isUser={true}
-            userName="Você"
-          />
-        )}
+          {transcribedText && !showLoading && (
+            <MessageBubble
+              message={transcribedText}
+              isUser={true}
+              userName="Você"
+            />
+          )}
 
-        {aiResponse && !showLoading && (
-          <MessageBubble
-            message={aiResponse}
-            isUser={false}
-            userName="Juiz IA"
-          />
-        )}
+          {aiResponse && !showLoading && (
+            <MessageBubble
+              message={aiResponse}
+              isUser={false}
+              userName="Juiz IA"
+            />
+          )}
 
-        <View className="flex flex-row w-full h-fit gap-6 items-center justify-center">
-          <ButtonAudio
-            isRecording={isRecording}
-            onStartRecording={handleStartRecording}
-            onStopRecording={handleStopRecording}
-            disabled={showLoading}
-          />
+          <View className="flex flex-row w-full h-fit gap-6 items-center justify-center">
+            <ButtonAudio
+              isRecording={isRecording}
+              onStartRecording={handleStartRecording}
+              onStopRecording={handleStopRecording}
+              disabled={showLoading}
+            />
 
-          <TouchableOpacity
-            onPress={handleStop}
-            className="flex h-16 w-16 items-center justify-center rounded-full shadow-sm bg-white"
-          >
-            <MaterialIcons name="stop" size={24} color="black" />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleStop}
+              className="flex h-16 w-16 items-center justify-center rounded-full shadow-sm bg-white"
+            >
+              <MaterialIcons name="stop" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
         </View>
 
         <ButtonUI
-          onPress={() => router.push("/screens/citizen/simulation/audience/audienceCompleted")}
+          onPress={() =>
+            router.push(
+              "/screens/citizen/simulation/audience/audienceCompleted",
+            )
+          }
           gradient={true}
           hover={false}
           iconLeft={false}
