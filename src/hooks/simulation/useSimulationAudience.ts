@@ -4,7 +4,6 @@ import Toast from "react-native-toast-message";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useWebSocketSimulation } from "@/store/simulation/websocket";
 import { useRecordAudio } from "@/hooks/shared/audio/useRecordAudio";
-import * as FileSystem from "expo-file-system/legacy";
 import { Audio } from "expo-av";
 
 export function useSimulationAudience() {
