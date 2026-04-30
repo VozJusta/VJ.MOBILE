@@ -20,7 +20,6 @@ import Skeletons from "@/components/Skeletons";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
 
-
 export default function SimulationAudience() {
   const {
     handleStartRecording,
@@ -112,7 +111,9 @@ export default function SimulationAudience() {
         )}
 
         <View className="flex flex-col gap-4">
-          {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
+          {(showLoading || isSpeaking) && !videoUrl && (
+            <Skeletons amountOfSkeletons={2} height={100} />
+          )}
 
           {!showLoading && !transcribedText && !aiResponse && (
             <EmptyState
@@ -122,7 +123,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {transcribedText && !showLoading && (
+          {transcribedText && !showLoading && !isSpeaking && (
             <MessageBubble
               message={transcribedText}
               isUser={true}
@@ -130,7 +131,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {aiResponse && !showLoading && (
+          {aiResponse && !showLoading && !isSpeaking && (
             <MessageBubble
               message={aiResponse}
               isUser={false}
