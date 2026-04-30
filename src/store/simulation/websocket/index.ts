@@ -1,3 +1,4 @@
+import { generateJudgeVideo } from "@/helpers/conversion/videoUrl";
 import { createSimulationSocket } from "@/helpers/websocket/simulationSocket";
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket";
@@ -20,6 +21,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     isSpeaking: false,
     simulationReportId: null,
     remainingSecs: null,
+    videoUrl: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -147,10 +149,18 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
       }
 
       set({ audioFile: result.data, isSpeaking: false });
+
+      try {
+        const videoUrl = await generateJudgeVideo(result.data!);
+        set({ videoUrl, isSpeaking: false });
+      } catch (e) {
+        console.error(e);
+        set({ isSpeaking: false });
+      }
     },
 
     clearMessages: () => {
-      set({ aiResponse: null, audioFile: null });
+      set({ aiResponse: null, audioFile: null, videoUrl: null });
     },
   }),
 );

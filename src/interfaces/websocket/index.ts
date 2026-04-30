@@ -34,6 +34,7 @@ export interface IWebSocketSimulation {
   socket: Socket | null;
   simulationReportId: string | null;
   remainingSecs: number | null;
+  videoUrl: string | null;
 
   createAndStartSimulation: (personality: Personality) => Promise<void>;
   stopSimulation: () => void;
