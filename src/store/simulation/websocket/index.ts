@@ -188,7 +188,11 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
       generateJudgeVideo(fileUri)
         .then((videoUrl) => {
-          set({ videoUrl: videoUrl ?? null, isSpeaking: false });
+          set({
+            videoUrl: videoUrl ?? null,
+            audioFile: fileUri,
+            isSpeaking: false,
+          });
         })
         .catch((e) => {
           console.error(e);
