@@ -7,6 +7,7 @@ import { router } from "expo-router";
 import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { downloadReportSimulationAsPdf } from "@/services/ai/simulation/downloadPdf";
 import Toast from "react-native-toast-message";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -14,8 +15,6 @@ export default function AudienceCompleted() {
   const { simulationId } = useSimulationStorage();
 
   const handleDownloadReport = async () => {
-    if (!simulationId) return;
-
     try {
       setIsDownloading(true);
       const result = await downloadReportSimulationAsPdf(simulationId);

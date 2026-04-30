@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
+import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 
 export default function SimulationAudience() {
   const {
