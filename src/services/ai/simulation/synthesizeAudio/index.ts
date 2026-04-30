@@ -12,8 +12,6 @@ export async function synthesizeAudio(body: ISynthesizeAnswerRequest) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.blob();
-
     if (!response.ok) {
       return {
         success: false,
@@ -21,6 +19,7 @@ export async function synthesizeAudio(body: ISynthesizeAnswerRequest) {
       };
     }
 
+    const data = await response.blob();
     return {
       success: true,
       data: data as Blob,
