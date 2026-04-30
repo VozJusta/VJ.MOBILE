@@ -51,27 +51,29 @@ export function useRecordAudio({ onRecordingComplete }: IUseRecordAudio) {
   };
 
   const handleStopRecording = async () => {
-    try {
-      await audioRecorder.stop();
+  try {
+    await audioRecorder.stop();
 
-      const uri = audioRecorder.uri;
+    const uri = audioRecorder.uri;
+    console.log("URI após stop:", uri);
 
-      if (!uri) {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao obter gravação",
-        });
-        return;
-      }
-
-      await onRecordingComplete(uri);
-    } catch {
+    if (!uri) {
       Toast.show({
         type: "error",
-        text1: "Erro ao parar gravação",
+        text1: "Erro ao obter gravação",
       });
+      return;
     }
-  };
+
+    await onRecordingComplete(uri);
+  } catch (e) {
+    console.error("Erro ao parar gravação:", e);
+    Toast.show({
+      type: "error",
+      text1: "Erro ao parar gravação",
+    });
+  }
+};
 
   return {
     handleStartRecording,

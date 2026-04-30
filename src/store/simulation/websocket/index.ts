@@ -140,35 +140,39 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     },
 
     synthesizeAnswer: async (text: string) => {
-  set({ isSpeaking: true });
+      set({ isSpeaking: true });
 
-  const result = await synthesizeAudio({ text });
-  if (!result.success) {
-    set({ error: result.fields?.[0], isSpeaking: false });
-    return;
-  }
+      const result = await synthesizeAudio({ text });
+      if (!result.success || !result.data) {
+        set({ error: result.fields?.[0], isSpeaking: false });
+        return;
+      }
 
-  const arrayBuffer = await result.data!.arrayBuffer();
-  const bytes = new Uint8Array(arrayBuffer);
-  let binary = "";
-  bytes.forEach((b) => (binary += String.fromCharCode(b)));
-  const base64 = btoa(binary);
+      const blob: Blob = result.data;
+      const reader = new FileReader();
+      const base64 = await new Promise<string>((resolve, reject) => {
+        reader.onloadend = () =>
+          resolve((reader.result as string).split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
 
-  const fileUri = FileSystem.cacheDirectory + "ai_response.mp3";
-  await FileSystem.writeAsStringAsync(fileUri, base64, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
+      const fileUri = FileSystem.cacheDirectory + "ai_response.mp3";
+      await FileSystem.writeAsStringAsync(fileUri, base64, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
 
-  set({ audioFile: fileUri }); 
+      set({ audioFile: fileUri, isSpeaking: true });
 
-  try {
-    const videoUrl = await generateJudgeVideo(fileUri);
-    set({ videoUrl, isSpeaking: false });
-  } catch (e) {
-    console.error(e);
-    set({ isSpeaking: false, error: "Erro ao gerar vídeo" });
-  }
-},
+      generateJudgeVideo(fileUri)
+        .then((videoUrl) => {
+          set({ videoUrl: videoUrl ?? null, isSpeaking: false });
+        })
+        .catch((e) => {
+          console.error(e);
+          set({ isSpeaking: false, error: "Erro ao gerar vídeo" });
+        });
+    },
 
     clearMessages: () => {
       set({ aiResponse: null, audioFile: null, videoUrl: null });
