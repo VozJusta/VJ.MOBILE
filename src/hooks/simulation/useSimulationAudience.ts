@@ -58,6 +58,32 @@ export function useSimulationAudience() {
   });
 
   useEffect(() => {
+    if (!audioFile || videoUrl) return;
+
+    let sound: Audio.Sound | null = null;
+
+    const playAudio = async () => {
+      try {
+        await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+        const { sound: audioSound } = await Audio.Sound.createAsync(
+          { uri: audioFile },
+          { shouldPlay: true },
+        );
+        sound = audioSound;
+      } catch (e) {
+        console.error(e);
+        Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
+      }
+    };
+
+    playAudio();
+
+    return () => {
+      sound?.unloadAsync();
+    };
+  }, [audioFile]);
+
+  useEffect(() => {
     if (!videoUrl || !audioFile) return;
 
     let sound: Audio.Sound | null = null;
