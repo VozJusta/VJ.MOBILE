@@ -58,50 +58,32 @@ export function useSimulationAudience() {
     },
   });
 
-  useEffect(() => {
-    if (!audioFile) return;
+ useEffect(() => {
+  if (!audioFile) return;
 
-    let sound: Audio.Sound | null = null;
+  let sound: Audio.Sound | null = null;
 
-    const playAudio = async () => {
-      try {
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            const result = reader.result as string;
-            resolve(result.split(",")[1]);
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(audioFile);
-        });
+  const playAudio = async () => {
+    try {
+      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
-        const fileUri = FileSystem.cacheDirectory + "ai_response.mp3";
-        await FileSystem.writeAsStringAsync(fileUri, base64, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
+      const { sound: audioSound } = await Audio.Sound.createAsync(
+        { uri: audioFile },
+        { shouldPlay: true },
+      );
+      sound = audioSound;
+    } catch (e) {
+      console.error(e);
+      Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
+    }
+  };
 
-        await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+  playAudio();
 
-        const { sound: audioSound } = await Audio.Sound.createAsync(
-          { uri: fileUri },
-          { shouldPlay: true },
-        );
-        sound = audioSound;
-      } catch (e) {
-        console.error(e);
-        Toast.show({
-          type: "error",
-          text1: "Erro ao reproduzir áudio",
-        });
-      }
-    };
-
-    playAudio();
-
-    return () => {
-      sound?.unloadAsync();
-    };
-  }, [audioFile]);
+  return () => {
+    sound?.unloadAsync();
+  };
+}, [audioFile]);
 
   useEffect(() => {
     if (!warning) return;

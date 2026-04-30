@@ -7,6 +7,7 @@ import { startSimulation } from "@/services/ai/simulation/startSimulation";
 import { synthesizeAudio } from "@/services/ai/simulation/synthesizeAudio";
 import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { create } from "zustand";
+import * as FileSystem from "expo-file-system/legacy";
 
 export const useWebSocketSimulation = create<IWebSocketSimulation>(
   (set, get) => ({
@@ -139,25 +140,35 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     },
 
     synthesizeAnswer: async (text: string) => {
-      set({ isSpeaking: true });
+  set({ isSpeaking: true });
 
-      const result = await synthesizeAudio({ text });
+  const result = await synthesizeAudio({ text });
+  if (!result.success) {
+    set({ error: result.fields?.[0], isSpeaking: false });
+    return;
+  }
 
-      if (!result.success) {
-        set({ error: result.fields?.[0], isSpeaking: false });
-        return;
-      }
+  const arrayBuffer = await result.data!.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer);
+  let binary = "";
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  const base64 = btoa(binary);
 
-      set({ audioFile: result.data });
+  const fileUri = FileSystem.cacheDirectory + "ai_response.mp3";
+  await FileSystem.writeAsStringAsync(fileUri, base64, {
+    encoding: FileSystem.EncodingType.Base64,
+  });
 
-      try {
-        const videoUrl = await generateJudgeVideo(result.data!);
-        set({ videoUrl, isSpeaking: false });
-      } catch (e) {
-        console.error(e);
-        set({ isSpeaking: false, error: "Erro ao gerar vídeo" });
-      }
-    },
+  set({ audioFile: fileUri }); 
+
+  try {
+    const videoUrl = await generateJudgeVideo(fileUri);
+    set({ videoUrl, isSpeaking: false });
+  } catch (e) {
+    console.error(e);
+    set({ isSpeaking: false, error: "Erro ao gerar vídeo" });
+  }
+},
 
     clearMessages: () => {
       set({ aiResponse: null, audioFile: null, videoUrl: null });

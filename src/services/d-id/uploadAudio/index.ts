@@ -1,9 +1,13 @@
 import { BASE_DID_KEY, BASE_DID_URL } from "@/settings/BASE_URL";
 
-export async function uploadAudio(audioBlob: Blob) {
+export async function uploadAudio(audioUri: string) {
   try {
     const formData = new FormData();
-    formData.append("audio", audioBlob, "audio.mp3");
+    formData.append("audio", {
+      uri: audioUri,
+      type: "audio/mpeg",
+      name: "audio.mp3",
+    } as any);
 
     const response = await fetch(`${BASE_DID_URL}/audios`, {
       method: "POST",
@@ -14,13 +18,15 @@ export async function uploadAudio(audioBlob: Blob) {
     });
 
     const data = await response.json();
+    console.log("D-ID upload response:", JSON.stringify(data));
 
     if (!response.ok) {
       return { success: false, error: data.error || "Erro ao enviar áudio" };
     }
 
     return { success: true, data: data.url as string };
-  } catch {
+  } catch (e) {
+    console.error("uploadAudio error:", e);
     return { success: false, error: "Erro ao enviar áudio" };
   }
 }
