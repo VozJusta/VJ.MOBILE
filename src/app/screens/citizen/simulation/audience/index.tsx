@@ -98,7 +98,7 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        {!isSpeaking && videoUrl && (
+        {videoUrl && (
           <VideoView
             player={player}
             style={{ width: "100%", height: 250, borderRadius: 12 }}
