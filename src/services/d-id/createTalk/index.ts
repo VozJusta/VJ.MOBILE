@@ -1,5 +1,4 @@
 import { BASE_DID_KEY, BASE_DID_URL } from "@/settings/BASE_URL";
-import LawyerImage from "@/assets/svg/lawyer-illustration.png";
 
 export async function createTalk(audioUrl: string) {
   try {
@@ -10,7 +9,7 @@ export async function createTalk(audioUrl: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        source_url: LawyerImage,
+        source_url: "https://i.ibb.co/zVJDc9GP/lawyer-illustration.png",
         audio_url: audioUrl,
         config: { stitch: true },
       }),
