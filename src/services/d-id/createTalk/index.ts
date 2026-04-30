@@ -10,7 +10,10 @@ export async function createTalk(audioUrl: string) {
       },
       body: JSON.stringify({
         source_url: "https://i.ibb.co/zVJDc9GP/lawyer-illustration.png",
-        audio_url: audioUrl,
+        script: {
+          type: "audio",
+          audio_url: audioUrl,
+        },
         config: { stitch: true },
       }),
     });
