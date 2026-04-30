@@ -18,6 +18,8 @@ import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
 import { useVideoPlayer, VideoView } from "expo-video";
+import { formatSeconds } from "@/utils/screens/citizen/simulation";
+
 
 export default function SimulationAudience() {
   const {
@@ -82,7 +84,7 @@ export default function SimulationAudience() {
               className="w-3 h-3 rounded-full bg-red-500"
             />
             <Text className="text-[#94A3B8] font-interSemiBold text-sm">
-              Tempo restante: {remainingSecs}s
+              Tempo restante: {formatSeconds(remainingSecs)}
             </Text>
           </View>
         )}
@@ -106,7 +108,7 @@ export default function SimulationAudience() {
         )}
 
         {!isSpeaking && !videoUrl && (
-          <View className="bg-black w-full h-[250px] rounded-xl" /> // estado inicial
+          <View className="bg-black w-full h-[250px] rounded-xl" />
         )}
 
         <View className="flex flex-col gap-4">

@@ -13,13 +13,21 @@ export default function AudienceCompleted() {
 
   const { simulationReportId } = useWebSocketSimulation();
 
+  console.log("simulationReportId:", simulationReportId);
+
   const handleDownloadReport = async () => {
-    if (!simulationReportId) return;
+    if (!simulationReportId) {
+      Toast.show({
+        type: "error",
+        text1: "Relatório ainda não está pronto",
+        text2: "Por favor, tente novamente em alguns instantes.",
+      });
+      return;
+    }
 
     try {
       setIsDownloading(true);
       const result = await downloadReportSimulationAsPdf(simulationReportId);
-
       if (!result.success) {
         Toast.show({
           type: "error",
