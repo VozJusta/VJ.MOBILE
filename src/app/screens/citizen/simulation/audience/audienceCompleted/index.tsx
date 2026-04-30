@@ -4,20 +4,21 @@ import ButtonUI from "@/ui/ButtonUI";
 import AnalysysConcludedTemplate from "@/template/AnalysysConcludedTemplate";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { downloadReportSimulationAsPdf } from "@/services/ai/simulation/downloadPdf";
 import Toast from "react-native-toast-message";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
+import { useWebSocketSimulation } from "@/store/simulation/websocket";
 
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const { simulationId } = useSimulationStorage();
+  const { simulationReportId } = useWebSocketSimulation();
 
   const handleDownloadReport = async () => {
+    if (!simulationReportId) return;
+
     try {
       setIsDownloading(true);
-      const result = await downloadReportSimulationAsPdf(simulationId);
+      const result = await downloadReportSimulationAsPdf(simulationReportId);
 
       if (!result.success) {
         Toast.show({

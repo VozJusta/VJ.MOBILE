@@ -18,6 +18,8 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     aiResponse: null,
     audioFile: null,
     isSpeaking: false,
+    simulationReportId: null,
+    remainingSecs: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -43,15 +45,18 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
+          console.log("socket conectado:", socket.id);
           socket.emit("simulation:start", { simulationId: result.data!.id });
         });
 
         socket.on("simulation:started", () => {
+          console.log("simulation:started recebido");
           set({ isLoading: false, simulationStatus: "InProgress" });
         });
 
         socket.on("simulation:warning", (payload) => {
-          set({ warning: payload });
+          console.log("simulation:warning recebido:", payload);
+          set({ warning: payload, remainingSecs: payload.remainingSecs });
         });
 
         socket.on("simulation:end", (payload) => {
@@ -61,9 +66,14 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("connect_error", (err) => {
+          console.log("erro de conexão:", err.message);
           set({ error: "Erro de conexão com o servidor de simulação" });
           socket.disconnect();
           set({ socket: null });
+        });
+
+        socket.on("simulation:report", (payload) => {
+          set({ simulationReportId: payload.reportId });
         });
       } catch {
         set({

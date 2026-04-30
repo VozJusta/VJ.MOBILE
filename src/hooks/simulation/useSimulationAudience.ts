@@ -11,6 +11,7 @@ export function useSimulationAudience() {
   const router = useRouter();
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [remainingSecs, setRemainingSecs] = useState<number | null>(null);
 
   const {
     sendChat,
@@ -24,6 +25,7 @@ export function useSimulationAudience() {
     error,
     clearSimulation,
     clearMessages,
+    simulationReportId,
   } = useWebSocketSimulation();
 
   const {
@@ -103,12 +105,30 @@ export function useSimulationAudience() {
   useEffect(() => {
     if (!warning) return;
 
+    setRemainingSecs(warning.remainingSecs);
+
     Toast.show({
       type: "info",
       text1: warning.message,
       text2: `Tempo restante: ${warning.remainingSecs}s`,
     });
   }, [warning]);
+
+  useEffect(() => {
+    if (remainingSecs === null || remainingSecs <= 0) return;
+
+    const interval = setInterval(() => {
+      setRemainingSecs((prev) => (prev !== null ? prev - 1 : null));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [remainingSecs]);
+
+  useEffect(() => {
+    if (simulationStatus === "Completed" || simulationStatus === "TimedOut") {
+      setRemainingSecs(null);
+    }
+  }, [simulationStatus]);
 
   useEffect(() => {
     if (!error) return;
@@ -143,5 +163,7 @@ export function useSimulationAudience() {
     isLoading,
     transcribedText,
     isTranscribing,
+    simulationReportId,
+    remainingSecs,
   };
 }
