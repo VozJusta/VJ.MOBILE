@@ -148,14 +148,14 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         return;
       }
 
-      set({ audioFile: result.data, isSpeaking: false });
+      set({ audioFile: result.data });
 
       try {
         const videoUrl = await generateJudgeVideo(result.data!);
         set({ videoUrl, isSpeaking: false });
       } catch (e) {
         console.error(e);
-        set({ isSpeaking: false });
+        set({ isSpeaking: false, error: "Erro ao gerar vídeo" });
       }
     },
 
