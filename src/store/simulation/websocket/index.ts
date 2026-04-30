@@ -8,6 +8,9 @@ import { synthesizeAudio } from "@/services/ai/simulation/synthesizeAudio";
 import { useSimulationStorage } from "@/store/simulation/simulationId/simulation.store";
 import { create } from "zustand";
 import * as FileSystem from "expo-file-system/legacy";
+import { jwtDecode } from "jwt-decode";
+import { IDecodedToken } from "@/interfaces/shared/decodedToken";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 export const useWebSocketSimulation = create<IWebSocketSimulation>(
   (set, get) => ({
@@ -48,7 +51,30 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
-          socket.emit("simulation:start", { simulationId: result.data!.id });
+          try {
+            const decodedToken = jwtDecode<IDecodedToken>(
+              useAccessTokenStorage.getState().accessToken,
+            );
+
+            if (!decodedToken || decodedToken.role !== "Citizen") {
+              set({
+                error:
+                  "Token inválido ou usuário não autorizado para simulação",
+              });
+              socket.disconnect();
+              set({ socket: null });
+              return;
+            }
+
+            socket.emit("simulation:start", {
+              simulationId: result.data!.id,
+              citizenId: decodedToken.sub,
+            });
+          } catch {
+            set({ error: "Erro ao autenticar usuário para simulação" });
+            socket.disconnect();
+            set({ socket: null });
+          }
         });
 
         socket.on("simulation:started", () => {
