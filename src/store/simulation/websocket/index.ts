@@ -45,14 +45,17 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
+          console.log("socket conectado:", socket.id);
           socket.emit("simulation:start", { simulationId: result.data!.id });
         });
 
         socket.on("simulation:started", () => {
+          console.log("simulation:started recebido");
           set({ isLoading: false, simulationStatus: "InProgress" });
         });
 
         socket.on("simulation:warning", (payload) => {
+          console.log("simulation:warning recebido:", payload);
           set({ warning: payload, remainingSecs: payload.remainingSecs });
         });
 
@@ -63,6 +66,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("connect_error", (err) => {
+          console.log("erro de conexão:", err.message);
           set({ error: "Erro de conexão com o servidor de simulação" });
           socket.disconnect();
           set({ socket: null });
