@@ -53,7 +53,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         socket.on("connect", () => {
           try {
             const decodedToken = jwtDecode<IDecodedToken>(
-              useAccessTokenStorage.getState().accessToken,
+              useAccessTokenStorage.getState().accessToken!,
             );
 
             if (!decodedToken || decodedToken.role !== "Citizen") {
@@ -87,8 +87,13 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
         socket.on("simulation:end", (payload) => {
           set({ simulationStatus: payload.status });
-          socket.disconnect();
-          set({ socket: null });
+          setTimeout(() => {
+            const { socket } = get();
+            if (socket?.connected) {
+              socket.disconnect();
+              set({ socket: null });
+            }
+          }, 10_000);
         });
 
         socket.on("connect_error", (err) => {
@@ -99,6 +104,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
         socket.on("simulation:report", (payload) => {
           set({ simulationReportId: payload.reportId });
+
+          get().socket?.disconnect();
+          set({ socket: null });
         });
       } catch {
         set({
