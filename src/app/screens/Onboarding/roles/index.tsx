@@ -4,26 +4,24 @@ import Logo from "@/assets/svg/icons/logo.svg";
 import Button from "@/ui/ButtonUI";
 import React, { useEffect, useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import AccountBalace from "@/assets/svg/icons/account-balace.svg";
-import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
 import { router } from "expo-router";
-import {useRolesStorage} from "@/store/auth/roles.store"
+import { useRolesStorage } from "@/store/auth/roles.store";
 
 export default function SelectionUserRole() {
   const [activeCitizen, setActiveCitizen] = useState(false);
   const [activeLawyer, setActiveLawyer] = useState(false);
-  const setRole = useRolesStorage((state) => state.setRole)
+  const setRole = useRolesStorage((state) => state.setRole);
 
   useEffect(() => {
     const sub = BackHandler.addEventListener("hardwareBackPress", () => {
-      return true; 
+      return true;
     });
     return () => sub.remove();
   }, []);
 
   const handleSelectedRole = () => {
     if (activeCitizen) {
-      setRole("citizen")
+      setRole("citizen");
       router.push("/screens/auth/users/SignUp/Citizen");
     } else if (activeLawyer) {
       setRole("lawyer");
@@ -32,9 +30,7 @@ export default function SelectionUserRole() {
   };
 
   return (
-    <SafeAreaView
-      className="flex-1 items-center flex-col py-[90px] px-[16px]"
-    >
+    <SafeAreaView className="flex-1 items-center flex-col py-[90px] px-[16px]">
       <View className="flex-col items-center">
         <Logo width={70} height={51} />
         <Text className=" text-[36px] text-white font-montserratBold">
@@ -99,11 +95,11 @@ export default function SelectionUserRole() {
               <View
                 className={`rounded-[12px] ${activeLawyer ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeLawyer ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
               >
-                {activeLawyer ? (
-                  <ActiveAccountBalace width={30} height={36} />
-                ) : (
-                  <AccountBalace width={30} height={36} />
-                )}
+                <MaterialIcons
+                  name="account-balance"
+                  size={32}
+                  color={activeLawyer ? "#052F5F" : "white"}
+                />
               </View>
               <View className="gap-[2px] flex-col">
                 <Text

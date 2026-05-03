@@ -5,7 +5,6 @@ export interface ICategoryCard {
   colorIcon: string;
   bgIcon: string;
   title: string;
-  path: string;
   description: string;
   isSelected?: boolean;
   onPress?: () => void;

@@ -5,27 +5,11 @@ import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import { startConversation } from "@/services/ai/conversation/startConversation";
-import {
-  AudioModule,
-  useAudioRecorder,
-  RecordingPresets,
-  setAudioModeAsync,
-  useAudioRecorderState,
-} from "expo-audio";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
+import { useRecordAudio } from "../shared/audio/useRecordAudio";
 
 export function useChat() {
   const router = useRouter();
-  const audioRecorder = useAudioRecorder({
-    ...RecordingPresets.HIGH_QUALITY,
-    isMeteringEnabled: true,
-  });
-
-  const audioRecorderState = useAudioRecorderState(audioRecorder);
-
-  const meteringVoice = audioRecorderState.metering || -160;
-
-  const recordingDuration = audioRecorderState.durationMillis || 0;
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -33,8 +17,6 @@ export function useChat() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [fetchingHistory, setFetchingHistory] = useState(false);
-
-  const [isRecording, setIsRecording] = useState(false);
 
   const {
     messages,
@@ -49,6 +31,21 @@ export function useChat() {
     clearChat,
     setReportId,
   } = useChatStorage();
+
+  const {
+    handleStartRecording,
+    handleStopRecording,
+    isRecording,
+    meteringVoice,
+    recordingDuration,
+  } = useRecordAudio({
+    onRecordingComplete: async (uri) => {
+      const response = await transcribeAudio(uri);
+      if (response.success && response.data) {
+        setDescription(response.data);
+      }
+    },
+  });
 
   useEffect(() => {
     if (conversationId && messages.length === 0) {
@@ -191,83 +188,6 @@ export function useChat() {
       removeMessage(tempId);
       setMessage(userMessage);
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleStartRecording = async () => {
-    try {
-      const permission = await AudioModule.requestRecordingPermissionsAsync();
-
-      if (!permission.granted) {
-        Toast.show({
-          type: "error",
-          text1: "Permissão de gravação negada",
-          text2:
-            "Por favor, permita o acesso ao microfone para usar esta função",
-        });
-        return;
-      }
-      await setAudioModeAsync({
-        playsInSilentMode: true,
-        allowsRecording: true,
-      });
-
-      await audioRecorder.prepareToRecordAsync();
-
-      audioRecorder.record();
-
-      setIsRecording(true);
-    } catch {
-      Toast.show({
-        type: "error",
-        text1: "Erro ao iniciar gravação",
-        text2: "Ocorreu um erro ao tentar iniciar a gravação de áudio",
-      });
-    }
-  };
-
-  const handleStopRecording = async (target: "description" | "message") => {
-    try {
-      setIsRecording(false);
-      setLoading(true);
-
-      await audioRecorder.stop();
-
-      const audioUri = audioRecorder.uri;
-
-      if (!audioUri) {
-        Toast.show({
-          type: "error",
-          text1: "Erro ao obter gravação",
-          text2: "Não foi possível obter o arquivo de áudio gravado",
-        });
-        return;
-      }
-
-      const response = await transcribeAudio(audioUri);
-
-      if (response.success && response.data) {
-        if (target === "description") {
-          setDescription(response.data);
-        } else {
-          setMessage(response.data);
-        }
-      } else {
-        Toast.show({
-          type: "error",
-          text1: response.fields
-            ? response.fields[0]
-            : "Erro ao transcrever áudio",
-        });
-      }
-    } catch {
-      Toast.show({
-        type: "error",
-        text1: "Erro ao transcrever áudio",
-        text2: "Ocorreu um erro ao tentar transcrever o áudio",
-      });
     } finally {
       setLoading(false);
     }

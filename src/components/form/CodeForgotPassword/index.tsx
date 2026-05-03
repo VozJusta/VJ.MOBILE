@@ -7,11 +7,11 @@ import InputUI from "@/ui/InputUI";
 import { usePathname } from "expo-router";
 import { useState } from "react";
 import { View, Text } from "react-native";
-import Shield from "@/assets/svg/icons/shield.svg";
 import Toast from "react-native-toast-message";
 import { useXTokenStorage } from "@/store/auth/token.store";
 import { ICodeForgotPassword } from "@/interfaces/components/Forms/forgotPassword";
 import { ActivityIndicator } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export function CodeForgotPassword({
   emailValidateScreen,
@@ -83,7 +83,7 @@ export function CodeForgotPassword({
     <>
       <View className="gap-[16px] items-center justify-center mb-[40px]">
         <View className="w-[64px] h-[64px] flex justify-center items-center bg-[rgba(19,91,236,0.1)] rounded-full">
-          <Shield width={30} height={36} />
+          <MaterialIcons name="shield" color={"#135BEC"} size={32} />
         </View>
         <Text className="font-interBold text-[24px] text-white text-center">
           {resolvedCodeTitle}

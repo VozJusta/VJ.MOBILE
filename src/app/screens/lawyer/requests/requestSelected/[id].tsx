@@ -19,7 +19,6 @@ export default function RequestSelected() {
     if (id) fetchRequestById(id as string);
   }, [id]);
 
-  console.log("requestDetails", requestDetails);
 
   return (
     <ScrollView>

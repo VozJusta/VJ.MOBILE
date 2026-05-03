@@ -2,7 +2,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
 import { useLocalSearchParams } from "expo-router";
-import Report from "@/assets/svg/reportIcon.svg";
 import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
 import { useEffect, useState } from "react";
 import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
@@ -17,6 +16,7 @@ import { TCaseStatus } from "@/interfaces/components/CaseCard";
 import DocCard from "@/components/DocCard";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function CaseSelected() {
   const local = useLocalSearchParams<{ id?: string | string[] }>();
@@ -169,7 +169,11 @@ export default function CaseSelected() {
                     <ActivityIndicator size="small" color="#fff" />
                   ) : (
                     <>
-                      <Report width={24} height={24} />
+                      <MaterialIcons
+                        name="analytics"
+                        color={"#FFF"}
+                        size={24}
+                      />
                       <Text className="font-interSemiBold text-[16px] text-white">
                         Baixar Relatório
                       </Text>

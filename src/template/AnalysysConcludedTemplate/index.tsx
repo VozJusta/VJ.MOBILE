@@ -30,28 +30,32 @@ export default function AnalysysConcludedTemplate(
             </View>
           </View>
           <View className="flex flex-row w-full items-center justify-center gap-4">
-            <View className="flex-1 flex flex-col justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl min-h-[132px]">
-              <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#1152D4]/20 ">
-                <MaterialIcons name="gavel" color={"#1152D4"} />
-              </View>
-              <Text className="font-inter text-sm text-[#94A3B8]">
-                {props.firstCardProps?.title}
-              </Text>
-              <Text className="font-inter text-base text-white">
-                {props.firstCardProps?.description}
-              </Text>
-            </View>
-            <View className="flex-1 flex flex-col justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl min-h-[132px]">
-              <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#10B981]/20 ">
-                <MaterialIcons name="show-chart" color={"#10B981"} />
-              </View>
-              <Text className="font-inter text-sm text-[#94A3B8]">
-                {props.secondCardProps?.title}
-              </Text>
-              <Text className="font-interSemiBold text-base text-white">
-                {props.secondCardProps?.description}
-              </Text>
-            </View>
+            {props.firstCardProps && props.secondCardProps && (
+              <>
+                <View className="flex-1 flex flex-col justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl min-h-[132px]">
+                  <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#1152D4]/20 ">
+                    <MaterialIcons name="gavel" color={"#1152D4"} />
+                  </View>
+                  <Text className="font-inter text-sm text-[#94A3B8]">
+                    {props.firstCardProps?.title}
+                  </Text>
+                  <Text className="font-inter text-base text-white">
+                    {props.firstCardProps?.description}
+                  </Text>
+                </View>
+                <View className="flex-1 flex flex-col justify-center items-start gap-2 p-4 bg-[#1152D4]/5 border-b border-t border-r border-l-4 border-[#1152D4]/20 rounded-2xl min-h-[132px]">
+                  <View className="flex flex-col items-center justify-center p-2 rounded-lg bg-[#10B981]/20 ">
+                    <MaterialIcons name="show-chart" color={"#10B981"} />
+                  </View>
+                  <Text className="font-inter text-sm text-[#94A3B8]">
+                    {props.secondCardProps?.title}
+                  </Text>
+                  <Text className="font-interSemiBold text-base text-white">
+                    {props.secondCardProps?.description}
+                  </Text>
+                </View>
+              </>
+            )}
           </View>
         </View>
 
