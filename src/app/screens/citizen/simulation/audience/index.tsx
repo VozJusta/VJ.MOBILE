@@ -24,7 +24,6 @@ export default function SimulationAudience() {
   const {
     handleStartRecording,
     handleStopRecording,
-    handleStop,
     isRecording,
     isLoading,
     simulationStatus,
@@ -34,6 +33,9 @@ export default function SimulationAudience() {
     remainingSecs,
     isSpeaking,
     videoUrl,
+    handlePauseAudio,
+    isPaused,
+    simulationReportId,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
@@ -149,10 +151,14 @@ export default function SimulationAudience() {
             />
 
             <TouchableOpacity
-              onPress={handleStop}
+              onPress={handlePauseAudio}
               className="flex h-16 w-16 items-center justify-center rounded-full shadow-sm bg-white"
             >
-              <MaterialIcons name="stop" size={24} color="black" />
+              <MaterialIcons
+                name={isPaused ? "play-arrow" : "pause"}
+                size={24}
+                color="black"
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -168,7 +174,10 @@ export default function SimulationAudience() {
           iconLeft={false}
           paddingButtonStatus={""}
           disabled={
-            simulationStatus !== "Completed" && simulationStatus !== "TimedOut"
+            !simulationReportId ||
+            (simulationStatus !== "Completed" &&
+              simulationStatus !== "TimedOut") ||
+            showLoading
           }
           children={
             <View className="justify-center items-center flex-1">
