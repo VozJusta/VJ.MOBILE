@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonUI from "@/ui/ButtonUI";
-import Person from "@/assets/svg/icons/person.svg";
 import { useRouter } from "expo-router";
 import Header from "@/components/Header";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
@@ -122,7 +121,11 @@ export default function Home() {
               </Text>
             </View>
             <View className="justify-center rounded-full items-center flex bg-[rgba(255,255,255,0.05)] w-[48px] h-[48px]">
-              <Person width={24} height={24} />
+              <MaterialIcons
+                name="psychology"
+                size={24}
+                color={"#818CF8"}
+              />
             </View>
           </View>
           <ButtonUI
