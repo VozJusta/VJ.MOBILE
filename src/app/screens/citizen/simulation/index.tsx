@@ -62,7 +62,7 @@ export default function SimulationScreen() {
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
                 <Text className="text-white font-interSemiBold text-[16px]">
-                  Inciar simulação
+                  Iniciar simulação
                 </Text>
               )}
             </View>
