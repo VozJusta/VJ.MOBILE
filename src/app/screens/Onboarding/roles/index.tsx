@@ -4,8 +4,6 @@ import Logo from "@/assets/svg/icons/logo.svg";
 import Button from "@/ui/ButtonUI";
 import React, { useEffect, useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import AccountBalace from "@/assets/svg/icons/account-balace.svg";
-import ActiveAccountBalace from "@/assets/svg/icons/active-account-balace.svg";
 import { router } from "expo-router";
 import { useRolesStorage } from "@/store/auth/roles.store";
 
