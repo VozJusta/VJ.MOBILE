@@ -138,13 +138,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
       if (socket && simulation) {
         socket.emit("simulation:stop", { simulationId: simulation.id });
-        socket.disconnect();
       }
-
-      set({
-        simulationStatus: "Waiting",
-        socket: null,
-      });
     },
 
     sendChat: async (text: string) => {
