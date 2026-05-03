@@ -42,6 +42,7 @@ export default function SimulationAudience() {
 
   const player = useVideoPlayer(null, (p) => {
     p.loop = false;
+    p.muted = true;
   });
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
@@ -11,6 +11,8 @@ export function useSimulationAudience() {
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [remainingSecs, setRemainingSecs] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const soundRef = useRef<Audio.Sound | null>(null);
 
   const {
     sendChat,
@@ -58,20 +60,23 @@ export function useSimulationAudience() {
   });
 
   useEffect(() => {
-    if (!audioFile || videoUrl) return;
-
-    let sound: Audio.Sound | null = null;
+    if (!audioFile) return;
 
     const playAudio = async () => {
       try {
+        if (soundRef.current) {
+          await soundRef.current.unloadAsync();
+          soundRef.current = null;
+        }
+
         await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-        const { sound: audioSound } = await Audio.Sound.createAsync(
+        const { sound } = await Audio.Sound.createAsync(
           { uri: audioFile },
           { shouldPlay: true },
         );
-        sound = audioSound;
+        soundRef.current = sound;
+        setIsPaused(false);
       } catch (e) {
-        console.error(e);
         Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
       }
     };
@@ -79,35 +84,25 @@ export function useSimulationAudience() {
     playAudio();
 
     return () => {
-      sound?.unloadAsync();
+      soundRef.current?.unloadAsync();
+      soundRef.current = null;
     };
   }, [audioFile]);
 
-  useEffect(() => {
-    if (!videoUrl || !audioFile) return;
+  const handlePauseAudio = async () => {
+    if (!soundRef.current) return;
 
-    let sound: Audio.Sound | null = null;
+    if (isPaused) {
+      await soundRef.current.playAsync();
+      setIsPaused(false);
+    } else {
+      await soundRef.current.pauseAsync();
+      setIsPaused(true);
+    }
+  };
 
-    const playAudio = async () => {
-      try {
-        await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-        const { sound: audioSound } = await Audio.Sound.createAsync(
-          { uri: audioFile },
-          { shouldPlay: true },
-        );
-        sound = audioSound;
-      } catch (e) {
-        console.error(e);
-        Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
-      }
-    };
 
-    playAudio();
-
-    return () => {
-      sound?.unloadAsync();
-    };
-  }, [videoUrl]);
+  
 
   useEffect(() => {
     if (!warning) return;
@@ -173,5 +168,7 @@ export function useSimulationAudience() {
     simulationReportId,
     remainingSecs,
     videoUrl,
+    handlePauseAudio,
+    isPaused,
   };
 }
