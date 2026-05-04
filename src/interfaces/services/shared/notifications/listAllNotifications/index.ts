@@ -1,4 +1,4 @@
-import { IPagination } from "../../../shared/pagination";
+import { IPagination } from "../../../../shared/pagination";
 
 export interface INotification {
   id: string;

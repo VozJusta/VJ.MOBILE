@@ -1,5 +1,5 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
-import { INotificationsResponse } from "@/interfaces/services/shared/notifications";
+import { INotificationsResponse } from "@/interfaces/services/shared/notifications/listAllNotifications";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function listNotifications() {
