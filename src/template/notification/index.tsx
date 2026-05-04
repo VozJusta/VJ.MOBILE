@@ -12,6 +12,7 @@ import EmptyNotifications from "@/assets/svg/empty-cases.svg";
 import NotificationCard from "@/components/NotificationCard";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
+import { mapTypeToBgColor, mapTypeToIcon, mapTypeToIconColor } from "@/utils/components/NotificationCard";
 
 export default function NotificationTemplate({
   recent,
