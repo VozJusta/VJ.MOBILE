@@ -4,9 +4,13 @@ export interface INotificationTemplate {
   recent: INotification[];
   previous: INotification[];
   loading: boolean;
-  loadingMore: boolean;
+  page: number;
+  totalPages: number;
   hasNextPage: boolean;
-  loadMore: () => Promise<void>;
+  hasPreviousPage: boolean;
+  goToNextPage: () => void;
+  goToPreviousPage: () => void;
+  goToPage: (page: number) => void;
   onDeleteAll: () => Promise<unknown>;
   onMarkAllAsRead: () => Promise<unknown>;
 }

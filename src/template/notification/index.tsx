@@ -12,7 +12,12 @@ import EmptyNotifications from "@/assets/svg/empty-cases.svg";
 import NotificationCard from "@/components/NotificationCard";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
-import { mapTypeToBgColor, mapTypeToIcon, mapTypeToIconColor } from "@/utils/components/NotificationCard";
+import {
+  mapTypeToBgColor,
+  mapTypeToIcon,
+  mapTypeToIconColor,
+} from "@/utils/components/NotificationCard";
+import Pagination from "@/components/Pagination";
 
 export default function NotificationTemplate({
   recent,
@@ -20,6 +25,13 @@ export default function NotificationTemplate({
   loading,
   onDeleteAll,
   onMarkAllAsRead,
+  page,
+  totalPages,
+  hasNextPage,
+  hasPreviousPage,
+  goToNextPage,
+  goToPreviousPage,
+  goToPage,
 }: INotificationTemplate) {
   const sections = [
     ...(recent.length > 0 ? [{ title: "Recentes", data: recent }] : []),
@@ -33,50 +45,62 @@ export default function NotificationTemplate({
       {loading ? (
         <ActivityIndicator className="flex-1" color="#FFFFFF" />
       ) : (
-        <SectionList
-          className="mt-4"
-          sections={sections}
-          keyExtractor={(item) => item.id}
-          renderSectionHeader={({ section: { title } }) => (
-            <View className="flex-row items-center justify-between py-3">
-              <Text className="font-interSemiBold text-[16px] text-white">
-                {title}
-              </Text>
-              {title === "Recentes" && (
-                <TouchableOpacity onPress={onMarkAllAsRead}>
-                  <Text className="font-interSemiBold text-[12px] text-blue-500">
-                    MARCAR TODAS COMO LIDAS
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
-          renderItem={({ item }) => (
-            <NotificationCard
-              id={item.id}
-              title={item.title}
-              description={item.body}
-              date={new Date(item.created_at)}
-              icon={mapTypeToIcon(item.type)}
-              iconColor={mapTypeToIconColor(item.type)}
-              bgColor={mapTypeToBgColor(item.type)}
-            />
-          )}
-          ListEmptyComponent={
-            <View className="flex-1 flex-col items-center justify-center gap-2 mt-20">
-              <EmptyNotifications width={300} height={300} />
-              <Text className="font-interSemiBold text-[32px] text-white">
-                Tudo limpo por aqui!
-              </Text>
-              <Text className="font-interRegular text-[14px] text-[#94A3B8] text-center">
-                Você não tem nenhuma notificação no momento.
-              </Text>
-            </View>
-          }
-          stickySectionHeadersEnabled={false}
-        />
-      )}
+        <>
+          <SectionList
+            className="mt-4"
+            sections={sections}
+            keyExtractor={(item) => item.id}
+            renderSectionHeader={({ section: { title } }) => (
+              <View className="flex-row items-center justify-between py-3">
+                <Text className="font-interSemiBold text-[16px] text-white">
+                  {title}
+                </Text>
+                {title === "Recentes" && (
+                  <TouchableOpacity onPress={onMarkAllAsRead}>
+                    <Text className="font-interSemiBold text-[12px] text-blue-500">
+                      MARCAR TODAS COMO LIDAS
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+            renderItem={({ item }) => (
+              <NotificationCard
+                id={item.id}
+                title={item.title}
+                description={item.body}
+                date={new Date(item.created_at)}
+                icon={mapTypeToIcon(item.type)}
+                iconColor={mapTypeToIconColor(item.type)}
+                bgColor={mapTypeToBgColor(item.type)}
+              />
+            )}
+            ListEmptyComponent={
+              <View className="flex-1 flex-col items-center justify-center gap-2 mt-20">
+                <EmptyNotifications width={300} height={300} />
+                <Text className="font-interSemiBold text-[32px] text-white">
+                  Tudo limpo por aqui!
+                </Text>
+                <Text className="font-interRegular text-[14px] text-[#94A3B8] text-center">
+                  Você não tem nenhuma notificação no momento.
+                </Text>
+              </View>
+            }
+            stickySectionHeadersEnabled={false}
+          />
 
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            hasNextPage={hasNextPage}
+            hasPreviousPage={hasPreviousPage}
+            goToNextPage={goToNextPage}
+            goToPreviousPage={goToPreviousPage}
+            goToPage={goToPage}
+            loading={loading}
+          />
+        </>
+      )}
       <ButtonUI
         iconLeft={true}
         gradient={true}
