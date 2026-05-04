@@ -1,4 +1,5 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
+import { IDeleteNotificationsResponse } from "@/interfaces/services/shared/notifications/deleteNotifications";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function deleteNotificationById(id: string) {
@@ -17,9 +18,11 @@ export async function deleteNotificationById(id: string) {
       };
     }
 
+    const data = await response.json().catch(() => {});
+
     return {
       success: true,
-      message: "Notificação deletada com sucesso",
+      data: data as IDeleteNotificationsResponse,
     };
   } catch {
     return {
