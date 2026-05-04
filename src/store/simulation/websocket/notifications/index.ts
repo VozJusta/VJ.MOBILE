@@ -6,14 +6,13 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { io } from "socket.io-client";
 
+const token = useAccessTokenStorage.getState().accessToken;
+
+const socket = io(`${BASE_URL}/notifications`, {
+  transports: ["websocket"],
+  auth: { token: token ? `Bearer ${token}` : null },
+});
 export function connectNotificationSockets(handlers: IWebSocketNotification) {
-  const token = useAccessTokenStorage.getState().accessToken;
-
-  const socket = io(`${BASE_URL}/notifications`, {
-    transports: ["websocket"],
-    auth: { token: token ? `Bearer ${token}` : null },
-  });
-
   socket.on("connect", () => {
     socket.emit("notifications:subscribe");
   });
@@ -29,4 +28,10 @@ export function connectNotificationSockets(handlers: IWebSocketNotification) {
   socket.on("notifications:deleted", (data: IDeleteNotificationsResponse) => {
     handlers.onDeleted(data);
   });
+}
+
+export function markNotificationAsRead(notificationIds?: string[]) {
+  if (!socket.connected) return;
+
+  socket.emit("notifications:mark-as-read", { notificationIds });
 }
