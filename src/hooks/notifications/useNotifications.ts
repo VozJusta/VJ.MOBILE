@@ -12,8 +12,17 @@ export function useNotifications() {
   const [unreadCount, setUnreadCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { page, hasNextPage, pageSize, setPaginationMeta, goToNextPage } =
-    usePagination(10);
+  const {
+    page,
+    hasNextPage,
+    pageSize,
+    setPaginationMeta,
+    goToNextPage,
+    totalPages,
+    hasPreviousPage,
+    goToPreviousPage,
+    goToPage,
+  } = usePagination(10);
 
   const fetchPage = useCallback(
     async (pageToFetch: number) => {
@@ -76,5 +85,11 @@ export function useNotifications() {
     hasNextPage,
     recentNotifications,
     previousNotifications,
+    page,
+    totalPages,
+    hasPreviousPage,
+    goToNextPage,
+    goToPreviousPage,
+    goToPage,
   };
 }

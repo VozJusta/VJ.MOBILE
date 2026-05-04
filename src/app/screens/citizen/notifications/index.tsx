@@ -8,7 +8,13 @@ export default function Notifications() {
     recentNotifications,
     previousNotifications,
     loading,
+    page,
+    totalPages,
     hasNextPage,
+    hasPreviousPage,
+    goToNextPage,
+    goToPreviousPage,
+    goToPage,
   } = useNotifications();
 
   return (
@@ -16,7 +22,13 @@ export default function Notifications() {
       recent={recentNotifications}
       previous={previousNotifications}
       loading={loading}
+      page={page}
+      totalPages={totalPages}
       hasNextPage={hasNextPage}
+      hasPreviousPage={hasPreviousPage}
+      goToNextPage={goToNextPage}
+      goToPreviousPage={goToPreviousPage}
+      goToPage={goToPage}
       onDeleteAll={deleteAllNotifications}
       onMarkAllAsRead={updateAllNotifications}
     />
