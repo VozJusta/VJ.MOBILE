@@ -51,5 +51,14 @@ export function useNotifications() {
     };
   }, []);
 
-  return { notifications, unreadCount, loading };
+  const recentNotifications = notifications.filter((n) => !n.is_read);
+  const previousNotifications = notifications.filter((n) => n.is_read);
+
+  return {
+    notifications,
+    unreadCount,
+    loading,
+    recentNotifications,
+    previousNotifications,
+  };
 }
