@@ -1,4 +1,4 @@
-export interface IDeleteAllNotificationsResponse {
+export interface IDeleteNotificationsResponse {
   ok: boolean;
   deleted: number;
 }
