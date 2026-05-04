@@ -35,3 +35,8 @@ export function markNotificationAsRead(notificationIds?: string[]) {
 
   socket.emit("notifications:mark-as-read", { notificationIds });
 }
+
+export function disconnectNotificationSockets() {
+    socket.disconnect();
+    return;
+}
