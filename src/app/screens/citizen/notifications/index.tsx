@@ -1,11 +1,8 @@
-
 import { INotificationTemplate } from "@/interfaces/template/NotificationTemplate";
 import NotificationTemplate from "@/template/notification";
 
 export const data: INotificationTemplate = {
-  notifications: [
-    
-  ],
+  notifications: [],
 };
 
 export default function Notifications() {

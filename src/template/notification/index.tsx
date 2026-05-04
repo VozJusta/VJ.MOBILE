@@ -1,44 +1,87 @@
 import Header from "@/components/Header";
+import { INotificationTemplate } from "@/interfaces/template/NotificationTemplate";
+import {
+  ActivityIndicator,
+  SectionList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import EmptyNotifications from "@/assets/svg/empty-cases.svg";
 import NotificationCard from "@/components/NotificationCard";
 import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FlatList, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import EmptyNotification from "@/assets/svg/illustration-empty-notification.svg";
-import { INotificationTemplate } from "@/interfaces/template/NotificationTemplate";
 
 export default function NotificationTemplate({
-  notifications,
+  recent,
+  previous,
+  loading,
+  onDeleteAll,
+  onMarkAllAsRead,
 }: INotificationTemplate) {
+  const sections = [
+    ...(recent.length > 0 ? [{ title: "Recentes", data: recent }] : []),
+    ...(previous.length > 0 ? [{ title: "Anteriores", data: previous }] : []),
+  ];
+
   return (
-    <SafeAreaView className="flex-1 gap-4 px-[16px]">
-      <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true}></Header>
-      <FlatList
-        className="mt-8"
-        data={notifications}
-        renderItem={({ item: notification }) => (
-          <NotificationCard {...notification} />
-        )}
-        ListEmptyComponent={
-          <View className="flex flex-col items-center gap-2">
-            <EmptyNotification width={300} height={300} />
-            <Text className="font-interSemiBold text-[32px] text-white">
-              Tudo limpo por aqui!
-            </Text>
-            <Text className="font-interRegular text-[14px] text-[#94A3B8] w-fit h-fit text-center">
-              Você não tem nenhuma notificação nova no momento. Avisaremos assim
-              que algo importante acontecer.
-            </Text>
-          </View>
-        }
-        keyExtractor={(item) => item.id}
-      />
+    <SafeAreaView className="flex-1 px-[16px]">
+      <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true} />
+
+      {loading ? (
+        <ActivityIndicator className="flex-1" color="#FFFFFF" />
+      ) : (
+        <SectionList
+          className="mt-4"
+          sections={sections}
+          keyExtractor={(item) => item.id}
+          renderSectionHeader={({ section: { title } }) => (
+            <View className="flex-row items-center justify-between py-3">
+              <Text className="font-interSemiBold text-[16px] text-white">
+                {title}
+              </Text>
+              {title === "Recentes" && (
+                <TouchableOpacity onPress={onMarkAllAsRead}>
+                  <Text className="font-interSemiBold text-[12px] text-blue-500">
+                    MARCAR TODAS COMO LIDAS
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+          renderItem={({ item }) => (
+            <NotificationCard
+              id={item.id}
+              title={item.title}
+              description={item.body}
+              date={new Date(item.created_at)}
+              icon={mapTypeToIcon(item.type)}
+              iconColor={mapTypeToIconColor(item.type)}
+              bgColor={mapTypeToBgColor(item.type)}
+            />
+          )}
+          ListEmptyComponent={
+            <View className="flex-1 flex-col items-center justify-center gap-2 mt-20">
+              <EmptyNotifications width={300} height={300} />
+              <Text className="font-interSemiBold text-[32px] text-white">
+                Tudo limpo por aqui!
+              </Text>
+              <Text className="font-interRegular text-[14px] text-[#94A3B8] text-center">
+                Você não tem nenhuma notificação no momento.
+              </Text>
+            </View>
+          }
+          stickySectionHeadersEnabled={false}
+        />
+      )}
+
       <ButtonUI
         iconLeft={true}
         gradient={true}
         hover={false}
-        paddingButtonStatus="px-[16px] py-[12px] mt-12"
-        onPress={() => console.log("Limpei tudo")}
+        paddingButtonStatus="px-[16px] py-[12px] my-4"
+        onPress={onDeleteAll}
         children={
           <View className="w-full h-full flex-row items-center justify-center gap-2">
             <MaterialIcons name="delete-sweep" size={20} color="#FFFFFF" />
