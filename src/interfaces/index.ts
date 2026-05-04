@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { INotification } from "./services/shared/notifications/listAllNotifications";
 import { listNotifications } from "@/services/shared/notifications/listNotifications";
+import { connectNotificationSockets } from "@/store/simulation/websocket/notifications";
 
 export function useNotifications() {
   const [notifications, setNotifications] = useState<INotification[]>([]);
@@ -14,6 +15,14 @@ export function useNotifications() {
         setUnreadCount(res.data.items.filter((n) => !n.is_read).length);
       }
       setLoading(false);
+    });
+
+    connectNotificationSockets({
+      onNew(notification) {
+        setNotifications((prev) => [notification, ...prev]);
+        setUnreadCount((prev) => prev + 1);
+      },
+      
     });
   }, []);
 }
