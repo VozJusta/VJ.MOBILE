@@ -39,7 +39,7 @@ export default function NotificationTemplate({
   ];
 
   return (
-    <SafeAreaView className="flex-1 px-[16px]">
+    <SafeAreaView className="flex-1">
       <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true} />
 
       {loading ? (
