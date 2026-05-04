@@ -1,8 +1,8 @@
-import { TCaseStatus } from "../components/CaseCard";
+import { TCaseStatus } from "../../components/CaseCard";
 import {
   ISimulationResponse,
   Personality,
-} from "../services/citizen/simulation/startSimulation";
+} from "../../services/citizen/simulation/startSimulation";
 import { Socket } from "socket.io-client";
 
 export type TSimulationStatus =

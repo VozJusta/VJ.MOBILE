@@ -1,7 +1,7 @@
 import { generateJudgeVideo } from "@/helpers/conversion/videoUrl";
 import { createSimulationSocket } from "@/helpers/websocket/simulationSocket";
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
-import { IWebSocketSimulation } from "@/interfaces/websocket";
+import { IWebSocketSimulation } from "@/interfaces/websocket/simulation";
 import { continueSimulation } from "@/services/ai/simulation/continueSimulation";
 import { startSimulation } from "@/services/ai/simulation/startSimulation";
 import { synthesizeAudio } from "@/services/ai/simulation/synthesizeAudio";
