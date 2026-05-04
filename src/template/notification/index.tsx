@@ -34,10 +34,13 @@ export default function NotificationTemplate({
   goToPage,
 }: INotificationTemplate) {
   const sections = [
-    ...(recent.length > 0 ? [{ title: "Recentes", data: recent }] : []),
-    ...(previous.length > 0 ? [{ title: "Anteriores", data: previous }] : []),
+    ...((recent ?? []).length > 0
+      ? [{ title: "Recentes", data: recent ?? [] }]
+      : []),
+    ...((previous ?? []).length > 0
+      ? [{ title: "Anteriores", data: previous ?? [] }]
+      : []),
   ];
-
   return (
     <SafeAreaView className="flex-1">
       <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true} />

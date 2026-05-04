@@ -28,7 +28,7 @@ export function useNotifications() {
     async (pageToFetch: number) => {
       const res = await listNotifications(pageToFetch, pageSize);
       if (res.success && res.data) {
-        const { items, pagination } = res.data;
+        const { data: items, pagination } = res.data;
         setNotifications(items);
         setUnreadCount(items.filter((n) => !n.is_read).length);
         setPaginationMeta(pagination);

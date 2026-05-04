@@ -16,6 +16,6 @@ export enum TypeNotification {
 }
 
 export interface INotificationsResponse {
-  items: INotification[];
+  data: INotification[];
   pagination: IPagination;
 }
