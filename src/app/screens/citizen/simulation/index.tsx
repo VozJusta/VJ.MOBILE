@@ -9,7 +9,7 @@ import {
 import CategoryCard from "@/components/CategoryCard";
 import ButtonUI from "@/ui/ButtonUI";
 import { router } from "expo-router";
-import { useWebSocketSimulation } from "@/store/simulation/websocket";
+import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation";
 
 export default function SimulationScreen() {
   const { createAndStartSimulation, isLoading, error } =
