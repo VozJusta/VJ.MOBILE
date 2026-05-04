@@ -4,17 +4,20 @@ import { IUpdateNotificationsResponse } from "@/interfaces/services/shared/notif
 import { IWebSocketNotification } from "@/interfaces/websocket/notification";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
-const token = useAccessTokenStorage.getState().accessToken;
+let socket: Socket | null = null;
 
-const socket = io(`${BASE_URL}/notifications`, {
-  transports: ["websocket"],
-  auth: { token: token ? `Bearer ${token}` : null },
-});
 export function connectNotificationSockets(handlers: IWebSocketNotification) {
+  const token = useAccessTokenStorage.getState().accessToken;
+
+  socket = io(`${BASE_URL}/notifications`, {
+    transports: ["websocket"],
+    auth: { token: token ? `Bearer ${token}` : null },
+  });
+
   socket.on("connect", () => {
-    socket.emit("notifications:subscribe");
+    socket?.emit("notifications:subscribe");
   });
 
   socket.on("notifications:new", (data: INotification) => {
@@ -31,12 +34,12 @@ export function connectNotificationSockets(handlers: IWebSocketNotification) {
 }
 
 export function markNotificationAsRead(notificationIds?: string[]) {
-  if (!socket.connected) return;
+  if (!socket?.connected) return;
 
-  socket.emit("notifications:mark-as-read", { notificationIds });
+  socket.emit("notifications:mark-read", { notificationIds });
 }
 
 export function disconnectNotificationSockets() {
-    socket.disconnect();
-    return;
+  socket?.disconnect();
+  socket = null;
 }
