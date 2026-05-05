@@ -6,10 +6,10 @@ export enum TypeNotificationIcon {
 }
 
 export enum TypeNotificationColor {
-  NOTIFICATION = "[#2B66E3]",
-  ALERT = "[#FDD835]",
-  DOCUMENTS = "[#F97316]",
-  SUCCESS = "[#10B981]",
+  NOTIFICATION = "#2B66E3",
+  ALERT = "#FDD835",
+  DOCUMENTS = "#F97316",
+  SUCCESS = "#10B981",
 }
 
 export enum TypeNotificationBgColor {
