@@ -59,6 +59,7 @@ export default function NotificationTemplate({
             )}
             renderItem={({ item }) => (
               <NotificationCard
+                opacity={item.is_read === true ? 0.3 : 1}
                 id={item.id}
                 title={item.title}
                 description={item.body}
