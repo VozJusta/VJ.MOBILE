@@ -1,12 +1,10 @@
 import { Text, View } from "react-native";
-import TypeNotificationCard, {
-} from "../TypeNotificationCard";
+import TypeNotificationCard from "../TypeNotificationCard";
 import { TNotificationCard } from "@/interfaces/components/NotificationCard";
-
 
 export default function NotificationCard({ ...props }: TNotificationCard) {
   return (
-    <View className="p-4 flex flex-row items-center w-full h-fit bg-[#09121E] gap-4 rounded-lg border-1 border-[#FFFFFF]/8">
+    <View className="p-4 flex flex-row items-center w-full h-fit bg-[#FFFFFF]/3 gap-4 rounded-2xl border-1 border-[#FFFFFF]/8">
       <TypeNotificationCard {...props} />
 
       <View className="flex-1 flex-col gap-1">
@@ -15,11 +13,14 @@ export default function NotificationCard({ ...props }: TNotificationCard) {
             {props.title}
           </Text>
           <Text className="font-interRegular text-[12px] text-[#94A3B8] w-fit">
-          {props.date.toLocaleDateString()}
+            {props.date.toLocaleDateString()}
           </Text>
         </View>
-        <Text className="font-interRegular text-[12px] text-[#94A3B8] w-fit h-fit" numberOfLines={2}>
-            {props.description}
+        <Text
+          className="font-interRegular text-[12px] text-[#94A3B8] w-fit h-fit"
+          numberOfLines={2}
+        >
+          {props.description}
         </Text>
       </View>
     </View>
