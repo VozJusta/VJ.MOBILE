@@ -36,8 +36,8 @@ export default function NotificationCard({ ...props }: TNotificationCard) {
     transform: [{ translateX: translateX.value }],
   }));
 
-  const handleDelete = () => {
-    if (props.onDelete) props.onDelete();
+  const handleDelete = (id: string) => {
+    if (props.onDelete) props.onDelete(id);
   };
 
   const swipeGesture = Gesture.Pan()
@@ -52,7 +52,7 @@ export default function NotificationCard({ ...props }: TNotificationCard) {
         translateX.value = withTiming(-500, { duration: 300 });
         cardHeight.value = withTiming(0, { duration: 300 });
         marginBottom.value = withTiming(0, { duration: 300 }, () => {
-          runOnJS(handleDelete)();
+          runOnJS(handleDelete)(props.id);
         });
       } else {
         translateX.value = withTiming(0, { duration: 300 });

@@ -15,4 +15,5 @@ export interface INotificationTemplate {
   onMarkAllAsRead: () => void;
   loadingDeleteAll?: boolean;
   loadingMarkAllAsRead?: boolean;
+  onDeleteOneNotification?: (id: string) => void;
 }

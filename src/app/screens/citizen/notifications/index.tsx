@@ -1,5 +1,6 @@
 import { useNotifications } from "@/hooks/notifications/useNotifications";
 import { deleteAllNotifications } from "@/services/shared/notifications/deleteNotifications/all";
+import { deleteNotificationById } from "@/services/shared/notifications/deleteNotifications/byId";
 import { updateAllNotifications } from "@/services/shared/notifications/updateNotification/all";
 import NotificationTemplate from "@/template/notification";
 import { useState } from "react";
@@ -76,6 +77,22 @@ export default function Notifications() {
     }
   };
 
+  const handleDeleteOneNotification = async (id: string) => {
+    try {
+      const response = await deleteNotificationById(id);
+      if (response.success) {
+        Toast.show({ type: "success", text1: "Notificação excluída" });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.message ?? "Erro ao excluir notificação",
+        });
+      }
+    } catch {
+      Toast.show({ type: "error", text1: "Erro ao excluir notificação" });
+    }
+  };
+
   return (
     <NotificationTemplate
       recent={recentNotifications}
@@ -90,6 +107,7 @@ export default function Notifications() {
       goToPage={goToPage}
       onDeleteAll={handleDeleteAll}
       onMarkAllAsRead={handleMarkAllAsRead}
+      onDeleteOneNotification={handleDeleteOneNotification}
     />
   );
 }

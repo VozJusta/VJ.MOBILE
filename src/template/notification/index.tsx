@@ -65,6 +65,8 @@ export default function NotificationTemplate({
                 icon={mapTypeToIcon(item.type)}
                 iconColor={mapTypeToIconColor(item.type)}
                 bgColor={mapTypeToBgColor(item.type)}
+                isRead={item.is_read}
+                onDelete={() => props.onDeleteOneNotification?.(item.id)}
               />
             )}
             ListEmptyComponent={

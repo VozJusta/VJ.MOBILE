@@ -6,5 +6,5 @@ export type TNotificationCard = ITypeNotificationCard & {
   description: string;
   date: Date;
   isRead?: boolean;
-  onDelete?: () => void;
+  onDelete?: (id: string) => void;
 };
