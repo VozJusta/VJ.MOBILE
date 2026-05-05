@@ -13,98 +13,96 @@ export default function RootLayout() {
 
   return (
     <>
-        <StatusBar hidden />
-        {fontsLoaded && (
-          <>
-            <Stack screenOptions={{ headerShown: false }} />
-            <Toast
-              config={{
-                success: ({ text1, text2 }) => (
-                  <LinearGradient
+      <StatusBar hidden />
+      {fontsLoaded && <Stack screenOptions={{ headerShown: false }} />}
+      <>
+        <Toast
+          config={{
+            success: ({ text1, text2 }) => (
+              <LinearGradient
+                style={{
+                  width: "95%",
+                  padding: 15,
+                  borderRadius: 12,
+                  position: "absolute",
+                  top: 20,
+                  gap: 8,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+                colors={["#13332B", "#151E2C"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                locations={[0, 0.4]}
+              >
+                <MaterialIcons
+                  name="check-circle"
+                  color={"#4CAF50"}
+                  size={24}
+                />
+                <View className="flex-1">
+                  <Text
                     style={{
-                      width: "95%",
-                      padding: 15,
-                      borderRadius: 12,
-                      position: "absolute",
-                      top: 20,
-                      gap: 8,
-                      flexDirection: "row",
-                      alignItems: "center",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      color: "#fff",
+                      marginBottom: 3,
                     }}
-                    colors={["#13332B", "#151E2C"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    locations={[0, 0.4]}
                   >
-                    <MaterialIcons
-                      name="check-circle"
-                      color={"#4CAF50"}
-                      size={24}
-                    />
-                    <View className="flex-1">
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          color: "#fff",
-                          marginBottom: 3,
-                        }}
-                      >
-                        {String(text1)}
-                      </Text>
+                    {String(text1)}
+                  </Text>
 
-                      {text2 ? (
-                        <Text style={{ fontSize: 13, color: "#ddd" }}>
-                          {String(text2)}
-                        </Text>
-                      ) : null}
-                    </View>
-                  </LinearGradient>
-                ),
+                  {text2 ? (
+                    <Text style={{ fontSize: 13, color: "#ddd" }}>
+                      {String(text2)}
+                    </Text>
+                  ) : null}
+                </View>
+              </LinearGradient>
+            ),
 
-                error: ({ text1, text2 }) => (
-                  <LinearGradient
+            error: ({ text1, text2 }) => (
+              <LinearGradient
+                style={{
+                  width: "95%",
+                  padding: 15,
+                  borderRadius: 12,
+                  position: "absolute",
+                  gap: 8,
+                  top: 20,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+                colors={["#2F1C29", "#151E2C"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                locations={[0, 0.4]}
+              >
+                <MaterialIcons name="error" size={24} color={"#FF5252"} />
+
+                <View className="flex-1">
+                  <Text
                     style={{
-                      width: "95%",
-                      padding: 15,
-                      borderRadius: 12,
-                      position: "absolute",
-                      gap: 8,
-                      top: 20,
-                      flexDirection: "row",
-                      alignItems: "center",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      color: "#fff",
+                      marginBottom: 3,
                     }}
-                    colors={["#2F1C29", "#151E2C"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    locations={[0, 0.4]}
                   >
-                    <MaterialIcons name="error" size={24} color={"#FF5252"} />
+                    {String(text1)}
+                  </Text>
 
-                    <View className="flex-1">
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                          color: "#fff",
-                          marginBottom: 3,
-                        }}
-                      >
-                        {String(text1)}
-                      </Text>
-
-                      {text2 ? (
-                        <Text style={{ fontSize: 13, color: "#ddd" }}>
-                          {String(text2)}
-                        </Text>
-                      ) : null}
-                    </View>
-                  </LinearGradient>
-                ),
-              }}
-            />
-          </>
-        )}
+                  {text2 ? (
+                    <Text style={{ fontSize: 13, color: "#ddd" }}>
+                      {String(text2)}
+                    </Text>
+                  ) : null}
+                </View>
+              </LinearGradient>
+            ),
+          }}
+        />
+      </>
     </>
   );
 }
