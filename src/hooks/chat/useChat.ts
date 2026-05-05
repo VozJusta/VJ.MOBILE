@@ -33,16 +33,31 @@ export function useChat() {
   } = useChatStorage();
 
   const {
-    handleStartRecording,
-    handleStopRecording,
-    isRecording,
-    meteringVoice,
-    recordingDuration,
+    handleStartRecording: handleStartRecordingDescription,
+    handleStopRecording: handleStopRecordingDescription,
+    isRecording: isRecordingDescription,
+    meteringVoice: meteringVoiceDescription,
+    recordingDuration: recordingDurationDescription,
   } = useRecordAudio({
     onRecordingComplete: async (uri) => {
       const response = await transcribeAudio(uri);
       if (response.success && response.data) {
         setDescription(response.data);
+      }
+    },
+  });
+
+  const {
+    handleStartRecording: handleStartRecordingMessage,
+    handleStopRecording: handleStopRecordingMessage,
+    isRecording: isRecordingMessage,
+    meteringVoice: meteringVoiceMessage,
+    recordingDuration: recordingDurationMessage,
+  } = useRecordAudio({
+    onRecordingComplete: async (uri) => {
+      const response = await transcribeAudio(uri);
+      if (response.success && response.data) {
+        setMessage(response.data);
       }
     },
   });
@@ -206,10 +221,15 @@ export function useChat() {
     fetchingHistory,
     finished,
     handleSendMessage,
-    handleStartRecording,
-    handleStopRecording,
-    isRecording,
-    meteringVoice,
-    recordingDuration,
+    isRecordingDescription,
+    handleStartRecordingDescription,
+    handleStopRecordingDescription,
+    meteringVoiceDescription,
+    recordingDurationDescription,
+    isRecordingMessage,
+    handleStartRecordingMessage,
+    handleStopRecordingMessage,
+    meteringVoiceMessage,
+    recordingDurationMessage,
   };
 }
