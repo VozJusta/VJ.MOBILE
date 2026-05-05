@@ -19,6 +19,7 @@ export default function Notifications() {
     goToNextPage,
     goToPreviousPage,
     goToPage,
+    fetchPage,
   } = useNotifications();
 
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -42,6 +43,7 @@ export default function Notifications() {
                   type: "success",
                   text1: "Notificações excluídas com sucesso",
                 });
+                fetchPage(1);
               } else {
                 Toast.show({
                   type: "error",
@@ -108,6 +110,8 @@ export default function Notifications() {
       onDeleteAll={handleDeleteAll}
       onMarkAllAsRead={handleMarkAllAsRead}
       onDeleteOneNotification={handleDeleteOneNotification}
+      loadingDeleteAll={loadingDelete}
+      loadingMarkAllAsRead={loadingMarkRead}
     />
   );
 }
