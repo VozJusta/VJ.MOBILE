@@ -176,7 +176,6 @@ export const useAuth = () => {
       setLoading(false);
     }
   }
-
   async function completeRegisterData(
     data: ZodCitizenCompleteRegisterTypes | ZodLawyerCompleteRegisterTypes,
     role: Role,
@@ -184,49 +183,38 @@ export const useAuth = () => {
     setLoading(true);
 
     try {
-      if (role === "Citizen") {
-        const response = await completeCitizenRegister(
-          data as ZodCitizenCompleteRegisterTypes,
-        );
+      const response =
+        role === "Citizen"
+          ? await completeCitizenRegister(
+              data as ZodCitizenCompleteRegisterTypes,
+            )
+          : await completeLawyerRegister(
+              data as ZodLawyerCompleteRegisterTypes,
+            );
 
-        if (!response.success) {
-          Toast.show({
-            type: "error",
-            text1: "Não foi possível completar o cadastro do cidadão",
-            text2: response.data,
-          });
-        } else {
-          Toast.show({
-            type: "success",
-            text1: "Cadastro completo",
-            text2: response.data,
-          });
-        }
-      } else {
-        const response = await completeLawyerRegister(
-          data as ZodLawyerCompleteRegisterTypes,
-        );
-
-        if (!response.success) {
-          Toast.show({
-            type: "error",
-            text1: "Não foi possível completar o cadastro do advogado",
-            text2: response.data,
-          });
-        } else {
-          Toast.show({
-            type: "success",
-            text1: "Cadastro completo",
-            text2: response.data,
-          });
-        }
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: `Não foi possível completar o cadastro`,
+          text2: response.data,
+        });
+        return { success: false };
       }
+
+      Toast.show({
+        type: "success",
+        text1: "Cadastro completo",
+        text2: response.data,
+      });
+
+      return { success: true };
     } catch {
       Toast.show({
         type: "error",
         text1: "Não foi possível completar o cadastro",
         text2: "Ocorreu um erro ao tentar completar o cadastro",
       });
+      return { success: false };
     } finally {
       setLoading(false);
     }
@@ -247,5 +235,6 @@ export const useAuth = () => {
     authMe,
     completeRegisterData,
     handleCompleteRegisterChange,
+    completeRegisterAuth,
   };
 };

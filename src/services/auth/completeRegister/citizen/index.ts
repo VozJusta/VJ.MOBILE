@@ -27,7 +27,7 @@ export async function completeCitizenRegister(body: ICitizenCompleteRegister) {
     if (!response.ok) {
       return {
         success: false,
-        error: [data.message || "Erro ao completar cadastro"],
+        data: data.message || "Erro ao completar cadastro",
       };
     }
 

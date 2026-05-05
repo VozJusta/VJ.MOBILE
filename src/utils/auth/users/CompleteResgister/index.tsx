@@ -14,6 +14,8 @@ import { specializationOptions } from "../Lawyer/data";
 import { ICareerSelect } from "@/interfaces/ui/SelectUI/careerSelect";
 import { IUfSelect } from "@/interfaces/ui/SelectUI/ufSelect";
 import { ActivityIndicator, Text } from "react-native";
+import { Email2FA } from "@/services/auth/users/security/email2FA";
+import Toast from "react-native-toast-message";
 
 type Params = {
   showPassword: boolean;
@@ -43,12 +45,30 @@ export function useBuildCompleteRegisterFields({
 
   const lawyerAuth = registerAuth as ZodLawyerCompleteRegisterTypes;
 
-  function handleSubmit() {
-    completeRegisterData(registerAuth, role).then(() => {
-      router.push(
-        `/screens/auth/Validate?source=${role.toLowerCase()}&email=${encodeURIComponent(email)}`,
-      );
-    });
+  async function handleSubmit() {
+    const result = await completeRegisterData(registerAuth, role);
+
+    if (!result?.success) return;
+
+    const validateEmail2FA = await Email2FA(email);
+
+    if (!validateEmail2FA.success) {
+      Toast.show({
+        type: "error",
+        text1: validateEmail2FA.fields?.[0] || "Erro ao enviar código",
+      });
+      if (validateEmail2FA.fields?.[0] === "Código já enviado") {
+        router.push(
+          `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=false`,
+        );
+      }
+      return;
+    }
+
+    Toast.show({ type: "success", text1: validateEmail2FA.data });
+    router.push(
+      `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=false`,
+    );
   }
 
   const sharedFields: IInput[] = [
