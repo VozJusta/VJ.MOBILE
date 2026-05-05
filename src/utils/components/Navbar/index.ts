@@ -25,7 +25,7 @@ export const NavbarItemsCitizen: INavbar[] = [
     path: "/screens/citizen/home",
   },
   {
-    iconName: "folder",
+    iconName: "psychology",
     name: "Simulação",
     path: "/screens/citizen/simulation",
   },
