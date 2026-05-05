@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import { useRouter } from "expo-router";
 import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import { startConversation } from "@/services/ai/conversation/startConversation";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useRecordAudio } from "../shared/audio/useRecordAudio";
+import { router, useRouter } from "expo-router/build/exports";
 
 export function useChat() {
-  const router = useRouter();
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
 

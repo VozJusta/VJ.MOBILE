@@ -9,16 +9,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
-import { useRouter } from "expo-router";
 import ButtonUI from "@/ui/ButtonUI";
 import { useChat } from "@/hooks/chat/useChat";
 import { useRef } from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
+import { router } from "expo-router/build/exports";
 
 export default function ConversationAI() {
-  const router = useRouter();
   const scrollViewRef = useRef<ScrollView>(null);
 
   const {
