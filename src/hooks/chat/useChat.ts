@@ -6,7 +6,7 @@ import { continueConversation } from "@/services/ai/conversation/continueConvers
 import { startConversation } from "@/services/ai/conversation/startConversation";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useRecordAudio } from "../shared/audio/useRecordAudio";
-import { router, useRouter } from "expo-router/build/exports";
+import { router } from "expo-router";
 
 export function useChat() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

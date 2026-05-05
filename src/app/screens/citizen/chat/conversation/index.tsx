@@ -15,7 +15,7 @@ import { useRef } from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
-import { router } from "expo-router/build/exports";
+import { router } from "expo-router";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
