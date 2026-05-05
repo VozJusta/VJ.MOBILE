@@ -39,6 +39,7 @@ export default function NotificationTemplate({
       ) : (
         <>
           <SectionList
+            contentContainerClassName="flex flex-col gap-4"
             className="mt-4"
             sections={sections}
             keyExtractor={(item) => item.id}
