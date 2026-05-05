@@ -6,7 +6,7 @@ import { TNotificationCard } from "@/interfaces/components/NotificationCard";
 
 export default function NotificationCard({ ...props }: TNotificationCard) {
   return (
-    <View className="p-4 flex flex-row items-center w-full h-fit bg-[#09121E] gap-4 rounded-lg border-1 border-[#1C2027]">
+    <View className="p-4 flex flex-row items-center w-full h-fit bg-[#09121E] gap-4 rounded-lg border-1 border-[#FFFFFF]/8">
       <TypeNotificationCard {...props} />
 
       <View className="flex-1 flex-col gap-1">
