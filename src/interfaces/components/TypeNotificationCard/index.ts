@@ -6,17 +6,17 @@ export enum TypeNotificationIcon {
 }
 
 export enum TypeNotificationColor {
-  NOTIFICATION = "#2B66E3",
-  ALERT = "#FDD835",
-  DOCUMENTS = "#F97316",
-  SUCCESS = "#10B981",
+  NOTIFICATION = "[#2B66E3]",
+  ALERT = "[#FDD835]",
+  DOCUMENTS = "[#F97316]",
+  SUCCESS = "[#10B981]",
 }
 
 export enum TypeNotificationBgColor {
-  NOTIFICATION = "#0B192F",
-  ALERT = "#FFEDD5",
-  DOCUMENTS = "#575343",
-  SUCCESS = "#161315",
+  NOTIFICATION = "[#2B66E3]/20",
+  ALERT = "[#FDD835]/20",
+  DOCUMENTS = "[#F97316]/20",
+  SUCCESS = "[#10B981]/20",
 }
 
 export interface ITypeNotificationCard {

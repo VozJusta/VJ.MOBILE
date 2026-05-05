@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 export default function TypeNotificationCard({...props}: ITypeNotificationCard) {
   return (
-    <View className={`flex items-center justify-center w-16 h-16 p-3 rounded-lg`} style={{ backgroundColor: props.bgColor }}>
+    <View className={`flex items-center justify-center w-16 h-16 p-3 rounded-lg bg-${props.bgColor}`}>
       <MaterialIcons name={props.icon as any} size={24} color={props.iconColor} />
     </View>
   );
