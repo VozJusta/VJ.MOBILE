@@ -91,34 +91,36 @@ export default function NotificationTemplate({
             }
             stickySectionHeadersEnabled={false}
           />
-
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            hasNextPage={hasNextPage}
-            hasPreviousPage={hasPreviousPage}
-            goToNextPage={goToNextPage}
-            goToPreviousPage={goToPreviousPage}
-            goToPage={goToPage}
-            loading={loading}
+          <ButtonUI
+            iconLeft={true}
+            gradient={true}
+            hover={false}
+            paddingButtonStatus="px-[16px] py-[12px] my-4"
+            onPress={onDeleteAll}
+            children={
+              <View className="w-full h-full flex-row items-center justify-center gap-2">
+                <MaterialIcons name="delete-sweep" size={20} color="#FFFFFF" />
+                <Text className="font-interSemiBold text-[14px] text-white">
+                  Limpar tudo
+                </Text>
+              </View>
+            }
           />
+
+          {totalPages > 1 && (
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+              goToNextPage={goToNextPage}
+              goToPreviousPage={goToPreviousPage}
+              goToPage={goToPage}
+              loading={loading}
+            />
+          )}
         </>
       )}
-      <ButtonUI
-        iconLeft={true}
-        gradient={true}
-        hover={false}
-        paddingButtonStatus="px-[16px] py-[12px] my-4"
-        onPress={onDeleteAll}
-        children={
-          <View className="w-full h-full flex-row items-center justify-center gap-2">
-            <MaterialIcons name="delete-sweep" size={20} color="#FFFFFF" />
-            <Text className="font-interSemiBold text-[14px] text-white">
-              Limpar tudo
-            </Text>
-          </View>
-        }
-      />
     </SafeAreaView>
   );
 }
