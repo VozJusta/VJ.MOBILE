@@ -23,7 +23,11 @@ export default function LawyerSelected() {
   const handleSendRequest = async () => {
     if (!lawyerSelected) return;
 
-    const result = sendRequestToLawyer(caseId, lawyerSelected.id);
+    const result = await sendRequestToLawyer(caseId, lawyerSelected.id);
+
+    console.log("Result of sending request to lawyer:", result);
+    console.log("caseId:", caseId);           // ← confirma se tem valor
+  console.log("lawyerId:", lawyerSelected.id);
 
     if (result) {
       router.push(

@@ -6,7 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { downloadReportSimulationAsPdf } from "@/services/ai/simulation/downloadPdf";
 import Toast from "react-native-toast-message";
-import { useWebSocketSimulation } from "@/store/simulation/websocket";
+import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation";
 
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);

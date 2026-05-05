@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
-import { useWebSocketSimulation } from "@/store/simulation/websocket";
+import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation";
 import { useRecordAudio } from "@/hooks/shared/audio/useRecordAudio";
 import { Audio } from "expo-av";
 

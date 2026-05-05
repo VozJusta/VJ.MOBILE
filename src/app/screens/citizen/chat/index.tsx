@@ -25,11 +25,11 @@ export default function Chat() {
     selectedCategory,
     setSelectedCategory,
     handleStartAnalysis,
-    handleStartRecording,
-    handleStopRecording,
-    isRecording,
-    meteringVoice,
-    recordingDuration,
+    handleStartRecordingDescription,
+    handleStopRecordingDescription,
+    isRecordingDescription,
+    meteringVoiceDescription,
+    recordingDurationDescription,
   } = useChat();
 
   return (
@@ -59,7 +59,7 @@ export default function Chat() {
           </View>
 
           <View className="w-full">
-            {!isRecording ? (
+            {!isRecordingDescription ? (
               <View className="relative w-full">
                 <TextArea
                   placeholder="Descreva o que aconteceu com suas próprias palavras..."
@@ -69,8 +69,8 @@ export default function Chat() {
                 <View className="absolute bottom-3 right-3 z-10">
                   <ButtonAudio
                     isRecording={false}
-                    onStartRecording={handleStartRecording}
-                    onStopRecording={handleStopRecording}
+                    onStartRecording={handleStartRecordingDescription}
+                    onStopRecording={handleStopRecordingDescription}
                     disabled={loading}
                   />
                 </View>
@@ -79,37 +79,37 @@ export default function Chat() {
               <View className="relative w-full min-h-[200px] flex items-center justify-center bg-[rgba(255,255,255,0.03)] rounded-xl border border-solid border-white/10">
                 <View className="flex-row items-end justify-center gap-1 h-12 mb-2">
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={12}
                     modifier={0.4}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={20}
                     modifier={0.7}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={30}
                     modifier={0.9}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={45}
                     modifier={1.3}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={30}
                     modifier={0.9}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={20}
                     modifier={0.7}
                   />
                   <AnimatedAudioBar
-                    meteringVoice={meteringVoice}
+                    meteringVoice={meteringVoiceDescription}
                     baseHeight={12}
                     modifier={0.4}
                   />
@@ -119,14 +119,14 @@ export default function Chat() {
                   Gravando o áudio
                 </Text>
                 <Text className="text-sm font-interRegular text-[#64748B]">
-                  {formatTime(recordingDuration)}
+                  {formatTime(recordingDurationDescription)}
                 </Text>
 
                 <View className="absolute bottom-3 right-3 z-10">
                   <ButtonAudio
                     isRecording={true}
-                    onStartRecording={handleStartRecording}
-                    onStopRecording={handleStopRecording}
+                    onStartRecording={handleStartRecordingDescription}
+                    onStopRecording={handleStopRecordingDescription}
                     disabled={loading}
                   />
                 </View>

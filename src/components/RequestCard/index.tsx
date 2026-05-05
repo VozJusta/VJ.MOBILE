@@ -1,13 +1,12 @@
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import Badge from "../Badge";
 import ButtonUI from "@/ui/ButtonUI";
-
-import { router, usePathname } from "expo-router/build/exports";
 import {
   IRequestCard,
   RequestCardTextBadge,
 } from "@/interfaces/components/RequestCard";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
+import { router, usePathname } from "expo-router";
 
 export default function RequestCard({ ...props }: IRequestCard) {
   const pathname = usePathname();
@@ -18,9 +17,7 @@ export default function RequestCard({ ...props }: IRequestCard) {
       style={{ borderLeftColor: props.badgeColor }}
       onPress={() =>
         pathname === "/screens/lawyer/requests" &&
-        router.push(
-          `/screens/lawyer/requests/requestSelected/${props.caseId}`,
-        )
+        router.push(`/screens/lawyer/requests/requestSelected/${props.caseId}`)
       }
     >
       <View className="flex flex-row justify-between items-start w-full">

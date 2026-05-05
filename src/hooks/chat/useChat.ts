@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import { useRouter } from "expo-router";
 import { useChatStorage } from "@/store/chat/chat.store";
 import { historyConversation } from "@/services/ai/conversation/historyConversation";
 import { continueConversation } from "@/services/ai/conversation/continueConversation";
 import { startConversation } from "@/services/ai/conversation/startConversation";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useRecordAudio } from "../shared/audio/useRecordAudio";
+import { router } from "expo-router";
 
 export function useChat() {
-  const router = useRouter();
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [description, setDescription] = useState("");
 
@@ -33,16 +31,31 @@ export function useChat() {
   } = useChatStorage();
 
   const {
-    handleStartRecording,
-    handleStopRecording,
-    isRecording,
-    meteringVoice,
-    recordingDuration,
+    handleStartRecording: handleStartRecordingDescription,
+    handleStopRecording: handleStopRecordingDescription,
+    isRecording: isRecordingDescription,
+    meteringVoice: meteringVoiceDescription,
+    recordingDuration: recordingDurationDescription,
   } = useRecordAudio({
     onRecordingComplete: async (uri) => {
       const response = await transcribeAudio(uri);
       if (response.success && response.data) {
         setDescription(response.data);
+      }
+    },
+  });
+
+  const {
+    handleStartRecording: handleStartRecordingMessage,
+    handleStopRecording: handleStopRecordingMessage,
+    isRecording: isRecordingMessage,
+    meteringVoice: meteringVoiceMessage,
+    recordingDuration: recordingDurationMessage,
+  } = useRecordAudio({
+    onRecordingComplete: async (uri) => {
+      const response = await transcribeAudio(uri);
+      if (response.success && response.data) {
+        setMessage(response.data);
       }
     },
   });
@@ -206,10 +219,15 @@ export function useChat() {
     fetchingHistory,
     finished,
     handleSendMessage,
-    handleStartRecording,
-    handleStopRecording,
-    isRecording,
-    meteringVoice,
-    recordingDuration,
+    isRecordingDescription,
+    handleStartRecordingDescription,
+    handleStopRecordingDescription,
+    meteringVoiceDescription,
+    recordingDurationDescription,
+    isRecordingMessage,
+    handleStartRecordingMessage,
+    handleStopRecordingMessage,
+    meteringVoiceMessage,
+    recordingDurationMessage,
   };
 }
