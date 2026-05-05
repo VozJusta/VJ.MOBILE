@@ -11,6 +11,8 @@ export interface INotificationTemplate {
   goToNextPage: () => void;
   goToPreviousPage: () => void;
   goToPage: (page: number) => void;
-  onDeleteAll: () => Promise<unknown>;
-  onMarkAllAsRead: () => Promise<unknown>;
+  onDeleteAll: () => void;
+  onMarkAllAsRead: () => void;
+  loadingDeleteAll?: boolean;
+  loadingMarkAllAsRead?: boolean;
 }

@@ -20,32 +20,21 @@ import {
 import Pagination from "@/components/Pagination";
 
 export default function NotificationTemplate({
-  recent,
-  previous,
-  loading,
-  onDeleteAll,
-  onMarkAllAsRead,
-  page,
-  totalPages,
-  hasNextPage,
-  hasPreviousPage,
-  goToNextPage,
-  goToPreviousPage,
-  goToPage,
+  ...props
 }: INotificationTemplate) {
   const sections = [
-    ...((recent ?? []).length > 0
-      ? [{ title: "Recentes", data: recent ?? [] }]
+    ...((props.recent ?? []).length > 0
+      ? [{ title: "Recentes", data: props.recent ?? [] }]
       : []),
-    ...((previous ?? []).length > 0
-      ? [{ title: "Anteriores", data: previous ?? [] }]
+    ...((props.previous ?? []).length > 0
+      ? [{ title: "Anteriores", data: props.previous ?? [] }]
       : []),
   ];
   return (
     <SafeAreaView className="flex-1">
       <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true} />
 
-      {loading ? (
+      {props.loading ? (
         <ActivityIndicator className="flex-1" color="#FFFFFF" />
       ) : (
         <>
@@ -59,7 +48,7 @@ export default function NotificationTemplate({
                   {title}
                 </Text>
                 {title === "Recentes" && (
-                  <TouchableOpacity onPress={onMarkAllAsRead}>
+                  <TouchableOpacity onPress={props.onMarkAllAsRead} disabled={props.loadingMarkAllAsRead}>
                     <Text className="font-interSemiBold text-[12px] text-blue-500">
                       MARCAR TODAS COMO LIDAS
                     </Text>
@@ -98,7 +87,8 @@ export default function NotificationTemplate({
               gradient={true}
               hover={false}
               paddingButtonStatus="px-[16px] py-[12px] my-4"
-              onPress={onDeleteAll}
+              onPress={props.onDeleteAll}
+              disabled={props.loadingDeleteAll}
               children={
                 <View className="w-full h-full flex-row items-center justify-center gap-2">
                   <MaterialIcons
@@ -114,16 +104,16 @@ export default function NotificationTemplate({
             />
           )}
 
-          {totalPages > 1 && (
+          {props.totalPages > 1 && (
             <Pagination
-              page={page}
-              totalPages={totalPages}
-              hasNextPage={hasNextPage}
-              hasPreviousPage={hasPreviousPage}
-              goToNextPage={goToNextPage}
-              goToPreviousPage={goToPreviousPage}
-              goToPage={goToPage}
-              loading={loading}
+              page={props.page}
+              totalPages={props.totalPages}
+              hasNextPage={props.hasNextPage}
+              hasPreviousPage={props.hasPreviousPage}
+              goToNextPage={props.goToNextPage}
+              goToPreviousPage={props.goToPreviousPage}
+              goToPage={props.goToPage}
+              loading={props.loading}
             />
           )}
         </>
