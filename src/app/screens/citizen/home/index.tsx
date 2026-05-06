@@ -34,7 +34,6 @@ export default function Home() {
     }
   }, [token]);
 
-
   if (!token) return null;
 
   return (
@@ -121,11 +120,7 @@ export default function Home() {
               </Text>
             </View>
             <View className="justify-center rounded-full items-center flex bg-[rgba(255,255,255,0.05)] w-[48px] h-[48px]">
-              <MaterialIcons
-                name="psychology"
-                size={24}
-                color={"#818CF8"}
-              />
+              <MaterialIcons name="psychology" size={24} color={"#818CF8"} />
             </View>
           </View>
           <ButtonUI
@@ -136,9 +131,7 @@ export default function Home() {
                 </Text>
               </View>
             }
-            onPress={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            onPress={() => router.push("/screens/citizen/simulation")}
             gradient={true}
             hover={false}
             iconLeft={false}
