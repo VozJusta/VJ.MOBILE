@@ -1,31 +1,23 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Image, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ButtonsProfile } from "@/utils/profile/data";
 import ProfileButton from "@/components/ProfileButton";
-import { jwtDecode } from "jwt-decode";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useRouter } from "expo-router";
-import Header from "@/components/Header";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useProfile } from "@/hooks/profile/useProfile";
 import { PlanType } from "@/interfaces/services/auth/me";
-import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 import Skeletons from "@/components/Skeletons";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
+import * as DocumentPicker from "expo-document-picker";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
-  const { handleLogout, user, loading, authMe } = useAuth();
-  let decodedToken: IDecodedToken | null = null;
-  if (token) {
-    try {
-      decodedToken = jwtDecode<IDecodedToken>(token);
-    } catch {
-      decodedToken = null;
-    }
-  }
+  const { handleLogout, user, loading: loadingAuth, authMe } = useAuth();
+  const { profile, saving, saveAvatar, fetchProfile } = useProfile();
 
   useEffect(() => {
     if (!token) {
@@ -36,34 +28,70 @@ export default function ProfileCitizen() {
   }, []);
 
   if (!token) return null;
+
+  async function handlePickAvatar() {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "image/*",
+      copyToCacheDirectory: true,
+    });
+
+    if (result.canceled || !result.assets?.[0]) return;
+
+    const asset = result.assets[0];
+    await saveAvatar(asset.uri, asset.mimeType ?? "image/jpeg");
+    fetchProfile();
+  }
+
   const sections = [[0, 1], [2, 3], [4]];
+
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
-        <Header isFirstPage={true} title="PERFIL" isCitizen={true} />
-        {loading || !user ? (
+        {loadingAuth || !user ? (
           <Skeletons amountOfSkeletons={3} height={250} />
         ) : (
           <>
-            <View className="w-full justify-center items-center gap-[16px]">
-              <LinearGradient
-                style={{
-                  width: 112,
-                  height: 112,
-                  borderRadius: 100,
-                  position: "relative",
-                  zIndex: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#1D4ED8", "#60A5FA"]}
-              >
-                <View className=" rounded-full min-w-[104px] min-h-[104px] border-[4px] border-solid border-[#0F172A] bg-[#1E293B] justify-center items-center">
-                  <MaterialIcons name="person" size={48} color={"#8E8E93"} />
-                </View>
-              </LinearGradient>
+            <View className="w-full justify-center items-center gap-[16px] pt-[16px]">
+              <View className="relative">
+                <LinearGradient
+                  style={{
+                    width: 112,
+                    height: 112,
+                    borderRadius: 100,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  colors={["#1D4ED8", "#60A5FA"]}
+                >
+                  <View className="rounded-full min-w-[104px] min-h-[104px] border-[4px] border-solid border-[#0F172A] overflow-hidden justify-center items-center bg-[#1E293B]">
+                    {profile?.avatar_image ? (
+                      <Image
+                        source={{ uri: profile.avatar_image }}
+                        style={{ width: 104, height: 104 }}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <MaterialIcons name="person" size={48} color={"#8E8E93"} />
+                    )}
+                  </View>
+                </LinearGradient>
+
+                <Pressable
+                  onPress={handlePickAvatar}
+                  disabled={saving}
+                  className="absolute bottom-0 right-0 w-[32px] h-[32px] rounded-full bg-[#1560CE] border border-[#2E83F8] items-center justify-center"
+                  style={{ elevation: 4 }}
+                >
+                  {saving ? (
+                    <ActivityIndicator size={14} color="#fff" />
+                  ) : (
+                    <MaterialIcons name="camera-alt" size={16} color="#FFFFFF" />
+                  )}
+                </Pressable>
+              </View>
+
               <View className="flex-col justify-center items-center">
                 <Text className="font-inter text-[20px] text-[#F1F5F9]">
                   {user?.full_name}
@@ -81,6 +109,7 @@ export default function ProfileCitizen() {
                 </View>
               </View>
             </View>
+
             <View className="flex-col gap-[16px] w-full pb-20">
               {sections.map((group, index) => (
                 <View
