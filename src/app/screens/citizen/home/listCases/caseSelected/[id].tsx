@@ -118,7 +118,7 @@ export default function CaseSelected() {
               </Text>
             </View>
           </View>
-          <View className="flex-row justify-between items-center w-full">
+          {/* <View className="flex-row justify-between items-center w-full">
             <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
               Documentos
             </Text>
@@ -140,7 +140,7 @@ export default function CaseSelected() {
                 size="14MB"
               />
             </View>
-          )}
+          )} */}
 
           <Text className="uppercase text-[14px] font-interSemiBold text-[#94A3B8]">
             CONTATO DO ADVOGADO

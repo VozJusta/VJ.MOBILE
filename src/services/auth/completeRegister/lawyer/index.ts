@@ -13,21 +13,24 @@ export async function completeLawyerRegister(body: ILawyerCompleteRegister) {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/auth/complete/lawyer`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "x-security-token": xToken,
+    const response = await fetch(
+      `${BASE_URL}/auth/complete/complete  /lawyer`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-security-token": xToken,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
 
     const data = await response.json().catch(() => {});
 
     if (!response.ok) {
       return {
         success: false,
-        error: [data.message || "Erro ao completar cadastro"],
+        data: data.message || "Erro ao completar cadastro",
       };
     }
 

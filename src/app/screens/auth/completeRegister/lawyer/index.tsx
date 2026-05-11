@@ -6,7 +6,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 
 export default function CompleteRegisterCitizen() {
-  const { registerAuth, handleCompleteRegisterChange } = useAuth();
+  const { completeRegisterAuth, handleCompleteRegisterChange } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const params = useLocalSearchParams();
 
@@ -14,7 +14,7 @@ export default function CompleteRegisterCitizen() {
   const role = params["source"] as Role;
 
   const completeRegisterData = useBuildCompleteRegisterFields({
-    registerAuth,
+    registerAuth: completeRegisterAuth,
     handleRegisterChange: handleCompleteRegisterChange,
     showPassword,
     onToggleShowPassword: () => setShowPassword((prev) => !prev),

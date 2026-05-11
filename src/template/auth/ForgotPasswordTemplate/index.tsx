@@ -104,16 +104,7 @@ export function ForgotPasswordTemplate(props: IForgotPassword) {
                 />
               )}
             </View>
-            {props.screen === ScreensForgotPassword.Code && (
-              <View className="mt-[32px] flex-row gap-[4px]">
-                <Text className=" font-inter text-[14px] text-[#64748B]">
-                  Não recebeu o código?
-                </Text>
-                <Text className=" font-interBold text-[14px] text-white underline">
-                  Reenviar
-                </Text>
-              </View>
-            )}
+            
           </View>
         </SafeAreaView>
       </TouchableWithoutFeedback>
