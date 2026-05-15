@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <ScrollView
-      contentContainerStyle={{ paddingBottom: 84 }}
+      contentContainerStyle={{ paddingBottom: 114 }}
       showsVerticalScrollIndicator={false}
     >
       <SafeAreaView className="gap-8">

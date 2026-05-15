@@ -3,8 +3,10 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { IRegisterResponse } from "@/interfaces/services/auth/signUp";
 import { ZodSignUpTypes } from "@/types/validation";
 import { ZodSignUpSchema } from "@/validation/auth/SignUp";
+import { useXTokenStorage } from "@/store/auth/token.store";
 
 export async function SignUpCitizen(data: ZodSignUpTypes) {
+  const setToken = useXTokenStorage.getState().setToken;
   try {
     const validate = ZodValidate(ZodSignUpSchema, data);
 
@@ -30,6 +32,7 @@ export async function SignUpCitizen(data: ZodSignUpTypes) {
       }),
     });
 
+
     const json = await response.json().catch(() => ({}));
 
     if (!response.ok) {
@@ -37,6 +40,14 @@ export async function SignUpCitizen(data: ZodSignUpTypes) {
         success: false,
         fields: json?.errors || [json?.message || "Erro ao cadastrar"],
       };
+    }
+
+    const token =
+      response.headers.get("x-security-token") ||
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (response.headers as any).map?.["x-security-token"];
+    if (token) {
+      setToken(token);
     }
 
     return {

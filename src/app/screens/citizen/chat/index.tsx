@@ -41,7 +41,7 @@ export default function Chat() {
         contentContainerStyle={{ paddingBottom: 128 }}
         showsVerticalScrollIndicator={false}
       >
-        <SafeAreaView style={{ gap: 32 }}>
+        <SafeAreaView style={{ gap: 32, paddingBottom: 32}}>
           <Header title="CHAT" isFirstPage={true} isCitizen={true} />
           <View className="flex-col mt-[24px] gap-[16px] w-full">
             <Text className="text-[14px] text-[#94A3B8] font-inter uppercase">

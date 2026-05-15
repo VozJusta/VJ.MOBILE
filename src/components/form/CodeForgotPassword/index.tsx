@@ -27,6 +27,7 @@ export function CodeForgotPassword({
   const [codeAuth, setCodeChange] = useState("");
   const token = useXTokenStorage((state) => state.token);
 
+
   const handleValidateCode = async (
     email: string,
     code: string,
@@ -132,6 +133,7 @@ export function CodeForgotPassword({
           bg="bg-[#135BEC]"
           hover={false}
           size="w-full h-[56px]"
+          // eslint-disable-next-line react/no-children-prop
           children={
             <View className="flex-1 justify-center items-center">
               <Text className="text-[16px] font-interBold text-white">

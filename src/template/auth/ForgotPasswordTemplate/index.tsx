@@ -14,7 +14,7 @@ import {
   ScreensForgotPassword,
 } from "@/interfaces/template/ForgotPasswordTemplate";
 import React, { useEffect, useState } from "react";
-import {  useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { EmailForgotPassword } from "@/components/form/EmailForgotPassword";
 import { CodeForgotPassword } from "@/components/form/CodeForgotPassword";
 import { UpdateForgotPassword } from "@/components/form/UpdateForgotPassword";
@@ -94,7 +94,7 @@ export function ForgotPasswordTemplate(props: IForgotPassword) {
               )}
               {props.screen === ScreensForgotPassword.Update && (
                 <UpdateForgotPassword
-                onSubmit={() => props.onSubmit && props.onSubmit()}
+                  onSubmit={() => props.onSubmit && props.onSubmit()}
                   confirmPassword={props.confirmPassword}
                   labelButton={props.labelButton}
                   newPassword={props.newPassword}
@@ -104,7 +104,6 @@ export function ForgotPasswordTemplate(props: IForgotPassword) {
                 />
               )}
             </View>
-            
           </View>
         </SafeAreaView>
       </TouchableWithoutFeedback>

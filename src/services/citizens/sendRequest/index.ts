@@ -16,8 +16,7 @@ export async function sendRequest(caseId: string, lawyerId: string) {
 
     const json = await response.json().catch(() => ({}));
 
-     console.log("sendRequest status:", response.status);  // ← adiciona
-    console.log("sendRequest response:", json);     
+    
 
     if (!response.ok) {
       return {
