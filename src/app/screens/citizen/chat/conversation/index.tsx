@@ -71,13 +71,13 @@ export default function ConversationAI() {
         </ScrollView>
 
         {!finished ? (
-          <View style={{ marginTop: 16 }} className="w-full">
+          <View style={{ marginTop: 16, paddingBottom:20 }} className="w-full">
             {!isRecordingMessage ? (
               <View className="flex-row items-center w-full gap-2">
                 <ButtonAudio
                   isRecording={false}
                   onStartRecording={handleStartRecordingMessage}
-                  onStopRecording={() => handleStopRecordingMessage}
+                  onStopRecording={handleStopRecordingMessage}
                   disabled={loading}
                 />
 
@@ -148,7 +148,7 @@ export default function ConversationAI() {
                   <ButtonAudio
                     isRecording={true}
                     onStartRecording={handleStartRecordingMessage}
-                    onStopRecording={() => handleStopRecordingMessage}
+                    onStopRecording={handleStopRecordingMessage}
                     disabled={loading}
                   />
                 </View>
