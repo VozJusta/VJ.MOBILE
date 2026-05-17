@@ -4,7 +4,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function getLawyerSelected(lawyerId: string) {
   try {
-    const response = await apiFetch(`${BASE_URL}/lawyers/${lawyerId}`, {
+    const response = await apiFetch(`${BASE_URL}/citizen/lawyers/${lawyerId}`, {
       method: "GET",
     });
 

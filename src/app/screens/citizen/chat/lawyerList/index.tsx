@@ -41,6 +41,8 @@ export default function LawyerList() {
       <SafeAreaView style={{ flex: 1, gap: 32 }}>
         <FlatList
           contentContainerClassName="gap-8"
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           ListHeaderComponent={
             <>
               <View className="w-full h-fit border-b-[#FFFFFF]/5 flex flex-col gap-4 border-b-[1px] pb-4">

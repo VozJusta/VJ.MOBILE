@@ -39,7 +39,7 @@ export default function ConversationAI() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 32 }}>
         <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
         <ScrollView
