@@ -1,7 +1,11 @@
-import { IProfileResponse, IUpdateProfileBody } from "@/interfaces/services/profile";
+import {
+  IProfileResponse,
+  IUpdateProfileBody,
+} from "@/interfaces/services/profile";
 import { getProfile } from "@/services/profile/getProfile";
 import { updateAvatar } from "@/services/profile/updateAvatar";
 import { updateProfile } from "@/services/profile/updateProfile";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
@@ -9,6 +13,10 @@ export function useProfile() {
   const [profile, setProfile] = useState<IProfileResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const token = useAccessTokenStorage((state) => state.accessToken);
+  const [isHydrated, setIsHydrated] = useState(
+    useAccessTokenStorage.persist.hasHydrated(),
+  );
 
   async function fetchProfile() {
     setLoading(true);
@@ -34,6 +42,18 @@ export function useProfile() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    const unsubscribe = useAccessTokenStorage.persist.onFinishHydration(() => {
+      setIsHydrated(true);
+    });
+
+    if (useAccessTokenStorage.persist.hasHydrated()) {
+      setIsHydrated(true);
+    }
+
+    return unsubscribe;
+  }, []);
 
   async function saveProfile(body: IUpdateProfileBody) {
     setSaving(true);
@@ -74,7 +94,9 @@ export function useProfile() {
       const response = await updateAvatar(fileUri, mimeType);
 
       if (response.success) {
-        setProfile((prev) => (prev ? { ...prev, avatar_image: fileUri } : prev));
+        setProfile((prev) =>
+          prev ? { ...prev, avatar_image: fileUri } : prev,
+        );
         Toast.show({
           type: "success",
           text1: "Foto atualizada",
@@ -102,8 +124,12 @@ export function useProfile() {
   }
 
   useEffect(() => {
+    if (!isHydrated || !token) {
+      return;
+    }
+
     fetchProfile();
-  }, []);
+  }, [isHydrated, token]);
 
   return {
     profile,

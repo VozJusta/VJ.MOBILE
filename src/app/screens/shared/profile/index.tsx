@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, Image, Pressable, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,22 +19,43 @@ import { PlanType } from "@/interfaces/services/auth/me";
 import Skeletons from "@/components/Skeletons";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import * as DocumentPicker from "expo-document-picker";
+import { useState } from "react";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
   const router = useRouter();
   const { handleLogout, user, loading: loadingAuth, authMe } = useAuth();
   const { profile, saving, saveAvatar, fetchProfile } = useProfile();
+  const [isHydrated, setIsHydrated] = useState(
+    useAccessTokenStorage.persist.hasHydrated(),
+  );
 
   useEffect(() => {
+    const unsubscribe = useAccessTokenStorage.persist.onFinishHydration(() => {
+      setIsHydrated(true);
+    });
+
+    if (useAccessTokenStorage.persist.hasHydrated()) {
+      setIsHydrated(true);
+    }
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
     if (!token) {
       router.replace("/screens/Onboarding/roles");
       return;
     }
-    authMe();
-  }, []);
 
-  if (!token) return null;
+    authMe();
+  }, [isHydrated, token]);
+
+  if (!isHydrated || !token) return null;
 
   async function handlePickAvatar() {
     const result = await DocumentPicker.getDocumentAsync({
@@ -73,7 +101,11 @@ export default function ProfileCitizen() {
                         resizeMode="cover"
                       />
                     ) : (
-                      <MaterialIcons name="person" size={48} color={"#8E8E93"} />
+                      <MaterialIcons
+                        name="person"
+                        size={48}
+                        color={"#8E8E93"}
+                      />
                     )}
                   </View>
                 </LinearGradient>
@@ -87,7 +119,11 @@ export default function ProfileCitizen() {
                   {saving ? (
                     <ActivityIndicator size={14} color="#fff" />
                   ) : (
-                    <MaterialIcons name="camera-alt" size={16} color="#FFFFFF" />
+                    <MaterialIcons
+                      name="camera-alt"
+                      size={16}
+                      color="#FFFFFF"
+                    />
                   )}
                 </Pressable>
               </View>

@@ -17,6 +17,7 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { useProfile } from "@/hooks/profile/useProfile";
 import { PlanType } from "@/interfaces/services/auth/me";
 import * as DocumentPicker from "expo-document-picker";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 
 type EditableFieldProps = {
   label: string;
@@ -67,14 +68,34 @@ function ReadonlyField({ label, value }: ReadonlyFieldProps) {
 
 export default function MyDataScreen() {
   const { user, authMe } = useAuth();
-  const { profile, loading, saving, fetchProfile, saveProfile, saveAvatar } = useProfile();
+  const { profile, loading, saving, fetchProfile, saveProfile, saveAvatar } =
+    useProfile();
+  const [isHydrated, setIsHydrated] = useState(
+    useAccessTokenStorage.persist.hasHydrated(),
+  );
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    authMe();
+    const unsubscribe = useAccessTokenStorage.persist.onFinishHydration(() => {
+      setIsHydrated(true);
+    });
+
+    if (useAccessTokenStorage.persist.hasHydrated()) {
+      setIsHydrated(true);
+    }
+
+    return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
+    authMe();
+  }, [isHydrated]);
 
   useEffect(() => {
     if (profile) {
