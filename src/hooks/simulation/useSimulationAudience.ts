@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation";
 import { useRecordAudio } from "@/hooks/shared/audio/useRecordAudio";
 import { Audio } from "expo-av";
+import { useVideoPlayer } from "expo-video";
 
 export function useSimulationAudience() {
-  const router = useRouter();
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [remainingSecs, setRemainingSecs] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const soundRef = useRef<Audio.Sound | null>(null);
 
   const {
@@ -29,6 +29,11 @@ export function useSimulationAudience() {
     simulationReportId,
     videoUrl,
   } = useWebSocketSimulation();
+
+  const player = useVideoPlayer(null, (p) => {
+    p.loop = false;
+    p.muted = true;
+  });
 
   const {
     handleStartRecording,
@@ -51,6 +56,7 @@ export function useSimulationAudience() {
           });
           return;
         }
+
         setTranscribedText(response.data);
         await sendChat(response.data);
       } finally {
@@ -58,6 +64,23 @@ export function useSimulationAudience() {
       }
     },
   });
+
+  useEffect(() => {
+    if (!videoUrl) return;
+
+    player.replace(videoUrl);
+    player.play();
+    setIsPaused(false);
+
+    const subscription = player.addListener("statusChange", (status) => {
+      if (status.status === "idle") {
+        useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
+        subscription.remove();
+      }
+    });
+
+    return () => subscription.remove();
+  }, [player, videoUrl]);
 
   useEffect(() => {
     if (!audioFile) return;
@@ -74,9 +97,20 @@ export function useSimulationAudience() {
           { uri: audioFile },
           { shouldPlay: true },
         );
+
         soundRef.current = sound;
+        setIsAudioPlaying(true);
+        sound.setOnPlaybackStatusUpdate((status) => {
+          if (!status.isLoaded) return;
+
+          if (status.didJustFinish) {
+            setIsAudioPlaying(false);
+            useWebSocketSimulation.setState({ audioFile: null });
+          }
+        });
         setIsPaused(false);
-      } catch (e) {
+      } catch {
+        setIsAudioPlaying(false);
         Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
       }
     };
@@ -86,23 +120,22 @@ export function useSimulationAudience() {
     return () => {
       soundRef.current?.unloadAsync();
       soundRef.current = null;
+      setIsAudioPlaying(false);
     };
   }, [audioFile]);
 
   const handlePauseAudio = async () => {
-    if (!soundRef.current) return;
-
     if (isPaused) {
-      await soundRef.current.playAsync();
+      await soundRef.current?.playAsync();
+      if (videoUrl) player.play();
       setIsPaused(false);
-    } else {
-      await soundRef.current.pauseAsync();
-      setIsPaused(true);
+      return;
     }
+
+    await soundRef.current?.pauseAsync();
+    if (videoUrl) player.pause();
+    setIsPaused(true);
   };
-
-
-  
 
   useEffect(() => {
     if (!warning) return;
@@ -150,7 +183,7 @@ export function useSimulationAudience() {
       setTranscribedText(null);
       clearSimulation();
     };
-  }, []);
+  }, [clearSimulation]);
 
   return {
     handleStartRecording,
@@ -170,5 +203,7 @@ export function useSimulationAudience() {
     videoUrl,
     handlePauseAudio,
     isPaused,
+    isAudioPlaying,
+    player,
   };
 }

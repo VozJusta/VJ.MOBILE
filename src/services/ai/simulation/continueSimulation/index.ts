@@ -20,7 +20,9 @@ export async function continueSimulation(body: IContinueSimulationRequest) {
     if (!response.ok) {
       return {
         success: false,
-        fields: data?.message || ["Erro ao continuar simulação"],
+        fields: Array.isArray(data?.message)
+          ? data.message
+          : [data?.message || "Erro ao continuar simulação"],
       };
     }
 

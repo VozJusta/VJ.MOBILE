@@ -6,7 +6,7 @@ import {
   Animated,
   ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import ButtonAudio from "@/components/ButtonAudio";
@@ -17,7 +17,7 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
-import { useVideoPlayer, VideoView } from "expo-video";
+import { VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
 
 export default function SimulationAudience() {
@@ -35,23 +35,17 @@ export default function SimulationAudience() {
     videoUrl,
     handlePauseAudio,
     isPaused,
+    isAudioPlaying,
     simulationReportId,
+    player,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
+  const shouldDisableButtonAudio =
+    showLoading ||
+    (!isPaused && (isSpeaking || isAudioPlaying || Boolean(videoUrl)));
 
-  const opacity = useRef(new Animated.Value(1)).current;
-
-  const player = useVideoPlayer(null, (p) => {
-    p.loop = false;
-    p.muted = true;
-  });
-
-  useEffect(() => {
-    if (!videoUrl) return;
-    player.replace(videoUrl);
-    player.play();
-  }, [videoUrl]);
+  const [opacity] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     Animated.loop(
@@ -68,11 +62,11 @@ export default function SimulationAudience() {
         }),
       ]),
     ).start();
-  }, []);
+  }, [opacity]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <SafeAreaView className="gap-8">
+      <SafeAreaView className="gap-8" style={{ paddingBottom: 32 }}>
         <Header
           isFirstPage={false}
           title="SIMULAÇÃO DE AUDIÊNCIA"
@@ -147,7 +141,7 @@ export default function SimulationAudience() {
               isRecording={isRecording}
               onStartRecording={handleStartRecording}
               onStopRecording={handleStopRecording}
-              disabled={showLoading}
+              disabled={shouldDisableButtonAudio}
             />
 
             <TouchableOpacity
@@ -179,14 +173,13 @@ export default function SimulationAudience() {
               simulationStatus !== "TimedOut") ||
             showLoading
           }
-          children={
-            <View className="justify-center items-center flex-1">
-              <Text className="text-white font-interSemiBold text-[16px]">
-                Encerrar simulação
-              </Text>
-            </View>
-          }
-        />
+        >
+          <View className="justify-center items-center flex-1">
+            <Text className="text-white font-interSemiBold text-[16px]">
+              Encerrar simulação
+            </Text>
+          </View>
+        </ButtonUI>
       </SafeAreaView>
     </ScrollView>
   );
