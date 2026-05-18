@@ -23,14 +23,6 @@ export default function PrivacySettings() {
 						value: isPartnerSharingEnabled,
 						onValueChange: setIsPartnerSharingEnabled,
 					},
-					{
-						id: "manage-documents",
-						type: "link",
-						icon: "folder-copy",
-						label: "Gerenciar Documentos",
-						description: "Acessos e permissões individuais",
-						onPress: () => {},
-					},
 				],
 			},
 			{

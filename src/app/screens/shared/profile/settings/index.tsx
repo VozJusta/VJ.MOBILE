@@ -84,15 +84,15 @@ export default function MainSettings() {
             label: "Termos de Uso",
             onPress: () => {},
           },
-          {
-            id: "privacy",
-            type: "link",
-            icon: "policy",
-            label: "Privacidade",
-            onPress: () => {
-              router.push("/screens/shared/profile/privacity");
-            },
-          },
+          // {
+          //   id: "privacy",
+          //   type: "link",
+          //   icon: "policy",
+          //   label: "Privacidade",
+          //   onPress: () => {
+          //     router.push("/screens/shared/profile/privacity");
+          //   },
+          // },
         ],
       },
     ],

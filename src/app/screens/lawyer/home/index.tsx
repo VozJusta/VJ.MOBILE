@@ -24,6 +24,7 @@ export default function LawyerHome() {
     useDashboardLawyer();
   const { authMe, user } = useAuth();
   const chartData = analyticsData?.data || [];
+  console.log("chartData:", chartData);
 
   let decodedToken: IDecodedToken | null = null;
   if (token) {
@@ -72,7 +73,7 @@ export default function LawyerHome() {
                   Análise de produtividade
                 </Text>
               </View>
-              {chartData.length === 0 ? (
+              {chartData.length < 2 ? (
                 <EmptyState
                   icon="area-chart"
                   title="Sem dados suficientes"
@@ -84,14 +85,14 @@ export default function LawyerHome() {
                 </>
               )}
             </View>
-            <View className="flex flex-col gap-6">
+            {/* <View className="flex flex-col gap-6">
               <Text className="text-white text-[20px] font-interBold">
                 Resumo geral
               </Text>
               {lawyerStats.map((stat, index) => (
                 <StatsCard key={index} {...stat} />
               ))}
-            </View>
+            </View> */}
             <View className="flex flex-col gap-6">
               <Text className="font-interBold text-white text-[18px]">
                 Status operacional dos casos
