@@ -8,7 +8,7 @@ export interface IProfileResponse {
 }
 
 export interface IUpdateProfileBody {
-  full_name?: string;
+  fullName?: string;
   phone?: string;
 }
 

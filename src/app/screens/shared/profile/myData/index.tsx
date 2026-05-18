@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   Text,
@@ -118,7 +120,7 @@ export default function MyDataScreen() {
   }
 
   async function handleSave() {
-    await saveProfile({ full_name: fullName, phone });
+    await saveProfile({ fullName, phone });
   }
 
   const firstName = (profile?.full_name ?? "").trim().split(" ")[0];
@@ -137,101 +139,106 @@ export default function MyDataScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Header isCitizen={true} title="MEUS DADOS" isFirstPage={false} />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Header isCitizen={true} title="MEUS DADOS" isFirstPage={false} />
 
-        <View className="items-center pb-[22px]">
-          <Pressable
-            onPress={handlePickAvatar}
-            disabled={saving}
-            className="relative"
-          >
-            <View
-              className="w-[122px] h-[122px] rounded-full border-[3px] border-[#227BF0] items-center justify-center overflow-hidden bg-[#E9EEF4]"
-              style={{
-                shadowColor: "#1B6EE5",
-                shadowOpacity: 0.45,
-                shadowRadius: 14,
-                shadowOffset: { width: 0, height: 0 },
-                elevation: 12,
-              }}
+          <View className="items-center pb-[22px]">
+            <Pressable
+              onPress={handlePickAvatar}
+              disabled={saving}
+              className="relative"
             >
-              {profile.avatar_image ? (
-                <Image
-                  source={{ uri: profile.avatar_image }}
-                  style={{ width: 122, height: 122 }}
-                  resizeMode="cover"
-                />
-              ) : (
-                <MaterialIcons name="person" size={82} color="#4B5563" />
-              )}
-            </View>
+              <View
+                className="w-[122px] h-[122px] rounded-full border-[3px] border-[#227BF0] items-center justify-center overflow-hidden bg-[#E9EEF4]"
+                style={{
+                  shadowColor: "#1B6EE5",
+                  shadowOpacity: 0.45,
+                  shadowRadius: 14,
+                  shadowOffset: { width: 0, height: 0 },
+                  elevation: 12,
+                }}
+              >
+                {profile.avatar_image ? (
+                  <Image
+                    source={{ uri: profile.avatar_image }}
+                    style={{ width: 122, height: 122 }}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <MaterialIcons name="person" size={82} color="#4B5563" />
+                )}
+              </View>
 
-            <View className="w-[36px] h-[36px] rounded-full bg-[#1560CE] border border-[#2E83F8] items-center justify-center absolute bottom-0 right-0">
-              {saving ? (
-                <ActivityIndicator size={16} color="#fff" />
-              ) : (
-                <MaterialIcons name="camera-alt" size={18} color="#FFFFFF" />
-              )}
-            </View>
-          </Pressable>
+              <View className="w-[36px] h-[36px] rounded-full bg-[#1560CE] border border-[#2E83F8] items-center justify-center absolute bottom-0 right-0">
+                {saving ? (
+                  <ActivityIndicator size={16} color="#fff" />
+                ) : (
+                  <MaterialIcons name="camera-alt" size={18} color="#FFFFFF" />
+                )}
+              </View>
+            </Pressable>
 
-          <Text className="mt-[12px] text-[#EAF2FF] text-[34px] font-interBold">
-            {firstName} {lastName}
-          </Text>
-
-          <View className="mt-[8px] px-[12px] py-[3px] rounded-full border border-[#2D74D7]/50 bg-[rgba(23,90,187,0.3)]">
-            <Text className="text-[#3F9EFF] text-[10px] uppercase tracking-[1.5px] font-interBold">
-              {user?.subscription?.plan?.type === PlanType.FREE
-                ? "Plano Gratuito"
-                : user?.subscription?.plan?.type === PlanType.PREMIUM
-                  ? "Plano Premium"
-                  : user?.subscription?.plan?.type === PlanType.MEDIUM
-                    ? "Plano Médio"
-                    : "Sem plano"}
+            <Text className="mt-[12px] text-[#EAF2FF] text-[34px] font-interBold">
+              {firstName} {lastName}
             </Text>
-          </View>
-        </View>
 
-        <View className="gap-[16px] pb-[18px]">
-          <EditableField
-            label="Nome Completo"
-            value={fullName}
-            onChangeText={setFullName}
-          />
-
-          <ReadonlyField label="CPF" value={profile.cpf} />
-
-          <ReadonlyField label="E-mail" value={profile.email} />
-
-          <EditableField
-            label="Telefone"
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
-        </View>
-
-        <ButtonUI
-          onPress={handleSave}
-          gradient
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-          disabled={saving}
-        >
-          <View className="w-full h-full items-center justify-center">
-            {saving ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text className="text-white text-[17px] font-interSemiBold">
-                Salvar alterações
+            <View className="mt-[8px] px-[12px] py-[3px] rounded-full border border-[#2D74D7]/50 bg-[rgba(23,90,187,0.3)]">
+              <Text className="text-[#3F9EFF] text-[10px] uppercase tracking-[1.5px] font-interBold">
+                {user?.subscription?.plan?.type === PlanType.FREE
+                  ? "Plano Gratuito"
+                  : user?.subscription?.plan?.type === PlanType.PREMIUM
+                    ? "Plano Premium"
+                    : user?.subscription?.plan?.type === PlanType.MEDIUM
+                      ? "Plano Médio"
+                      : "Sem plano"}
               </Text>
-            )}
+            </View>
           </View>
-        </ButtonUI>
-      </ScrollView>
-    </SafeAreaView>
+
+          <View className="gap-[16px] pb-[18px]">
+            <EditableField
+              label="Nome Completo"
+              value={fullName}
+              onChangeText={setFullName}
+            />
+
+            <ReadonlyField label="CPF" value={profile.cpf} />
+
+            <ReadonlyField label="E-mail" value={profile.email} />
+
+            <EditableField
+              label="Telefone"
+              value={phone}
+              onChangeText={setPhone}
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <ButtonUI
+            onPress={handleSave}
+            gradient
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+            disabled={saving}
+          >
+            <View className="w-full h-full items-center justify-center">
+              {saving ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text className="text-white text-[17px] font-interSemiBold">
+                  Salvar alterações
+                </Text>
+              )}
+            </View>
+          </ButtonUI>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

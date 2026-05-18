@@ -8,7 +8,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 export async function updateProfile(body: IUpdateProfileBody) {
   try {
     const response = await apiFetch(`${BASE_URL}/profile`, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

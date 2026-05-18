@@ -102,7 +102,10 @@ export default function Home() {
               <CaseCard
                 key={report.id}
                 iconName={getStatusIcon(report.status)}
-                onPress={() => {}}
+                onPress={() =>
+              router.push(
+                `/screens/citizen/home/listCases/caseSelected/${report.id}`,
+              )}
                 status={report.status}
                 title={getCategoryLabel(report.category_detected)}
               />

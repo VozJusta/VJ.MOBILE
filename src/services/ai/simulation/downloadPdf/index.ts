@@ -7,11 +7,11 @@ export async function downloadReportSimulationAsPdf(simulationId: string) {
   const token = useAccessTokenStorage.getState().accessToken;
 
   try {
-    const fileUri =
-      FileSystem.documentDirectory + `simulacao_vozjusta_${simulationId}.pdf`;
+    const fileUri = FileSystem.documentDirectory + `simulacao_vozjusta_${simulationId}.pdf`;
+    const url = `${BASE_URL}/simulation/pdf/${simulationId}`;
 
     const downloadRes = await FileSystem.downloadAsync(
-      `${BASE_URL}/simulation/pdf/${simulationId}`,
+      url,
       fileUri,
       {
         headers: {
@@ -41,10 +41,7 @@ export async function downloadReportSimulationAsPdf(simulationId: string) {
       });
     }
 
-    return {
-      success: true,
-      data: downloadRes.uri,
-    };
+    return { success: true, data: downloadRes.uri };
   } catch {
     return {
       success: false,

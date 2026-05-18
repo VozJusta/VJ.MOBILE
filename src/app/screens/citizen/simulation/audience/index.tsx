@@ -36,7 +36,6 @@ export default function SimulationAudience() {
     handlePauseAudio,
     isPaused,
     isAudioPlaying,
-    simulationReportId,
     player,
   } = useSimulationAudience();
 
@@ -168,7 +167,6 @@ export default function SimulationAudience() {
           iconLeft={false}
           paddingButtonStatus={""}
           disabled={
-            !simulationReportId ||
             (simulationStatus !== "Completed" &&
               simulationStatus !== "TimedOut") ||
             showLoading

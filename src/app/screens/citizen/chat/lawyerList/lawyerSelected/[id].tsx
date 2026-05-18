@@ -25,10 +25,6 @@ export default function LawyerSelected() {
 
     const result = await sendRequestToLawyer(caseId, lawyerSelected.id);
 
-    console.log("Result of sending request to lawyer:", result);
-    console.log("caseId:", caseId);           // ← confirma se tem valor
-  console.log("lawyerId:", lawyerSelected.id);
-
     if (result) {
       router.push(
         "/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded",

@@ -160,6 +160,12 @@ export function useSimulationAudience() {
   }, [remainingSecs]);
 
   useEffect(() => {
+    if (remainingSecs !== 0) return;
+
+    useWebSocketSimulation.setState({ simulationStatus: "TimedOut" });
+  }, [remainingSecs]);
+
+  useEffect(() => {
     if (simulationStatus === "Completed" || simulationStatus === "TimedOut") {
       setRemainingSecs(null);
     }
@@ -177,13 +183,11 @@ export function useSimulationAudience() {
   const handleStop = () => {
     stopSimulation();
   };
-
   useEffect(() => {
     return () => {
       setTranscribedText(null);
-      clearSimulation();
     };
-  }, [clearSimulation]);
+  }, []);
 
   return {
     handleStartRecording,
