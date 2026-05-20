@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useChat } from "@/hooks/chat/useChat";
@@ -18,7 +19,9 @@ import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
- 
+import * as DocumentPicker from "expo-document-picker";
+import { createEvidences } from "@/services/citizens/createEvidences";
+import Toast from "react-native-toast-message";
 
 export default function Chat() {
   const {
@@ -38,6 +41,54 @@ export default function Chat() {
     "audio" | "evidence" | null
   >(null);
   const [isOpenInsertOptions, setIsOpenInsertOptions] = useState(false);
+  const [ocrContent, setOcrContent] = useState<string[]>([]);
+  const [fileUri, setFileUri] = useState<string[]>([]);
+  const handleSendFile = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: ["image/jpeg", "image/png", "application/pdf"],
+      copyToCacheDirectory: true,
+    });
+    if (result.canceled) return;
+    if (fileUri.length >= 3) {
+      Toast.show({
+        type: "error",
+        text1: "Limite de evidências anexadas atingido (3).",
+      });
+      return;
+    } else {
+      const file = result.assets[0];
+      const response = await createEvidences({ file });
+
+      if (!response.success) {
+        Toast.show({
+          type: "error",
+          text1: response.fields && response.fields[0],
+        });
+        return;
+      }
+      if (!response.data) {
+        Toast.show({
+          type: "info",
+          text1: "Evidência anexada, mas não foi possível extrair o conteúdo.",
+        });
+        return;
+      }
+
+      setFileUri([...fileUri, file.uri]);
+
+      setOcrContent([...ocrContent, response.data.ocr_content || ""]);
+      Toast.show({
+        type: "success",
+        text1: "Evidência anexada com sucesso!",
+      });
+    }
+  };
+
+  const firstMessageText = ocrContent
+    ? `${description}\n\nConteúdo extraído da evidência:\n${ocrContent}`
+    : description;
+
+  console.log(fileUri);
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -67,6 +118,17 @@ export default function Chat() {
           <View className="w-full">
             {!isRecordingDescription ? (
               <View className="relative w-full">
+                {fileUri.length > 0 && (
+                  <View className="flex flex-row gap-[10px] ">
+                    {fileUri.map((uri, index) => (
+                      <Image
+                        key={index}
+                        source={{ uri }}
+                        className="w-[100px] h-32 object-cover rounded-lg mb-2"
+                      />
+                    ))}
+                  </View>
+                )}
                 <TextArea
                   placeholder="Descreva o que aconteceu com suas próprias palavras..."
                   value={description}
@@ -132,21 +194,19 @@ export default function Chat() {
                       onStopRecording={handleStopRecordingDescription}
                       disabled={loading}
                       onLongPress={() => {
-                        setSelectedInsert(null)
-                        setIsOpenInsertOptions(true)
+                        setSelectedInsert(null);
+                        setIsOpenInsertOptions(true);
                       }}
                       delayLongPress={500}
                     />
                   ) : (
                     <ButtonUI
                       onLongPress={() => {
-                        setSelectedInsert(null)
-                        setIsOpenInsertOptions(true)
+                        setSelectedInsert(null);
+                        setIsOpenInsertOptions(true);
                       }}
                       delayLongPress={500}
-                      onPress={function (): void {
-                        throw new Error("Function not implemented.");
-                      }}
+                      onPress={handleSendFile}
                     >
                       <View className="flex w-[50px] h-[50px] bg-BlueAzure rounded-full items-center justify-center">
                         <MaterialCommunityIcons
@@ -220,7 +280,7 @@ export default function Chat() {
         </SafeAreaView>
 
         <ButtonUI
-          onPress={handleStartAnalysis}
+          onPress={() => handleStartAnalysis(firstMessageText)}
           gradient={true}
           hover={false}
           iconLeft={false}

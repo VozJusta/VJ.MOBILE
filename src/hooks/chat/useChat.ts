@@ -78,7 +78,8 @@ export function useChat() {
     }
   };
 
-  const handleStartAnalysis = async () => {
+  const handleStartAnalysis = async (overrideMessage?: string) => {
+    const firstMessageText = overrideMessage ?? description;
     if (!selectedCategory) {
       Toast.show({
         type: "error",
@@ -86,7 +87,7 @@ export function useChat() {
       });
       return;
     }
-    if (!description.trim()) {
+    if (!firstMessageText.trim()) {
       Toast.show({
         type: "error",
         text1: "Descreva o ocorrido para iniciar a análise",
@@ -98,9 +99,6 @@ export function useChat() {
 
     try {
       clearChat();
-
-      const firstMessageText = `${description}`;
-
       addMessage({
         id: Date.now().toString() + "-user",
         content: firstMessageText,
