@@ -28,6 +28,8 @@ export function useChat() {
     setFinished,
     clearChat,
     setReportId,
+    setUri,
+    uri,
   } = useChatStorage();
 
   const {
@@ -71,14 +73,32 @@ export function useChat() {
     try {
       const response = await historyConversation(conversationId);
       if (response.success && response.data) {
-        setMessages(response.data.messages);
+        const sanitized = response.data.messages.map((msg) => {
+          if (msg.role === "User") {
+            return {
+              ...msg,
+              content: msg.content.split(
+                "\n\nConteúdo extraído da evidência:",
+              )[0],
+            };
+          }
+          return msg;
+        });
+        setMessages(sanitized);
       }
     } finally {
       setFetchingHistory(false);
     }
   };
 
-  const handleStartAnalysis = async () => {
+  const handleStartAnalysis = async (
+    overrideMessage?: string,
+    uris?: string[],
+    displayMessage?: string,
+  ) => {
+    const firstMessageText = overrideMessage ?? description;
+    const visibleMessage = displayMessage ?? firstMessageText;
+    console.log("visibleMessage:", visibleMessage);
     if (!selectedCategory) {
       Toast.show({
         type: "error",
@@ -86,7 +106,7 @@ export function useChat() {
       });
       return;
     }
-    if (!description.trim()) {
+    if (!visibleMessage.trim()) {
       Toast.show({
         type: "error",
         text1: "Descreva o ocorrido para iniciar a análise",
@@ -98,15 +118,18 @@ export function useChat() {
 
     try {
       clearChat();
-
-      const firstMessageText = `${description}`;
-
+      if (uris && uris.length > 0) {
+        setUri(uris);
+        console.log("uris salvas:", uris);
+      }
       addMessage({
         id: Date.now().toString() + "-user",
-        content: firstMessageText,
+        content: visibleMessage,
         role: "User",
         created_at: String(Date.now()),
       });
+
+      console.log("visibleMessage:", visibleMessage);
 
       const response = await startConversation({ message: firstMessageText });
 

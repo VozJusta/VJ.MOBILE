@@ -16,10 +16,11 @@ import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { router } from "expo-router";
+import { useChatStorage } from "@/store/chat/chat.store";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
-
+  const { uri } = useChatStorage();
   const {
     messages,
     loading,
@@ -51,13 +52,14 @@ export default function ConversationAI() {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
         >
-          {messages.map((msg) => (
+          {messages.map((msg, index) => (
             <MessageBubble
               key={msg.id}
               message={msg.content}
               createdAt={msg.created_at}
               userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
+              uri={msg.role === "User" && index === 0 ? uri : undefined}
             />
           ))}
 
@@ -71,7 +73,7 @@ export default function ConversationAI() {
         </ScrollView>
 
         {!finished ? (
-          <View style={{ marginTop: 16, paddingBottom:20 }} className="w-full">
+          <View style={{ marginTop: 16, paddingBottom: 20 }} className="w-full">
             {!isRecordingMessage ? (
               <View className="flex-row items-center w-full gap-2">
                 <ButtonAudio
@@ -165,14 +167,13 @@ export default function ConversationAI() {
               hover={false}
               iconLeft={false}
               paddingButtonStatus={""}
-              children={
-                <View className="justify-center items-center flex-1">
-                  <Text className="text-white font-interSemiBold text-[16px]">
-                    Ver Relatório do Caso
-                  </Text>
-                </View>
-              }
-            />
+            >
+              <View className="justify-center items-center flex-1">
+                <Text className="text-white font-interSemiBold text-[16px]">
+                  Ver Relatório do Caso
+                </Text>
+              </View>
+            </ButtonUI>
           </View>
         )}
       </SafeAreaView>

@@ -1,8 +1,7 @@
-import { View, Text } from "react-native";
+import { View, Text,Image } from "react-native";
 import { IMessageBubble } from "@/interfaces/components/MessageBubble";
 
 export default function MessageBubble(props: IMessageBubble) {
-
   const formatTime = (dateStr: string) => {
     try {
       const isNumeric = /^\d+$/.test(dateStr);
@@ -37,14 +36,23 @@ export default function MessageBubble(props: IMessageBubble) {
           borderBottomRightRadius: 16,
         }}
       >
+        {props.uri && props.uri.length > 0 && (
+          <View className="flex-row flex-wrap gap-2 mb-3">
+            {props.uri.map((u, index) => (
+              <Image
+                key={index}
+                source={{ uri: u }}
+                className="w-[80px] h-24 rounded-lg"
+              />
+            ))}
+          </View>
+        )}
         <Text className="font-inter text-[14px] text-white">
           {props.message}
         </Text>
       </View>
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
-        {props.createdAt
-          ? formatTime(props.createdAt)
-          : ""}
+        {props.createdAt ? formatTime(props.createdAt) : ""}
       </Text>
     </View>
   );

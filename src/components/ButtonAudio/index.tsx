@@ -16,6 +16,8 @@ export default function ButtonAudio(props: IButtonAudio) {
 
   return (
     <TouchableOpacity
+      onLongPress={props.onLongPress}
+      delayLongPress={props.delayLongPress}
       onPress={handlePress}
       disabled={props.disabled}
       accessibilityState={{ disabled: props.disabled }}

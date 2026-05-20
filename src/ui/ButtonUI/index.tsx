@@ -15,6 +15,7 @@ export default function ButtonUI({
   if (isNavigation) {
     return (
       <TouchableOpacity
+  
         className={`
           ${props.size}
           ${goNext ? "bg-BlueAzure" : "bg-white/5 border border-solid border-white/10"}
@@ -71,6 +72,9 @@ export default function ButtonUI({
 
   return (
     <Pressable
+      onLongPress={props.onLongPress}
+      delayLongPress={props.delayLongPress}
+      
       onPress={props.onPress}
       className={`
         rounded-[20px]

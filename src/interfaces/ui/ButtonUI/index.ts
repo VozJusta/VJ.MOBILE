@@ -16,4 +16,6 @@ export interface IButton {
   iconLeft?: boolean;
   iconName?: React.ComponentProps<typeof MaterialIcons>["name"];
   paddingButtonStatus?: string;
+  onLongPress?: () => void;
+  delayLongPress?: number;
 }

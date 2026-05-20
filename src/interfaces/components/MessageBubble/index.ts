@@ -3,4 +3,5 @@ export interface IMessageBubble {
   isUser: boolean;
   userName?: string;
   createdAt?: string;
+  uri?: string[];
 }
