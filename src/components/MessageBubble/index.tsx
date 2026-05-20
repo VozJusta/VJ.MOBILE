@@ -1,4 +1,4 @@
-import { View, Text,Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { IMessageBubble } from "@/interfaces/components/MessageBubble";
 
 export default function MessageBubble(props: IMessageBubble) {
@@ -23,6 +23,17 @@ export default function MessageBubble(props: IMessageBubble) {
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
         {props.userName ? props.userName : "VozJusta AI"}
       </Text>
+      {props.uri && props.uri.length > 0 && (
+        <View className="flex-row flex-wrap gap-2 mb-3">
+          {props.uri.map((u, index) => (
+            <Image
+              key={index}
+              source={{ uri: u }}
+              className="w-[80px] h-24 rounded-lg"
+            />
+          ))}
+        </View>
+      )}
 
       <View
         className="w-[90%] p-5"
@@ -36,17 +47,6 @@ export default function MessageBubble(props: IMessageBubble) {
           borderBottomRightRadius: 16,
         }}
       >
-        {props.uri && props.uri.length > 0 && (
-          <View className="flex-row flex-wrap gap-2 mb-3">
-            {props.uri.map((u, index) => (
-              <Image
-                key={index}
-                source={{ uri: u }}
-                className="w-[80px] h-24 rounded-lg"
-              />
-            ))}
-          </View>
-        )}
         <Text className="font-inter text-[14px] text-white">
           {props.message}
         </Text>
