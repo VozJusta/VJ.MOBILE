@@ -18,7 +18,7 @@ import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+ 
 
 export default function Chat() {
   const {
