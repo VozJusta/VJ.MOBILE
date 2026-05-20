@@ -67,6 +67,9 @@ export default function Chat() {
                   onChangeText={setDescription}
                 />
                 <View className="absolute bottom-3 right-3 z-10">
+                  <ButtonUI onPress={function (): void {
+                    throw new Error("Function not implemented.");
+                  } }/>
                   <ButtonAudio
                     isRecording={false}
                     onStartRecording={handleStartRecordingDescription}
