@@ -31,9 +31,10 @@ export default function Chat() {
     selectedCategory,
     setSelectedCategory,
     handleStartAnalysis,
-    handleStartRecordingDescription,
+    handleStartRecordingDescription, 
     handleStopRecordingDescription,
     isRecordingDescription,
+
     meteringVoiceDescription,
     recordingDurationDescription,
   } = useChat();
@@ -84,9 +85,12 @@ export default function Chat() {
     }
   };
 
-  const firstMessageText = ocrContent
-    ? `${description}\n\nConteúdo extraído da evidência:\n${ocrContent}`
-    : description;
+  const displayMessage = description;
+
+  const firstMessageText =
+    ocrContent.length > 0
+      ? `${description}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
+      : description;
 
   console.log(fileUri);
   return (
@@ -280,7 +284,7 @@ export default function Chat() {
         </SafeAreaView>
 
         <ButtonUI
-          onPress={() => handleStartAnalysis(firstMessageText)}
+          onPress={() => handleStartAnalysis(firstMessageText, fileUri,displayMessage)}
           gradient={true}
           hover={false}
           iconLeft={false}
