@@ -1,13 +1,20 @@
 import { apiFetch } from "@/helpers/api/apiFetch";
 import { ICreateEvidenceRequest, ICreateEvidenceResponse } from "@/interfaces/services/citizen/createEvidences";
-import { ILawyerSelected } from "@/interfaces/services/citizen/lawyerSelected";
 import { BASE_URL } from "@/settings/BASE_URL";
 
 export async function createEvidences({ file }:ICreateEvidenceRequest) {
     try {
+
+        const formData = new FormData();
+        formData.append("file", {
+          uri: file.uri,
+          name: file.name,
+          type: file.mimeType,
+        } as any);
+
         const response = await apiFetch(`${BASE_URL}/citizen/me/evidence`, {
           method: "POST",
-          body: JSON.stringify({ file }),
+          body: formData,
         });
     
         const json = await response.json().catch(() => ({}));

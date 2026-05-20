@@ -34,6 +34,8 @@ export default function ConversationAI() {
     recordingDurationMessage,
   } = useChat();
 
+  
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
