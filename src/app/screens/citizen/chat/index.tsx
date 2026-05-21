@@ -17,11 +17,8 @@ import { useChat } from "@/hooks/chat/useChat";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
-import { useState } from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as DocumentPicker from "expo-document-picker";
-import { createEvidences } from "@/services/citizens/createEvidences";
-import Toast from "react-native-toast-message";
+import { ButtonOption } from "@/components/ButtonOption";
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 
 export default function Chat() {
   const {
@@ -31,60 +28,14 @@ export default function Chat() {
     selectedCategory,
     setSelectedCategory,
     handleStartAnalysis,
-    handleStartRecordingDescription, 
+    handleStartRecordingDescription,
     handleStopRecordingDescription,
     isRecordingDescription,
 
     meteringVoiceDescription,
     recordingDurationDescription,
   } = useChat();
-  const [selectedInsert, setSelectedInsert] = useState<
-    "audio" | "evidence" | null
-  >(null);
-  const [isOpenInsertOptions, setIsOpenInsertOptions] = useState(false);
-  const [ocrContent, setOcrContent] = useState<string[]>([]);
-  const [fileUri, setFileUri] = useState<string[]>([]);
-  const handleSendFile = async () => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: ["image/jpeg", "image/png", "application/pdf"],
-      copyToCacheDirectory: true,
-    });
-    if (result.canceled) return;
-    if (fileUri.length >= 3) {
-      Toast.show({
-        type: "error",
-        text1: "Limite de evidências anexadas atingido (3).",
-      });
-      return;
-    } else {
-      const file = result.assets[0];
-      const response = await createEvidences({ file });
-
-      if (!response.success) {
-        Toast.show({
-          type: "error",
-          text1: response.fields && response.fields[0],
-        });
-        return;
-      }
-      if (!response.data) {
-        Toast.show({
-          type: "info",
-          text1: "Evidência anexada, mas não foi possível extrair o conteúdo.",
-        });
-        return;
-      }
-
-      setFileUri([...fileUri, file.uri]);
-
-      setOcrContent([...ocrContent, response.data.ocr_content || ""]);
-      Toast.show({
-        type: "success",
-        text1: "Evidência anexada com sucesso!",
-      });
-    }
-  };
-
+  const { ocrContent, fileUri, handleSendFile } = useEvidenceUpload();
   const displayMessage = description;
 
   const firstMessageText =
@@ -139,88 +90,13 @@ export default function Chat() {
                   onChangeText={setDescription}
                 />
                 <View className="absolute bottom-3 right-3 z-10">
-                  {isOpenInsertOptions && (
-                    <View className="absolute w-[170px] bottom-16 right-0 bg-[#1E293B] rounded-lg p-2 flex flex-col gap-4">
-                      <ButtonUI
-                        onPress={() => {
-                          setSelectedInsert("evidence");
-                          setIsOpenInsertOptions(false);
-                        }}
-                      >
-                        <View className="flex-row w-full items-center gap-2">
-                          <MaterialCommunityIcons
-                            name="paperclip"
-                            size={20}
-                            color="#94A3B8"
-                          />
-                          <Text className="text-[14px] text-[#94A3B8]">
-                            Adicionar evidência
-                          </Text>
-                        </View>
-                      </ButtonUI>
-                      <ButtonUI
-                        onPress={() => {
-                          setSelectedInsert("audio");
-                          setIsOpenInsertOptions(false);
-                        }}
-                      >
-                        <View className="flex-row w-full items-center gap-2">
-                          <MaterialCommunityIcons
-                            name="microphone"
-                            size={20}
-                            color="#94A3B8"
-                          />
-                          <Text className="text-[14px] text-[#94A3B8]">
-                            Adicionar áudio
-                          </Text>
-                        </View>
-                      </ButtonUI>
-                    </View>
-                  )}
-                  {selectedInsert === null ? (
-                    <ButtonUI
-                      onPress={() =>
-                        setIsOpenInsertOptions(!isOpenInsertOptions)
-                      }
-                    >
-                      <View className="flex w-[50px] h-[50px] bg-BlueAzure rounded-full items-center justify-center">
-                        <MaterialCommunityIcons
-                          name="plus"
-                          size={25}
-                          color={"#FFFF"}
-                        />
-                      </View>
-                    </ButtonUI>
-                  ) : selectedInsert === "audio" ? (
-                    <ButtonAudio
-                      isRecording={false}
-                      onStartRecording={handleStartRecordingDescription}
-                      onStopRecording={handleStopRecordingDescription}
-                      disabled={loading}
-                      onLongPress={() => {
-                        setSelectedInsert(null);
-                        setIsOpenInsertOptions(true);
-                      }}
-                      delayLongPress={500}
-                    />
-                  ) : (
-                    <ButtonUI
-                      onLongPress={() => {
-                        setSelectedInsert(null);
-                        setIsOpenInsertOptions(true);
-                      }}
-                      delayLongPress={500}
-                      onPress={handleSendFile}
-                    >
-                      <View className="flex w-[50px] h-[50px] bg-BlueAzure rounded-full items-center justify-center">
-                        <MaterialCommunityIcons
-                          name="paperclip"
-                          size={25}
-                          color={"#FFFF"}
-                        />
-                      </View>
-                    </ButtonUI>
-                  )}
+                  <ButtonOption
+                    handleSendFile={handleSendFile}
+                    onStartRecording={handleStartRecordingDescription}
+                    onStopRecording={handleStopRecordingDescription}
+                    loading={false}
+                    positionsInput={"textArea"}
+                  />
                 </View>
               </View>
             ) : (
@@ -284,7 +160,9 @@ export default function Chat() {
         </SafeAreaView>
 
         <ButtonUI
-          onPress={() => handleStartAnalysis(firstMessageText, fileUri,displayMessage)}
+          onPress={() =>
+            handleStartAnalysis(firstMessageText, fileUri, displayMessage)
+          }
           gradient={true}
           hover={false}
           iconLeft={false}

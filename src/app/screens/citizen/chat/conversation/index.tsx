@@ -11,12 +11,14 @@ import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
 import ButtonUI from "@/ui/ButtonUI";
 import { useChat } from "@/hooks/chat/useChat";
-import { useRef } from "react";
+import { useRef} from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { router } from "expo-router";
 import { useChatStorage } from "@/store/chat/chat.store";
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
+import { ButtonOption } from "@/components/ButtonOption";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -34,6 +36,7 @@ export default function ConversationAI() {
     meteringVoiceMessage,
     recordingDurationMessage,
   } = useChat();
+  const { handleSendFile } = useEvidenceUpload();
 
   return (
     <KeyboardAvoidingView
@@ -76,11 +79,12 @@ export default function ConversationAI() {
           <View style={{ marginTop: 16, paddingBottom: 20 }} className="w-full">
             {!isRecordingMessage ? (
               <View className="flex-row items-center w-full gap-2">
-                <ButtonAudio
-                  isRecording={false}
+                <ButtonOption
+                  handleSendFile={handleSendFile}
                   onStartRecording={handleStartRecordingMessage}
                   onStopRecording={handleStopRecordingMessage}
-                  disabled={loading}
+                  loading={loading}
+                  positionsInput={"input"}
                 />
 
                 <View className="flex-1">
