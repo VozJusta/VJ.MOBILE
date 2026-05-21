@@ -39,6 +39,10 @@ export function useEvidenceUpload() {
       Toast.show({ type: "success", text1: "Evidência anexada com sucesso!" });
     }
   };
+  const clearFiles = () => {
+    setFileUri([]);
+    setOcrContent([]);
+  };
 
-  return { ocrContent, fileUri, handleSendFile };
+  return { ocrContent, fileUri, handleSendFile, clearFiles };
 }

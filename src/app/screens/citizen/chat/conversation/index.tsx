@@ -4,6 +4,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -11,7 +12,7 @@ import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
 import ButtonUI from "@/ui/ButtonUI";
 import { useChat } from "@/hooks/chat/useChat";
-import { useRef} from "react";
+import { useRef } from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
@@ -36,14 +37,27 @@ export default function ConversationAI() {
     meteringVoiceMessage,
     recordingDurationMessage,
   } = useChat();
-  const { handleSendFile } = useEvidenceUpload();
+  const { handleSendFile, fileUri, clearFiles, ocrContent } =
+    useEvidenceUpload();
+
+  const displayMessage = message;
+
+  const firstMessageText =
+    ocrContent.length > 0
+      ? `${message}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
+      : message;
+
+  const handleSend = async () => {
+    await handleSendMessage(fileUri, firstMessageText, displayMessage);
+    clearFiles();
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 2 }}>
         <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
         <ScrollView
@@ -55,14 +69,14 @@ export default function ConversationAI() {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
         >
-          {messages.map((msg, index) => (
+          {messages.map((msg) => (
             <MessageBubble
               key={msg.id}
               message={msg.content}
               createdAt={msg.created_at}
               userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
-              uri={msg.role === "User" && index === 0 ? uri : undefined}
+              uri={msg.role === "User" ? msg.uri : undefined}
             />
           ))}
 
@@ -76,31 +90,47 @@ export default function ConversationAI() {
         </ScrollView>
 
         {!finished ? (
-          <View style={{ marginTop: 16, paddingBottom: 20 }} className="w-full">
-            {!isRecordingMessage ? (
-              <View className="flex-row items-center w-full gap-2">
-                <ButtonOption
-                  handleSendFile={handleSendFile}
-                  onStartRecording={handleStartRecordingMessage}
-                  onStopRecording={handleStopRecordingMessage}
-                  loading={loading}
-                  positionsInput={"input"}
-                />
-
-                <View className="flex-1">
-                  <InputUI
-                    placeholder="Digite sua mensagem..."
-                    rightIcon
-                    rightIconName="send"
-                    iconSize={24}
-                    iconColor={message.trim() ? "#135BEC" : "gray"}
-                    iconNameProps="send"
-                    type="text"
-                    value={message}
-                    onChangeText={setMessage}
-                    onRightIconPress={handleSendMessage}
-                    onSubmitEditing={handleSendMessage}
+          <View
+            style={{ marginTop: 16, paddingBottom: 20 }}
+            className="w-full flex-col"
+          >
+            {fileUri.length > 0 && (
+              <View className="flex w-full items-end flex-row gap-[10px] ">
+                {fileUri.map((uri, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri }}
+                    className="w-[100px] h-32 object-cover rounded-lg mb-2"
                   />
+                ))}
+              </View>
+            )}
+            {!isRecordingMessage ? (
+              <View>
+                <View className="flex-row items-center w-full gap-2">
+                  <ButtonOption
+                    handleSendFile={handleSendFile}
+                    onStartRecording={handleStartRecordingMessage}
+                    onStopRecording={handleStopRecordingMessage}
+                    loading={loading}
+                    positionsInput={"input"}
+                  />
+
+                  <View className="flex-1">
+                    <InputUI
+                      placeholder="Digite sua mensagem..."
+                      rightIcon
+                      rightIconName="send"
+                      iconSize={24}
+                      iconColor={message.trim() ? "#135BEC" : "gray"}
+                      iconNameProps="send"
+                      type="text"
+                      value={message}
+                      onChangeText={setMessage}
+                      onRightIconPress={handleSend}
+                      onSubmitEditing={handleSend}
+                    />
+                  </View>
                 </View>
               </View>
             ) : (

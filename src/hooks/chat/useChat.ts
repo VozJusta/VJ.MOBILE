@@ -29,7 +29,6 @@ export function useChat() {
     clearChat,
     setReportId,
     setUri,
-    uri,
   } = useChatStorage();
 
   const {
@@ -127,6 +126,7 @@ export function useChat() {
         content: visibleMessage,
         role: "User",
         created_at: String(Date.now()),
+        uri: uris ?? [],
       });
 
       console.log("visibleMessage:", visibleMessage);
@@ -170,26 +170,39 @@ export function useChat() {
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!message.trim() || loading || finished) return;
+  const handleSendMessage = async (
+    evidenceUris?: string[],
+    overrideMessage?: string,
+    displayMessage?: string,
+  ) => {
+    const firstMessageText = overrideMessage ?? description;
+    const visibleMessage = displayMessage ?? firstMessageText;
+    if (!visibleMessage.trim() || loading || finished) return;
 
-    const userMessage = message;
+    const userMessage = visibleMessage;
     const tempId = Date.now().toString() + "-user";
 
     setMessage("");
     setLoading(true);
+
+    if (evidenceUris && evidenceUris.length > 0) {
+      setUri(evidenceUris);
+    } else {
+      setUri([]);
+    }
 
     addMessage({
       id: tempId,
       content: userMessage,
       role: "User",
       created_at: String(Date.now()),
+      uri: evidenceUris ?? [],
     });
 
     try {
       const response = await continueConversation({
         conversationId: conversationId,
-        message: userMessage,
+        message: firstMessageText,
       });
 
       if (!response.success && !response.data) {
@@ -222,7 +235,7 @@ export function useChat() {
       }
     } catch {
       removeMessage(tempId);
-      setMessage(userMessage);
+      setMessage(firstMessageText);
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
     } finally {
       setLoading(false);
