@@ -98,7 +98,6 @@ export function useChat() {
   ) => {
     const firstMessageText = overrideMessage ?? description;
     const visibleMessage = displayMessage ?? firstMessageText;
-    console.log("visibleMessage:", visibleMessage);
     if (!selectedCategory) {
       Toast.show({
         type: "error",
@@ -120,7 +119,6 @@ export function useChat() {
       clearChat();
       if (uris && uris.length > 0) {
         setUri(uris);
-        console.log("uris salvas:", uris);
       }
       addMessage({
         id: Date.now().toString() + "-user",
@@ -129,7 +127,6 @@ export function useChat() {
         created_at: String(Date.now()),
       });
 
-      console.log("visibleMessage:", visibleMessage);
 
       const response = await startConversation({ message: firstMessageText });
 

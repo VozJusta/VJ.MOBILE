@@ -92,7 +92,6 @@ export default function Chat() {
       ? `${description}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
       : description;
 
-  console.log(fileUri);
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
