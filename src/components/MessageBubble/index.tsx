@@ -1,7 +1,10 @@
 import { View, Text, Image } from "react-native";
 import { IMessageBubble } from "@/interfaces/components/MessageBubble";
+import ButtonUI from "@/ui/ButtonUI";
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 
 export default function MessageBubble(props: IMessageBubble) {
+  const {removeEvidence} = useEvidenceUpload();
   const formatTime = (dateStr: string) => {
     try {
       const isNumeric = /^\d+$/.test(dateStr);
@@ -26,11 +29,13 @@ export default function MessageBubble(props: IMessageBubble) {
       {props.uri && props.uri.length > 0 && (
         <View className="flex-row flex-wrap gap-2 mb-3">
           {props.uri.map((u, index) => (
-            <Image
-              key={index}
-              source={{ uri: u }}
-              className="w-[80px] h-24 rounded-lg"
-            />
+            <ButtonUI key={index}
+             onPress={() => removeEvidence(index)}>
+              <Image
+                source={{ uri: u }}
+                className="w-[80px] h-24 rounded-lg"
+              />
+            </ButtonUI>
           ))}
         </View>
       )}

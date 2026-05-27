@@ -4,6 +4,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -17,6 +18,9 @@ import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { router } from "expo-router";
 import { useChatStorage } from "@/store/chat/chat.store";
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
+import { ButtonOption } from "@/components/ButtonOption";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -34,13 +38,27 @@ export default function ConversationAI() {
     meteringVoiceMessage,
     recordingDurationMessage,
   } = useChat();
+  const { handleSendFile, fileUri, clearFiles, ocrContent, fileTypes, removeEvidence } =
+    useEvidenceUpload();
+
+  const displayMessage = message;
+
+  const firstMessageText =
+    ocrContent.length > 0
+      ? `${message}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
+      : message;
+
+  const handleSend = async () => {
+    await handleSendMessage(fileUri, firstMessageText, displayMessage);
+    clearFiles();
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 2 }}>
         <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
         <ScrollView
@@ -52,14 +70,15 @@ export default function ConversationAI() {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
         >
-          {messages.map((msg, index) => (
+          {messages.map((msg) => (
             <MessageBubble
               key={msg.id}
               message={msg.content}
               createdAt={msg.created_at}
               userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
-              uri={msg.role === "User" && index === 0 ? uri : undefined}
+              uri={msg.role === "User" ? msg.uri : undefined}
+              
             />
           ))}
 
@@ -73,30 +92,63 @@ export default function ConversationAI() {
         </ScrollView>
 
         {!finished ? (
-          <View style={{ marginTop: 16, paddingBottom: 20 }} className="w-full">
-            {!isRecordingMessage ? (
-              <View className="flex-row items-center w-full gap-2">
-                <ButtonAudio
-                  isRecording={false}
-                  onStartRecording={handleStartRecordingMessage}
-                  onStopRecording={handleStopRecordingMessage}
-                  disabled={loading}
-                />
+          <View
+            style={{ marginTop: 16, paddingBottom: 20 }}
+            className="w-full flex-col"
+          >
+            {fileUri.length > 0 && (
+              <View className="flex w-full items-end flex-row gap-[10px] ">
+                {fileUri.map((uri, index) => {
+                      if (fileTypes[index].startsWith("image/")) {
+                        return (
+                          <ButtonUI
+                            key={index} onPress={() => removeEvidence(index)}>
+                            <Image
+                              source={{ uri }}
+                              className="w-[100px] h-28 object-cover rounded-lg mb-5"
+                            />
+                          </ButtonUI>
+                        )
+                      } else if (fileTypes[index] === "application/pdf") {
+                        return (
+                          <ButtonUI
+                            key={index} onPress={() => removeEvidence(index)}>
+                            <View className="w-[100px] h-28 bg-black/30 rounded-[24px] mb-5 flex items-center justify-center">
+                              <MaterialCommunityIcons name="file-pdf-box" size={30} color="red" />
+                            </View>
+                          </ButtonUI>
+                        )
+                      }
 
-                <View className="flex-1">
-                  <InputUI
-                    placeholder="Digite sua mensagem..."
-                    rightIcon
-                    rightIconName="send"
-                    iconSize={24}
-                    iconColor={message.trim() ? "#135BEC" : "gray"}
-                    iconNameProps="send"
-                    type="text"
-                    value={message}
-                    onChangeText={setMessage}
-                    onRightIconPress={handleSendMessage}
-                    onSubmitEditing={handleSendMessage}
+                    })}
+              </View>
+            )}
+            {!isRecordingMessage ? (
+              <View>
+                <View className="flex-row items-center w-full gap-2">
+                  <ButtonOption
+                    handleSendFile={handleSendFile}
+                    onStartRecording={handleStartRecordingMessage}
+                    onStopRecording={handleStopRecordingMessage}
+                    loading={loading}
+                    positionsInput={"input"}
                   />
+
+                  <View className="flex-1">
+                    <InputUI
+                      placeholder="Digite sua mensagem..."
+                      rightIcon
+                      rightIconName="send"
+                      iconSize={24}
+                      iconColor={message.trim() ? "#135BEC" : "gray"}
+                      iconNameProps="send"
+                      type="text"
+                      value={message}
+                      onChangeText={setMessage}
+                      onRightIconPress={handleSend}
+                      onSubmitEditing={handleSend}
+                    />
+                  </View>
                 </View>
               </View>
             ) : (
