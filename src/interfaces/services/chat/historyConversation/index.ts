@@ -4,6 +4,7 @@ export interface IMessageResponse {
     content: string;
     created_at: string;
     uri?: string[];
+    fileTypes?: string[];
 } 
 
 export interface IHistoryConversationResponse {

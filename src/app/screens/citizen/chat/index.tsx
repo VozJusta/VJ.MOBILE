@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
-  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useChat } from "@/hooks/chat/useChat";
@@ -19,7 +18,8 @@ import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { ButtonOption } from "@/components/ButtonOption";
 import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import { Evidences } from "@/components/Evidences";
 
 export default function Chat() {
   const {
@@ -36,7 +36,8 @@ export default function Chat() {
     meteringVoiceDescription,
     recordingDurationDescription,
   } = useChat();
-  const { ocrContent, fileUri, handleSendFile, removeEvidence, fileTypes } = useEvidenceUpload();
+  const { ocrContent, fileUri, handleSendFile, removeEvidence, fileTypes } =
+    useEvidenceUpload();
   const displayMessage = description;
 
   const firstMessageText =
@@ -77,27 +78,16 @@ export default function Chat() {
                 {fileUri.length > 0 && (
                   <View className="flex flex-row gap-[10px] ">
                     {fileUri.map((uri, index) => {
-                      if (fileTypes[index].startsWith("image/")) {
-                        return (
-                          <ButtonUI
-                            key={index} onPress={() => removeEvidence(index)}>
-                            <Image
-                              source={{ uri }}
-                              className="w-[100px] h-32 object-cover rounded-lg mb-2"
-                            />
-                          </ButtonUI>
-                        )
-                      } else if (fileTypes[index] === "application/pdf") {
-                        return (
-                          <ButtonUI
-                            key={index} onPress={() => removeEvidence(index)}>
-                            <View className="w-[100px] h-32 bg-black/30 rounded-[24px] mb-2 flex items-center justify-center">
-                              <MaterialCommunityIcons name="file-pdf-box" size={30} color="red" />
-                            </View>
-                          </ButtonUI>
-                        )
-                      }
-
+                      return (
+                        <Evidences
+                          key={index}
+                          uri={uri}
+                          index={index}
+                          fileTypes={fileTypes}
+                          removeEvidence={removeEvidence}
+                          size="w-[100px] h-28"
+                        />
+                      );
                     })}
                   </View>
                 )}
@@ -178,7 +168,7 @@ export default function Chat() {
 
         <ButtonUI
           onPress={() =>
-            handleStartAnalysis(firstMessageText, fileUri, displayMessage)
+            handleStartAnalysis(firstMessageText, fileUri, displayMessage, fileTypes)
           }
           gradient={true}
           hover={false}

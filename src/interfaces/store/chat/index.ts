@@ -26,5 +26,9 @@ export interface IChatStore {
   setUri: (uri: string[]) => void;
   clearUri: () => void;
 
+  filesTypes: string[];
+  setFilesTypes: (fileTypes: string[]) => void;
+  clearFilesTypes: () => void;
+
   clearChat: () => void;
 }

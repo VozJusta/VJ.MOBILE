@@ -94,6 +94,8 @@ export function useChat() {
     overrideMessage?: string,
     uris?: string[],
     displayMessage?: string,
+    fileTypes?: string[],
+  
   ) => {
     const firstMessageText = overrideMessage ?? description;
     const visibleMessage = displayMessage ?? firstMessageText;
@@ -125,6 +127,7 @@ export function useChat() {
         role: "User",
         created_at: String(Date.now()),
         uri: uris ?? [],
+        fileTypes: fileTypes ?? [],
       });
 
 
@@ -156,6 +159,7 @@ export function useChat() {
           content: response.data.question,
           role: "Assistant",
           created_at: String(Date.now()),
+        
         });
       }
 
@@ -171,6 +175,7 @@ export function useChat() {
     evidenceUris?: string[],
     overrideMessage?: string,
     displayMessage?: string,
+    fileTypes?: string[],
   ) => {
     const firstMessageText = overrideMessage ?? description;
     const visibleMessage = displayMessage ?? firstMessageText;
@@ -194,6 +199,7 @@ export function useChat() {
       role: "User",
       created_at: String(Date.now()),
       uri: evidenceUris ?? [],
+      fileTypes: fileTypes ?? [],
     });
 
     try {

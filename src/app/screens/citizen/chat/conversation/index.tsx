@@ -4,7 +4,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -17,14 +16,14 @@ import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { router } from "expo-router";
-import { useChatStorage } from "@/store/chat/chat.store";
+
 import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 import { ButtonOption } from "@/components/ButtonOption";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Evidences } from "@/components/Evidences";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
-  const { uri } = useChatStorage();
+
   const {
     messages,
     loading,
@@ -38,8 +37,14 @@ export default function ConversationAI() {
     meteringVoiceMessage,
     recordingDurationMessage,
   } = useChat();
-  const { handleSendFile, fileUri, clearFiles, ocrContent, fileTypes, removeEvidence } =
-    useEvidenceUpload();
+  const {
+    handleSendFile,
+    fileUri,
+    clearFiles,
+    ocrContent,
+    fileTypes,
+    removeEvidence,
+  } = useEvidenceUpload();
 
   const displayMessage = message;
 
@@ -49,7 +54,12 @@ export default function ConversationAI() {
       : message;
 
   const handleSend = async () => {
-    await handleSendMessage(fileUri, firstMessageText, displayMessage);
+    await handleSendMessage(
+      fileUri,
+      firstMessageText,
+      displayMessage,
+      fileTypes,
+    );
     clearFiles();
   };
 
@@ -78,7 +88,7 @@ export default function ConversationAI() {
               userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
               uri={msg.role === "User" ? msg.uri : undefined}
-              
+              fileTypes={msg.role === "User" ? msg.fileTypes : undefined}
             />
           ))}
 
@@ -99,28 +109,17 @@ export default function ConversationAI() {
             {fileUri.length > 0 && (
               <View className="flex w-full items-end flex-row gap-[10px] ">
                 {fileUri.map((uri, index) => {
-                      if (fileTypes[index].startsWith("image/")) {
-                        return (
-                          <ButtonUI
-                            key={index} onPress={() => removeEvidence(index)}>
-                            <Image
-                              source={{ uri }}
-                              className="w-[100px] h-28 object-cover rounded-lg mb-5"
-                            />
-                          </ButtonUI>
-                        )
-                      } else if (fileTypes[index] === "application/pdf") {
-                        return (
-                          <ButtonUI
-                            key={index} onPress={() => removeEvidence(index)}>
-                            <View className="w-[100px] h-28 bg-black/30 rounded-[24px] mb-5 flex items-center justify-center">
-                              <MaterialCommunityIcons name="file-pdf-box" size={30} color="red" />
-                            </View>
-                          </ButtonUI>
-                        )
-                      }
-
-                    })}
+                  return (
+                    <Evidences
+                      key={index}
+                      uri={uri}
+                      index={index}
+                      fileTypes={fileTypes}
+                      removeEvidence={removeEvidence}
+                      size="w-[100px] h-28"
+                    />
+                  );
+                })}
               </View>
             )}
             {!isRecordingMessage ? (

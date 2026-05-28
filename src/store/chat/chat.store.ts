@@ -35,6 +35,10 @@ export const useChatStorage = create<IChatStore>()(
       setUri: (uri) => set({ uri }),
       clearUri: () => set({ uri: [] }),
 
+      filesTypes: [],
+      setFilesTypes: (filesTypes) => set({ filesTypes }),
+      clearFilesTypes: () => set({ filesTypes: [] }),
+
       clearChat: () =>
         set({
           conversationId: "",
@@ -43,6 +47,7 @@ export const useChatStorage = create<IChatStore>()(
           messages: [],
           reportId: "",
           uri: [],
+          filesTypes: [],
         }),
     }),
     {
