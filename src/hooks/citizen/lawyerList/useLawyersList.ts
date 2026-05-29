@@ -105,7 +105,7 @@ export function useLawyersList(initialPageSize: number = 6) {
   };
 
   useEffect(() => {
-    fetchLawyers(1);
+    fetchLawyers(page);
   }, [page, pageSize]);
 
   const refresh = () => {

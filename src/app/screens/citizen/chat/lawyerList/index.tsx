@@ -38,7 +38,7 @@ export default function LawyerList() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 20 }}>
         <FlatList
           contentContainerClassName="gap-8"
           showsVerticalScrollIndicator={false}
