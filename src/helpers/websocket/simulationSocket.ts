@@ -7,6 +7,6 @@ export function createSimulationSocket(): Socket {
 
   return io(`${BASE_URL}/simulation`, {
     transports: ["websocket"],
-    auth: { token: token ? `Bearer ${token}` : null },
+    auth: { token: token ?? "" },
   });
 }
