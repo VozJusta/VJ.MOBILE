@@ -1,9 +1,4 @@
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { OtpInput } from "react-native-otp-entry";
 import { IInput } from "@/interfaces/ui/InputUI";
@@ -66,6 +61,7 @@ export default function InputUI({
         )}
 
         <TextInput
+          maxLength={restProps.maxLength}
           className="w-[80%] h-full bg-transparent text-white font-interRegular"
           style={{ fontSize: 14 }}
           placeholderTextColor={"#475569"}

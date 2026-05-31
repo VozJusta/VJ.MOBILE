@@ -11,7 +11,7 @@ import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
 import ButtonUI from "@/ui/ButtonUI";
 import { useChat } from "@/hooks/chat/useChat";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
@@ -20,6 +20,7 @@ import { router } from "expo-router";
 import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 import { ButtonOption } from "@/components/ButtonOption";
 import { Evidences } from "@/components/Evidences";
+import Toast from "react-native-toast-message";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -62,6 +63,15 @@ export default function ConversationAI() {
     );
     clearFiles();
   };
+
+  useEffect(() => {
+    if (message.length >= 600) {
+      Toast.show({
+        type: "error",
+        text1: "Mensagem muito longa",
+      });
+    }
+  }, [message]);
 
   return (
     <KeyboardAvoidingView
@@ -135,6 +145,7 @@ export default function ConversationAI() {
 
                   <View className="flex-1">
                     <InputUI
+                      maxLength={600}
                       placeholder="Digite sua mensagem..."
                       rightIcon
                       rightIconName="send"
@@ -209,7 +220,10 @@ export default function ConversationAI() {
             )}
           </View>
         ) : (
-          <View style={{ marginTop: 16, marginBottom: 20 }} className="w-full flex-col gap-4">
+          <View
+            style={{ marginTop: 16, marginBottom: 20 }}
+            className="w-full flex-col gap-4"
+          >
             <ButtonUI
               onPress={() =>
                 router.push("/screens/citizen/chat/analysysConcluded")
