@@ -209,7 +209,7 @@ export default function ConversationAI() {
             )}
           </View>
         ) : (
-          <View style={{ marginTop: 16 }}>
+          <View style={{ marginTop: 16, marginBottom: 20 }} className="w-full flex-col gap-4">
             <ButtonUI
               onPress={() =>
                 router.push("/screens/citizen/chat/analysysConcluded")
@@ -219,7 +219,7 @@ export default function ConversationAI() {
               iconLeft={false}
               paddingButtonStatus={""}
             >
-              <View className="justify-center items-center flex-1">
+              <View className="justify-center  items-center flex-1">
                 <Text className="text-white font-interSemiBold text-[16px]">
                   Ver Relatório do Caso
                 </Text>

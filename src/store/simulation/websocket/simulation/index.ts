@@ -51,11 +51,28 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
+          const token = useAccessTokenStorage.getState().accessToken;
+          console.log(
+            "Token usado:",
+            token ? token.substring(0, 20) + "..." : "NULL",
+          );
+
           console.log("Socket conectado:", socket.id);
           try {
             const decodedToken = jwtDecode<IDecodedToken>(
               useAccessTokenStorage.getState().accessToken!,
             );
+
+            setTimeout(() => {
+              socket.emit("simulation:start", {
+                simulationId: result.data!.id,
+                citizenId: decodedToken.sub,
+              });
+            }, 500);
+            console.log("Emitindo simulation:start com:", {
+              simulationId: result.data!.id,
+              citizenId: decodedToken.sub,
+            });
 
             if (!decodedToken || decodedToken.role !== "Citizen") {
               set({
@@ -67,10 +84,16 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
               return;
             }
 
-            socket.emit("simulation:start", {
-              simulationId: result.data!.id,
-              citizenId: decodedToken.sub,
-            });
+            setTimeout(() => {
+              console.log("Emitindo simulation:start com:", {
+                simulationId: result.data!.id,
+                citizenId: decodedToken.sub,
+              });
+              socket.emit("simulation:start", {
+                simulationId: result.data!.id,
+                citizenId: decodedToken.sub,
+              });
+            }, 500);
           } catch {
             set({ error: "Erro ao autenticar usuário para simulação" });
             socket.disconnect();
@@ -115,11 +138,12 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         socket.on("simulation:report", (payload) => {
           console.log("simulation:report recebido:", payload);
           set({ simulationReportId: payload.reportId });
-          useSimulationStorage.getState().setSimulationReportId(payload.reportId);
+          useSimulationStorage
+            .getState()
+            .setSimulationReportId(payload.reportId);
           get().socket?.disconnect();
           set({ socket: null });
         });
-
       } catch {
         set({
           error: "Erro ao iniciar simulação. Tente novamente mais tarde.",
@@ -130,7 +154,10 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     clearSimulation: () => {
       const { socket } = get();
-      console.log("clearSimulation chamado, socket conectado:", socket?.connected);
+      console.log(
+        "clearSimulation chamado, socket conectado:",
+        socket?.connected,
+      );
       socket?.disconnect();
 
       set({

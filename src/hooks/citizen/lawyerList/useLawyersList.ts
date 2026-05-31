@@ -13,9 +13,22 @@ export function useLawyersList(initialPageSize: number = 6) {
     null,
   );
   const [loading, setLoading] = useState(false);
-
+  const [allLawyers, setAllLawyers] = useState<ILawyersList["data"]>([]);
   const { page, pageSize, setPaginationMeta, ...pagination } =
     usePagination(initialPageSize);
+
+  const fetchAllLawyers = async (totalPages: number) => {
+    try {
+      const requests = Array.from({ length: totalPages }, (_, i) =>
+        getLawyersList(i + 1, 10),
+      );
+      const responses = await Promise.all(requests);
+      const all = responses
+        .filter((r) => r.success && r.data)
+        .flatMap((r) => r.data!.data);
+      setAllLawyers(all);
+    } catch {}
+  };
 
   const fetchLawyers = async (pageNumber: number) => {
     setLoading(true);
@@ -26,6 +39,9 @@ export function useLawyersList(initialPageSize: number = 6) {
       if (response.success && response.data) {
         setLawyers(response.data.data);
         setPaginationMeta(response.data.pagination);
+        if (pageNumber === 1) {
+          fetchAllLawyers(response.data.pagination.totalItems);
+        }
       } else {
         Toast.show({
           type: "error",
@@ -120,6 +136,7 @@ export function useLawyersList(initialPageSize: number = 6) {
     fetchLawyerById,
     lawyerSelected,
     sendRequestToLawyer,
+    allLawyers,
     ...pagination,
   };
 }
