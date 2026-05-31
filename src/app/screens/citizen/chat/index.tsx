@@ -20,6 +20,8 @@ import { ButtonOption } from "@/components/ButtonOption";
 import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 
 import { Evidences } from "@/components/Evidences";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { useEffect } from "react";
 
 export default function Chat() {
   const {
@@ -44,7 +46,15 @@ export default function Chat() {
     ocrContent.length > 0
       ? `${description}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
       : description;
-  console.log("firstMessageText", firstMessageText);
+
+  useEffect(() => {
+    if (description.length > 2000) {
+      Toast.show({
+        type: "error",
+        text1: "Descrição muito longa",
+      });
+    }
+  }, [description]);
 
   return (
     <KeyboardAvoidingView
@@ -92,10 +102,16 @@ export default function Chat() {
                   </View>
                 )}
                 <TextArea
+                  maxLength={2000}
                   placeholder="Descreva o que aconteceu com suas próprias palavras..."
                   value={description}
                   onChangeText={setDescription}
                 />
+                <View className="absolute bottom-3 left-3 z-10">
+                  <Text className="text-[12px] text-[white] font-interRegular">
+                    {description.length}/2000
+                  </Text>
+                </View>
                 <View className="absolute bottom-3 right-3 z-10">
                   <ButtonOption
                     handleSendFile={handleSendFile}
@@ -168,7 +184,12 @@ export default function Chat() {
 
         <ButtonUI
           onPress={() =>
-            handleStartAnalysis(firstMessageText, fileUri, displayMessage, fileTypes)
+            handleStartAnalysis(
+              firstMessageText,
+              fileUri,
+              displayMessage,
+              fileTypes,
+            )
           }
           gradient={true}
           hover={false}
