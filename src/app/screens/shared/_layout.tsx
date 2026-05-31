@@ -1,9 +1,14 @@
 import { Slot, usePathname } from "expo-router";
 import Navbar from "@/components/Navbar";
 import { LinearGradient } from "expo-linear-gradient";
-import { useAccessTokenStorage } from "@/store/auth/token.store";
+import {
+  useAccessTokenStorage,
+  useRefreshTokenStorage,
+} from "@/store/auth/token.store";
 import { jwtDecode } from "jwt-decode";
 import { IDecodedToken } from "@/interfaces/shared/decodedToken";
+import { refreshToken } from "@/services/auth/users/security/refreshToken";
+import { useEffect } from "react";
 
 export default function SharedLayout() {
   const pathName = usePathname();
@@ -13,7 +18,7 @@ export default function SharedLayout() {
     "/screens/shared/profile/settings",
     "/screens/shared/profile/privacity",
     "/screens/shared/terms",
-    "/screens/shared/terminate-account"
+    "/screens/shared/terminate-account",
   ];
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
@@ -29,6 +34,27 @@ export default function SharedLayout() {
     }
   }
   const isCitizen = decodedToken?.role?.toLowerCase() === "citizen";
+
+  const refreshTokenStorage = useRefreshTokenStorage(
+    (state) => state.refreshToken,
+  );
+  const accessTokenStorage = useAccessTokenStorage().setTokens;
+
+  useEffect(() => {
+    const interval = setInterval(
+      async () => {
+        const response = await refreshToken(
+          refreshTokenStorage ? refreshTokenStorage : "",
+        );
+        if (response.success) {
+          accessTokenStorage(response.accessToken || null);
+        }
+      },
+      3 * 60 * 1000,
+    );
+
+    return () => clearInterval(interval);
+  }, [refreshTokenStorage]);
 
   return (
     <LinearGradient
