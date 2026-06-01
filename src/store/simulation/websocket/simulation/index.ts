@@ -51,13 +51,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
-          const token = useAccessTokenStorage.getState().accessToken;
-          console.log(
-            "Token usado:",
-            token ? token.substring(0, 20) + "..." : "NULL",
-          );
-
-          console.log("Socket conectado:", socket.id);
           try {
             const decodedToken = jwtDecode<IDecodedToken>(
               useAccessTokenStorage.getState().accessToken!,
@@ -69,10 +62,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
                 citizenId: decodedToken.sub,
               });
             }, 500);
-            console.log("Emitindo simulation:start com:", {
-              simulationId: result.data!.id,
-              citizenId: decodedToken.sub,
-            });
 
             if (!decodedToken || decodedToken.role !== "Citizen") {
               set({

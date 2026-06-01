@@ -20,12 +20,15 @@ import { useProfile } from "@/hooks/profile/useProfile";
 import { PlanType } from "@/interfaces/services/auth/me";
 import * as DocumentPicker from "expo-document-picker";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
+import Toast from "react-native-toast-message";
 
 type EditableFieldProps = {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
+  bio?: boolean;
+  maxLength?: number;
 };
 
 type ReadonlyFieldProps = {
@@ -38,19 +41,36 @@ function EditableField({
   value,
   onChangeText,
   keyboardType = "default",
+  bio = false,
+  maxLength,
 }: EditableFieldProps) {
   return (
-    <View className="w-full h-[77px] rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)] p-[16px]">
+    <View
+      className={`w-full ${bio ? "h-[200px]" : "h-[77px]"} rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)] p-[16px]`}
+    >
       <Text className="text-[10px] font-interBold uppercase tracking-[2px] text-[#7E93B2]">
         {label}
       </Text>
-      <TextInput
-        value={value}
-        onChangeText={onChangeText}
-        keyboardType={keyboardType}
-        placeholderTextColor="#7E93B2"
-        className="mt-[4px] text-[16px] text-[#E5EEF9] font-interRegular"
-      />
+      {bio ? (
+        <TextInput
+          textAlignVertical="top"
+          className=" text-white w-full h-full  rounded-[16px] text-[16px] font-interRegular"
+          placeholderTextColor={"#64748B"}
+          placeholderClassName="text-[16px] font-interRegular"
+          multiline={true}
+          value={value}
+          onChangeText={onChangeText}
+          maxLength={maxLength}
+        />
+      ) : (
+        <TextInput
+          value={value}
+          onChangeText={onChangeText}
+          keyboardType={keyboardType}
+          placeholderTextColor="#7E93B2"
+          className={`mt-[4px] h-full text-[16px] text-[#E5EEF9] font-interRegular`}
+        />
+      )}
     </View>
   );
 }
@@ -78,6 +98,7 @@ export default function MyDataScreen() {
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     const unsubscribe = useAccessTokenStorage.persist.onFinishHydration(() => {
@@ -103,6 +124,7 @@ export default function MyDataScreen() {
     if (profile) {
       setFullName(profile.full_name);
       setPhone(profile.phone);
+      setBio(profile.bio || "");
     }
   }, [profile]);
 
@@ -120,7 +142,7 @@ export default function MyDataScreen() {
   }
 
   async function handleSave() {
-    await saveProfile({ fullName, phone });
+    await saveProfile({ fullName, phone, bio });
   }
 
   const firstName = (profile?.full_name ?? "").trim().split(" ")[0];
@@ -128,6 +150,16 @@ export default function MyDataScreen() {
     const parts = (profile?.full_name ?? "").trim().split(" ");
     return parts.length > 1 ? parts[parts.length - 1] : "";
   })();
+
+  useEffect(() => {
+
+    if (bio.length >= 500) {
+      Toast.show({
+        type: "error",
+        text1: "Limite de caracteres atingido",
+      });
+    }
+  }, [bio]);
 
   if (loading || !profile) {
     return (
@@ -216,6 +248,14 @@ export default function MyDataScreen() {
               value={phone}
               onChangeText={setPhone}
               keyboardType="phone-pad"
+            />
+            <EditableField
+              label="Biografia"
+              value={bio}
+              onChangeText={setBio}
+              keyboardType="default"
+              bio
+              maxLength={500}
             />
           </View>
 

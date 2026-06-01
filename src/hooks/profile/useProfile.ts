@@ -59,7 +59,7 @@ export function useProfile() {
     setSaving(true);
     try {
       const response = await updateProfile(body);
-
+      console.log("Response do updateProfile:", response);
       if (response.success) {
         setProfile((prev) => (prev ? { ...prev, ...body } : prev));
         Toast.show({
