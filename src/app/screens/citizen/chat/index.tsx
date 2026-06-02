@@ -21,7 +21,7 @@ import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
 
 import { Evidences } from "@/components/Evidences";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Chat() {
   const {
@@ -55,6 +55,8 @@ export default function Chat() {
       });
     }
   }, [description]);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <KeyboardAvoidingView
@@ -106,19 +108,29 @@ export default function Chat() {
                   placeholder="Descreva o que aconteceu com suas próprias palavras..."
                   value={description}
                   onChangeText={setDescription}
+                  isMenuOpen={isMenuOpen}
                 />
                 <View className="absolute bottom-3 left-3 z-10">
                   <Text className="text-[12px] text-[white] font-interRegular">
                     {description.length}/2000
                   </Text>
                 </View>
-                <View className="absolute bottom-3 right-3 z-10">
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 12,
+                    right: 12,
+                    zIndex: 20,
+                  }}
+                  pointerEvents="box-none"
+                >
                   <ButtonOption
                     handleSendFile={handleSendFile}
                     onStartRecording={handleStartRecordingDescription}
                     onStopRecording={handleStopRecordingDescription}
                     loading={false}
                     positionsInput={"textArea"}
+                    modalVisible={() => setIsMenuOpen(true)}
                   />
                 </View>
               </View>

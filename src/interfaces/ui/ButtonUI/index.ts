@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export interface IButton {
   children?: ReactNode;
-  onPress: () => void;
+  onPress: (e?: any) => void;
   goNext?: boolean;
   goBack?: boolean;
   gradient?: boolean;

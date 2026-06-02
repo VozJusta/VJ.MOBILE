@@ -74,6 +74,8 @@ export default function ButtonUI({
     <Pressable
       onLongPress={props.onLongPress}
       delayLongPress={props.delayLongPress}
+      onStartShouldSetResponder={() => true} 
+      
       
       onPress={props.onPress}
       className={`

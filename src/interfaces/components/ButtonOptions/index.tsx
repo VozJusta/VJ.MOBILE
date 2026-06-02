@@ -4,4 +4,5 @@ export interface IButtonOption {
   onStopRecording: () => void;
   loading: boolean;
   positionsInput: "textArea" | "input";
+  modalVisible?: () => void;
 }

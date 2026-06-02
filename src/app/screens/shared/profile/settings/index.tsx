@@ -2,7 +2,7 @@ import { ISettingsSection } from "@/interfaces/template/configTemplate";
 import { router } from "expo-router";
 import SettingsTemplate from "@/template/settingsTemplate/index";
 import { useMemo, useState } from "react";
-
+import * as Linking from "expo-linking";
 export default function MainSettings() {
   const [isPushEnabled, setIsPushEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(true);
@@ -108,7 +108,7 @@ export default function MainSettings() {
       supportCard={{
         title: "Falar com suporte",
         description: "Atendimento 24/7 disponível",
-        onPress: () => {},
+        onPress: () => Linking.openURL("https://vozjusta.com.br"),
       }}
     />
   );

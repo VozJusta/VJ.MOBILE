@@ -1,6 +1,11 @@
 import { TextInput, TextInputProps } from "react-native";
 
-export default function TextArea(props: TextInputProps) {
+interface TextAreaProps extends TextInputProps {
+  isMenuOpen: boolean;
+}
+export default function TextArea(
+  { isMenuOpen, ...props }: TextAreaProps,
+) {
   return (
     <TextInput
       {...props}
@@ -9,6 +14,7 @@ export default function TextArea(props: TextInputProps) {
       placeholderTextColor={"#64748B"}
       placeholderClassName="text-[16px] font-interRegular"
       multiline={true}
+      editable={!isMenuOpen}
     />
   );
 }
