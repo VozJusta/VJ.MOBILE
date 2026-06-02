@@ -54,7 +54,7 @@ function EditableField({
       {bio ? (
         <TextInput
           textAlignVertical="top"
-          className=" text-white w-full h-full  rounded-[16px] text-[16px] font-interRegular"
+          className=" text-white w-full h-full  rounded-[16px] text-[16px] font-interRegular" 
           placeholderTextColor={"#64748B"}
           placeholderClassName="text-[16px] font-interRegular"
           multiline={true}

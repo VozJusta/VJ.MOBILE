@@ -53,34 +53,33 @@ export default function SelectionUserRole() {
             setActiveCitizen(!activeCitizen);
             setActiveLawyer(false);
           }}
-          children={
-            <View className="flex-1 items-center flex-row gap-[20px] px-[20px]">
-              <View
-                className={`rounded-[12px] ${activeCitizen ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
-              >
-                <MaterialIcons
-                  name="person"
-                  color={`${activeCitizen ? "#052F5F" : "white"}`}
-                  size={30}
-                />
-              </View>
-              <View className="gap-[2px] flex-col">
-                <Text
-                  className={`font-interSemiBold text-[18px] ${activeCitizen ? "text-BrightBlue" : "text-white"}`}
-                >
-                  Sou Cidadão
-                </Text>
-                <Text
-                  className={`font-interRegular text-[12px] max-w-[255px] ${activeCitizen ? "text-BrightBlue" : " text-white/50"}`}
-                >
-                  Busco orientação e empoderamento jurídico simples.
-                </Text>
-              </View>
-            </View>
-          }
           iconLeft={false}
           paddingButtonStatus={""}
-        />
+        >
+          <View className="flex-1 items-center flex-row gap-[20px] px-[20px]">
+            <View
+              className={`rounded-[12px] ${activeCitizen ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeCitizen ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
+            >
+              <MaterialIcons
+                name="person"
+                color={`${activeCitizen ? "#052F5F" : "white"}`}
+                size={30}
+              />
+            </View>
+            <View className="gap-[2px] flex-col">
+              <Text
+                className={`font-interSemiBold text-[18px] ${activeCitizen ? "text-BrightBlue" : "text-white"}`}
+              >
+                Sou Cidadão
+              </Text>
+              <Text
+                className={`font-interRegular text-[12px] max-w-[255px] ${activeCitizen ? "text-BrightBlue" : " text-white/50"}`}
+              >
+                Busco orientação e empoderamento jurídico simples.
+              </Text>
+            </View>
+          </View>
+        </Button>
         <Button
           hover
           size="min-w-full h-[103px]"
@@ -90,56 +89,64 @@ export default function SelectionUserRole() {
             setActiveLawyer(!activeLawyer);
             setActiveCitizen(false);
           }}
-          children={
-            <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
-              <View
-                className={`rounded-[12px] ${activeLawyer ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeLawyer ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
-              >
-                <MaterialIcons
-                  name="account-balance"
-                  size={32}
-                  color={activeLawyer ? "#052F5F" : "white"}
-                />
-              </View>
-              <View className="gap-[2px] flex-col">
-                <Text
-                  className={`font-interSemiBold text-[18px] ${activeLawyer ? "text-BrightBlue" : "text-white"}`}
-                >
-                  Sou Advogado
-                </Text>
-                <Text
-                  className={`font-interRegular text-[12px] max-w-[255px] ${activeLawyer ? "text-BrightBlue" : " text-white/50"}`}
-                >
-                  Quero gerenciar casos e me conectar com clientes.
-                </Text>
-              </View>
-            </View>
-          }
           iconLeft={false}
           paddingButtonStatus={""}
-        />
+        >
+          <View className=" flex-1 items-center flex-row gap-[20px] px-[20px]">
+            <View
+              className={`rounded-[12px] ${activeLawyer ? "bg-[rgba(5,47,95,0.08)]" : "bg-[rgba(255,255,255,0.08)]"} border ${activeLawyer ? "border-BrightBlue" : "border-[rgba(255,255,255,0.12)]"} items-center justify-center py-[9px] px-[12px]`}
+            >
+              <MaterialIcons
+                name="account-balance"
+                size={32}
+                color={activeLawyer ? "#052F5F" : "white"}
+              />
+            </View>
+            <View className="gap-[2px] flex-col">
+              <Text
+                className={`font-interSemiBold text-[18px] ${activeLawyer ? "text-BrightBlue" : "text-white"}`}
+              >
+                Sou Advogado
+              </Text>
+              <Text
+                className={`font-interRegular text-[12px] max-w-[255px] ${activeLawyer ? "text-BrightBlue" : " text-white/50"}`}
+              >
+                Quero gerenciar casos e me conectar com clientes.
+              </Text>
+            </View>
+          </View>
+        </Button>
         <Button
           gradient={true}
           size="w-full"
-          children={
-            <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
-              <Text className="text-white font-interBold text-[16px]">
-                Começar agora
-              </Text>
-              <MaterialIcons
-                name="keyboard-arrow-right"
-                size={20}
-                color={"#FFF"}
-              />
-            </View>
-          }
           onPress={handleSelectedRole}
           hover={false}
           iconLeft={false}
           paddingButtonStatus={""}
-        />
+        >
+          <View className="min-w-full h-full flex-row items-center justify-center gap-[10px]">
+            <Text className="text-white font-interBold text-[16px]">
+              Começar agora
+            </Text>
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              size={20}
+              color={"#FFF"}
+            />
+          </View>
+        </Button>
       </View>
-      <View className="w-full px-4  mt-[72px]"></View>
+      <View className="w-full flex  justify-center items-center  mt-[20px]">
+        <Text className="text-[#64748B] text-[14px] font-interRegular">
+          Já possui uma conta?{" "}
+          <Text
+            className="text-BlueAzure underline font-interBold"
+            onPress={() => router.push("/screens/auth/users/SignIn/")}
+          >
+            Entrar
+          </Text>
+        </Text>
+      </View>
     </SafeAreaView>
   );
 }
