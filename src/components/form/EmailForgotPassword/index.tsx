@@ -90,27 +90,7 @@ export function EmailForgotPassword() {
         iconLeft={false}
         paddingButtonStatus={""}
       />
-      <ButtonUI
-        bg="bg-transparent"
-        gradient={false}
-        hover={false}
-        onPress={() => router.push("/screens/auth/users/SingIn")}
-        children={
-          <View style={{ gap: 8 }} className="flex-row items-center gap-2">
-            <MaterialIcons
-              name="arrow-forward"
-              size={20}
-              style={{ transform: [{ rotate: "-180deg" }] }}
-              color={"rgba(255,255,255,0.5)"}
-            />
-            <Text className="font-inter text-[14px] text-white/50">
-              Voltar para o Login
-            </Text>
-          </View>
-        }
-        iconLeft={false}
-        paddingButtonStatus={""}
-      />
+    
     </>
   );
 }

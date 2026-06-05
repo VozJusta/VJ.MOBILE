@@ -22,6 +22,7 @@ export default function SharedLayout() {
   ];
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
+  const currentRouter= pathName === "/screens/shared/terms"? 20: 84
 
   const token = useAccessTokenStorage((state) => state.accessToken);
 
@@ -58,7 +59,7 @@ export default function SharedLayout() {
 
   return (
     <LinearGradient
-      style={{ flex: 1, paddingBottom: 84, paddingTop: 32, paddingInline: 16 }}
+      style={{ flex: 1, paddingBottom: currentRouter, paddingTop: 32, paddingInline: 16 }}
       start={{ x: 0, y: 0 }}
       end={{ x: 0.8, y: 1 }}
       colors={["#000000", "#052F5F"]}

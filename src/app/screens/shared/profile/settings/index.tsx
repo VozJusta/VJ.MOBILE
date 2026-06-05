@@ -82,7 +82,7 @@ export default function MainSettings() {
             type: "link",
             icon: "description",
             label: "Termos de Uso",
-            onPress: () => {},
+            onPress: () => router.push("/screens/shared/terms"),
           },
           // {
           //   id: "privacy",
