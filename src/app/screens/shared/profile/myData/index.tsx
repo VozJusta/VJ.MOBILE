@@ -21,6 +21,7 @@ import { PlanType } from "@/interfaces/services/auth/me";
 import * as DocumentPicker from "expo-document-picker";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import Toast from "react-native-toast-message";
+import { useRolesStorage } from "@/store/auth/roles.store";
 
 type EditableFieldProps = {
   label: string;
@@ -54,7 +55,7 @@ function EditableField({
       {bio ? (
         <TextInput
           textAlignVertical="top"
-          className=" text-white w-full h-full  rounded-[16px] text-[16px] font-interRegular" 
+          className=" text-white w-full h-full  rounded-[16px] text-[16px] font-interRegular"
           placeholderTextColor={"#64748B"}
           placeholderClassName="text-[16px] font-interRegular"
           multiline={true}
@@ -77,7 +78,7 @@ function EditableField({
 
 function ReadonlyField({ label, value }: ReadonlyFieldProps) {
   return (
-    <View className="w-full h-[77px] rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)] p-[16px]">
+    <View className="w-full h-[77px] rounded-[28px] border border-[#1C4A84]/45 bg-[rgba(7,23,45,0.62)] opacity-50 p-[16px]">
       <Text className="text-[10px] font-interBold uppercase tracking-[2px] text-[#7E93B2]">
         {label}
       </Text>
@@ -150,9 +151,10 @@ export default function MyDataScreen() {
     const parts = (profile?.full_name ?? "").trim().split(" ");
     return parts.length > 1 ? parts[parts.length - 1] : "";
   })();
+  const role = useRolesStorage((state) => state.role);
+  console.log("User role:", role);
 
   useEffect(() => {
-
     if (bio.length >= 500) {
       Toast.show({
         type: "error",
@@ -215,7 +217,7 @@ export default function MyDataScreen() {
               </View>
             </Pressable>
 
-            <Text className="mt-[12px] text-[#EAF2FF] text-[34px] font-interBold">
+            <Text className="mt-20px] text-[#EAF2FF] text-[34px] font-interBold">
               {firstName} {lastName}
             </Text>
 
@@ -249,14 +251,16 @@ export default function MyDataScreen() {
               onChangeText={setPhone}
               keyboardType="phone-pad"
             />
-            <EditableField
-              label="Biografia"
-              value={bio}
-              onChangeText={setBio}
-              keyboardType="default"
-              bio
-              maxLength={500}
-            />
+            {role !== "citizen" && (
+              <EditableField
+                label="Biografia"
+                onChangeText={setBio}
+                value={bio}
+                keyboardType="default"
+                bio
+                maxLength={500}
+              />
+            )}
           </View>
 
           <ButtonUI
