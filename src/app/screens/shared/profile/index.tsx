@@ -20,6 +20,7 @@ import Skeletons from "@/components/Skeletons";
 import { useAccessTokenStorage } from "@/store/auth/token.store";
 import * as DocumentPicker from "expo-document-picker";
 import { useState } from "react";
+import Header from "@/components/Header";
 
 export default function ProfileCitizen() {
   const token = useAccessTokenStorage((state) => state.accessToken);
@@ -75,6 +76,7 @@ export default function ProfileCitizen() {
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }} className="gap-[32px]">
+        <Header isCitizen={true} title="PERFIL" isFirstPage={false} />
         {loadingAuth || !user ? (
           <Skeletons amountOfSkeletons={3} height={250} />
         ) : (
