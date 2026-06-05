@@ -144,6 +144,7 @@ export default function MyDataScreen() {
 
   async function handleSave() {
     await saveProfile({ fullName, phone, bio });
+    await fetchProfile();
   }
 
   const firstName = (profile?.full_name ?? "").trim().split(" ")[0];
