@@ -29,7 +29,7 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
         type={"password"}
         secureTextEntry={isOpen ? false : true}
         rightIcon
-        rightIconName={isOpen ? "visibility-off" : "visibility"}
+        rightIconName={!isOpen ? "visibility-off" : "visibility"}
         onRightIconPress={() => setIsOpen(!isOpen)}
         value={props.newPassword}
         onChangeText={(e) => props.setNewPassword(e)}
@@ -43,7 +43,7 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
         secureTextEntry={confirmPassword ? false : true}
         type={"password"}
         rightIcon
-        rightIconName={confirmPassword ? "visibility-off" : "visibility"}
+        rightIconName={!confirmPassword ? "visibility-off" : "visibility"}
         onRightIconPress={() => setConfirmPassword(!confirmPassword)}
         value={props.confirmPassword}
         onChangeText={(e) => props.setConfirmPassword(e)}
