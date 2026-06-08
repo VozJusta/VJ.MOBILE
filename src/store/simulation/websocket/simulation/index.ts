@@ -96,7 +96,8 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
         socket.on("simulation:started", () => {
           console.log("simulation:started recebido");
-          set({ isLoading: false, simulationStatus: "InProgress" });
+          set({ isLoading: false, 
+            simulationStatus: "InProgress" });
         });
 
         socket.on("simulation:warning", (payload) => {

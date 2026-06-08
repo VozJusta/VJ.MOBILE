@@ -46,7 +46,9 @@ export default function LawyerHome() {
   if (!token) return null;
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView
+    showsVerticalScrollIndicator={false} 
+    contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
 
