@@ -102,7 +102,6 @@ export function useSimulationAudience() {
         setIsAudioPlaying(true);
         sound.setOnPlaybackStatusUpdate((status) => {
           if (!status.isLoaded) return;
-
           if (status.didJustFinish) {
             setIsAudioPlaying(false);
             useWebSocketSimulation.setState({ audioFile: null });
@@ -161,7 +160,6 @@ export function useSimulationAudience() {
 
   useEffect(() => {
     if (remainingSecs !== 0) return;
-
     useWebSocketSimulation.setState({ simulationStatus: "TimedOut" });
   }, [remainingSecs]);
 
@@ -173,26 +171,26 @@ export function useSimulationAudience() {
 
   useEffect(() => {
     if (!error) return;
-
     Toast.show({
       type: "error",
       text1: error,
     });
   }, [error]);
 
-  const handleStop = () => {
-    stopSimulation();
-  };
   useEffect(() => {
     return () => {
       setTranscribedText(null);
     };
   }, []);
 
+
+  const stop = () => {
+    stopSimulation();
+  };
+
   return {
     handleStartRecording,
     handleStopRecording,
-    handleStop,
     isRecording,
     meteringVoice,
     recordingDuration,
@@ -209,5 +207,8 @@ export function useSimulationAudience() {
     isPaused,
     isAudioPlaying,
     player,
+    error,      
+    warning,    
+    stop,       
   };
 }
