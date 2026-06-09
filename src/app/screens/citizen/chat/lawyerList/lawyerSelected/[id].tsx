@@ -27,11 +27,15 @@ export default function LawyerSelected() {
     const result = await sendRequestToLawyer(caseId, lawyerSelected.id);
 
     if (result) {
-      router.push(
-        "/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded",
-      );
+      router.push({
+        pathname: "/screens/citizen/chat/lawyerList/lawyerSelected/requestConcluded",
+        params: {
+          name: lawyerSelected.full_name,
+        },
+      });
     }
   };
+
   return (
     <ScrollView showsHorizontalScrollIndicator={false}>
       <SafeAreaView
@@ -48,7 +52,7 @@ export default function LawyerSelected() {
           <Skeletons amountOfSkeletons={3} height={200} />
         ) : (
           <>
-            <View className=" rounded-full min-w-[104px] min-h-[104px] border-[4px] border-solid border-[#0F172A] bg-[#1E293B] justify-center items-center">
+            <View className="rounded-full min-w-[104px] min-h-[104px] border-[4px] border-solid border-[#0F172A] bg-[#1E293B] justify-center items-center">
               <MaterialIcons name="person" size={48} color={"#8E8E93"} />
             </View>
             <View className="flex-col justify-center items-center">
@@ -60,7 +64,7 @@ export default function LawyerSelected() {
               </Text>
             </View>
 
-            <View className="flex flex-col items-start gap-3 w-full ">
+            <View className="flex flex-col items-start gap-3 w-full">
               <View className="flex flex-row gap-2 justify-center">
                 <MaterialIcons name="work" color={"#1152D4"} size={20} />
                 <Text className="text-[16px] font-interSemiBold text-white">
@@ -99,6 +103,7 @@ export default function LawyerSelected() {
                 </View>
               </View>
             ) : null}
+
             <ButtonUI
               onPress={() => handleSendRequest()}
               gradient={true}
