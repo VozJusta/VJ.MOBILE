@@ -24,7 +24,6 @@ export default function LawyerHome() {
     useDashboardLawyer();
   const { authMe, user } = useAuth();
   const chartData = analyticsData?.data || [];
-  console.log("chartData:", chartData);
 
   let decodedToken: IDecodedToken | null = null;
   if (token) {

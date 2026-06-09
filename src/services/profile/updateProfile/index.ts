@@ -11,7 +11,7 @@ export async function updateProfile(body: IUpdateProfileBody) {
   const data =
     role === "citizen" ? { fullName: body.fullName, phone: body.phone } : body;
   try {
-    console.log(body);
+
     const response = await apiFetch(`${BASE_URL}/profile`, {
       method: "PUT",
       headers: {
@@ -20,7 +20,6 @@ export async function updateProfile(body: IUpdateProfileBody) {
       },
       body: JSON.stringify(data),
     });
-    console.log("updateProfile response:", response);
 
     const json = await response.json().catch(() => ({}));
 

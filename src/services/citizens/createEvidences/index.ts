@@ -16,9 +16,10 @@ export async function createEvidences({ file }:ICreateEvidenceRequest) {
           method: "POST",
           body: formData,
         });
+        
     
         const json = await response.json().catch(() => ({}));
-    
+        
         if (!response.ok) {
           return {
             success: false,

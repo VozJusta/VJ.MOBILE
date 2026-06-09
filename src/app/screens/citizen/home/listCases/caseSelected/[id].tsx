@@ -29,7 +29,6 @@ export default function CaseSelected() {
 
 
 const handleSendEmail = (email: string) => {
-    console.log("Email clicado:", email);
     Linking.openURL(
     `mailto:${email}?subject=Contato&body=Olá, gostaria de falar com você.`,
   );
@@ -44,9 +43,7 @@ const handleWhatsApp = async (phone: string) => {
 
   if (supported) {
     await Linking.openURL(url);
-  } else {
-    console.log("WhatsApp não está instalado");
-  }
+  } 
 };
 
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
@@ -58,7 +55,6 @@ const handleWhatsApp = async (phone: string) => {
 
       try {
         const data = await getDetailsReportById(reportId);
-        console.log("Report details data:", data);
         if (data) {
           setReportData(data);
         }
@@ -84,7 +80,6 @@ const handleWhatsApp = async (phone: string) => {
     }
   };
 
-  console.log(reportData?.user.report.lawyer);
   return loading || !reportData ? (
     <Skeletons height={220} amountOfSkeletons={2} />
   ) : (

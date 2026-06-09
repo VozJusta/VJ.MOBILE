@@ -153,7 +153,6 @@ export default function MyDataScreen() {
     return parts.length > 1 ? parts[parts.length - 1] : "";
   })();
   const role = useRolesStorage((state) => state.role);
-  console.log("User role:", role);
 
   useEffect(() => {
     if (bio.length >= 500) {

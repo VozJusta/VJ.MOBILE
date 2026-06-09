@@ -74,10 +74,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
             }
 
             setTimeout(() => {
-              console.log("Emitindo simulation:start com:", {
-                simulationId: result.data!.id,
-                citizenId: decodedToken.sub,
-              });
               socket.emit("simulation:start", {
                 simulationId: result.data!.id,
                 citizenId: decodedToken.sub,
@@ -95,23 +91,19 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:started", () => {
-          console.log("simulation:started recebido");
           set({ isLoading: false, 
             simulationStatus: "InProgress" });
         });
 
         socket.on("simulation:warning", (payload) => {
-          console.log("simulation:warning recebido:", payload);
           set({ warning: payload, remainingSecs: payload.remainingSecs });
         });
 
         socket.on("simulation:end", (payload) => {
-          console.log("simulation:end recebido:", payload);
           set({ simulationStatus: payload.status });
           setTimeout(() => {
             const { socket } = get();
             if (socket?.connected) {
-              console.log("Desconectando socket após 60s...");
               socket.disconnect();
               set({ socket: null });
             }
@@ -126,7 +118,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:report", (payload) => {
-          console.log("simulation:report recebido:", payload);
           set({ simulationReportId: payload.reportId });
           useSimulationStorage
             .getState()
@@ -144,10 +135,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     clearSimulation: () => {
       const { socket } = get();
-      console.log(
-        "clearSimulation chamado, socket conectado:",
-        socket?.connected,
-      );
       socket?.disconnect();
 
       set({
@@ -164,7 +151,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     stopSimulation: () => {
       const { socket, simulation } = get();
-      console.log("stopSimulation chamado, simulationId:", simulation?.id);
 
       if (socket && simulation) {
         socket.emit("simulation:stop", { simulationId: simulation.id });

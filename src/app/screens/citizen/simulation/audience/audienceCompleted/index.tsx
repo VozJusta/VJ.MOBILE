@@ -12,7 +12,6 @@ export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const { simulationReportId } = useWebSocketSimulation();
-  console.log("simulationReportId:", simulationReportId);
 
   const handleDownloadReport = async () => {
     const idToUse = simulationReportId;

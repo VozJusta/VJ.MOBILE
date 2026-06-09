@@ -1,6 +1,6 @@
 import * as DocumentPicker from "expo-document-picker";
 
-export interface ICreateEvidenceRequest {
+export interface  ICreateEvidenceRequest {
   file: DocumentPicker.DocumentPickerAsset;
 }
 
