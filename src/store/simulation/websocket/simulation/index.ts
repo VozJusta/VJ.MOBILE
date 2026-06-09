@@ -26,6 +26,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     simulationReportId: null,
     remainingSecs: null,
     videoUrl: null,
+    pendingEndStatus: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
@@ -56,13 +57,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
               useAccessTokenStorage.getState().accessToken!,
             );
 
-            setTimeout(() => {
-              socket.emit("simulation:start", {
-                simulationId: result.data!.id,
-                citizenId: decodedToken.sub,
-              });
-            }, 500);
-
             if (!decodedToken || decodedToken.role !== "Citizen") {
               set({
                 error:
@@ -91,8 +85,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:started", () => {
-          set({ isLoading: false, 
-            simulationStatus: "InProgress" });
+          set({ isLoading: false, simulationStatus: "InProgress" });
         });
 
         socket.on("simulation:warning", (payload) => {
@@ -100,14 +93,20 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:end", (payload) => {
-          set({ simulationStatus: payload.status });
-          setTimeout(() => {
-            const { socket } = get();
-            if (socket?.connected) {
-              socket.disconnect();
-              set({ socket: null });
-            }
-          }, 60_000);
+          const endStatus = payload.status;
+          const { simulationReportId } = get();
+
+          if (simulationReportId) {
+            set({ simulationStatus: endStatus });
+          } else {
+            set({ pendingEndStatus: endStatus });
+            setTimeout(() => {
+              const { pendingEndStatus } = get();
+              if (pendingEndStatus) {
+                set({ simulationStatus: pendingEndStatus, pendingEndStatus: null });
+              }
+            }, 3000);
+          }
         });
 
         socket.on("connect_error", (err) => {
@@ -118,10 +117,17 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:report", (payload) => {
+          const { pendingEndStatus } = get();
+
           set({ simulationReportId: payload.reportId });
           useSimulationStorage
             .getState()
             .setSimulationReportId(payload.reportId);
+
+          if (pendingEndStatus) {
+            set({ simulationStatus: pendingEndStatus? pendingEndStatus : null, pendingEndStatus: null });
+          }
+
           get().socket?.disconnect();
           set({ socket: null });
         });
@@ -146,6 +152,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         aiResponse: null,
         audioFile: null,
         isSpeaking: false,
+        pendingEndStatus: null,
       });
     },
 

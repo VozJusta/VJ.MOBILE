@@ -2,8 +2,7 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lawyerStats } from "./data";
-import StatsCard from "@/components/StatsCard";
+
 import OperationalStats from "@/components/OperationalStats";
 import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";

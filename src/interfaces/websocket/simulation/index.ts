@@ -27,6 +27,7 @@ export interface IWebSocketSimulationFinished {
 
 export interface IWebSocketSimulation {
   simulation: ISimulationResponse | null;
+  pendingEndStatus: TSimulationStatus | null;
   isLoading: boolean;
   error: string | null;
   warning: IWebSocketSimulationWarning | null;

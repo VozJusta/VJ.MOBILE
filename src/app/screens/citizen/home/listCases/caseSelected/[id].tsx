@@ -13,7 +13,6 @@ import Header from "@/components/Header";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
-import DocCard from "@/components/DocCard";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
 import { MaterialIcons } from "@expo/vector-icons";
