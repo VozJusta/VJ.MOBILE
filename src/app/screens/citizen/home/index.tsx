@@ -13,16 +13,19 @@ import { IDecodedToken } from "@/interfaces/shared/decodedToken";
 import { useDashboardCitizen } from "@/hooks/dashboard/citizen/useDashboardCitizen";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
+import { useRolesStorage } from "@/store/auth/roles.store";
 
 export default function Home() {
   const router = useRouter();
   const token = useAccessTokenStorage((state) => state.accessToken);
   const { loading, reports } = useDashboardCitizen();
+  const roleStorage = useRolesStorage((state) => state.setRole);
 
   let decodedToken: IDecodedToken | null = null;
   if (token) {
     try {
       decodedToken = jwtDecode<IDecodedToken>(token);
+      roleStorage(decodedToken.role);
     } catch {
       decodedToken = null;
     }
@@ -61,20 +64,19 @@ export default function Home() {
             mesmo.
           </Text>
           <ButtonUI
-            children={
-              <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px] h-full">
-                <Text className="text-white font-interSemiBold text-[14px]">
-                  Relatar Novo Caso
-                </Text>
-                <MaterialIcons name="arrow-forward" size={20} color="white" />
-              </View>
-            }
             onPress={() => router.push("/screens/citizen/chat")}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="px-[24px] py-[16px] justify-between items-center flex-row gap-[8px] h-full">
+              <Text className="text-white font-interSemiBold text-[14px]">
+                Relatar Novo Caso
+              </Text>
+              <MaterialIcons name="arrow-forward" size={20} color="white" />
+            </View>
+          </ButtonUI>
         </View>
         <View className="gap-[16px] items-center w-full">
           <View className="w-full flex-row justify-between items-center">
@@ -103,9 +105,10 @@ export default function Home() {
                 key={report.id}
                 iconName={getStatusIcon(report.status)}
                 onPress={() =>
-              router.push(
-                `/screens/citizen/home/listCases/caseSelected/${report.id}`,
-              )}
+                  router.push(
+                    `/screens/citizen/home/listCases/caseSelected/${report.id}`,
+                  )
+                }
                 status={report.status}
                 title={getCategoryLabel(report.category_detected)}
               />
@@ -127,19 +130,18 @@ export default function Home() {
             </View>
           </View>
           <ButtonUI
-            children={
-              <View className=" justify-center items-center flex-1">
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Começar treinamento
-                </Text>
-              </View>
-            }
             onPress={() => router.push("/screens/citizen/simulation")}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className=" justify-center items-center flex-1">
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Começar treinamento
+              </Text>
+            </View>
+          </ButtonUI>
         </View>
       </SafeAreaView>
     </ScrollView>

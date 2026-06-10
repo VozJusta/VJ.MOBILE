@@ -22,7 +22,7 @@ export default function SharedLayout() {
   ];
 
   const shouldHideNavbar = hiddenRoutes.includes(pathName);
-  const currentRouter= pathName === "/screens/shared/terms"? 20: 84
+  const currentRouter= pathName === "/screens/shared/terms"? 20: 50
 
   const token = useAccessTokenStorage((state) => state.accessToken);
 

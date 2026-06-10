@@ -171,6 +171,7 @@ export default function MyDataScreen() {
       </SafeAreaView>
     );
   }
+  console.log(role)
 
   return (
     <KeyboardAvoidingView
@@ -251,7 +252,7 @@ export default function MyDataScreen() {
               onChangeText={setPhone}
               keyboardType="phone-pad"
             />
-            {role !== "citizen" && (
+            {role !== "Citizen" && (
               <EditableField
                 label="Biografia"
                 onChangeText={setBio}
