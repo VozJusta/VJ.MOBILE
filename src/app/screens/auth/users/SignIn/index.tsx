@@ -2,7 +2,7 @@ import SignInTemplate from "@/template/auth/SingInTemplate";
 import { useBuildLoginFields } from "@/utils/auth/users/SingIn/data";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import GoogleIcon from "@/assets/svg/icons/Google-Icon.svg";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { BottomSheetGoogle } from "@/components/BottomSheetGoogle";
@@ -27,7 +27,11 @@ export default function Login() {
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
   });
 
+  console.log("LoginAuth:", loginAuth);
+  console.log("selectedRole:", selectedRole);
+
   const handleLoginWithGoogle = async () => {
+      console.log("selectedRole:", selectedRole);
     const result = await loginWithGoogle(selectedRole);
 
     if (!result.success) {
@@ -44,11 +48,12 @@ export default function Login() {
     await setToken(result.token || "");
 
     if (!result.registerCompleted) {
-    router.push(
-      `/screens/auth/CompleteRegister?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}`,
-    );
-    return;
-  }
+      const normalizedRole = selectedRole.toLowerCase();
+      router.push(
+        `/screens/auth/completeRegister/${normalizedRole}?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}`,
+      );
+      return;
+    }
 
     const validateEmail2FA = await Email2FA(result.email || "");
 
@@ -78,6 +83,11 @@ export default function Login() {
       type: "success",
       text1: validateEmail2FA.data,
     });
+    console.log(selectedRole, result.email, result.registerCompleted);
+    console.log(
+      "result.registerCompleted:",
+      `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,
+    );
 
     router.push(
       `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,

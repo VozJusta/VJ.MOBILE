@@ -12,6 +12,7 @@ export default function CompleteRegisterCitizen() {
 
   const email = params["email"] as string;
   const role = params["source"] as Role;
+  
 
   const completeRegisterData = useBuildCompleteRegisterFields({
     registerAuth: completeRegisterAuth,

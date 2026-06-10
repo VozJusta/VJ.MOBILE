@@ -1,9 +1,17 @@
 import { ILawyerCompleteRegister } from "@/interfaces/services/auth/completeRegister/lawyer";
 import { BASE_URL } from "@/settings/BASE_URL";
 import { useXTokenStorage } from "@/store/auth/token.store";
+import { jwtDecode } from "jwt-decode";
 
 export async function completeLawyerRegister(body: ILawyerCompleteRegister) {
+  console.log("Iniciando completeLawyerRegister com os seguintes dados:", body);
   const xToken = useXTokenStorage.getState().token;
+  console.log("token decodificado:", JSON.stringify(jwtDecode(xToken || "")));
+  console.log("xToken:", xToken);
+  const cleanBody = {
+    ...body,
+    oabNumber: body.oabNumber.replace(/\D/g, ""),
+  };
 
   if (!xToken) {
     return {
@@ -13,19 +21,18 @@ export async function completeLawyerRegister(body: ILawyerCompleteRegister) {
   }
 
   try {
-    const response = await fetch(
-      `${BASE_URL}/auth/complete/complete  /lawyer`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-security-token": xToken,
-        },
-        body: JSON.stringify(body),
+    const response = await fetch(`${BASE_URL}/auth/complete/lawyer`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-security-token": xToken,
       },
-    );
-
+      body: JSON.stringify(cleanBody),
+    });
+    console.log("Status:", response.status);
+    console.log("Response OK:", response.ok);
     const data = await response.json().catch(() => {});
+    console.log(data);
 
     if (!response.ok) {
       return {
