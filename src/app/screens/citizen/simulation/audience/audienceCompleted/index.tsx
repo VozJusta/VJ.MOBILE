@@ -11,7 +11,7 @@ import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation"
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const { simulationReportId } = useWebSocketSimulation();
+  const { simulationReportId, clearSimulation } = useWebSocketSimulation();
 
   const handleDownloadReport = async () => {
     const idToUse = simulationReportId;
@@ -69,7 +69,10 @@ para visualização."
             </View>
           </ButtonUI>
           <ButtonUI
-            onPress={() => router.push("/screens/citizen/home/")}
+            onPress={() => {
+              clearSimulation();
+              router.push("/screens/citizen/home/");
+            }}
             gradient={true}
             hover={false}
             iconLeft={false}

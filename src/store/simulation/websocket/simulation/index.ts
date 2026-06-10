@@ -30,6 +30,10 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
+      const { socket: oldSocket } = get();
+      if (oldSocket) {
+        oldSocket.disconnect();
+      }
 
       try {
         const result = await startSimulation(personality);
@@ -103,7 +107,10 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
             setTimeout(() => {
               const { pendingEndStatus } = get();
               if (pendingEndStatus) {
-                set({ simulationStatus: pendingEndStatus, pendingEndStatus: null });
+                set({
+                  simulationStatus: pendingEndStatus,
+                  pendingEndStatus: null,
+                });
               }
             }, 3000);
           }
@@ -125,7 +132,10 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
             .setSimulationReportId(payload.reportId);
 
           if (pendingEndStatus) {
-            set({ simulationStatus: pendingEndStatus? pendingEndStatus : null, pendingEndStatus: null });
+            set({
+              simulationStatus: pendingEndStatus ? pendingEndStatus : null,
+              pendingEndStatus: null,
+            });
           }
 
           get().socket?.disconnect();
