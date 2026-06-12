@@ -12,6 +12,7 @@ export function useSimulationAudience() {
   const [remainingSecs, setRemainingSecs] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const soundRef = useRef<Audio.Sound | null>(null);
 
   const {
@@ -32,7 +33,7 @@ export function useSimulationAudience() {
 
   const player = useVideoPlayer(null, (p) => {
     p.loop = false;
-    p.muted = true;
+    p.muted = false;
   });
 
   const {
@@ -65,22 +66,51 @@ export function useSimulationAudience() {
     },
   });
 
-  useEffect(() => {
-    if (!videoUrl) return;
+useEffect(() => {
+  if (!videoUrl) return;
 
-    player.replace(videoUrl);
-    player.play();
-    setIsPaused(false);
+  console.log("=== videoUrl no hook:", videoUrl);
 
-    const subscription = player.addListener("statusChange", (status) => {
-      if (status.status === "idle") {
-        useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
-        subscription.remove();
-      }
-    });
+  let hasStartedPlaying = false;
+  let subscription: any;
 
-    return () => subscription.remove();
-  }, [player, videoUrl]);
+  const load = async () => {
+    try {
+      setIsVideoReady(true);
+      await player.replaceAsync({ uri: videoUrl });
+      player.play();
+      setIsPaused(false);
+    } catch (e) {
+      console.error("=== player.replaceAsync error:", e);
+      setIsVideoReady(false);
+    }
+  };
+
+   subscription = player.addListener("statusChange", (status) => {
+    console.log("=== statusChange:", status.status);
+
+    if (status.status === "readyToPlay") {
+      hasStartedPlaying = true;
+    }
+
+    if (status.status === "error") {
+      console.error("=== player error:", status);
+      setIsVideoReady(false);
+      useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
+      subscription?.remove();
+    }
+
+    if (status.status === "idle" && hasStartedPlaying) {
+      setIsVideoReady(false);
+      useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
+      subscription?.remove();
+    }
+  });
+
+  load();
+
+  return () => subscription?.remove();
+}, [player, videoUrl]);
 
   useEffect(() => {
     if (!audioFile) return;
@@ -126,13 +156,13 @@ export function useSimulationAudience() {
   const handlePauseAudio = async () => {
     if (isPaused) {
       await soundRef.current?.playAsync();
-      if (videoUrl) player.play();
+      if (isVideoReady) player.play();
       setIsPaused(false);
       return;
     }
 
     await soundRef.current?.pauseAsync();
-    if (videoUrl) player.pause();
+    if (isVideoReady) player.pause();
     setIsPaused(true);
   };
 
@@ -183,7 +213,6 @@ export function useSimulationAudience() {
     };
   }, []);
 
-
   const stop = () => {
     stopSimulation();
   };
@@ -203,12 +232,13 @@ export function useSimulationAudience() {
     simulationReportId,
     remainingSecs,
     videoUrl,
+    isVideoReady,
     handlePauseAudio,
     isPaused,
     isAudioPlaying,
     player,
-    error,      
-    warning,    
-    stop,       
+    error,
+    warning,
+    stop,
   };
 }

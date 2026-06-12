@@ -56,6 +56,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         set({ socket });
 
         socket.on("connect", () => {
+          console.log("Socket conectado, id:", socket.id);
           try {
             const decodedToken = jwtDecode<IDecodedToken>(
               useAccessTokenStorage.getState().accessToken!,
@@ -223,6 +224,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
       generateJudgeVideo(fileUri)
         .then((videoUrl) => {
+          console.log("=== generateJudgeVideo retornou:", videoUrl);
           if (videoUrl) {
             set({ videoUrl, audioFile: fileUri, isSpeaking: false });
           } else {

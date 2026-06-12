@@ -17,7 +17,7 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
-import { useVideoPlayer, VideoView } from "expo-video";
+import { VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
 
 export default function SimulationAudience() {
@@ -32,13 +32,14 @@ export default function SimulationAudience() {
     isTranscribing,
     remainingSecs,
     isSpeaking,
-    videoUrl,
+    isVideoReady,
     handlePauseAudio,
     isPaused,
     simulationReportId,
     error,
     warning,
     stop,
+    player,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
@@ -52,17 +53,6 @@ export default function SimulationAudience() {
     isManuallyEnded;
 
   const opacity = useRef(new Animated.Value(1)).current;
-
-  const player = useVideoPlayer(null, (p) => {
-    p.loop = false;
-    p.muted = true;
-  });
-
-  useEffect(() => {
-    if (!videoUrl) return;
-    player.replace(videoUrl);
-    player.play();
-  }, [videoUrl]);
 
   useEffect(() => {
     Animated.loop(
@@ -148,7 +138,7 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        {isSpeaking && !videoUrl && (
+        {isSpeaking && !isVideoReady && (
           <View className="bg-black w-full h-[250px] rounded-xl items-center justify-center">
             <ActivityIndicator color="white" />
             <Text className="text-white mt-2 font-interRegular text-sm">
@@ -157,7 +147,8 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        {videoUrl && (
+        {/* VideoView sempre montado quando isVideoReady, independente de estar tocando */}
+        {isVideoReady && (
           <VideoView
             player={player}
             style={{ width: "100%", height: 250, borderRadius: 12 }}
@@ -166,12 +157,12 @@ export default function SimulationAudience() {
           />
         )}
 
-        {!isSpeaking && !videoUrl && (
+        {!isSpeaking && !isVideoReady && (
           <View className="bg-black w-full h-[250px] rounded-xl" />
         )}
 
         <View className="flex flex-col gap-4">
-          {(showLoading || isSpeaking) && !videoUrl && (
+          {(showLoading || isSpeaking) && !isVideoReady && (
             <Skeletons amountOfSkeletons={2} height={100} />
           )}
 
@@ -226,7 +217,6 @@ export default function SimulationAudience() {
           )}
         </View>
 
-        {/* Botão sempre habilitado — encerra a qualquer momento */}
         <ButtonUI
           onPress={handleEndSession}
           gradient={true}

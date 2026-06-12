@@ -40,7 +40,7 @@ export function useLawyersList(initialPageSize: number = 6) {
         setLawyers(response.data.data);
         setPaginationMeta(response.data.pagination);
         if (pageNumber === 1) {
-          fetchAllLawyers(response.data.pagination.totalItems);
+           fetchAllLawyers(response.data.pagination.totalItems);
         }
       } else {
         Toast.show({
