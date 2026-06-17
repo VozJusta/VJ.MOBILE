@@ -4,7 +4,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,6 +18,7 @@ import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
 import { VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
+import { JudgeRobot } from "@/components/Judgerobot";
 
 export default function SimulationAudience() {
   const {
@@ -30,8 +30,8 @@ export default function SimulationAudience() {
     transcribedText,
     aiResponse,
     isTranscribing,
-    remainingSecs,
     isSpeaking,
+    remainingSecs,
     isVideoReady,
     handlePauseAudio,
     isPaused,
@@ -39,7 +39,6 @@ export default function SimulationAudience() {
     error,
     warning,
     stop,
-    player,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
@@ -138,33 +137,11 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        {isSpeaking && !isVideoReady && (
-          <View className="bg-black w-full h-[250px] rounded-xl items-center justify-center">
-            <ActivityIndicator color="white" />
-            <Text className="text-white mt-2 font-interRegular text-sm">
-              Gerando vídeo do juiz...
-            </Text>
-          </View>
-        )}
+       <JudgeRobot isSpeaking={isSpeaking} judgeName="Juiz IA - Dr. Silva" />
 
-        {/* VideoView sempre montado quando isVideoReady, independente de estar tocando */}
-        {isVideoReady && (
-          <VideoView
-            player={player}
-            style={{ width: "100%", height: 250, borderRadius: 12 }}
-            contentFit="cover"
-            nativeControls={false}
-          />
-        )}
-
-        {!isSpeaking && !isVideoReady && (
-          <View className="bg-black w-full h-[250px] rounded-xl" />
-        )}
 
         <View className="flex flex-col gap-4">
-          {(showLoading || isSpeaking) && !isVideoReady && (
-            <Skeletons amountOfSkeletons={2} height={100} />
-          )}
+          {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
 
           {!showLoading && !transcribedText && !aiResponse && (
             <EmptyState
@@ -174,7 +151,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {transcribedText && !showLoading && !isSpeaking && (
+          {transcribedText && !showLoading && (
             <MessageBubble
               message={transcribedText}
               isUser={true}
@@ -182,7 +159,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {aiResponse && !showLoading && !isSpeaking && (
+          {aiResponse && !showLoading && (
             <MessageBubble
               message={aiResponse}
               isUser={false}

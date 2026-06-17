@@ -1,4 +1,3 @@
-import { generateJudgeVideo } from "@/helpers/conversion/videoUrl";
 import { createSimulationSocket } from "@/helpers/websocket/simulationSocket";
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket/simulation";
@@ -198,11 +197,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     },
 
     synthesizeAnswer: async (text: string) => {
-      set({ isSpeaking: true });
-
       const result = await synthesizeAudio({ text });
       if (!result.success || !result.data) {
-        set({ error: result.fields?.[0], isSpeaking: false });
+        set({ error: result.fields?.[0] });
         return;
       }
 
@@ -220,20 +217,8 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         encoding: FileSystem.EncodingType.Base64,
       });
 
+      // isSpeaking e audioFile juntos — animação começa quando áudio está pronto
       set({ audioFile: fileUri, isSpeaking: true });
-
-      generateJudgeVideo(fileUri)
-        .then((videoUrl) => {
-          console.log("=== generateJudgeVideo retornou:", videoUrl);
-          if (videoUrl) {
-            set({ videoUrl, audioFile: fileUri, isSpeaking: false });
-          } else {
-            set({ audioFile: fileUri, isSpeaking: false });
-          }
-        })
-        .catch(() => {
-          set({ audioFile: fileUri, isSpeaking: false });
-        });
     },
 
     clearMessages: () => {

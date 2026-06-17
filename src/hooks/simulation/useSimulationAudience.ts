@@ -4,7 +4,6 @@ import { transcribeAudio } from "@/services/ai/conversation/transcribeAudio";
 import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation";
 import { useRecordAudio } from "@/hooks/shared/audio/useRecordAudio";
 import { Audio } from "expo-av";
-import { useVideoPlayer } from "expo-video";
 
 export function useSimulationAudience() {
   const [transcribedText, setTranscribedText] = useState<string | null>(null);
@@ -12,7 +11,6 @@ export function useSimulationAudience() {
   const [remainingSecs, setRemainingSecs] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
   const soundRef = useRef<Audio.Sound | null>(null);
 
   const {
@@ -25,16 +23,9 @@ export function useSimulationAudience() {
     audioFile,
     isLoading,
     error,
-    clearSimulation,
     clearMessages,
     simulationReportId,
-    videoUrl,
   } = useWebSocketSimulation();
-
-  const player = useVideoPlayer(null, (p) => {
-    p.loop = false;
-    p.muted = false;
-  });
 
   const {
     handleStartRecording,
@@ -66,52 +57,6 @@ export function useSimulationAudience() {
     },
   });
 
-useEffect(() => {
-  if (!videoUrl) return;
-
-  console.log("=== videoUrl no hook:", videoUrl);
-
-  let hasStartedPlaying = false;
-  let subscription: any;
-
-  const load = async () => {
-    try {
-      setIsVideoReady(true);
-      await player.replaceAsync({ uri: videoUrl });
-      player.play();
-      setIsPaused(false);
-    } catch (e) {
-      console.error("=== player.replaceAsync error:", e);
-      setIsVideoReady(false);
-    }
-  };
-
-   subscription = player.addListener("statusChange", (status) => {
-    console.log("=== statusChange:", status.status);
-
-    if (status.status === "readyToPlay") {
-      hasStartedPlaying = true;
-    }
-
-    if (status.status === "error") {
-      console.error("=== player error:", status);
-      setIsVideoReady(false);
-      useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
-      subscription?.remove();
-    }
-
-    if (status.status === "idle" && hasStartedPlaying) {
-      setIsVideoReady(false);
-      useWebSocketSimulation.setState({ isSpeaking: false, videoUrl: null });
-      subscription?.remove();
-    }
-  });
-
-  load();
-
-  return () => subscription?.remove();
-}, [player, videoUrl]);
-
   useEffect(() => {
     if (!audioFile) return;
 
@@ -130,16 +75,36 @@ useEffect(() => {
 
         soundRef.current = sound;
         setIsAudioPlaying(true);
+
         sound.setOnPlaybackStatusUpdate((status) => {
-          if (!status.isLoaded) return;
-          if (status.didJustFinish) {
-            setIsAudioPlaying(false);
-            useWebSocketSimulation.setState({ audioFile: null });
-          }
-        });
+  if (!status.isLoaded) return;
+
+
+  if (
+    status.durationMillis &&
+    status.positionMillis >= status.durationMillis - 200
+  ) {
+    setIsAudioPlaying(false);
+    useWebSocketSimulation.setState({
+      audioFile: null,
+      isSpeaking: false,
+    });
+    return;
+  }
+
+  if (status.didJustFinish) {
+    setIsAudioPlaying(false);
+    useWebSocketSimulation.setState({
+      audioFile: null,
+      isSpeaking: false,
+    });
+  }
+});
+
         setIsPaused(false);
       } catch {
         setIsAudioPlaying(false);
+        useWebSocketSimulation.setState({ isSpeaking: false });
         Toast.show({ type: "error", text1: "Erro ao reproduzir áudio" });
       }
     };
@@ -156,13 +121,11 @@ useEffect(() => {
   const handlePauseAudio = async () => {
     if (isPaused) {
       await soundRef.current?.playAsync();
-      if (isVideoReady) player.play();
       setIsPaused(false);
       return;
     }
 
     await soundRef.current?.pauseAsync();
-    if (isVideoReady) player.pause();
     setIsPaused(true);
   };
 
@@ -231,12 +194,9 @@ useEffect(() => {
     isTranscribing,
     simulationReportId,
     remainingSecs,
-    videoUrl,
-    isVideoReady,
     handlePauseAudio,
     isPaused,
     isAudioPlaying,
-    player,
     error,
     warning,
     stop,

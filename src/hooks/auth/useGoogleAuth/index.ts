@@ -46,6 +46,13 @@ export function useGoogleAuth() {
       }
 
       const url = new URL(result.url);
+      const errorParam = url.searchParams.get("error");
+      if (errorParam === "account_conflict") {
+        return {
+          success: false,
+          error: "Este e-mail já está vinculado a outro tipo de conta.",
+        };
+      }
 
       console.log("URL completa:", result.url);
       console.log(

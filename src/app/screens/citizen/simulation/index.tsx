@@ -50,7 +50,7 @@ export default function SimulationScreen() {
           </Text>
         </View>
 
-        {/* Banner de erro ao iniciar */}
+
         {error && (
           <View className="bg-red-500/20 border border-red-500 rounded-xl px-4 py-3">
             <Text className="text-red-300 text-sm text-center">{error}</Text>
