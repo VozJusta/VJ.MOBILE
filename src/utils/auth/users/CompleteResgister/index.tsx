@@ -46,9 +46,7 @@ export function useBuildCompleteRegisterFields({
   const lawyerAuth = registerAuth as ZodLawyerCompleteRegisterTypes;
 
   async function handleSubmit() {
-    console.log("Dados enviados para completeRegisterData:", registerAuth, role);
     const result = await completeRegisterData(registerAuth, role);
-    console.log("Resultado do completeRegisterData:", result);
 
     if (!result?.success) return;
 

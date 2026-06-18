@@ -183,8 +183,6 @@ export const useAuth = () => {
   ) {
     setLoading(true);
 
-    console.log("role recebido useAuth:", role);
-    console.log("role === Lawyer:", role === "Lawyer");
     try {
       const normalizedRole = role.toLowerCase();
       const response =

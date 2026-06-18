@@ -3,9 +3,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { useXTokenStorage } from "@/store/auth/token.store";
 
 export async function completeCitizenRegister(body: ICitizenCompleteRegister) {
-  console.log("Iniciando completeCitizenRegister com os seguintes dados:", body);
   const xToken = useXTokenStorage.getState().token;
-  console.log("xToken:", xToken);
 
   if (!xToken) {
     return {
@@ -23,11 +21,9 @@ export async function completeCitizenRegister(body: ICitizenCompleteRegister) {
       },
       body: JSON.stringify(body),
     });
-    console.log("Status:", response.status);
-    console.log("Response OK:", response.ok);
+
     const data = await response.json().catch(() => {});
-    console.log("Status:", response.status);
-    console.log("Resposta do servidor:", JSON.stringify(data));
+
 
     if (!response.ok) {
       return {

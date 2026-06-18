@@ -23,20 +23,15 @@ export function useGoogleAuth() {
         Linking.createURL("/", { scheme: "vozjusta" }).replace("///", "//") +
         "auth";
 
-      console.log("Redirect URL:", redirectUrl);
       const state = `${role}|mobile`;
       const authUrl = `${BASE_URL}/auth/google?state=${encodeURIComponent(state)}`;
-      console.log("state enviado:", state);
-      console.log("authUrl:", authUrl);
+
 
       const result = await WebBrowser.openAuthSessionAsync(
         authUrl,
         redirectUrl,
       );
-      console.log("result type:", result.type);
-      if (result.type === "success") {
-        console.log("URL retornada:", result.url);
-      }
+
 
       if (result.type !== "success") {
         return {
@@ -54,11 +49,6 @@ export function useGoogleAuth() {
         };
       }
 
-      console.log("URL completa:", result.url);
-      console.log(
-        "registerCompleted param:",
-        url.searchParams.get("registerCompleted"),
-      );
 
       const token = url.searchParams.get("x-security-token");
 

@@ -137,8 +137,7 @@ export default function SimulationAudience() {
           </View>
         )}
 
-       <JudgeRobot isSpeaking={isSpeaking} judgeName="Juiz IA - Dr. Silva" />
-
+        <JudgeRobot isSpeaking={isSpeaking} judgeName="Juiz IA - Dr. Silva" />
 
         <View className="flex flex-col gap-4">
           {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
@@ -193,21 +192,22 @@ export default function SimulationAudience() {
             </Text>
           )}
         </View>
-
-        <ButtonUI
-          onPress={handleEndSession}
-          gradient={true}
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-          disabled={showLoading && !isManuallyEnded}
-        >
-          <View className="justify-center items-center flex-1">
-            <Text className="text-white font-interSemiBold text-[16px]">
-              Encerrar simulação
-            </Text>
-          </View>
-        </ButtonUI>
+        <View className="w-full flex-row items-center justify-center pb-[20px]">
+          <ButtonUI
+            onPress={handleEndSession}
+            gradient={true}
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+            disabled={showLoading && !isManuallyEnded}
+          >
+            <View className="justify-center items-center flex-1">
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Encerrar simulação
+              </Text>
+            </View>
+          </ButtonUI>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

@@ -27,11 +27,10 @@ export default function Login() {
     onToggleShowPassword: () => setShowPassword((prev) => !prev),
   });
 
-  console.log("LoginAuth:", loginAuth);
-  console.log("selectedRole:", selectedRole);
+
 
   const handleLoginWithGoogle = async () => {
-      console.log("selectedRole:", selectedRole);
+
     const result = await loginWithGoogle(selectedRole);
 
     if (!result.success) {
@@ -83,11 +82,8 @@ export default function Login() {
       type: "success",
       text1: validateEmail2FA.data,
     });
-    console.log(selectedRole, result.email, result.registerCompleted);
-    console.log(
-      "result.registerCompleted:",
-      `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,
-    );
+
+
 
     router.push(
       `/screens/auth/Validate?source=${selectedRole}&email=${encodeURIComponent(result.email || "")}&registerCompleted=${result.registerCompleted}`,

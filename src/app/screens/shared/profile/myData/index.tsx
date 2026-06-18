@@ -171,7 +171,7 @@ export default function MyDataScreen() {
       </SafeAreaView>
     );
   }
-  console.log(role)
+
 
   return (
     <KeyboardAvoidingView

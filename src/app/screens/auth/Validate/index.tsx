@@ -31,14 +31,7 @@ export default function ValidateEmail() {
           : "Enviamos um código de 6 dígitos para seu email"
       }
       onCodeVerified={() => {
-        console.log("registerCompleted:", registerCompletedValue);
-        console.log("resolvedSource:", resolvedSource);
-        console.log("emailValue:", emailValue);
-        console.log(
-          "rota:",
-          `/screens/auth/completeRegister/${resolvedSource}?source=${resolvedSource}&email=${encodeURIComponent(emailValue || "")}`,
-        );
-        console.log("registerCompleted:", registerCompletedValue);
+
         if (registerCompletedValue === "true") {
           router.push(
             resolvedSource === "lawyer"
@@ -48,7 +41,6 @@ export default function ValidateEmail() {
           return;
         }
 
-        console.log("registerCompleted:", registerCompletedValue);
         if (registerCompletedValue === "false") {
           router.push(
             `/screens/auth/completeRegister/${resolvedSource}?source=${resolvedSource}&email=${encodeURIComponent(emailValue || "")}`,
@@ -56,7 +48,7 @@ export default function ValidateEmail() {
           return;
         }
 
-        console.log("registerCompleted:", registerCompletedValue);
+
         router.push(
           resolvedSource === "lawyer"
             ? "/screens/lawyer/home"

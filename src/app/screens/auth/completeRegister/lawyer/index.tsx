@@ -14,12 +14,8 @@ export default function CompleteRegisterCitizen() {
 
   const email = params["email"] as string;
   const role = params["source"] as Role;
-  const xToken = useXTokenStorage.getState().token;
   const roleLower = role.toLowerCase();
-  console.log("xToken:", xToken);
-  console.log("BASE_URL:", BASE_URL);
-  console.log("Role recebido:", roleLower);
-  console.log("URL completa:", `${BASE_URL}/auth/complete/${roleLower}`);
+
 
   const completeRegisterData = useBuildCompleteRegisterFields({
     registerAuth: completeRegisterAuth,

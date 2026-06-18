@@ -1,18 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, Animated, Easing } from "react-native";
-import Svg, { Rect, Circle } from "react-native-svg";
 import Robot from "@/assets/svg/icons/robot.svg";
-const BAR_COUNT = 9;
+
 const BAR_CONFIGS = [
-  { baseHeight: 12, modifier: 0.5 },
-  { baseHeight: 28, modifier: 0.7 },
-  { baseHeight: 40, modifier: 0.9 },
-  { baseHeight: 52, modifier: 1.1 },
-  { baseHeight: 60, modifier: 1.3 },
-  { baseHeight: 52, modifier: 1.1 },
-  { baseHeight: 40, modifier: 0.9 },
-  { baseHeight: 28, modifier: 0.7 },
-  { baseHeight: 12, modifier: 0.5 },
+  { baseHeight: 16, modifier: 0.5 },
+  { baseHeight: 20, modifier: 0.7 },
+  { baseHeight: 32, modifier: 0.9 },
+  { baseHeight: 44, modifier: 1.1 },
+  { baseHeight: 52, modifier: 1.3 },
+  { baseHeight: 44, modifier: 1.1 },
+  { baseHeight: 32, modifier: 0.9 },
+  { baseHeight: 20, modifier: 0.7 },
+  { baseHeight: 16, modifier: 0.5 },
 ];
 
 interface JudgeRobotProps {
@@ -84,12 +83,9 @@ export function JudgeRobot({
   judgeName = "Juiz IA - Dr. Silva",
 }: JudgeRobotProps) {
   return (
-    <View
-    className="w-full h-[180px] flex flex-col items-center bg-[#0F1929] rounded-[16px] border border-solid border-[#1E3A5F] gap-4 "
-    >
+    <View className="w-full h-[185px] flex flex-col items-center bg-[#0F1929] rounded-[16px] border border-solid border-[#1E3A5F] gap-4 pt-[29px] ">
       <Robot />
 
-      {/* Audio bars */}
       <View
         style={{
           flexDirection: "row",
@@ -109,29 +105,18 @@ export function JudgeRobot({
         ))}
       </View>
 
-      {/* Badge */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 6,
-          backgroundColor: "#1E3A5F",
-          paddingHorizontal: 12,
-          paddingVertical: 6,
-          borderRadius: 999,
-        }}
-      >
-        <View
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: 999,
-            backgroundColor: isSpeaking ? "#3B82F6" : "#64748B",
-          }}
-        />
-        <Text style={{ color: "#CBD5E1", fontSize: 13, fontWeight: "600" }}>
-          {judgeName}
-        </Text>
+      <View className="flex w-full  relative z-10 -top-6 left-3 justify-start items-start">
+        <View className="flex flex-row items-center absolute gap-[9px] bg-[#2563EB]/20 px-3 py-1 rounded-full border border-[#2563EB]/30">
+          <View
+            className="w-[8px] h-[8px] rounded-full "
+            style={{
+              backgroundColor: isSpeaking ? "#3B82F6" : "#64748B",
+            }}
+          />
+          <Text style={{ color: "#CBD5E1", fontSize: 10, fontWeight: "600" }}>
+            {judgeName}
+          </Text>
+        </View>
       </View>
     </View>
   );
