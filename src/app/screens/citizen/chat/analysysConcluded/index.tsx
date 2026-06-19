@@ -44,56 +44,53 @@ para visualização."
       extraActions={
         <View className="flex flex-col gap-8 w-full">
           <ButtonUI
-            children={
-              <View className="justify-center items-center flex-1 flex-row gap-2">
-                {isDownloading ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
-                  <>
-                    <MaterialIcons name="analytics" size={24} color="#ffffff" />
-                    <Text className="text-white font-interSemiBold text-[16px]">
-                      Baixar relatório
-                    </Text>
-                  </>
-                )}
-              </View>
-            }
             onPress={handleDownloadReport}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="justify-center items-center flex-1 flex-row gap-2">
+              {isDownloading ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <>
+                  <MaterialIcons name="analytics" size={24} color="#ffffff" />
+                  <Text className="text-white font-interSemiBold text-[16px]">
+                    Baixar relatório
+                  </Text>
+                </>
+              )}
+            </View>
+          </ButtonUI>
           <ButtonUI
-            children={
-              <View className="justify-center items-center flex-1 flex-row gap-2">
-                <MaterialIcons name="balance" size={24} color="#ffffff" />
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Lista de advogados
-                </Text>
-              </View>
-            }
             onPress={() => router.push("/screens/citizen/chat/lawyerList")}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="justify-center items-center flex-1 flex-row gap-2">
+              <MaterialIcons name="balance" size={24} color="#ffffff" />
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Lista de advogados
+              </Text>
+            </View>
+          </ButtonUI>
           <ButtonUI
-            children={
-              <View className="justify-center items-center flex-1 flex-row gap-2">
-                <MaterialIcons name="home" size={24} color="#ffffff" />
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Ir para a página inicial
-                </Text>
-              </View>
-            }
             onPress={() => router.push("/screens/citizen/home/")}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="justify-center items-center flex-1 flex-row gap-2">
+              <MaterialIcons name="home" size={24} color="#ffffff" />
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Ir para a página inicial
+              </Text>
+            </View>
+          </ButtonUI>
         </View>
       }
     />

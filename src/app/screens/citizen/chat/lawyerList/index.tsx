@@ -100,7 +100,7 @@ export default function LawyerList() {
             loading ? (
               <Skeletons amountOfSkeletons={4} height={100} />
             ) : (
-              <>
+              <View className="flex-1 justify-center items-center gap-8">
                 <EmptyCases />
 
                 <Text className="text-[24px] font-interBold text-white text-center">
@@ -130,7 +130,8 @@ export default function LawyerList() {
                     </Text>
                   </View>
                 </ButtonUI>
-              </>
+                </View>
+              
             )
           }
           ListFooterComponent={
