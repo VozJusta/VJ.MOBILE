@@ -16,7 +16,6 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
-import { VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
 import { JudgeRobot } from "@/components/Judgerobot";
 
@@ -32,10 +31,8 @@ export default function SimulationAudience() {
     isTranscribing,
     isSpeaking,
     remainingSecs,
-    isVideoReady,
     handlePauseAudio,
     isPaused,
-    simulationReportId,
     error,
     warning,
     stop,

@@ -41,7 +41,7 @@ export function useBuildCompleteRegisterFields({
   role,
   email,
 }: Params): IBuildLoginFields {
-  const { loading, setLoading, completeRegisterData } = useAuth();
+  const { loading, completeRegisterData } = useAuth();
 
   const lawyerAuth = registerAuth as ZodLawyerCompleteRegisterTypes;
 

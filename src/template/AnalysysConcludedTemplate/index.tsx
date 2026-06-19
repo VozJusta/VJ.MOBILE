@@ -3,10 +3,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { IAnalysysConcludedTemplate } from "@/interfaces/template/analysysConcludedTemplate";
+import { usePathname } from "expo-router/build/exports";
 
 export default function AnalysysConcludedTemplate(
   props: IAnalysysConcludedTemplate,
 ) {
+ 
   return (
     <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       <SafeAreaView className="flex-1 items-center justify-between gap-6 h-full">
