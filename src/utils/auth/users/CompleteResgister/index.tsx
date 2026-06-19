@@ -41,7 +41,7 @@ export function useBuildCompleteRegisterFields({
   role,
   email,
 }: Params): IBuildLoginFields {
-  const { loading, setLoading, completeRegisterData } = useAuth();
+  const { loading, completeRegisterData } = useAuth();
 
   const lawyerAuth = registerAuth as ZodLawyerCompleteRegisterTypes;
 
@@ -59,7 +59,7 @@ export function useBuildCompleteRegisterFields({
       });
       if (validateEmail2FA.fields?.[0] === "Código já enviado") {
         router.push(
-          `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=false`,
+          `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=true`,
         );
       }
       return;
@@ -67,7 +67,7 @@ export function useBuildCompleteRegisterFields({
 
     Toast.show({ type: "success", text1: validateEmail2FA.data });
     router.push(
-      `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=false`,
+      `/screens/auth/Validate?source=${role}&email=${encodeURIComponent(email)}&registerCompleted=true`,
     );
   }
 
@@ -113,7 +113,7 @@ export function useBuildCompleteRegisterFields({
   ];
 
   const lawyerFields: FieldsType[] =
-    role === "Lawyer"
+    role === "lawyer"
       ? [
           {
             label: "Número OAB",

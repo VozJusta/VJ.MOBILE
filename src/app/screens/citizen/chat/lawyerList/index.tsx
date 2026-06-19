@@ -1,4 +1,3 @@
-import Badge from "@/components/Badge";
 import Header from "@/components/Header";
 import LawyerCard from "@/components/LawyerCard";
 import {
@@ -18,6 +17,7 @@ import { useLawyersList } from "@/hooks/citizen/lawyerList/useLawyersList";
 import Skeletons from "@/components/Skeletons";
 import { getCategoryLabel } from "@/utils/screens/citizen/home";
 import Pagination from "@/components/Pagination";
+import { useState } from "react";
 
 export default function LawyerList() {
   const {
@@ -31,16 +31,21 @@ export default function LawyerList() {
     goToPreviousPage,
     goToPage,
     refresh,
+    allLawyers,
   } = useLawyersList(4);
+
+  const [name, setName] = useState("");
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 20 }}>
         <FlatList
           contentContainerClassName="gap-8"
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           ListHeaderComponent={
             <>
               <View className="w-full h-fit border-b-[#FFFFFF]/5 flex flex-col gap-4 border-b-[1px] pb-4">
@@ -56,20 +61,19 @@ export default function LawyerList() {
                   iconColor="#94A3B8"
                   leftIcon
                   type={"text"}
+                  value={name}
+                  onChangeText={setName}
                 />
-                <View className="flex flex-row gap-2 w-full items-center">
-                  <Text className="font-interSemiBold text-[16px] text-white text-center">
-                    Área do caso:
-                  </Text>
-                  <Badge
-                    badgeColor="#0D59F2"
-                    textBadge="DIREITO DO CONSUMIDOR"
-                  />
-                </View>
               </View>
             </>
           }
-          data={lawyers}
+          data={
+            name
+              ? allLawyers.filter((l) =>
+                  l.full_name.toLowerCase().includes(name.toLowerCase()),
+                )
+              : lawyers
+          }
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View className="flex flex-col gap-4">
@@ -96,7 +100,7 @@ export default function LawyerList() {
             loading ? (
               <Skeletons amountOfSkeletons={4} height={100} />
             ) : (
-              <>
+              <View className="flex-1 justify-center items-center gap-8">
                 <EmptyCases />
 
                 <Text className="text-[24px] font-interBold text-white text-center">
@@ -126,23 +130,26 @@ export default function LawyerList() {
                     </Text>
                   </View>
                 </ButtonUI>
-              </>
+                </View>
+              
             )
           }
           ListFooterComponent={
-            loading && lawyers.length > 0 ? (
-              <Skeletons amountOfSkeletons={1} height={50} />
-            ) : lawyers.length > 0 && totalPages > 1 ? (
-              <Pagination
-                page={page}
-                totalPages={totalPages}
-                hasNextPage={hasNextPage}
-                hasPreviousPage={hasPreviousPage}
-                loading={loading}
-                goToNextPage={goToNextPage}
-                goToPreviousPage={goToPreviousPage}
-                goToPage={goToPage}
-              />
+            !name ? (
+              loading && lawyers.length > 0 ? (
+                <Skeletons amountOfSkeletons={1} height={50} />
+              ) : lawyers.length > 0 && totalPages > 1 ? (
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  hasNextPage={hasNextPage}
+                  hasPreviousPage={hasPreviousPage}
+                  loading={loading}
+                  goToNextPage={goToNextPage}
+                  goToPreviousPage={goToPreviousPage}
+                  goToPage={goToPage}
+                />
+              ) : null
             ) : null
           }
           refreshing={loading}

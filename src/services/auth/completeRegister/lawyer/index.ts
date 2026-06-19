@@ -3,7 +3,13 @@ import { BASE_URL } from "@/settings/BASE_URL";
 import { useXTokenStorage } from "@/store/auth/token.store";
 
 export async function completeLawyerRegister(body: ILawyerCompleteRegister) {
+
   const xToken = useXTokenStorage.getState().token;
+
+  const cleanBody = {
+    ...body,
+    oabNumber: body.oabNumber.replace(/\D/g, ""),
+  };
 
   if (!xToken) {
     return {
@@ -13,18 +19,14 @@ export async function completeLawyerRegister(body: ILawyerCompleteRegister) {
   }
 
   try {
-    const response = await fetch(
-      `${BASE_URL}/auth/complete/complete  /lawyer`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-security-token": xToken,
-        },
-        body: JSON.stringify(body),
+    const response = await fetch(`${BASE_URL}/auth/complete/lawyer`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-security-token": xToken,
       },
-    );
-
+      body: JSON.stringify(cleanBody),
+    });
     const data = await response.json().catch(() => {});
 
     if (!response.ok) {

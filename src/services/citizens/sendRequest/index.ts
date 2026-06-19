@@ -5,7 +5,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 export async function sendRequest(caseId: string, lawyerId: string) {
   try {
     const response = await apiFetch(
-      `${BASE_URL}/case/${caseId}/requests/${lawyerId}`,
+      `${BASE_URL}/citizen/case/${caseId}/requests/${lawyerId}`,
       {
         method: "POST",
         headers: {

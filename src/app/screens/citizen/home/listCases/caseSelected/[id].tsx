@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator,Linking } from "react-native";
 import ButtonUI from "@/ui/ButtonUI";
 import { useLocalSearchParams } from "expo-router";
 import { IGetReportDetailsResponse } from "@/interfaces/services/dashboard/citizen/reports/detailsReport";
@@ -13,7 +13,6 @@ import Header from "@/components/Header";
 import { downloadReportAsPdf } from "@/services/dashboard/citizen/reports/dowloadPdf";
 import ContactCard from "@/components/ContactCard";
 import { TCaseStatus } from "@/interfaces/components/CaseCard";
-import DocCard from "@/components/DocCard";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,6 +25,25 @@ export default function CaseSelected() {
   const { getDetailsReportById } = useDashboardCitizen();
 
   const [loading, setLoading] = useState<boolean>(false);
+
+
+const handleSendEmail = (email: string) => {
+    Linking.openURL(
+    `mailto:${email}?subject=Contato&body=Olá, gostaria de falar com você.`,
+  );
+};
+
+const handleWhatsApp = async (phone: string) => {
+  const formattedPhone = phone.replace(/\D/g, "");
+
+  const url = `whatsapp://send?phone=55${formattedPhone}`;
+
+  const supported = await Linking.canOpenURL(url);
+
+  if (supported) {
+    await Linking.openURL(url);
+  } 
+};
 
   const reportId = Array.isArray(local.id) ? local.id[0] : local.id;
   useEffect(() => {
@@ -67,6 +85,8 @@ export default function CaseSelected() {
     <ScrollView
       style={{ flex: 1 }}
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}
+      showsVerticalScrollIndicator={false}
+      
     >
       <SafeAreaView style={{ flex: 1, paddingTop: 20, gap: 24 }}>
         <Header
@@ -151,6 +171,8 @@ export default function CaseSelected() {
               name={reportData.user.report.lawyer.full_name}
               email={reportData.user.report.lawyer.email}
               phone={reportData.user.report.lawyer.phone}
+              onPressEmail={() => handleSendEmail(reportData.user.report.lawyer.email)}
+              onPressPhone={() => handleWhatsApp(reportData.user.report.lawyer.phone)}
             />
           ) : (
             <EmptyState
@@ -163,29 +185,24 @@ export default function CaseSelected() {
           <View className="w-full mt-[9px] mb-[24px]">
             <ButtonUI
               onPress={handleDownloadReport}
-              children={
-                <View className="flex-1 justify-center items-center gap-[8px] flex-row">
-                  {isDownloading ? (
-                    <ActivityIndicator size="small" color="#fff" />
-                  ) : (
-                    <>
-                      <MaterialIcons
-                        name="analytics"
-                        color={"#FFF"}
-                        size={24}
-                      />
-                      <Text className="font-interSemiBold text-[16px] text-white">
-                        Baixar Relatório
-                      </Text>
-                    </>
-                  )}
-                </View>
-              }
               gradient={true}
               hover={false}
               iconLeft={false}
               paddingButtonStatus={""}
-            />
+            >
+              <View className="flex-1 justify-center items-center gap-[8px] flex-row">
+                {isDownloading ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <>
+                    <MaterialIcons name="analytics" color={"#FFF"} size={24} />
+                    <Text className="font-interSemiBold text-[16px] text-white">
+                      Baixar Relatório
+                    </Text>
+                  </>
+                )}
+              </View>
+            </ButtonUI>
           </View>
         </View>
       </SafeAreaView>

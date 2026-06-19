@@ -5,7 +5,7 @@ import { BASE_URL } from "@/settings/BASE_URL";
 export async function getLawyersList(page: number, pageSize: number) {
   try {
     const response = await apiFetch(
-      `${BASE_URL}/lawyers?page=${page}&pageSize=${pageSize}`,
+      `${BASE_URL}/citizen/lawyers?page=${page}&pageSize=${pageSize}`,
       {
         method: "GET",
       },

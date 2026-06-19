@@ -24,6 +24,7 @@ export async function completeCitizenRegister(body: ICitizenCompleteRegister) {
 
     const data = await response.json().catch(() => {});
 
+
     if (!response.ok) {
       return {
         success: false,

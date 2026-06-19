@@ -176,6 +176,7 @@ export const useAuth = () => {
       setLoading(false);
     }
   }
+
   async function completeRegisterData(
     data: ZodCitizenCompleteRegisterTypes | ZodLawyerCompleteRegisterTypes,
     role: Role,
@@ -183,13 +184,12 @@ export const useAuth = () => {
     setLoading(true);
 
     try {
+      const normalizedRole = role.toLowerCase();
       const response =
-        role === "Citizen"
-          ? await completeCitizenRegister(
+        normalizedRole === "lawyer"
+          ? await completeLawyerRegister(data as ZodLawyerCompleteRegisterTypes)
+          : await completeCitizenRegister(
               data as ZodCitizenCompleteRegisterTypes,
-            )
-          : await completeLawyerRegister(
-              data as ZodLawyerCompleteRegisterTypes,
             );
 
       if (!response.success) {

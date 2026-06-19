@@ -6,7 +6,6 @@ import { View, Text } from "react-native";
 import { useAppFonts } from "@/assets/fonts/font";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
@@ -18,6 +17,7 @@ export default function RootLayout() {
       <>
         <Toast
           config={{
+            
             success: ({ text1, text2 }) => (
               <LinearGradient
                 style={{

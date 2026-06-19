@@ -31,7 +31,7 @@ export default function NotificationTemplate({
       : []),
   ];
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1" style={{ paddingBottom: 16 }}>
       <Header isFirstPage={false} title="NOTIFICAÇÕES" isCitizen={true} />
 
       {props.loading ? (

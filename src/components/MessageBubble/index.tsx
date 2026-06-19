@@ -1,8 +1,9 @@
 import { View, Text } from "react-native";
 import { IMessageBubble } from "@/interfaces/components/MessageBubble";
+import { Evidences } from "../Evidences";
+
 
 export default function MessageBubble(props: IMessageBubble) {
-
   const formatTime = (dateStr: string) => {
     try {
       const isNumeric = /^\d+$/.test(dateStr);
@@ -24,6 +25,20 @@ export default function MessageBubble(props: IMessageBubble) {
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
         {props.userName ? props.userName : "VozJusta AI"}
       </Text>
+      {props.uri && props.uri.length > 0 && (
+        <View className="flex-row flex-wrap gap-2 mb-3">
+          {props.uri.map((u, index) => (
+            <Evidences
+              key={index}
+              uri={u}
+              index={index}
+              fileTypes={props.fileTypes ?? []}
+              removeEvidence={() => {}}
+              size="w-[100px] h-28"
+            />
+          ))}
+        </View>
+      )}
 
       <View
         className="w-[90%] p-5"
@@ -42,9 +57,7 @@ export default function MessageBubble(props: IMessageBubble) {
         </Text>
       </View>
       <Text className="font-interSemiBold text-[14px] text-[#94A3B8]">
-        {props.createdAt
-          ? formatTime(props.createdAt)
-          : ""}
+        {props.createdAt ? formatTime(props.createdAt) : ""}
       </Text>
     </View>
   );

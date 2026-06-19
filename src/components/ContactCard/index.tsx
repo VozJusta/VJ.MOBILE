@@ -1,4 +1,5 @@
 import { IContactCard } from "@/interfaces/components/ContactCard";
+import ButtonUI from "@/ui/ButtonUI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text } from "react-native";
 
@@ -27,7 +28,9 @@ export default function ContactCard({ ...props }: IContactCard) {
           <Text className="font-inter text-[14px] text-[#FFFFFF]">
             {props.phone}
           </Text>
-          <MaterialIcons name="phone" size={24} color="#2b86ee" />
+          <ButtonUI onPress={props.onPressPhone}>
+            <MaterialIcons name="phone" size={24} color="#2b86ee" />
+          </ButtonUI>
         </View>
       </View>
       <View className="flex flex-col gap-1">
@@ -38,7 +41,9 @@ export default function ContactCard({ ...props }: IContactCard) {
           <Text className="font-inter text-[14px] text-[#FFFFFF]">
             {props.email}
           </Text>
-          <MaterialIcons name="email" size={24} color="#2b86ee" />
+          <ButtonUI onPress={props.onPressEmail}>
+            <MaterialIcons name="email" size={24} color="#2b86ee" />
+          </ButtonUI>
         </View>
       </View>
     </View>

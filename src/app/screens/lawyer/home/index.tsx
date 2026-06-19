@@ -2,8 +2,7 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
-import { lawyerStats } from "./data";
-import StatsCard from "@/components/StatsCard";
+
 import OperationalStats from "@/components/OperationalStats";
 import ImportantRequestCard from "@/components/ImportantRequestCard";
 import { useDashboardLawyer } from "@/hooks/dashboard/lawyer/useDashboardLawyer";
@@ -45,7 +44,9 @@ export default function LawyerHome() {
   if (!token) return null;
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView
+    showsVerticalScrollIndicator={false} 
+    contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaView className="flex-1 gap-6">
         <Header isFirstPage={true} title="ADVOGADO" isCitizen={false} />
 
@@ -72,7 +73,7 @@ export default function LawyerHome() {
                   Análise de produtividade
                 </Text>
               </View>
-              {chartData.length === 0 ? (
+              {chartData.length < 2 ? (
                 <EmptyState
                   icon="area-chart"
                   title="Sem dados suficientes"
@@ -84,14 +85,14 @@ export default function LawyerHome() {
                 </>
               )}
             </View>
-            <View className="flex flex-col gap-6">
+            {/* <View className="flex flex-col gap-6">
               <Text className="text-white text-[20px] font-interBold">
                 Resumo geral
               </Text>
               {lawyerStats.map((stat, index) => (
                 <StatsCard key={index} {...stat} />
               ))}
-            </View>
+            </View> */}
             <View className="flex flex-col gap-6">
               <Text className="font-interBold text-white text-[18px]">
                 Status operacional dos casos

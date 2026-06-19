@@ -3,6 +3,8 @@ export interface IMessageResponse {
     role: "User" | "Assistant";
     content: string;
     created_at: string;
+    uri?: string[];
+    fileTypes?: string[];
 } 
 
 export interface IHistoryConversationResponse {

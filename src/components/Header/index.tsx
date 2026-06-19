@@ -1,12 +1,21 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import Logo from "@/assets/svg/icons/logo.svg";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import ButtonUI from "@/ui/ButtonUI";
 import { IHeader } from "@/interfaces/components/Header";
 
 export default function Header({ ...props }: IHeader) {
   const router = useRouter();
+  const thisPath = usePathname();
+  const isConcluedPage =
+    thisPath.includes("audienceCompleted") ||
+    thisPath.includes("analysysConcluded")
+      ? true
+      : false;
+
+      const routersForHeader = isConcluedPage?  () => router.push("/screens/citizen/home") 
+  : () => router.back();
 
   return (
     <View className="w-full justify-between flex-row items-center">
@@ -16,9 +25,7 @@ export default function Header({ ...props }: IHeader) {
         <ButtonUI
           goBack
           size="w-[40px] h-[40px]"
-          onPress={() => {
-            router.back();
-          }}
+          onPress={() => routersForHeader()}
           gradient={false}
           hover={false}
           iconLeft={false}
@@ -30,7 +37,13 @@ export default function Header({ ...props }: IHeader) {
       </Text>
       {props.isFirstPage ? (
         <TouchableOpacity
-          onPress={() => router.push(props.isCitizen ? "screens/citizen/notifications" : "screens/lawyer/notifications")}
+          onPress={() =>
+            router.push(
+              props.isCitizen
+                ? "screens/citizen/notifications"
+                : "screens/lawyer/notifications",
+            )
+          }
           className="min-w-[40px] min-h-[40px] rounded-full justify-center items-center bg-[rgba(37,99,235,0.2)] border border-solid border-[rgba(37,99,235,0.3)]"
         >
           <MaterialIcons name="notifications" size={20} color="#2563EB" />

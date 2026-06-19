@@ -19,4 +19,5 @@ export interface IInput {
   inputOTP?: boolean
   onFilledOTP?: (code: string) => void;
   onSubmitEditing?: () => void;
+  maxLength?: number;
 }

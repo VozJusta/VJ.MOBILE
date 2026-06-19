@@ -21,7 +21,9 @@ export default function RequestSelected() {
 
 
   return (
-    <ScrollView>
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    >
       <SafeAreaView className="flex-1 gap-6">
         <Header
           title={

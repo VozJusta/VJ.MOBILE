@@ -2,6 +2,7 @@ import { ISettingsSection } from "@/interfaces/template/configTemplate";
 import SettingsTemplate from "@/template/settingsTemplate";
 import { router } from "expo-router";
 import { useMemo } from "react";
+import * as Linking from "expo-linking";
 
 export default function HelpCenterScreen() {
 	const sections = useMemo<ISettingsSection[]>(
@@ -68,7 +69,7 @@ export default function HelpCenterScreen() {
 				icon: "support-agent",
 				title: "Falar com Suporte",
 				description: "",
-				onPress: () => {},
+				onPress: () => Linking.openURL("https://vozjusta.com.br"),
 			}}
 		/>
 	);

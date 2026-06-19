@@ -28,6 +28,7 @@ export function useChat() {
     setFinished,
     clearChat,
     setReportId,
+    setUri,
   } = useChatStorage();
 
   const {
@@ -71,14 +72,33 @@ export function useChat() {
     try {
       const response = await historyConversation(conversationId);
       if (response.success && response.data) {
-        setMessages(response.data.messages);
+        const sanitized = response.data.messages.map((msg) => {
+          if (msg.role === "User") {
+            return {
+              ...msg,
+              content: msg.content.split(
+                "\n\nConteúdo extraído da evidência:",
+              )[0],
+            };
+          }
+          return msg;
+        });
+        setMessages(sanitized);
       }
     } finally {
       setFetchingHistory(false);
     }
   };
 
-  const handleStartAnalysis = async () => {
+  const handleStartAnalysis = async (
+    overrideMessage?: string,
+    uris?: string[],
+    displayMessage?: string,
+    fileTypes?: string[],
+  
+  ) => {
+    const firstMessageText = overrideMessage ?? description;
+    const visibleMessage = displayMessage ?? firstMessageText;
     if (!selectedCategory) {
       Toast.show({
         type: "error",
@@ -86,7 +106,7 @@ export function useChat() {
       });
       return;
     }
-    if (!description.trim()) {
+    if (!visibleMessage.trim()) {
       Toast.show({
         type: "error",
         text1: "Descreva o ocorrido para iniciar a análise",
@@ -98,15 +118,18 @@ export function useChat() {
 
     try {
       clearChat();
-
-      const firstMessageText = `${description}`;
-
+      if (uris && uris.length > 0) {
+        setUri(uris);
+      }
       addMessage({
         id: Date.now().toString() + "-user",
-        content: firstMessageText,
+        content: visibleMessage,
         role: "User",
         created_at: String(Date.now()),
+        uri: uris ?? [],
+        fileTypes: fileTypes ?? [],
       });
+
 
       const response = await startConversation({ message: firstMessageText });
 
@@ -136,6 +159,7 @@ export function useChat() {
           content: response.data.question,
           role: "Assistant",
           created_at: String(Date.now()),
+        
         });
       }
 
@@ -147,26 +171,41 @@ export function useChat() {
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!message.trim() || loading || finished) return;
+  const handleSendMessage = async (
+    evidenceUris?: string[],
+    overrideMessage?: string,
+    displayMessage?: string,
+    fileTypes?: string[],
+  ) => {
+    const firstMessageText = overrideMessage ?? description;
+    const visibleMessage = displayMessage ?? firstMessageText;
+    if (!visibleMessage.trim() || loading || finished) return;
 
-    const userMessage = message;
+    const userMessage = visibleMessage;
     const tempId = Date.now().toString() + "-user";
 
     setMessage("");
     setLoading(true);
+
+    if (evidenceUris && evidenceUris.length > 0) {
+      setUri(evidenceUris);
+    } else {
+      setUri([]);
+    }
 
     addMessage({
       id: tempId,
       content: userMessage,
       role: "User",
       created_at: String(Date.now()),
+      uri: evidenceUris ?? [],
+      fileTypes: fileTypes ?? [],
     });
 
     try {
       const response = await continueConversation({
         conversationId: conversationId,
-        message: userMessage,
+        message: firstMessageText,
       });
 
       if (!response.success && !response.data) {
@@ -199,7 +238,7 @@ export function useChat() {
       }
     } catch {
       removeMessage(tempId);
-      setMessage(userMessage);
+      setMessage(firstMessageText);
       Toast.show({ type: "error", text1: "Erro de conexão com o servidor" });
     } finally {
       setLoading(false);

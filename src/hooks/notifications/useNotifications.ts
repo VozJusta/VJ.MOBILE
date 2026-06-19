@@ -91,6 +91,7 @@ export function useNotifications() {
     goToNextPage,
     goToPreviousPage,
     goToPage,
-    fetchPage
+    setNotifications,
+    fetchPage,
   };
 }

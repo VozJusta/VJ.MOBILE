@@ -4,16 +4,21 @@ import {
   IUpdateProfileResponse,
 } from "@/interfaces/services/profile";
 import { BASE_URL } from "@/settings/BASE_URL";
+import { useRolesStorage } from "@/store/auth/roles.store";
 
 export async function updateProfile(body: IUpdateProfileBody) {
+  const role = useRolesStorage.getState().role;
+  const data =
+    role === "citizen" ? { fullName: body.fullName, phone: body.phone } : body;
   try {
+
     const response = await apiFetch(`${BASE_URL}/profile`, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(data),
     });
 
     const json = await response.json().catch(() => ({}));

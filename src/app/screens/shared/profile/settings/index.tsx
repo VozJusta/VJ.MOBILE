@@ -2,7 +2,7 @@ import { ISettingsSection } from "@/interfaces/template/configTemplate";
 import { router } from "expo-router";
 import SettingsTemplate from "@/template/settingsTemplate/index";
 import { useMemo, useState } from "react";
-
+import * as Linking from "expo-linking";
 export default function MainSettings() {
   const [isPushEnabled, setIsPushEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(true);
@@ -23,22 +23,22 @@ export default function MainSettings() {
             value: isPushEnabled,
             onValueChange: setIsPushEnabled,
           },
-          {
-            id: "dark-mode",
-            type: "switch",
-            icon: "dark-mode",
-            label: "Modo Escuro",
-            value: isDarkModeEnabled,
-            onValueChange: setIsDarkModeEnabled,
-          },
-          {
-            id: "language",
-            type: "link",
-            icon: "language",
-            label: "Idioma",
-            rightLabel: "Português (BR)",
-            onPress: () => {},
-          },
+          // {
+          //   id: "dark-mode",
+          //   type: "switch",
+          //   icon: "dark-mode",
+          //   label: "Modo Escuro",
+          //   value: isDarkModeEnabled,
+          //   onValueChange: setIsDarkModeEnabled,
+          // },
+          // {
+          //   id: "language",
+          //   type: "link",
+          //   icon: "language",
+          //   label: "Idioma",
+          //   rightLabel: "Português (BR)",
+          //   onPress: () => {},
+          // },
         ],
       },
       {
@@ -82,17 +82,17 @@ export default function MainSettings() {
             type: "link",
             icon: "description",
             label: "Termos de Uso",
-            onPress: () => {},
+            onPress: () => router.push("/screens/shared/terms"),
           },
-          {
-            id: "privacy",
-            type: "link",
-            icon: "policy",
-            label: "Privacidade",
-            onPress: () => {
-              router.push("/screens/shared/profile/privacity");
-            },
-          },
+          // {
+          //   id: "privacy",
+          //   type: "link",
+          //   icon: "policy",
+          //   label: "Privacidade",
+          //   onPress: () => {
+          //     router.push("/screens/shared/profile/privacity");
+          //   },
+          // },
         ],
       },
     ],
@@ -108,7 +108,7 @@ export default function MainSettings() {
       supportCard={{
         title: "Falar com suporte",
         description: "Atendimento 24/7 disponível",
-        onPress: () => {},
+        onPress: () => Linking.openURL("https://vozjusta.com.br"),
       }}
     />
   );

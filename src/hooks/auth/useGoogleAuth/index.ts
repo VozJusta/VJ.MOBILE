@@ -22,13 +22,16 @@ export function useGoogleAuth() {
       const redirectUrl =
         Linking.createURL("/", { scheme: "vozjusta" }).replace("///", "//") +
         "auth";
+
       const state = `${role}|mobile`;
       const authUrl = `${BASE_URL}/auth/google?state=${encodeURIComponent(state)}`;
+
 
       const result = await WebBrowser.openAuthSessionAsync(
         authUrl,
         redirectUrl,
       );
+
 
       if (result.type !== "success") {
         return {
@@ -37,8 +40,15 @@ export function useGoogleAuth() {
         };
       }
 
-
       const url = new URL(result.url);
+      const errorParam = url.searchParams.get("error");
+      if (errorParam === "account_conflict") {
+        return {
+          success: false,
+          error: "Este e-mail já está vinculado a outro tipo de conta.",
+        };
+      }
+
 
       const token = url.searchParams.get("x-security-token");
 

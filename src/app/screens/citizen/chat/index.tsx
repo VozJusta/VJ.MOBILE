@@ -16,6 +16,12 @@ import { useChat } from "@/hooks/chat/useChat";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
+import { ButtonOption } from "@/components/ButtonOption";
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
+
+import { Evidences } from "@/components/Evidences";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { useEffect, useState } from "react";
 
 export default function Chat() {
   const {
@@ -28,9 +34,29 @@ export default function Chat() {
     handleStartRecordingDescription,
     handleStopRecordingDescription,
     isRecordingDescription,
+
     meteringVoiceDescription,
     recordingDurationDescription,
   } = useChat();
+  const { ocrContent, fileUri, handleSendFile, removeEvidence, fileTypes } =
+    useEvidenceUpload();
+  const displayMessage = description;
+
+  const firstMessageText =
+    ocrContent.length > 0
+      ? `${description}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
+      : description;
+
+  useEffect(() => {
+    if (description.length > 2000) {
+      Toast.show({
+        type: "error",
+        text1: "Descrição muito longa",
+      });
+    }
+  }, [description]);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <KeyboardAvoidingView
@@ -41,7 +67,7 @@ export default function Chat() {
         contentContainerStyle={{ paddingBottom: 128 }}
         showsVerticalScrollIndicator={false}
       >
-        <SafeAreaView style={{ gap: 32, paddingBottom: 32}}>
+        <SafeAreaView style={{ gap: 32, paddingBottom: 32 }}>
           <Header title="CHAT" isFirstPage={true} isCitizen={true} />
           <View className="flex-col mt-[24px] gap-[16px] w-full">
             <Text className="text-[14px] text-[#94A3B8] font-inter uppercase">
@@ -61,17 +87,50 @@ export default function Chat() {
           <View className="w-full">
             {!isRecordingDescription ? (
               <View className="relative w-full">
+                {fileUri.length > 0 && (
+                  <View className="flex flex-row gap-[10px] ">
+                    {fileUri.map((uri, index) => {
+                      return (
+                        <Evidences
+                          key={index}
+                          uri={uri}
+                          index={index}
+                          fileTypes={fileTypes}
+                          removeEvidence={removeEvidence}
+                          size="w-[100px] h-28"
+                        />
+                      );
+                    })}
+                  </View>
+                )}
                 <TextArea
+                  maxLength={2000}
                   placeholder="Descreva o que aconteceu com suas próprias palavras..."
                   value={description}
                   onChangeText={setDescription}
+                  isMenuOpen={isMenuOpen}
                 />
-                <View className="absolute bottom-3 right-3 z-10">
-                  <ButtonAudio
-                    isRecording={false}
+                <View className="absolute bottom-3 left-3 z-10">
+                  <Text className="text-[12px] text-[white] font-interRegular">
+                    {description.length}/2000
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 12,
+                    right: 12,
+                    zIndex: 20,
+                  }}
+                  pointerEvents="box-none"
+                >
+                  <ButtonOption
+                    handleSendFile={handleSendFile}
                     onStartRecording={handleStartRecordingDescription}
                     onStopRecording={handleStopRecordingDescription}
-                    disabled={loading}
+                    loading={false}
+                    positionsInput={"textArea"}
+                    modalVisible={() => setIsMenuOpen(true)}
                   />
                 </View>
               </View>
@@ -136,23 +195,29 @@ export default function Chat() {
         </SafeAreaView>
 
         <ButtonUI
-          children={
-            <View className="justify-center items-center flex-1">
-              <Text className="text-white font-interSemiBold text-[16px]">
-                {loading ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  "Iniciar análise por IA"
-                )}
-              </Text>
-            </View>
+          onPress={() =>
+            handleStartAnalysis(
+              firstMessageText,
+              fileUri,
+              displayMessage,
+              fileTypes,
+            )
           }
-          onPress={handleStartAnalysis}
           gradient={true}
           hover={false}
           iconLeft={false}
           paddingButtonStatus={""}
-        />
+        >
+          <View className="justify-center items-center flex-1">
+            <Text className="text-white font-interSemiBold text-[16px]">
+              {loading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                "Iniciar análise por IA"
+              )}
+            </Text>
+          </View>
+        </ButtonUI>
       </ScrollView>
     </KeyboardAvoidingView>
   );

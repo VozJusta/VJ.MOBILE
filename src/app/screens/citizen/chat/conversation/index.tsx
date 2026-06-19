@@ -11,11 +11,16 @@ import MessageBubble from "@/components/MessageBubble";
 import InputUI from "@/ui/InputUI";
 import ButtonUI from "@/ui/ButtonUI";
 import { useChat } from "@/hooks/chat/useChat";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import ButtonAudio from "@/components/ButtonAudio";
 import { formatTime } from "@/utils/components/ButtonAudio";
 import { AnimatedAudioBar } from "@/components/AudioBar";
 import { router } from "expo-router";
+
+import { useEvidenceUpload } from "@/hooks/chat/useEvidenceUpload";
+import { ButtonOption } from "@/components/ButtonOption";
+import { Evidences } from "@/components/Evidences";
+import Toast from "react-native-toast-message";
 
 export default function ConversationAI() {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -33,13 +38,47 @@ export default function ConversationAI() {
     meteringVoiceMessage,
     recordingDurationMessage,
   } = useChat();
+  const {
+    handleSendFile,
+    fileUri,
+    clearFiles,
+    ocrContent,
+    fileTypes,
+    removeEvidence,
+  } = useEvidenceUpload();
+
+  const displayMessage = message;
+
+  const firstMessageText =
+    ocrContent.length > 0
+      ? `${message}\n\n[EVIDÊNCIAS ANEXADAS]\n${ocrContent.join("\n---\n")}`
+      : message;
+
+  const handleSend = async () => {
+    await handleSendMessage(
+      fileUri,
+      firstMessageText,
+      displayMessage,
+      fileTypes,
+    );
+    clearFiles();
+  };
+
+  useEffect(() => {
+    if (message.length >= 600) {
+      Toast.show({
+        type: "error",
+        text1: "Mensagem muito longa",
+      });
+    }
+  }, [message]);
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <SafeAreaView style={{ flex: 1, gap: 32 }}>
+      <SafeAreaView style={{ flex: 1, gap: 32, paddingBottom: 2 }}>
         <Header title="CHAT" isFirstPage={false} isCitizen={true} />
 
         <ScrollView
@@ -58,6 +97,8 @@ export default function ConversationAI() {
               createdAt={msg.created_at}
               userName={msg.role === "User" ? "Você" : "Assistente"}
               isUser={msg.role === "User"}
+              uri={msg.role === "User" ? msg.uri : undefined}
+              fileTypes={msg.role === "User" ? msg.fileTypes : undefined}
             />
           ))}
 
@@ -71,30 +112,53 @@ export default function ConversationAI() {
         </ScrollView>
 
         {!finished ? (
-          <View style={{ marginTop: 16, paddingBottom:20 }} className="w-full">
+          <View
+            style={{ marginTop: 16, paddingBottom: 20 }}
+            className="w-full flex-col"
+          >
+            {fileUri.length > 0 && (
+              <View className="flex w-full items-end flex-row gap-[10px] ">
+                {fileUri.map((uri, index) => {
+                  return (
+                    <Evidences
+                      key={index}
+                      uri={uri}
+                      index={index}
+                      fileTypes={fileTypes}
+                      removeEvidence={removeEvidence}
+                      size="w-[100px] h-28"
+                    />
+                  );
+                })}
+              </View>
+            )}
             {!isRecordingMessage ? (
-              <View className="flex-row items-center w-full gap-2">
-                <ButtonAudio
-                  isRecording={false}
-                  onStartRecording={handleStartRecordingMessage}
-                  onStopRecording={handleStopRecordingMessage}
-                  disabled={loading}
-                />
-
-                <View className="flex-1">
-                  <InputUI
-                    placeholder="Digite sua mensagem..."
-                    rightIcon
-                    rightIconName="send"
-                    iconSize={24}
-                    iconColor={message.trim() ? "#135BEC" : "gray"}
-                    iconNameProps="send"
-                    type="text"
-                    value={message}
-                    onChangeText={setMessage}
-                    onRightIconPress={handleSendMessage}
-                    onSubmitEditing={handleSendMessage}
+              <View>
+                <View className="flex-row items-center w-full gap-2">
+                  <ButtonOption
+                    handleSendFile={handleSendFile}
+                    onStartRecording={handleStartRecordingMessage}
+                    onStopRecording={handleStopRecordingMessage}
+                    loading={loading}
+                    positionsInput={"input"}
                   />
+
+                  <View className="flex-1">
+                    <InputUI
+                      maxLength={600}
+                      placeholder="Digite sua mensagem..."
+                      rightIcon
+                      rightIconName="send"
+                      iconSize={24}
+                      iconColor={message.trim() ? "#135BEC" : "gray"}
+                      iconNameProps="send"
+                      type="text"
+                      value={message}
+                      onChangeText={setMessage}
+                      onRightIconPress={handleSend}
+                      onSubmitEditing={handleSend}
+                    />
+                  </View>
                 </View>
               </View>
             ) : (
@@ -156,7 +220,10 @@ export default function ConversationAI() {
             )}
           </View>
         ) : (
-          <View style={{ marginTop: 16 }}>
+          <View
+            style={{ marginTop: 16, marginBottom: 20 }}
+            className="w-full flex-col gap-4"
+          >
             <ButtonUI
               onPress={() =>
                 router.push("/screens/citizen/chat/analysysConcluded")
@@ -165,14 +232,13 @@ export default function ConversationAI() {
               hover={false}
               iconLeft={false}
               paddingButtonStatus={""}
-              children={
-                <View className="justify-center items-center flex-1">
-                  <Text className="text-white font-interSemiBold text-[16px]">
-                    Ver Relatório do Caso
-                  </Text>
-                </View>
-              }
-            />
+            >
+              <View className="justify-center  items-center flex-1">
+                <Text className="text-white font-interSemiBold text-[16px]">
+                  Ver Relatório do Caso
+                </Text>
+              </View>
+            </ButtonUI>
           </View>
         )}
       </SafeAreaView>

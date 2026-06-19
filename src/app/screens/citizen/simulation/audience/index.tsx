@@ -4,9 +4,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import ButtonAudio from "@/components/ButtonAudio";
@@ -17,8 +16,8 @@ import { router } from "expo-router";
 import MessageBubble from "@/components/MessageBubble";
 import EmptyState from "@/components/EmptyState";
 import Skeletons from "@/components/Skeletons";
-import { useVideoPlayer, VideoView } from "expo-video";
 import { formatSeconds } from "@/utils/screens/citizen/simulation";
+import { JudgeRobot } from "@/components/Judgerobot";
 
 export default function SimulationAudience() {
   const {
@@ -30,28 +29,26 @@ export default function SimulationAudience() {
     transcribedText,
     aiResponse,
     isTranscribing,
-    remainingSecs,
     isSpeaking,
-    videoUrl,
+    remainingSecs,
     handlePauseAudio,
     isPaused,
-    simulationReportId,
+    error,
+    warning,
+    stop,
   } = useSimulationAudience();
 
   const showLoading = isTranscribing || isLoading;
 
+  const [isManuallyEnded, setIsManuallyEnded] = useState(false);
+  const hasNavigatedRef = useRef(false);
+
+  const isSessionEnded =
+    simulationStatus === "Completed" ||
+    simulationStatus === "TimedOut" ||
+    isManuallyEnded;
+
   const opacity = useRef(new Animated.Value(1)).current;
-
-  const player = useVideoPlayer(null, (p) => {
-    p.loop = false;
-    p.muted = true;
-  });
-
-  useEffect(() => {
-    if (!videoUrl) return;
-    player.replace(videoUrl);
-    player.play();
-  }, [videoUrl]);
 
   useEffect(() => {
     Animated.loop(
@@ -70,6 +67,34 @@ export default function SimulationAudience() {
     ).start();
   }, []);
 
+  useEffect(() => {
+    if (
+      (simulationStatus === "Completed" || simulationStatus === "TimedOut") &&
+      !hasNavigatedRef.current
+    ) {
+      hasNavigatedRef.current = true;
+      router.push("/screens/citizen/simulation/audience/audienceCompleted");
+    }
+  }, [simulationStatus]);
+
+  useEffect(() => {
+    if (isSessionEnded && isRecording) {
+      handleStopRecording();
+    }
+  }, [isSessionEnded]);
+
+  const handleEndSession = () => {
+    setIsManuallyEnded(true);
+    if (isRecording) handleStopRecording();
+    stop();
+    setTimeout(() => {
+      if (!hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        router.push("/screens/citizen/simulation/audience/audienceCompleted");
+      }
+    }, 4000);
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView className="gap-8">
@@ -79,7 +104,25 @@ export default function SimulationAudience() {
           isCitizen={true}
         />
 
-        {remainingSecs !== null && (
+        {error && (
+          <View className="bg-red-500/20 border border-red-500 rounded-xl px-4 py-3">
+            <Text className="text-red-300 text-sm text-center">{error}</Text>
+          </View>
+        )}
+        {warning && (
+          <View className="bg-yellow-500/20 border border-yellow-500 rounded-xl px-4 py-3 flex-row items-center justify-center gap-2">
+            <Text className="text-yellow-300 text-sm text-center">
+              {warning.message}
+            </Text>
+            {remainingSecs !== null && remainingSecs > 0 && (
+              <Text className="text-yellow-300 text-sm font-bold">
+                {remainingSecs}s
+              </Text>
+            )}
+          </View>
+        )}
+
+        {remainingSecs !== null && !warning && (
           <View className="flex-row items-center justify-center gap-2 w-full">
             <Animated.View
               style={{ opacity }}
@@ -91,32 +134,10 @@ export default function SimulationAudience() {
           </View>
         )}
 
-        {isSpeaking && !videoUrl && (
-          <View className="bg-black w-full h-[250px] rounded-xl items-center justify-center">
-            <ActivityIndicator color="white" />
-            <Text className="text-white mt-2 font-interRegular text-sm">
-              Gerando vídeo do juiz...
-            </Text>
-          </View>
-        )}
-
-        {videoUrl && (
-          <VideoView
-            player={player}
-            style={{ width: "100%", height: 250, borderRadius: 12 }}
-            contentFit="cover"
-            nativeControls={false}
-          />
-        )}
-
-        {!isSpeaking && !videoUrl && (
-          <View className="bg-black w-full h-[250px] rounded-xl" />
-        )}
+        <JudgeRobot isSpeaking={isSpeaking} judgeName="Juiz IA - Dr. Silva" />
 
         <View className="flex flex-col gap-4">
-          {(showLoading || isSpeaking) && !videoUrl && (
-            <Skeletons amountOfSkeletons={2} height={100} />
-          )}
+          {showLoading && <Skeletons amountOfSkeletons={2} height={100} />}
 
           {!showLoading && !transcribedText && !aiResponse && (
             <EmptyState
@@ -126,7 +147,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {transcribedText && !showLoading && !isSpeaking && (
+          {transcribedText && !showLoading && (
             <MessageBubble
               message={transcribedText}
               isUser={true}
@@ -134,7 +155,7 @@ export default function SimulationAudience() {
             />
           )}
 
-          {aiResponse && !showLoading && !isSpeaking && (
+          {aiResponse && !showLoading && (
             <MessageBubble
               message={aiResponse}
               isUser={false}
@@ -147,7 +168,7 @@ export default function SimulationAudience() {
               isRecording={isRecording}
               onStartRecording={handleStartRecording}
               onStopRecording={handleStopRecording}
-              disabled={showLoading}
+              disabled={showLoading || isSessionEnded}
             />
 
             <TouchableOpacity
@@ -161,32 +182,29 @@ export default function SimulationAudience() {
               />
             </TouchableOpacity>
           </View>
-        </View>
 
-        <ButtonUI
-          onPress={() =>
-            router.push(
-              "/screens/citizen/simulation/audience/audienceCompleted",
-            )
-          }
-          gradient={true}
-          hover={false}
-          iconLeft={false}
-          paddingButtonStatus={""}
-          disabled={
-            !simulationReportId ||
-            (simulationStatus !== "Completed" &&
-              simulationStatus !== "TimedOut") ||
-            showLoading
-          }
-          children={
+          {isSessionEnded && (
+            <Text className="text-center text-xs text-white/50">
+              Sessão encerrada
+            </Text>
+          )}
+        </View>
+        <View className="w-full flex-row items-center justify-center pb-[20px]">
+          <ButtonUI
+            onPress={handleEndSession}
+            gradient={true}
+            hover={false}
+            iconLeft={false}
+            paddingButtonStatus={""}
+            disabled={showLoading && !isManuallyEnded}
+          >
             <View className="justify-center items-center flex-1">
               <Text className="text-white font-interSemiBold text-[16px]">
                 Encerrar simulação
               </Text>
             </View>
-          }
-        />
+          </ButtonUI>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

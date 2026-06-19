@@ -1,4 +1,3 @@
-import { generateJudgeVideo } from "@/helpers/conversion/videoUrl";
 import { createSimulationSocket } from "@/helpers/websocket/simulationSocket";
 import { Personality } from "@/interfaces/services/citizen/simulation/startSimulation";
 import { IWebSocketSimulation } from "@/interfaces/websocket/simulation";
@@ -26,9 +25,14 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     simulationReportId: null,
     remainingSecs: null,
     videoUrl: null,
+    pendingEndStatus: null,
 
     createAndStartSimulation: async (personality: Personality) => {
       set({ isLoading: true, error: null, warning: null });
+      const { socket: oldSocket } = get();
+      if (oldSocket) {
+        oldSocket.disconnect();
+      }
 
       try {
         const result = await startSimulation(personality);
@@ -66,15 +70,21 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
               return;
             }
 
-            socket.emit("simulation:start", {
-              simulationId: result.data!.id,
-              citizenId: decodedToken.sub,
-            });
+            setTimeout(() => {
+              socket.emit("simulation:start", {
+                simulationId: result.data!.id,
+                citizenId: decodedToken.sub,
+              });
+            }, 500);
           } catch {
             set({ error: "Erro ao autenticar usuário para simulação" });
             socket.disconnect();
             set({ socket: null });
           }
+        });
+
+        socket.on("disconnect", (reason) => {
+          console.log("Socket desconectado, motivo:", reason);
         });
 
         socket.on("simulation:started", () => {
@@ -86,24 +96,46 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         });
 
         socket.on("simulation:end", (payload) => {
-          set({ simulationStatus: payload.status });
-          setTimeout(() => {
-            const { socket } = get();
-            if (socket?.connected) {
-              socket.disconnect();
-              set({ socket: null });
-            }
-          }, 10_000);
+          const endStatus = payload.status;
+          const { simulationReportId } = get();
+
+          if (simulationReportId) {
+            set({ simulationStatus: endStatus });
+          } else {
+            set({ pendingEndStatus: endStatus });
+            setTimeout(() => {
+              const { pendingEndStatus } = get();
+              if (pendingEndStatus) {
+                set({
+                  simulationStatus: pendingEndStatus,
+                  pendingEndStatus: null,
+                });
+              }
+            }, 3000);
+          }
         });
 
         socket.on("connect_error", (err) => {
+          console.log("Erro de conexão:", err.message);
           set({ error: "Erro de conexão com o servidor de simulação" });
           socket.disconnect();
           set({ socket: null });
         });
 
         socket.on("simulation:report", (payload) => {
+          const { pendingEndStatus } = get();
+
           set({ simulationReportId: payload.reportId });
+          useSimulationStorage
+            .getState()
+            .setSimulationReportId(payload.reportId);
+
+          if (pendingEndStatus) {
+            set({
+              simulationStatus: pendingEndStatus ? pendingEndStatus : null,
+              pendingEndStatus: null,
+            });
+          }
 
           get().socket?.disconnect();
           set({ socket: null });
@@ -118,7 +150,6 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
 
     clearSimulation: () => {
       const { socket } = get();
-
       socket?.disconnect();
 
       set({
@@ -130,6 +161,7 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         aiResponse: null,
         audioFile: null,
         isSpeaking: false,
+        pendingEndStatus: null,
       });
     },
 
@@ -164,11 +196,9 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
     },
 
     synthesizeAnswer: async (text: string) => {
-      set({ isSpeaking: true });
-
       const result = await synthesizeAudio({ text });
       if (!result.success || !result.data) {
-        set({ error: result.fields?.[0], isSpeaking: false });
+        set({ error: result.fields?.[0] });
         return;
       }
 
@@ -186,19 +216,8 @@ export const useWebSocketSimulation = create<IWebSocketSimulation>(
         encoding: FileSystem.EncodingType.Base64,
       });
 
+      // isSpeaking e audioFile juntos — animação começa quando áudio está pronto
       set({ audioFile: fileUri, isSpeaking: true });
-
-      generateJudgeVideo(fileUri)
-        .then((videoUrl) => {
-          if (videoUrl) {
-            set({ videoUrl, audioFile: fileUri, isSpeaking: false });
-          } else {
-            set({ audioFile: fileUri, isSpeaking: false });
-          }
-        })
-        .catch((e) => {
-          set({ audioFile: fileUri, isSpeaking: false });
-        });
     },
 
     clearMessages: () => {

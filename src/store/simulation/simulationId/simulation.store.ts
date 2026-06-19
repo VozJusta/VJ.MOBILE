@@ -7,8 +7,11 @@ export const useSimulationStorage = create<ISimulationStore>()(
   persist(
     (set) => ({
       simulationId: "",
+      simulationReportId: "",
       setSimulationId: (simulationId) => set({ simulationId }),
+      setSimulationReportId: (simulationReportId) => set({ simulationReportId }),
       clearSimulationId: () => set({ simulationId: "" }),
+      clearSimulationReportId: () => set({ simulationReportId: "" }),
     }),
     {
       name: "simulation",

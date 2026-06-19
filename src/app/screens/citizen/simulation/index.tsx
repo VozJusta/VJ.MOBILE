@@ -17,13 +17,16 @@ export default function SimulationScreen() {
   const [selected, setSelected] = useState<string | null>(null);
 
   const handleStartSimulation = async () => {
-    if (!selected) return;
+    if (!selected || isLoading) return;
 
     const personality = personalityMap[selected];
 
-    await createAndStartSimulation(personality);
-
-    router.push("/screens/citizen/simulation/audience");
+    try {
+      await createAndStartSimulation(personality);
+      router.push("/screens/citizen/simulation/audience");
+    } catch {
+      // erro já capturado no hook via `error`
+    }
   };
 
   return (
@@ -46,6 +49,14 @@ export default function SimulationScreen() {
             pratique seus argumentos.
           </Text>
         </View>
+
+
+        {error && (
+          <View className="bg-red-500/20 border border-red-500 rounded-xl px-4 py-3">
+            <Text className="text-red-300 text-sm text-center">{error}</Text>
+          </View>
+        )}
+
         {simulationPersonalities.map((personality, index) => (
           <CategoryCard
             {...personality}
@@ -56,23 +67,23 @@ export default function SimulationScreen() {
         ))}
 
         <ButtonUI
-          children={
-            <View className="justify-center items-center flex-1">
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Iniciar simulação
-                </Text>
-              )}
-            </View>
-          }
           onPress={handleStartSimulation}
           gradient={true}
           hover={false}
           iconLeft={false}
           paddingButtonStatus={""}
-        />
+          disabled={!selected || isLoading}
+        >
+          <View className="justify-center items-center flex-1">
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Iniciar simulação
+              </Text>
+            )}
+          </View>
+        </ButtonUI>
       </SafeAreaView>
     </ScrollView>
   );

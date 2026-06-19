@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -34,7 +33,7 @@ export function ForgotPasswordTemplate(props: IForgotPassword) {
       return;
     }
 
-    setSecondsLeft(5 * 60);
+    setSecondsLeft(15 * 60);
     const intervalId = setInterval(() => {
       setSecondsLeft((prev) => {
         if (prev <= 1) {

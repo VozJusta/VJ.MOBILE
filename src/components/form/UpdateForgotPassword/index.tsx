@@ -3,10 +3,13 @@ import { useAuth } from "@/hooks/auth/useAuth";
 import { IUpdateForgotPassword } from "@/interfaces/components/Forms/forgotPassword";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
+import { useState } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 
 export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
   const { loading } = useAuth();
+  const [confirmPassword, setConfirmPassword] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <View className="gap-[7px] w-full items-start">
@@ -21,14 +24,13 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
         label="Nova senha"
         placeholder={"••••••••"}
         leftIcon
-        keyboardType="visible-password"
         iconSize={24}
         iconNameProps={"lock"}
         type={"password"}
-        secureTextEntry={true}
+        secureTextEntry={isOpen ? false : true}
         rightIcon
-        rightIconName="visibility"
-        onRightIconPress={() => {}}
+        rightIconName={!isOpen ? "visibility-off" : "visibility"}
+        onRightIconPress={() => setIsOpen(!isOpen)}
         value={props.newPassword}
         onChangeText={(e) => props.setNewPassword(e)}
       />
@@ -36,14 +38,13 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
         label="Confirme a nova senha"
         placeholder={"••••••••"}
         leftIcon
-        keyboardType="visible-password"
         iconSize={24}
         iconNameProps={"lock"}
-        secureTextEntry={true}
+        secureTextEntry={confirmPassword ? false : true}
         type={"password"}
         rightIcon
-        rightIconName="visibility"
-        onRightIconPress={() => {}}
+        rightIconName={!confirmPassword ? "visibility-off" : "visibility"}
+        onRightIconPress={() => setConfirmPassword(!confirmPassword)}
         value={props.confirmPassword}
         onChangeText={(e) => props.setConfirmPassword(e)}
       />
@@ -58,20 +59,19 @@ export function UpdateForgotPassword({ ...props }: IUpdateForgotPassword) {
         onPress={() => props.onSubmit()}
         gradient={true}
         hover={false}
-        children={
-          <View className="flex-1 justify-center items-center">
-            {loading ? (
-              <ActivityIndicator size="small" color="#FFF" />
-            ) : (
-              <Text className="text-[16px] font-interBold text-white">
-                {props.labelButton || "Redefinir senha"}
-              </Text>
-            )}
-          </View>
-        }
         iconLeft={false}
         paddingButtonStatus={""}
-      />
+      >
+        <View className="flex-1 justify-center items-center">
+          {loading ? (
+            <ActivityIndicator size="small" color="#FFF" />
+          ) : (
+            <Text className="text-[16px] font-interBold text-white">
+              {props.labelButton || "Redefinir senha"}
+            </Text>
+          )}
+        </View>
+      </ButtonUI>
     </>
   );
 }

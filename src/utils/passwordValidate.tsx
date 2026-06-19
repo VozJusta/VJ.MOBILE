@@ -15,7 +15,7 @@ export default function passwordValidate(password: string): PasswordStrength {
     { label: "Maiúscula",     test: (v: string) => /[A-Z]/.test(v) },
     { label: "Minúscula",     test: (v: string) => /[a-z]/.test(v) },
     { label: "Número",        test: (v: string) => /[0-9]/.test(v) },
-    { label: "Símbolo",       test: (v: string) => /[@$!%*?&]/.test(v) },
+    { label: "Símbolo",       test: (v: string) => /[!@#$%^&*()_+\-=[\]{}|;:'",.<>/?]/.test(v) },
   ];
 
   if (/\s/.test(password)) {
@@ -38,7 +38,7 @@ export default function passwordValidate(password: string): PasswordStrength {
     score === 2 ? "#F97316" :
     score === 3 ? "#EAB308" :
     score === 4 ? "#67f55d" :
-                  "#018d06";
+                  "#12ff01";
 
   return { score, color, checklist };
 }

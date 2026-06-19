@@ -3,4 +3,6 @@ export interface IButtonAudio {
   onStartRecording: () => void;
   onStopRecording: () => void;
   disabled?: boolean;
+  onLongPress?: () => void;
+  delayLongPress?: number;
 }

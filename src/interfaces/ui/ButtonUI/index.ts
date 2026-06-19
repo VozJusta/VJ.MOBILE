@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export interface IButton {
   children?: ReactNode;
-  onPress: () => void;
+  onPress: (e?: any) => void;
   goNext?: boolean;
   goBack?: boolean;
   gradient?: boolean;
@@ -16,4 +16,6 @@ export interface IButton {
   iconLeft?: boolean;
   iconName?: React.ComponentProps<typeof MaterialIcons>["name"];
   paddingButtonStatus?: string;
+  onLongPress?: () => void;
+  delayLongPress?: number;
 }

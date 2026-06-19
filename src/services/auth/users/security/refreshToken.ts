@@ -1,10 +1,8 @@
 import { BASE_URL } from "@/settings/BASE_URL";
-import { useAccessTokenStorage, useRefreshTokenStorage } from "@/store/auth/token.store";
+import { useAccessTokenStorage } from "@/store/auth/token.store";
 
-export async function refreshToken() {
-  const token = useRefreshTokenStorage.getState().refreshToken;
-
-  if (!token) {
+export async function refreshToken(refreshToken: string) {
+  if (!refreshToken) {
     throw new Error("O Refresh Token não está disponível.");
   }
 
@@ -12,7 +10,7 @@ export async function refreshToken() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      refreshToken: token,
+      Authorization: `Bearer ${refreshToken}`,
     },
   });
 

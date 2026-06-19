@@ -6,10 +6,15 @@ type ValidationSource = "citizen" | "lawyer";
 
 export default function ValidateEmail() {
   const router = useRouter();
-  const { source, email } = useLocalSearchParams<{
+  const { source, email, registerCompleted } = useLocalSearchParams<{
     source?: ValidationSource | ValidationSource[];
     email?: string | string[];
+    registerCompleted?: string;
   }>();
+
+  const registerCompletedValue = Array.isArray(registerCompleted)
+    ? registerCompleted[0]
+    : registerCompleted;
 
   const sourceValue = Array.isArray(source) ? source[0] : source;
   const emailValue = Array.isArray(email) ? email[0] : email;
@@ -25,13 +30,31 @@ export default function ValidateEmail() {
           ? `Enviamos um código de 6 dígitos para ${emailValue}`
           : "Enviamos um código de 6 dígitos para seu email"
       }
-      onCodeVerified={() =>
+      onCodeVerified={() => {
+
+        if (registerCompletedValue === "true") {
+          router.push(
+            resolvedSource === "lawyer"
+              ? "/screens/lawyer/home"
+              : "/screens/citizen/home",
+          );
+          return;
+        }
+
+        if (registerCompletedValue === "false") {
+          router.push(
+            `/screens/auth/completeRegister/${resolvedSource}?source=${resolvedSource}&email=${encodeURIComponent(emailValue || "")}`,
+          );
+          return;
+        }
+
+
         router.push(
           resolvedSource === "lawyer"
             ? "/screens/lawyer/home"
             : "/screens/citizen/home",
-        )
-      }
+        );
+      }}
     />
   );
 }

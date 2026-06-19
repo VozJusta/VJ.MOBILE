@@ -11,12 +11,11 @@ import { useWebSocketSimulation } from "@/store/simulation/websocket/simulation"
 export default function AudienceCompleted() {
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const { simulationReportId } = useWebSocketSimulation();
-
-  console.log("simulationReportId:", simulationReportId);
+  const { simulationReportId, clearSimulation } = useWebSocketSimulation();
 
   const handleDownloadReport = async () => {
-    if (!simulationReportId) {
+    const idToUse = simulationReportId;
+    if (!idToUse) {
       Toast.show({
         type: "error",
         text1: "Relatório ainda não está pronto",
@@ -27,7 +26,7 @@ export default function AudienceCompleted() {
 
     try {
       setIsDownloading(true);
-      const result = await downloadReportSimulationAsPdf(simulationReportId);
+      const result = await downloadReportSimulationAsPdf(idToUse);
       if (!result.success) {
         Toast.show({
           type: "error",
@@ -49,42 +48,43 @@ para visualização."
       extraActions={
         <View className="flex flex-col gap-8 w-full">
           <ButtonUI
-            children={
-              <View className="justify-center items-center flex-1 flex-row gap-2">
-                {isDownloading ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
-                  <>
-                    <MaterialIcons name="analytics" size={24} color="#ffffff" />
-                    <Text className="text-white font-interSemiBold text-[16px]">
-                      Baixar relatório
-                    </Text>
-                  </>
-                )}
-              </View>
-            }
             onPress={handleDownloadReport}
             gradient={true}
             hover={false}
             disabled={isDownloading}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="justify-center items-center flex-1 flex-row gap-2">
+              {isDownloading ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <>
+                  <MaterialIcons name="analytics" size={24} color="#ffffff" />
+                  <Text className="text-white font-interSemiBold text-[16px]">
+                    Baixar relatório
+                  </Text>
+                </>
+              )}
+            </View>
+          </ButtonUI>
           <ButtonUI
-            children={
-              <View className="justify-center items-center flex-1 flex-row gap-2">
-                <MaterialIcons name="home" size={24} color="#ffffff" />
-                <Text className="text-white font-interSemiBold text-[16px]">
-                  Ir para a página inicial
-                </Text>
-              </View>
-            }
-            onPress={() => router.push("/screens/citizen/home/")}
+            onPress={() => {
+              clearSimulation();
+              router.push("/screens/citizen/home/");
+            }}
             gradient={true}
             hover={false}
             iconLeft={false}
             paddingButtonStatus={""}
-          />
+          >
+            <View className="justify-center items-center flex-1 flex-row gap-2">
+              <MaterialIcons name="home" size={24} color="#ffffff" />
+              <Text className="text-white font-interSemiBold text-[16px]">
+                Ir para a página inicial
+              </Text>
+            </View>
+          </ButtonUI>
         </View>
       }
     />

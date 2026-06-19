@@ -3,7 +3,6 @@ import { CodeSeding } from "@/services/auth/forgotPassword/codeSending";
 import { useEmailStorage } from "@/store/auth/email.store";
 import ButtonUI from "@/ui/ButtonUI";
 import InputUI from "@/ui/InputUI";
-import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
@@ -76,41 +75,19 @@ export function EmailForgotPassword() {
         bg="bg-[#135BEC]"
         hover={false}
         size="w-full h-[56px]"
-        children={
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-[16px] font-interBold text-white">
-              {loading ? (
-                <ActivityIndicator size="small" color="#FFF" />
-              ) : (
-                "Enviar código"
-              )}
-            </Text>
-          </View>
-        }
         iconLeft={false}
         paddingButtonStatus={""}
-      />
-      <ButtonUI
-        bg="bg-transparent"
-        gradient={false}
-        hover={false}
-        onPress={() => router.push("/screens/auth/users/SingIn")}
-        children={
-          <View style={{ gap: 8 }} className="flex-row items-center gap-2">
-            <MaterialIcons
-              name="arrow-forward"
-              size={20}
-              style={{ transform: [{ rotate: "-180deg" }] }}
-              color={"rgba(255,255,255,0.5)"}
-            />
-            <Text className="font-inter text-[14px] text-white/50">
-              Voltar para o Login
-            </Text>
-          </View>
-        }
-        iconLeft={false}
-        paddingButtonStatus={""}
-      />
+      >
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-[16px] font-interBold text-white">
+            {loading ? (
+              <ActivityIndicator size="small" color="#FFF" />
+            ) : (
+              "Enviar código"
+            )}
+          </Text>
+        </View>
+      </ButtonUI>
     </>
   );
 }

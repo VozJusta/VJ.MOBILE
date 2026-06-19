@@ -27,7 +27,6 @@ export function CodeForgotPassword({
   const [codeAuth, setCodeChange] = useState("");
   const token = useXTokenStorage((state) => state.token);
 
-
   const handleValidateCode = async (
     email: string,
     code: string,
@@ -48,10 +47,14 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
+
+
+  setTimeout(() => {           
     if (onCodeVerified) {
       onCodeVerified();
     }
     setLoading(false);
+  }, 700);
     return;
   };
 
@@ -74,10 +77,13 @@ export function CodeForgotPassword({
       type: "success",
       text1: "Email validado com sucesso!",
     });
+
+  setTimeout(() => {         
     if (onCodeVerified) {
       onCodeVerified();
     }
     setLoading(false);
+  }, 700);
   };
 
   return (

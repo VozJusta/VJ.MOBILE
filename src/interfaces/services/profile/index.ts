@@ -5,11 +5,13 @@ export interface IProfileResponse {
   cpf: string;
   avatar_image: string | null;
   phone: string;
+  bio: string | null;
 }
 
 export interface IUpdateProfileBody {
-  full_name?: string;
+  fullName?: string;
   phone?: string;
+  bio?: string;
 }
 
 export interface IUpdateProfileResponse {
